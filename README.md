@@ -5,7 +5,7 @@
 ## Состав
 
 - [Сметанкин Кирилл](https://github.com/smet1)
-- [Меркулова Надежда])(https://github.com/crueltycute)
+- [Меркулова Надежда](https://github.com/crueltycute)
 - [Мурашко Илья](https://github.com/MrOcumare)
 - [Пупчин Павел](https://github.com/4taa)
 
