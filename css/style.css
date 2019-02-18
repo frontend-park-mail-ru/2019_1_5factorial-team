@@ -1,0 +1,72 @@
+@font-face {
+    font-family: "One Stroke";
+    src: url("../fonts/14392.otf");
+}
+body {
+    font-family: "One Stroke";
+    background-image: url('../img/2.png');
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.container {
+    display: flex;
+    flex-direction: row;
+}
+.settings-block {
+    display: inline-flex;
+}
+.settings-btn {
+    display: flex;
+    fill: white;
+    cursor: pointer;
+    margin-right: 16px;
+}
+.menu-container {
+    background: black;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    box-shadow: 0 0 128px darkslategray;
+}
+.menu-content {
+    width: 360px;
+    margin-top: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.menu-row {
+    font-size: 90px;
+    line-height: 110px;
+    text-shadow: 0 0 32px cadetblue;
+}
+.menu-row:hover {
+    font-size: 100px;
+}
+.menu-btn {
+    color: white;
+    cursor: pointer;
+    text-shadow: 0 0 32px cadetblue;
+}
+.menu-header {
+    color: white;
+    font-size: 80px;
+    display: flex;
+    margin-left: 240px;
+    text-shadow: 0 0 64px cadetblue;
+}
+.users-block {
+    position: absolute;
+    margin-left: 1200px;
+    margin-right: 0;
+    text-shadow: 0 0 32px cadetblue;
+}
+.users-btn {
+    color: white;
+    font-size: 30pt;
+    margin-right: 16px;
+}
+
+
+
