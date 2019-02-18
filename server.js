@@ -15,7 +15,7 @@ app.get('/login', function (req, res) {
     console.log('GET login');
 });
 
-app.get('/registrarion', function (req, res) {
+app.get('/registration', function (req, res) {
     res.sendFile('./static/registration.html', {root: __dirname});
     console.log('GET registration');
 });
