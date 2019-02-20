@@ -1,0 +1,234 @@
+/* COMMON CONTENT */
+@font-face {
+    font-family: "One Stroke";
+    src: url("../fonts/14392.otf");
+}
+body {
+    font-family: "One Stroke";
+    background-image: url('../img/2.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+    text-shadow: 0 0 1em cadetblue;
+}
+.container {
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+
+/* block with sound and info icons */
+.settings-block {
+    display: flex;
+    justify-content: space-between;
+    width: 6vw;
+    margin-right: 1vw;
+    margin-left: 1vw;
+    margin-top: 1vh;
+}
+.settings-btn {
+    font-size: 4vh;
+    fill: white;
+    cursor: pointer;
+    filter: drop-shadow(0 0 16px cadetblue);
+    margin-right: 4%;
+}
+.settings-btn:hover {
+    filter: drop-shadow(0 0 16px powderblue);
+}
+
+/* block with signin and signup */
+.users-block {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    right: 4vw;
+    height: 4vh;
+    margin-top: 1vh;
+}
+.users-btn {
+    color: white;
+    font-size: 5vh;
+    cursor: pointer;
+    margin-left: 12%;
+}
+.users-btn:hover {
+    font-size: 6vh;
+    text-shadow: 0 0 1em powderblue;
+}
+.main-header {
+    cursor: default;
+    color: white;
+    font-size: 24vh;
+    display: flex;
+    margin-top: 20vh;
+    margin-left: 8vw;
+    animation: pulse 1s infinite;
+}
+@keyframes pulse {
+    0% {
+        text-shadow: 0 0 0.8em cadetblue;
+    }
+    20% {
+        text-shadow: 0 0 0.6em cadetblue;
+    }
+    40% {
+        text-shadow: 0 0 1em cadetblue;
+    }
+    60% {
+        text-shadow: 0 0 0.8em cadetblue;
+    }
+    80% {
+        text-shadow: 0 0 0.6em cadetblue;
+    }
+    100% {
+        text-shadow: 0 0 0.8em cadetblue;
+    }
+}
+
+/* items for page content */
+.main-container {
+    background: black;
+    display: inline-flex;
+    flex-direction: column;
+    text-align: center;
+    box-shadow: 0 0 16vw darkslategray;
+    justify-content: center;
+}
+.main-content {
+    height: 100vh;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.main-content-header {
+    display: flex;
+    justify-content: center;
+    color: #111111;
+    font-size: 10vh;
+    margin-bottom: 1vh;
+}
+.content-block {
+    display: flex;
+    flex-direction: column;
+}
+.main-row {
+    width: 100%;
+    text-align: left;
+    font-size: 12vh;
+}
+.main-row:hover {
+    text-shadow: 0 0 32px powderblue;
+}
+.main-btn {
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+}
+.main-label-light {
+    display: flex;
+    color: white;
+    font-size: 6vh;
+    margin-bottom: 1vh;
+    margin-top: 1vh;
+}
+.main-label-dark {
+    display: flex;
+    color: #111111;
+    text-align: left;
+    font-size: 6vh;
+    margin-bottom: 1vh;
+    margin-top: 1vh;
+}
+.back-menu-btn {
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 4vh;
+    color: #111111;
+    margin-top: 2vh;
+    cursor: pointer;
+    margin-bottom: 4vh;
+}
+.back-menu-btn:hover {
+    color: white;
+}
+
+/* MENU CONTENT */
+.menu-content {
+    padding-left: 2vw;
+    padding-right: 2vw;
+    margin-top: 32vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+/* LOGIN AND SIGNUP CONTENT */
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .login-block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .signup-block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .input-row {
+        font-family: "One Stroke";
+        width: 20vw;
+        height: 6vh;
+        font-size: 4vh;
+        border: none;
+        box-shadow: 0 0 1em cadetblue;
+        border-radius: 1vh;
+        margin-top: 2vh;
+        margin-bottom: 2vh;
+    }
+    .input-row:focus {
+        outline: none;
+        box-shadow: 0 0 1em powderblue;
+    }
+    .input-row:invalid:not(:placeholder-shown) {
+        box-shadow: 0 0 1em indianred;
+        text-shadow: 0 0 0.5em indianred;
+    }
+    .input-row:valid {
+        box-shadow: 0 0 1em lightgreen;
+    }
+    .enter-btn {
+        font-family: "One Stroke";
+        width: 18vw;
+        background: transparent;
+        border: none;
+        font-size: 10vh;
+        color: #111111;
+        margin-top: 8vh;
+        text-shadow: 0 0 0.5em cadetblue;
+        cursor: pointer;
+    }
+    .enter-btn:hover {
+        color: white;
+    }
+
+/* ABOUT CONTENT */
+    .main-row-about {
+        width: 100%;
+        text-align: left;
+        font-size: 6vh;
+        text-decoration: none;
+    }
+    .main-row-about:hover {
+        text-shadow: 0 0 1em powderblue;
+    }
