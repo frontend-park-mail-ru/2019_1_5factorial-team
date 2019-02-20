@@ -1,0 +1,195 @@
+@font-face {
+    font-family: "One Stroke";
+    src: url("../fonts/14392.otf");
+}
+body {
+    font-family: "One Stroke";
+    background-image: url('../img/2.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+}
+.container {
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+.settings-block {
+    display: flex;
+    justify-content: space-between;
+    width: 6vw;
+    margin-right: 1vw;
+    margin-left: 1vw;
+}
+.settings-btn {
+    font-size: 4vh;
+    fill: white;
+    cursor: pointer;
+    filter: drop-shadow(0 0 16px cadetblue);
+    margin-right: 4%;
+}
+.settings-btn:hover {
+    filter: drop-shadow(0 0 16px powderblue);
+}
+
+.users-block {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    right: 4vw;
+    height: 4vh;
+}
+.users-btn {
+    color: white;
+    font-size: 5vh;
+    cursor: pointer;
+    text-shadow: 0 0 1em cadetblue;
+    margin-left: 12%;
+}
+.users-btn:hover {
+    font-size: 6vh;
+    text-shadow: 0 0 1em powderblue;
+}
+.main-header {
+    cursor: default;
+    color: white;
+    font-size: 10vh;
+    display: flex;
+    margin-left: 12vw;
+    text-shadow: 0 0 0 cadetblue;
+    animation: pulse 1s infinite;
+}
+@keyframes pulse {
+    0% {
+        text-shadow: 0 0 0.8em cadetblue;
+    }
+    20% {
+        text-shadow: 0 0 0.6em cadetblue;
+    }
+    40% {
+        text-shadow: 0 0 1em cadetblue;
+    }
+    60% {
+        text-shadow: 0 0 0.8em cadetblue;
+    }
+    80% {
+        text-shadow: 0 0 0.6em cadetblue;
+    }
+    100% {
+        text-shadow: 0 0 0.8em cadetblue;
+    }
+}
+
+/* MENU CONTENT STARTS */
+.menu-container {
+    background: black;
+    display: inline-flex;
+    text-align: center;
+    box-shadow: 0 0 16vw darkslategray;
+}
+.menu-content {
+    padding-left: 2vw;
+    padding-right: 2vw;
+    margin-top: 32vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.menu-row {
+    width: 100%;
+    text-align: left;
+    font-size: 12vh;
+    text-shadow: 0 0 32px cadetblue;
+}
+.menu-row:hover {
+    text-shadow: 0 0 32px powderblue;
+}
+.menu-btn {
+    color: white;
+    cursor: pointer;
+}
+/* MENU CONTENT ENDS */
+
+/* LOGIN CONTENT STARTS */
+.login-container {
+    background: black;
+    display: inline-flex;
+    align-items: center;
+    box-shadow: 0 0 16vw darkslategray;
+}
+.login-content {
+    padding-left: 2vw;
+    padding-right: 2vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.login-label {
+    color: white;
+    text-align: center;
+    font-size: 6vh;
+    text-shadow: 0 0 1em cadetblue;
+    margin-bottom: 1vh;
+    margin-top: 1vh;
+}
+.input-row {
+    font-family: "One Stroke";
+    width: 20vw;
+    height: 6vh;
+    font-size: 4vh;
+    border: none;
+    box-shadow: 0 0 1em cadetblue;
+    border-radius: 1vh;
+}
+.input-row:focus {
+    outline: none;
+    box-shadow: 0 0 1em powderblue;
+}
+.input-row:invalid:not(:placeholder-shown) {
+    box-shadow: 0 0 1em indianred;
+    text-shadow: 0 0 0.5em indianred;
+}
+.input-row:valid {
+    box-shadow: 0 0 1em lightgreen;
+    text-shadow: 0 0 0.5em green;
+}
+.enter-btn {
+    font-family: "One Stroke";
+    width: 18vw;
+    background: transparent;
+    border: none;
+    font-size: 10vh;
+    color: #111111;
+    margin-top: 8vh;
+    text-shadow: 0 0 0.5em cadetblue;
+    cursor: pointer;
+}
+.enter-btn:hover {
+    color: white;
+}
+.menu-btn {
+    text-decoration: none;
+    font-size: 4vh;
+    color: #111111;
+    margin-top: 2vh;
+    text-shadow: 0 0 0.5em cadetblue;
+    cursor: pointer;
+}
+.menu-btn:hover {
+    color: white;
+}
+/* LOGIN CONTENT ENDS */
