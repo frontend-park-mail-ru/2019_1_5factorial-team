@@ -20,42 +20,46 @@ body {
     display: flex;
     justify-content: space-between;
     height: 4vh;
-    width: 76px;
+    width: 6vw;
     margin-right: 1vw;
     margin-left: 1vw;
 }
 .settings-btn {
+    font-size: 4vh;
     fill: white;
     cursor: pointer;
     filter: drop-shadow(0 0 16px cadetblue);
     margin-right: 4%;
 }
+.settings-btn:hover {
+    filter: drop-shadow(0 0 16px powderblue);
+}
 .menu-container {
     background: black;
-    display: flex;
+    display: inline-flex;
     text-align: center;
     box-shadow: 0 0 16vw darkslategray;
 }
 .menu-content {
     padding-left: 2vw;
-    width: 24vw;
+    padding-right: 2vw;
     margin-top: 32vh;
     display: flex;
     justify-content: center;
     flex-direction: column;
 }
 .menu-row {
+    width: 100%;
     text-align: left;
     font-size: 12vh;
     text-shadow: 0 0 32px cadetblue;
 }
 .menu-row:hover {
-    font-size: 13vh;
+    text-shadow: 0 0 32px powderblue;
 }
 .menu-btn {
     color: white;
     cursor: pointer;
-    text-shadow: 0 0 1em cadetblue;
 }
 .menu-header {
     color: white;
@@ -91,7 +95,6 @@ body {
     position: absolute;
     right: 4vw;
     height: 4vh;
-
 }
 .users-btn {
     color: white;
@@ -102,4 +105,5 @@ body {
 }
 .users-btn:hover {
     font-size: 6vh;
+    text-shadow: 0 0 1em powderblue;
 }
