@@ -1,0 +1,105 @@
+@font-face {
+    font-family: "One Stroke";
+    src: url("../fonts/14392.otf");
+}
+body {
+    font-family: "One Stroke";
+    background-image: url('../img/2.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+}
+.container {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+.settings-block {
+    display: flex;
+    justify-content: space-between;
+    height: 4vh;
+    width: 76px;
+    margin-right: 1vw;
+    margin-left: 1vw;
+}
+.settings-btn {
+    fill: white;
+    cursor: pointer;
+    filter: drop-shadow(0 0 16px cadetblue);
+    margin-right: 4%;
+}
+.menu-container {
+    background: black;
+    display: flex;
+    text-align: center;
+    box-shadow: 0 0 16vw darkslategray;
+}
+.menu-content {
+    padding-left: 2vw;
+    width: 24vw;
+    margin-top: 32vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.menu-row {
+    text-align: left;
+    font-size: 9vh;
+    text-shadow: 0 0 32px cadetblue;
+}
+.menu-row:hover {
+    font-size: 13vh;
+}
+.menu-btn {
+    color: white;
+    cursor: pointer;
+    text-shadow: 0 0 1em cadetblue;
+}
+.menu-header {
+    color: white;
+    font-size: 10vh;
+    display: flex;
+    margin-left: 12vw;
+    text-shadow: 0 0 0 cadetblue;
+    animation: pulse 1s infinite;
+}
+@keyframes pulse {
+    0% {
+        text-shadow: 0 0 0.8em cadetblue;
+    }
+    20% {
+        text-shadow: 0 0 0.6em cadetblue;
+    }
+    40% {
+        text-shadow: 0 0 1em cadetblue;
+    }
+    60% {
+        text-shadow: 0 0 0.8em cadetblue;
+    }
+    80% {
+        text-shadow: 0 0 0.6em cadetblue;
+    }
+    100% {
+        text-shadow: 0 0 0.8em cadetblue;
+    }
+}
+.users-block {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    right: 4vw;
+    height: 4vh;
+
+}
+.users-btn {
+    color: white;
+    font-size: 5vh;
+    cursor: pointer;
+    text-shadow: 0 0 1em cadetblue;
+    margin-left: 12%;
+}
+.users-btn:hover {
+    font-size: 6vh;
+}
