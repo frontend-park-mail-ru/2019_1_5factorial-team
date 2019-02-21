@@ -33,31 +33,31 @@ class Validator {
         return false
     };
 
-    validateLogin = login => {
-        const myInput = document.getElementsByName('login-or-email');
-        if (login.length >= 8) {
-            // length.classList.remove("invalid");
-            // length.classList.add("valid");
+    validateLogin = myInput => {
+        const lengthOfLogin = myInput.value.length;
+        if (lengthOfLogin >= 6) {
+            myInput.classList.remove("invalid");
+            myInput.classList.add("valid");
             console.log('correct login!');
             return true
         } else {
-            // length.classList.remove("valid");
-            // length.classList.add("invalid");
+            myInput.classList.remove("valid");
+            myInput.classList.add("invalid");
             console.log('incorrect login!');
             return false
         }
     };
 
-    validatePassword = password => {
-        const myInput = document.getElementsByName('password');
-        if (password.length >= 8) {
-            // length.classList.remove("invalid");
-            // length.classList.add("valid");
+    validatePassword = myInput => {
+        const lengthOfPass = myInput.value.length;
+        if (lengthOfPass >= 4) {
+            myInput.classList.remove("invalid");
+            myInput.classList.add("valid");
             console.log('correct password!');
             return true
         } else {
-            // length.classList.remove("valid");
-            // length.classList.add("invalid");
+            myInput.classList.remove("valid");
+            myInput.classList.add("invalid");
             console.log('incorrect password!');
             return false
         }
@@ -70,8 +70,5 @@ submit.addEventListener('click', () => {
     const passInput = document.getElementsByName('password')[0];
     const logInput = document.getElementsByName('login-or-email')[0];
 
-    const password = passInput.value;
-    const login = logInput.value;
-
-    const validate = new Validator(login, password);
+    const validate = new Validator(logInput, passInput);
 });
