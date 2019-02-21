@@ -193,8 +193,8 @@ body {
         border: none;
         box-shadow: 0 0 1em cadetblue;
         border-radius: 1vh;
-        margin-top: 2vh;
-        margin-bottom: 2vh;
+        margin: 0.5vh 0;
+        text-align: center;
     }
     .input-row:focus {
         outline: none;
@@ -214,11 +214,37 @@ body {
         border: none;
         font-size: 10vh;
         color: #111111;
-        margin-top: 8vh;
+        margin-top: 6vh;
         text-shadow: 0 0 0.5em cadetblue;
         cursor: pointer;
     }
     .enter-btn:hover {
+        color: white;
+    }
+    .input-btn-photo input[type="file"] {
+        display: none;
+    }
+    .input-btn-photo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        background: #111111;
+        width: 20vw;
+        height: 6vh;
+        font-size: 4vh;
+        margin: 2vh 0 0 0;
+        border-radius: 1vh;
+        box-shadow: 0 0 1em cadetblue;
+        cursor: pointer;
+    }
+    .input-btn-photo:hover {
+        box-shadow: 0 0 1em powderblue;
+    }
+    .input-btn-photo:focus {
+        outline: none;
+    }
+    .photo-info {
         color: white;
     }
 
