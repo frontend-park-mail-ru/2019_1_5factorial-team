@@ -22,8 +22,8 @@ class Validator {
     };
 
     validateEmail = email => {
-        let expression = new RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+[^<>()\.,;:\s@\"]{2,})$/);
-        let res = expression.test(email);
+        const expression = new RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+[^<>()\.,;:\s@\"]{2,})$/);
+        const res = expression.test(email);
         if (res) {
             console.log('correct email!');
             return true
@@ -76,14 +76,30 @@ class Validator {
             return true
         }
     };
+
+    validateRepeatPasswords = (first, second) => {
+        const firstPass = first.value;
+        const secPass = second.value;
+
+        if (firstPass !== secPass) {
+            console.log('Passwords not match!');
+            return false
+        } else {
+            console.log('Passwords match!');
+            return true
+        }
+    };
 }
 
 const submit = document.getElementsByName('submit')[0];
-submit.addEventListener('click', () => {
+submit.addEventListener('click', (event) => {
     event.preventDefault();
     const passInput = document.getElementsByName('password')[0];
     const logInput = document.getElementsByName('login-or-email')[0];
     const avatarInput = document.getElementsByName('avatar')[0];
+    const firstPassInput = document.getElementsByName('password')[0];
+    const secondPassInput = document.getElementsByName('password')[1];
+
 
     const validate = new Validator(logInput, passInput);
 });
