@@ -1,7 +1,6 @@
 'use strict';
 
 class Validator {
-
     /**
      * @return {boolean}
      */
@@ -62,6 +61,21 @@ class Validator {
             return false
         }
     };
+
+    validateImage = myInput => {
+        const typeOfImage = myInput.type;
+        if ((typeOfImage !== 'image/jpeg') || (typeOfImage !== 'image/png')) {
+            myInput.classList.remove("valid");
+            myInput.classList.add("invalid");
+            console.log('invalid format of image!');
+            return false
+        } else {
+            myInput.classList.remove("invalid");
+            myInput.classList.add("valid");
+            console.log('valid format of image!');
+            return true
+        }
+    };
 }
 
 const submit = document.getElementsByName('submit')[0];
@@ -69,6 +83,7 @@ submit.addEventListener('click', () => {
     event.preventDefault();
     const passInput = document.getElementsByName('password')[0];
     const logInput = document.getElementsByName('login-or-email')[0];
+    const avatarInput = document.getElementsByName('avatar')[0];
 
     const validate = new Validator(logInput, passInput);
 });
