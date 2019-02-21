@@ -3,6 +3,7 @@ const http = require('http'),
       app = express();
       body = require('body-parser');
 
+app.use(body.json());
 http.createServer(app).listen(3000);
 console.log('Server started at' + ' http://127.0.0.1:3000');
 
@@ -14,7 +15,8 @@ let users = {
 		age: 1,
         score: 100500,
         avatar: 'default',
-        avatarLink: `./static/avatars/${avatar}.jpg`
+        avatarType: 'jpg',
+        avatarLink: `./static/avatars/${this.avatar}.${this.avatarType}`
     }, 
     'lol': {
         email: 'lol.l.ol',
@@ -22,7 +24,8 @@ let users = {
 		age: 1,
         score: 100500,
         avatar: 'default',
-        avatarLink: `./static/avatars/${avatar}.jpg`
+        avatarType: 'jpg',
+        avatarLink: `./static/avatars/${this.avatar}.${this.avatarType}`
     }, 
 };
 
@@ -52,9 +55,12 @@ app.get('/profile', (req, res) => {
 });
 
 app.post('/profile', (req, res) => {
-    // const usr = req.body.email;
-    console.log(req)
-})
+    console.log('post xui');
+    console.log(req.body.avatar);
+    console.log('file info: ',req.body.avatar.file);
+    console.log('---------');
+    console.log('file info: ',req.body.avatar.files);
+});
 
 app.get('/registration', (req, res) => {
     res.sendFile('./static/registration.html', {root: __dirname});

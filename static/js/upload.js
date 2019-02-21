@@ -8,15 +8,15 @@ const inputPhotoForm = document.getElementById('upload-photo');
 const submitUpload = document.getElementsByClassName('btn btn-default')[0];
 
 function ajax (callback, method, path, body) {
-    const xhr = new XMLHttpRequest();
+	const xhr = new XMLHttpRequest();
+	xhr.open(method, path, true);
+	xhr.withCredentials = true;
 
-    xhr.open(method, path, true);
+	if (body) {
+		xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+	}
 
-    if (body) {
-        xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
-    }
-
-    xhr.onreadystatechange = function () {
+	xhr.onreadystatechange = function () {
 		if (xhr.readyState !== 4) {
 			return;
 		}
@@ -32,19 +32,26 @@ function ajax (callback, method, path, body) {
 }
 
 submitUpload.addEventListener('click', (event) => {
-    console.log(event);
+    // console.log(event);
     event.preventDefault();
 
     let userAvatar = document.getElementsByClassName('photo-input')[0].files[0];
     console.log(userAvatar)
 
     // pseudoValidation (kek)
-    if (userAvatar.type !== 'image/png' || userAvatar.type !== 'image/jpg') {
-        alert('ti debil tol`ko png ili jpeg');
-        return;
-    }
+    console.log(userAvatar.type);
 
-    formData = new FormData();
+    // if (userAvatar.type !== 'image/png' || userAvatar.type !== 'image/jpeg') {
+    //     alert('ti debil tol`ko png ili jpeg');
+    //     return;
+    // }
 
-    alert('111');
+    let formData = new FormData();
+    formData.append('avatar', userAvatar);
+
+    console.log(formData);
+
+    ajax(() => {}, 'POST', '/profile', {avatar: userAvatar});
+
+    // alert('111');
 });
