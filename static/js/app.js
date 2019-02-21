@@ -2,19 +2,22 @@
 
 class Validator {
 
-    validateUser = (user, pass) => {
+    /**
+     * @return {boolean}
+     */
+    constructor(user, pass) {
         if (this.validateEmail(user)) {
             if (this.validatePassword(pass)) {
-                console.log('enter');
+                alert('enter');
                 return true;
             }
         } else if (this.validateLogin(user)) {
             if (this.validatePassword(pass)) {
-                console.log('enter');
+                alert('enter');
                 return true;
             }
         } else {
-            console.log('ploho');
+            alert('ploho');
             return false;
         }
     };
@@ -61,3 +64,14 @@ class Validator {
     };
 }
 
+const submit = document.getElementsByName('submit')[0];
+submit.addEventListener('click', () => {
+    event.preventDefault();
+    const passInput = document.getElementsByName('password')[0];
+    const logInput = document.getElementsByName('login-or-email')[0];
+
+    const password = passInput.value;
+    const login = logInput.value;
+
+    const validate = new Validator(login, password);
+});
