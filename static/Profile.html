@@ -13,15 +13,15 @@
     <a href="about">about</a>
     <a href="registration">regis</a>
 
-    <div class="container">
+    <div class="container" id="app">
         <div class="row">
             <div class="col-md-4"></div>
             <div class="col-md-4">
                 <!-- Photos upload Form -->
-                <form id="upload-photos" method="post" action="/profile" enctype="multipart/form-data">
+                <form id="upload-photo" method="post" action="/profile" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="photos-input">File input</label>
-                        <input id="photos-input" type="file" name="avatar">
+                        <label for="photo-input">File input</label>
+                        <input class="photo-input" id="photo-input" type="file" name="avatar">
                         <p class="help-block">You can upload avatar</p>
                     </div>
                     <input type="hidden" name="csrf_token" value="just_a_text_field" />
