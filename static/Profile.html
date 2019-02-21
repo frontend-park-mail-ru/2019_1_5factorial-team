@@ -3,12 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <title>Profile</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style type="text/css">body {background-color: #cccccc;}</style>
 </head>
 <body>
-<a href="/">index</a>
-<a href="leaderboard">leader</a>
-<a href="login">login</a>
-<a href="about">about</a>
-<a href="registration">regis</a>
+    <a href="/">index</a>
+    <a href="leaderboard">leader</a>
+    <a href="login">login</a>
+    <a href="about">about</a>
+    <a href="registration">regis</a>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <!-- Photos upload Form -->
+                <form id="upload-photos" method="post" action="/profile" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="photos-input">File input</label>
+                        <input id="photos-input" type="file" name="avatar">
+                        <p class="help-block">You can upload avatar</p>
+                    </div>
+                    <input type="hidden" name="csrf_token" value="just_a_text_field" />
+                    <input class="btn btn-default" type="submit" name="Photo Uploads" value="Upload Photos" />
+                </form>
+                <br/>
+                <!-- Progress Bar -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                                <span class="sr-only"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+        <!-- Photos Album Container -->
+        <div id="album" class="row"></div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/upload.js"></script>
 </body>
 </html>
