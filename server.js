@@ -1,12 +1,14 @@
 const http = require('http'),
       express = require('express'),
-      app = express();
-      body = require('body-parser');
+      app = express(),
+      body = require('body-parser'),
+      multer  = require('multer');  // @1.4.1
 
 app.use(body.json());
 http.createServer(app).listen(3000);
 console.log('Server started at' + ' http://127.0.0.1:3000');
 
+var upload = multer({dest: './static/avatars'});
 
 let users = {
     'kek': {
@@ -54,13 +56,38 @@ app.get('/profile', (req, res) => {
     console.log('GET Profile');
 });
 
-app.post('/profile', (req, res) => {
-    console.log('post xui');
-    console.log(req.body.avatar);
-    console.log('file info: ',req.body.avatar.file);
+// app.post('/profile', (req, res) => {
+//     console.log('POST Profile');
+//     console.log(req.headers);
+//     console.log(req.file);
+//     console.log(req.files);
+//     console.log(req.body);
+//     // console.log(req.body.avatar);
+//     // console.log('file info: ',req.avatar.file);
+//     // console.log('---------');
+//     // console.log('file info: ',req.body.avatar.files);
+//     // console.log(req.headers);
+
+//     upload(req, res, function(err) {
+//         if(err) {
+//             console.log('----err----');
+//             console.log(err);
+//             return res.end("Error uploading file.");
+//         }
+//         console.log('----ok----');
+//         res.end("File is uploaded");
+//     });
+
+//     console.log('----end----');
+// });
+
+app.post('/profile', upload.single('avatar'),  (req, res) => {
+    console.log('POST Profile');
     console.log('---------');
-    console.log('file info: ',req.body.avatar.files);
-});
+    console.log(req.file);
+    console.log('----end----');
+    res.send("OK");
+})
 
 app.get('/registration', (req, res) => {
     res.sendFile('./static/registration.html', {root: __dirname});
