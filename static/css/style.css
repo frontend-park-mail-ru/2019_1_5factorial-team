@@ -25,16 +25,14 @@ body {
     display: flex;
     justify-content: space-between;
     width: 6vw;
-    margin-right: 1vw;
-    margin-left: 1vw;
-    margin-top: 1vh;
+    margin: 1vh  1vw 0 1vw;
 }
 .settings-btn {
     font-size: 4vh;
     fill: white;
     cursor: pointer;
     filter: drop-shadow(0 0 16px cadetblue);
-    margin-right: 4%;
+    margin: 0 4% 0 0;
 }
 .settings-btn:hover {
     filter: drop-shadow(0 0 16px powderblue);
@@ -64,8 +62,7 @@ body {
     color: white;
     font-size: 24vh;
     display: flex;
-    margin-top: 20vh;
-    margin-left: 8vw;
+    margin: 20vh 0 0 8vw;
     animation: pulse 1s infinite;
 }
 @keyframes pulse {
@@ -111,7 +108,7 @@ body {
     justify-content: center;
     color: #111111;
     font-size: 10vh;
-    margin-bottom: 1vh;
+    margin: 0 0 1vh 0;
 }
 .content-block {
     display: flex;
@@ -134,16 +131,14 @@ body {
     display: flex;
     color: white;
     font-size: 6vh;
-    margin-bottom: 1vh;
-    margin-top: 1vh;
+    margin: 1vh 0;
 }
 .main-label-dark {
     display: flex;
     color: #111111;
     text-align: left;
     font-size: 6vh;
-    margin-bottom: 1vh;
-    margin-top: 1vh;
+    margin: 1vh 0;
 }
 .back-menu-btn {
     display: flex;
@@ -151,9 +146,8 @@ body {
     text-decoration: none;
     font-size: 4vh;
     color: #111111;
-    margin-top: 2vh;
+    margin: 2vh 0 4vh 0;
     cursor: pointer;
-    margin-bottom: 4vh;
 }
 .back-menu-btn:hover {
     color: white;
@@ -188,8 +182,7 @@ form {
     border: none;
     box-shadow: 0 0 1em cadetblue;
     border-radius: 1vh;
-    margin-top: 2vh;
-    margin-bottom: 2vh;
+    margin: 2vh 0;
 }
 .input-row:focus {
     outline: none;
