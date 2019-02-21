@@ -25,6 +25,7 @@
 
 # Generated files
 .idea/**/contentModel.xml
+.idea
 
 # Sensitive or high-churn files
 .idea/**/dataSources/
@@ -58,6 +59,9 @@ cmake-build-*/
 
 # IntelliJ
 out/
+package.json
+package-lock.json
+node_modules/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
