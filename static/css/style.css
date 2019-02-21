@@ -201,6 +201,7 @@ form {
 }
 .input-row:valid {
     box-shadow: 0 0 1em lightgreen;
+    text-shadow: 0 0 0.5em green;
 }
 .enter-btn {
     font-family: "One Stroke";
