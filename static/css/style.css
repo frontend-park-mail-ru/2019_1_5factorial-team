@@ -152,6 +152,7 @@ body {
 .back-menu-btn:hover {
     color: white;
 }
+
 .small-label-light {
     display: flex;
     color: white;
@@ -178,6 +179,7 @@ body {
 .small-btn-dark:hover {
     color: white;
 }
+
 
 /* MENU CONTENT */
 .menu-content {
@@ -236,6 +238,7 @@ form {
 .enter-btn:hover {
     color: white;
 }
+
 .input-btn-photo input[type="file"] {
     display: none;
 }
@@ -361,4 +364,5 @@ form {
     display: flex;
     flex-direction: row;
     margin: 1vh 0;
+
 }
