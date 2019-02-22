@@ -12,12 +12,12 @@ app.get('/', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-    res.sendFile('./static/login.html', {root: __dirname});
+              res.sendFile('./static/login.html', {root: __dirname});
     console.log('GET login');
 });
 
 app.get('/about', (req, res) => {
-    res.sendFile('./static/about.html', {root: __dirname});
+           res.sendFile('./static/about.html', {root: __dirname});
     console.log('GET about');
 });
 
