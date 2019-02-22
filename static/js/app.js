@@ -6,6 +6,11 @@ class Validator {
      */
     constructor() {}
 
+    /**
+     * valifateEmail - check validity of input email (using RegExp)
+     * @param {string} email
+     * @return {boolean}
+     */
     validateEmail = email => {
         const expression = new RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+[^<>()\.,;:\s@\"]{2,})$/);
         const res = expression.test(email);
@@ -17,6 +22,11 @@ class Validator {
         return false
     };
 
+    /**
+     * valifateLogin - check validity of input login (only for length)
+     * @param {HTMLElement} myInput
+     * @return {boolean}
+     */
     validateLogin = myInput => {
         const lengthOfLogin = myInput.value.length;
         if (lengthOfLogin >= 6) {
@@ -32,6 +42,11 @@ class Validator {
         }
     };
 
+    /**
+     * valifatePassword - check validity of input password (only for length)
+     * @param {HTMLElement} myInput
+     * @return {boolean}
+     */
     validatePassword = myInput => {
         const lengthOfPass = myInput.value.length;
         if (lengthOfPass >= 4) {
@@ -47,6 +62,11 @@ class Validator {
         }
     };
 
+    /**
+     * valifateImage - check validity of input image
+     * @param {HTMLElement} myInput
+     * @return {boolean}
+     */
     validateImage = myInput => {
         const typeOfImage = myInput.type;
         if ((typeOfImage !== 'image/jpeg') || (typeOfImage !== 'image/png')) {
@@ -62,6 +82,12 @@ class Validator {
         }
     };
 
+    /**
+     * valifateRepeatPasswords - check validity of input passwords and compare them
+     * @param first
+     * @param second
+     * @return {boolean}
+     */
     validateRepeatPasswords = (first, second) => {
         const firstPass = first.value;
         const secPass = second.value;
