@@ -1,9 +1,13 @@
 {
-    "husky": {
-      "hooks": {
-        "pre-commit": "npm test",
-        "pre-push": "npm test",
-        "...": "..."
-      }
+  "husky": {
+    "hooks": {
+        "pre-commit": "lint-staged",
+      "pre-push": "npm test",
+      
+      "...": "..."
     }
+  },
+  "devDependencies": {
+    "lint-staged": "^8.1.4"
   }
+}
