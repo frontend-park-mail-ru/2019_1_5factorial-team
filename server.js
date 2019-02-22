@@ -8,7 +8,17 @@ app.use(body.json());
 http.createServer(app).listen(3000);
 console.log('Server started at' + ' http://127.0.0.1:3000');
 
-var upload = multer({dest: './static/avatars'});
+var storage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, './static/avatars')
+    },
+    filename: function (req, file, callback) {
+        callback(null, file.fieldname + '-' + Date.now() + '.' + ((file.mimetype === 'image/png') ? 'png' : 'jpeg'))
+    }
+});
+
+// var upload = multer({dest: './static/avatars'});
+var upload = multer({storage: storage});
 
 let users = {
     'kek': {
@@ -16,18 +26,16 @@ let users = {
 		password: 'password',
 		age: 1,
         score: 100500,
-        avatar: 'default',
         avatarType: 'jpg',
-        avatarLink: `./static/avatars/${this.avatar}.${this.avatarType}`
+        avatarLink: `./static/avatars/default.jpg`
     }, 
     'lol': {
         email: 'lol.l.ol',
 		password: 'password',
 		age: 1,
         score: 100500,
-        avatar: 'default',
         avatarType: 'jpg',
-        avatarLink: `./static/avatars/${this.avatar}.${this.avatarType}`
+        avatarLink: `./static/avatars/default.jpg`
     }, 
 };
 
@@ -53,41 +61,41 @@ app.get('/leaderboard', (req, res) => {
 
 app.get('/profile', (req, res) => {
     res.sendFile('./static/Profile.html', {root: __dirname});
+    // res.sendFile(users['kek'].avatarLink, {root: __dirname});
     console.log('GET Profile');
+
+    // res.end();
 });
 
-// app.post('/profile', (req, res) => {
-//     console.log('POST Profile');
-//     console.log(req.headers);
-//     console.log(req.file);
-//     console.log(req.files);
-//     console.log(req.body);
-//     // console.log(req.body.avatar);
-//     // console.log('file info: ',req.avatar.file);
-//     // console.log('---------');
-//     // console.log('file info: ',req.body.avatar.files);
-//     // console.log(req.headers);
-
-//     upload(req, res, function(err) {
-//         if(err) {
-//             console.log('----err----');
-//             console.log(err);
-//             return res.end("Error uploading file.");
-//         }
-//         console.log('----ok----');
-//         res.end("File is uploaded");
-//     });
-
-//     console.log('----end----');
-// });
-
-app.post('/profile', upload.single('avatar'),  (req, res) => {
+// имя пользователя передается в Form-Data по ключу 'nickname'
+// в будущем перекатиться на куку
+app.post('/profile', (req, res) => {
     console.log('POST Profile');
     console.log(req.headers);
+
     console.log('---------');
-    console.log(req.file);
-    console.log('----end----');
-    res.send("OK");
+    upload.single('avatar')(req, res, (err) => {
+        console.log(req.file);
+
+        if (err instanceof multer.MulterError) {
+            res.send("Multer error");
+        } else if (err) {
+            res.send("An unknown error occurred when uploading");
+        }
+
+        console.log(req.body.nickname);
+        console.log(req.file.filename);
+
+        // TODO(): проверка на существование пользователя
+        users[req.body.nickname].avatarType = (req.file.mimetype === 'image/png') ? 'png' : 'jpeg';
+        users[req.body.nickname].avatarLink = req.file.filename;
+
+        console.log(users);
+        res.send("OK");
+
+        console.log('----end----');
+    })
+    
 })
 
 app.get('/registration', (req, res) => {
