@@ -3,6 +3,7 @@
     font-family: "One Stroke";
     src: url("../fonts/14392.otf");
 }
+
 body {
     font-family: "One Stroke";
     background-image: url('../img/2.png');
@@ -13,6 +14,7 @@ body {
     height: 100vh;
     text-shadow: 0 0 1em cadetblue;
 }
+
 .container {
     margin: 0;
     display: flex;
@@ -25,8 +27,9 @@ body {
     display: flex;
     justify-content: space-between;
     width: 6vw;
-    margin: 1vh  1vw 0 1vw;
+    margin: 1vh 1vw 0 1vw;
 }
+
 .settings-btn {
     font-size: 4vh;
     fill: white;
@@ -34,6 +37,7 @@ body {
     filter: drop-shadow(0 0 16px cadetblue);
     margin: 0 4% 0 0;
 }
+
 .settings-btn:hover {
     filter: drop-shadow(0 0 16px powderblue);
 }
@@ -47,16 +51,19 @@ body {
     height: 4vh;
     margin-top: 1vh;
 }
+
 .users-btn {
     color: white;
     font-size: 5vh;
     cursor: pointer;
     margin-left: 12%;
 }
+
 .users-btn:hover {
     font-size: 6vh;
     text-shadow: 0 0 1em powderblue;
 }
+
 .main-header {
     cursor: default;
     color: white;
@@ -65,6 +72,7 @@ body {
     margin: 20vh 0 0 8vw;
     animation: pulse 1s infinite;
 }
+
 @keyframes pulse {
     0% {
         text-shadow: 0 0 0.8em cadetblue;
@@ -95,6 +103,7 @@ body {
     box-shadow: 0 0 16vw darkslategray;
     justify-content: center;
 }
+
 .main-content {
     height: 100vh;
     padding-left: 2vw;
@@ -103,6 +112,7 @@ body {
     justify-content: center;
     flex-direction: column;
 }
+
 .main-content-header {
     display: flex;
     justify-content: center;
@@ -110,29 +120,35 @@ body {
     font-size: 10vh;
     margin: 0 0 1vh 0;
 }
+
 .content-block {
     display: flex;
     flex-direction: column;
 }
+
 .main-row {
     width: 100%;
     text-align: left;
     font-size: 12vh;
 }
+
 .main-row:hover {
     text-shadow: 0 0 32px powderblue;
 }
+
 .main-btn {
     color: white;
     cursor: pointer;
     text-decoration: none;
 }
+
 .main-label-light {
     display: flex;
     color: white;
     font-size: 6vh;
     margin: 1vh 0;
 }
+
 .main-label-dark {
     display: flex;
     color: #111111;
@@ -140,6 +156,7 @@ body {
     font-size: 6vh;
     margin: 1vh 0;
 }
+
 .back-menu-btn {
     display: flex;
     justify-content: center;
@@ -149,6 +166,7 @@ body {
     margin: 2vh 0 4vh 0;
     cursor: pointer;
 }
+
 .back-menu-btn:hover {
     color: white;
 }
@@ -169,11 +187,13 @@ form {
     flex-direction: column;
     align-items: center;
 }
+
 .login-block {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
 .input-row {
     font-family: "One Stroke";
     width: 20vw;
@@ -184,10 +204,12 @@ form {
     border-radius: 1vh;
     margin: 2vh 0;
 }
+
 .input-row:focus {
     outline: none;
     box-shadow: 0 0 1em powderblue;
 }
+
 .invalid {
     box-shadow: 0 0 1em indianred;
     text-shadow: 0 0 0.5em indianred;
@@ -209,10 +231,17 @@ form {
     text-shadow: 0 0 0.5em cadetblue;
     cursor: pointer;
 }
+
 .enter-btn:hover {
     color: white;
+    outline: none;
+    border: none;
 }
 
+.enter-btn:focus {
+    outline: none;
+    border-width: 0;
+}
 /* ABOUT CONTENT */
 .main-row-about {
     width: 100%;
@@ -220,6 +249,7 @@ form {
     font-size: 6vh;
     text-decoration: none;
 }
+
 .main-row-about:hover {
     text-shadow: 0 0 1em powderblue;
 }

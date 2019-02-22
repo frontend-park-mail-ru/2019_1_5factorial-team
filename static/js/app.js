@@ -7,7 +7,7 @@ class Validator {
     constructor() {}
 
     /**
-     * valifateEmail - check validity of input email (using RegExp)
+     * validateEmail - check validity of input email (using RegExp)
      * @param {string} email
      * @return {boolean}
      */
@@ -23,7 +23,7 @@ class Validator {
     };
 
     /**
-     * valifateLogin - check validity of input login (only for length)
+     * validateLogin - check validity of input login (only for length)
      * @param {HTMLElement} myInput
      * @return {boolean}
      */
@@ -43,7 +43,7 @@ class Validator {
     };
 
     /**
-     * valifatePassword - check validity of input password (only for length)
+     * validatePassword - check validity of input password (only for length)
      * @param {HTMLElement} myInput
      * @return {boolean}
      */
@@ -63,7 +63,7 @@ class Validator {
     };
 
     /**
-     * valifateImage - check validity of input image
+     * validateImage - check validity of input image
      * @param {HTMLElement} myInput
      * @return {boolean}
      */
@@ -83,7 +83,7 @@ class Validator {
     };
 
     /**
-     * valifateRepeatPasswords - check validity of input passwords and compare them
+     * validateRepeatPasswords - check validity of input passwords and compare them
      * @param first
      * @param second
      * @return {boolean}
