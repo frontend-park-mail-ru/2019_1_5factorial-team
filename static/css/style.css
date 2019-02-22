@@ -188,14 +188,16 @@ form {
     outline: none;
     box-shadow: 0 0 1em powderblue;
 }
-.input-row:invalid:not(:placeholder-shown) {
+.invalid {
     box-shadow: 0 0 1em indianred;
     text-shadow: 0 0 0.5em indianred;
 }
-.input-row:valid {
+
+.valid {
     box-shadow: 0 0 1em lightgreen;
     text-shadow: 0 0 0.5em green;
 }
+
 .enter-btn {
     font-family: "One Stroke";
     width: 18vw;
