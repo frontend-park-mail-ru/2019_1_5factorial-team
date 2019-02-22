@@ -1,14 +1,14 @@
-const http = require('http'),
-      express = require('express'),
-      app = express(),
-      body = require('body-parser'),
-      multer = require('multer');  // @1.4.1
+const http = require('http');
+const express = require('express');
+const app = express();
+const body = require('body-parser');
+const multer = require('multer');  // @1.4.1
 
 app.use(body.json());
 http.createServer(app).listen(3000);
 console.log('Server started at' + ' http://127.0.0.1:3000');
 
-var storage = multer.diskStorage({
+const storage = multer.diskStorage({
     destination: function (req, file, callback) {
         callback(null, './static/avatars')
     },
@@ -17,8 +17,7 @@ var storage = multer.diskStorage({
     }
 });
 
-// var upload = multer({dest: './static/avatars'});
-var upload = multer({storage: storage});
+const upload = multer({storage: storage});
 
 let users = {
     'kek': {
@@ -68,10 +67,6 @@ app.get('/profile', (req, res) => {
 app.post('/avatar', (req, res) => {
     console.log('GET Avatar');
     console.log(req.headers);
-    let nick = req.body.nickname;
-    console.log(users);
-    console.log(req.body);
-    console.log(users[req.body.nickname].avatarLink);
 
     res.status(200).json(users[req.body.nickname].avatarLink);
 })
@@ -82,29 +77,19 @@ app.post('/profile', (req, res) => {
     console.log('POST Profile');
     console.log(req.headers);
 
-    console.log('---------');
     upload.single('avatar')(req, res, (err) => {
-        console.log(req.file);
-
         if (err instanceof multer.MulterError) {
             res.send("Multer error");
         } else if (err) {
             res.send("An unknown error occurred when uploading");
         }
 
-        console.log(req.body.nickname);
-        console.log(req.file.filename);
-
         // TODO(): проверка на существование пользователя
         users[req.body.nickname].avatarType = (req.file.mimetype === 'image/png') ? 'png' : 'jpeg';
-        users[req.body.nickname].avatarLink = ('./avatars/' + req.file.filename);
+        users[req.body.nickname].avatarLink = `./avatars/${req.file.filename}`;
 
-        console.log(users);
         res.status(200).json(users[req.body.nickname].avatarLink);
-
-        console.log('----end----');
     })
-    
 })
 
 app.get('/registration', (req, res) => {
