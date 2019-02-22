@@ -4,22 +4,7 @@ class Validator {
     /**
      * @return {boolean}
      */
-    constructor(user, pass) {
-        if (this.validateEmail(user)) {
-            if (this.validatePassword(pass)) {
-                alert('enter');
-                return true;
-            }
-        } else if (this.validateLogin(user)) {
-            if (this.validatePassword(pass)) {
-                alert('enter');
-                return true;
-            }
-        } else {
-            alert('ploho');
-            return false;
-        }
-    };
+    constructor() {}
 
     validateEmail = email => {
         const expression = new RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+[^<>()\.,;:\s@\"]{2,})$/);
@@ -90,16 +75,26 @@ class Validator {
         }
     };
 }
+// Temp DOM's elems for future validation!
+// const avatarInput = document.getElementsByClassName('js-avatar')[0];
+// const firstPassInput = document.getElementsByClassName('js-password')[0];
+// const secondPassInput = document.getElementsByClassName('js-password')[1];
 
-const submit = document.getElementsByName('submit')[0];
+const submit = document.getElementsByClassName('js-submit')[0];
 submit.addEventListener('click', (event) => {
     event.preventDefault();
-    const passInput = document.getElementsByName('password')[0];
-    const logInput = document.getElementsByName('login-or-email')[0];
-    const avatarInput = document.getElementsByName('avatar')[0];
-    const firstPassInput = document.getElementsByName('password')[0];
-    const secondPassInput = document.getElementsByName('password')[1];
+    const passInput = document.getElementsByClassName('js-password')[0];
+    const logInput = document.getElementsByClassName('js-login-or-email')[0];
 
-
-    const validate = new Validator(logInput, passInput);
+    const validate = new Validator();
+    const checkLogin = validate.validateLogin(logInput);
+    const checkPass = validate.validatePassword(passInput);
+    const checkEmail = validate.validateEmail(logInput);
+    if (checkLogin && checkPass) {
+        console.log('Success!');
+    } else if (checkEmail && checkPass) {
+        console.log('Success!');
+    } else {
+        console.log('Smth went wrong!');
+    }
 });
