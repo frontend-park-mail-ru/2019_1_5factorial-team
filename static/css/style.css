@@ -3,6 +3,7 @@
     font-family: "One Stroke";
     src: url("../fonts/14392.otf");
 }
+
 body {
     font-family: "One Stroke";
     background-image: url('../img/2.png');
@@ -13,6 +14,7 @@ body {
     height: 100vh;
     text-shadow: 0 0 1em cadetblue;
 }
+
 .container {
     margin: 0;
     display: flex;
@@ -27,6 +29,7 @@ body {
     width: 6vw;
     margin: 1vh 1vw 0 1vw;
 }
+
 .settings-btn {
     font-size: 4vh;
     fill: white;
@@ -34,6 +37,7 @@ body {
     filter: drop-shadow(0 0 16px cadetblue);
     margin: 0 4% 0 0;
 }
+
 .settings-btn:hover {
     filter: drop-shadow(0 0 16px powderblue);
 }
@@ -47,16 +51,19 @@ body {
     height: 4vh;
     margin-top: 1vh;
 }
+
 .users-btn {
     color: white;
     font-size: 5vh;
     cursor: pointer;
     margin-left: 12%;
 }
+
 .users-btn:hover {
     font-size: 6vh;
     text-shadow: 0 0 1em powderblue;
 }
+
 .main-header {
     cursor: default;
     color: white;
@@ -65,6 +72,7 @@ body {
     margin: 20vh 0 0 8vw;
     animation: pulse 1s infinite;
 }
+
 @keyframes pulse {
     0% {
         text-shadow: 0 0 0.8em cadetblue;
@@ -95,6 +103,7 @@ body {
     box-shadow: 0 0 16vw darkslategray;
     justify-content: center;
 }
+
 .main-content {
     height: 100vh;
     padding-left: 2vw;
@@ -103,6 +112,7 @@ body {
     justify-content: center;
     flex-direction: column;
 }
+
 .main-content-header {
     display: flex;
     justify-content: center;
@@ -110,29 +120,35 @@ body {
     font-size: 10vh;
     margin: 0 0 1vh 0;
 }
+
 .content-block {
     display: flex;
     flex-direction: column;
 }
+
 .main-row {
     width: 100%;
     text-align: left;
     font-size: 12vh;
 }
+
 .main-row:hover {
     text-shadow: 0 0 32px powderblue;
 }
+
 .main-btn {
     color: white;
     cursor: pointer;
     text-decoration: none;
 }
+
 .main-label-light {
     display: flex;
     color: white;
     font-size: 6vh;
     margin: 1vh 0;
 }
+
 .main-label-dark {
     display: flex;
     color: #111111;
@@ -140,6 +156,7 @@ body {
     font-size: 6vh;
     margin: 1vh 0;
 }
+
 .back-menu-btn {
     display: flex;
     justify-content: center;
@@ -149,15 +166,18 @@ body {
     margin: 2vh 0 4vh 0;
     cursor: pointer;
 }
+
 .back-menu-btn:hover {
     color: white;
 }
+
 .small-label-light {
     display: flex;
     color: white;
     text-shadow: 0 0 1em cadetblue;
     font-size: 4vh;
 }
+
 .small-btn-light {
     display: flex;
     color: white;
@@ -165,9 +185,11 @@ body {
     text-shadow: 0 0 1em cadetblue;
     cursor: pointer;
 }
+
 .small-btn-light:hover {
     text-shadow: 0 0 1em powderblue;
 }
+
 .small-btn-dark {
     display: flex;
     color: #111111;
@@ -175,6 +197,7 @@ body {
     text-shadow: 0 0 1em cadetblue;
     cursor: pointer;
 }
+
 .small-btn-dark:hover {
     color: white;
 }
@@ -190,100 +213,116 @@ body {
 }
 
 /* LOGIN AND SIGNUP CONTENT */
-  form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-  }
-  .login-block {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-  }
-  .signup-block {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-  }
-  .input-row {
-      font-family: "One Stroke";
-      width: 20vw;
-      height: 6vh;
-      font-size: 4vh;
-      border: none;
-      box-shadow: 0 0 1em cadetblue;
-      border-radius: 1vh;
-      margin: 0.5vh 0;
-      text-align: center;
-  }
-  .input-row:focus {
-      outline: none;
-      box-shadow: 0 0 1em powderblue;
-  }
-  .input-row:invalid:not(:placeholder-shown) {
-      box-shadow: 0 0 1em indianred;
-      text-shadow: 0 0 0.5em indianred;
-  }
-  .input-row:valid {
-      box-shadow: 0 0 1em lightgreen;
-  }
-  .enter-btn {
-      font-family: "One Stroke";
-      width: 18vw;
-      background: transparent;
-      border: none;
-      font-size: 10vh;
-      color: #111111;
-      margin-top: 6vh;
-      text-shadow: 0 0 0.5em cadetblue;
-      cursor: pointer;
-  }
-  .enter-btn:hover {
-      color: white;
-  }
-  .input-btn-photo input[type="file"] {
-      display: none;
-  }
-  .input-btn-photo {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      background: #111111;
-      width: 20vw;
-      height: 6vh;
-      font-size: 4vh;
-      margin: 2vh 0 0 0;
-      border-radius: 1vh;
-      box-shadow: 0 0 1em cadetblue;
-      cursor: pointer;
-  }
-  .input-btn-photo:hover {
-      box-shadow: 0 0 1em powderblue;
-  }
-  .input-btn-photo:focus {
-      outline: none;
-  }
-  .photo-info {
-      color: white;
-  }
-  .photo-btn {
-      cursor: pointer;
-  }
-  .photo-btn-label {
-      cursor: pointer;
-  }
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.signup-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-row {
+    font-family: "One Stroke";
+    width: 20vw;
+    height: 6vh;
+    font-size: 4vh;
+    border: none;
+    box-shadow: 0 0 1em cadetblue;
+    border-radius: 1vh;
+    margin: 0.5vh 0;
+    text-align: center;
+}
+
+.input-row:focus {
+    outline: none;
+    box-shadow: 0 0 1em powderblue;
+}
+
+.input-row:invalid:not(:placeholder-shown) {
+    box-shadow: 0 0 1em indianred;
+    text-shadow: 0 0 0.5em indianred;
+}
+
+.input-row:valid {
+    box-shadow: 0 0 1em lightgreen;
+}
+
+.enter-btn {
+    font-family: "One Stroke";
+    width: 18vw;
+    background: transparent;
+    border: none;
+    font-size: 10vh;
+    color: #111111;
+    margin-top: 6vh;
+    text-shadow: 0 0 0.5em cadetblue;
+    cursor: pointer;
+}
+
+.enter-btn:hover {
+    color: white;
+}
+
+.input-btn-photo input[type="file"] {
+    display: none;
+}
+
+.input-btn-photo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background: #111111;
+    width: 20vw;
+    height: 6vh;
+    font-size: 4vh;
+    margin: 2vh 0 0 0;
+    border-radius: 1vh;
+    box-shadow: 0 0 1em cadetblue;
+    cursor: pointer;
+}
+
+.input-btn-photo:hover {
+    box-shadow: 0 0 1em powderblue;
+}
+
+.input-btn-photo:focus {
+    outline: none;
+}
+
+.photo-info {
+    color: white;
+}
+
+.photo-btn {
+    cursor: pointer;
+}
+
+.photo-btn-label {
+    cursor: pointer;
+}
 
 /* ABOUT CONTENT */
-  .main-row-about {
-      width: 100%;
-      text-align: left;
-      font-size: 6vh;
-      text-decoration: none;
-  }
-  .main-row-about:hover {
-      text-shadow: 0 0 1em powderblue;
-  }
+.main-row-about {
+    width: 100%;
+    text-align: left;
+    font-size: 6vh;
+    text-decoration: none;
+}
+
+.main-row-about:hover {
+    text-shadow: 0 0 1em powderblue;
+}
 
 /* PROFILE CONTENT */
 .avatar-img {
@@ -292,15 +331,18 @@ body {
     border-radius: 6em;
     filter: drop-shadow(0 0 1em darkslategray);
 }
+
 .profile-avatar-block {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
+
 .change-btn-photo input[type="file"] {
     display: none;
 }
+
 .change-btn-photo {
     display: inline-flex;
     justify-content: center;
@@ -312,12 +354,21 @@ body {
     cursor: pointer;
     text-shadow: 0 0 1em cadetblue;
 }
+
 .change-btn-label {
     cursor: pointer;
 }
+
 .change-btn-photo:hover {
     text-shadow: 0 0 1em powderblue;
 }
+
+.login-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .main-profile-block {
     display: flex;
     flex-direction: column;
@@ -325,16 +376,19 @@ body {
     justify-content: center;
     margin: 1vh 0;
 }
+
 .profile-block {
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin: 2vh;
 }
-.profile-subblock{
+
+.profile-subblock {
     display: flex;
     flex-direction: column;
 }
+
 .profile-row {
     width: 20vw;
     height: 6vh;
@@ -346,17 +400,73 @@ body {
     border-radius: 1vh;
     margin: 2vh 0;
 }
+
+.input-row:focus {
+    outline: none;
+    box-shadow: 0 0 1em powderblue;
+}
+
+.invalid {
+    box-shadow: 0 0 1em indianred;
+    text-shadow: 0 0 0.5em indianred;
+}
+
+.valid {
+    box-shadow: 0 0 1em lightgreen;
+    text-shadow: 0 0 0.5em green;
+}
+
+.enter-btn {
+    font-family: "One Stroke";
+    width: 18vw;
+    background: transparent;
+    border: none;
+    font-size: 10vh;
+    color: #111111;
+    margin-top: 8vh;
+    text-shadow: 0 0 0.5em cadetblue;
+    cursor: pointer;
+}
+
+.enter-btn:hover {
+    color: white;
+    outline: none;
+    border: none;
+}
+
 .profile-subblock-row {
     display: flex;
     flex-direction: row;
     margin: 1vh 0;
 }
+
 .profile-balance {
     color: white;
 }
+
 .profile-score {
     color: white;
+    outline: none;
+    border: none;
 }
+
+.enter-btn:focus {
+    outline: none;
+    border-width: 0;
+}
+
+/* ABOUT CONTENT */
+.main-row-about {
+    width: 100%;
+    text-align: left;
+    font-size: 6vh;
+    text-decoration: none;
+}
+
+.main-row-about:hover {
+    text-shadow: 0 0 1em powderblue;
+}
+
 .actions-block {
     display: flex;
     flex-direction: column;
@@ -364,6 +474,7 @@ body {
     align-items: center;
     margin-top: 2vh;
 }
+
 .actions-subblock-row {
     cursor: pointer;
     display: flex;
