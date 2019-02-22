@@ -11,9 +11,9 @@
   },
   "devDependencies": {},
   "scripts": {
-    "lint": "eslint --debug 2019_1_5factorial-team/",
-    "lint:write": "eslint --debug 2019_1_5factorial-team/ --fix",
-    "prettier": "prettier --write 2019_1_5factorial-team/**/*.js"
+    "lint": "eslint --debug ",
+    "lint:write": "eslint --debug  --fix",
+    "prettier": "prettier --write **/*.js"
   },
   "husky": {
     "hooks": {
