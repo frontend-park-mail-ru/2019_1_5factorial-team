@@ -3,7 +3,7 @@
       "precommit": "lint-staged"
     },
     "lint-staged": {
-      "src/**/*.{ts,tsx}": [
+      "2019_1_5factorial-team/**/*.{ts,tsx,js}": [
         "prettier --write",
         "tslint --fix",
         "git add"

@@ -9,7 +9,7 @@ console.log('Server started at' + ' http://127.0.0.1:3000');
 app.get('/', (req, res) => {
     res.sendFile('./static/index.html', {root: __dirname});
     console.log('GET index');
-})  ;
+}            );
 
 app.get('/login', (req, res) => {
     res.sendFile('./static/login.html', {root: __dirname});
