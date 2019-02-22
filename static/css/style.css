@@ -361,4 +361,5 @@ form {
     display: flex;
     flex-direction: row;
     margin: 1vh 0;
+    text-decoration: none;
 }
