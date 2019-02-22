@@ -13,7 +13,7 @@ function ajax (callback, method, path, body) {
 	xhr.withCredentials = true;
 
 	if (body) {
-		xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+		// xhr.setRequestHeader('Content-Type', 'multipart/form-data; boundary=--------------------------858107428410713176554953;');
 	}
 
 	xhr.onreadystatechange = function () {
@@ -25,7 +25,9 @@ function ajax (callback, method, path, body) {
 	};
 
 	if (body) {
-		xhr.send(JSON.stringify(body));
+        // debugger;
+        xhr.send(body);
+        
 	} else {
 		xhr.send();
 	}
@@ -49,9 +51,11 @@ submitUpload.addEventListener('click', (event) => {
     let formData = new FormData();
     formData.append('avatar', userAvatar);
 
-    console.log(formData);
+    console.log(formData.get('avatar'));
 
-    ajax(() => {}, 'POST', '/profile', {avatar: userAvatar});
+    // debugger;
+
+    ajax(() => {}, 'POST', '/profile', formData);
 
     // alert('111');
 });

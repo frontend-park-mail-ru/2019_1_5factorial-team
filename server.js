@@ -2,7 +2,7 @@ const http = require('http'),
       express = require('express'),
       app = express(),
       body = require('body-parser'),
-      multer  = require('multer');  // @1.4.1
+      multer = require('multer');  // @1.4.1
 
 app.use(body.json());
 http.createServer(app).listen(3000);
@@ -83,6 +83,7 @@ app.get('/profile', (req, res) => {
 
 app.post('/profile', upload.single('avatar'),  (req, res) => {
     console.log('POST Profile');
+    console.log(req.headers);
     console.log('---------');
     console.log(req.file);
     console.log('----end----');
