@@ -152,7 +152,6 @@ body {
 .back-menu-btn:hover {
     color: white;
 }
-
 .small-label-light {
     display: flex;
     color: white;
@@ -180,7 +179,6 @@ body {
     color: white;
 }
 
-
 /* MENU CONTENT */
 .menu-content {
     padding-left: 2vw;
@@ -191,94 +189,101 @@ body {
     flex-direction: column;
 }
 
-/* LOGIN CONTENT */
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.login-block {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.input-row {
-    font-family: "One Stroke";
-    width: 20vw;
-    height: 6vh;
-    font-size: 4vh;
-    border: none;
-    box-shadow: 0 0 1em cadetblue;
-    border-radius: 1vh;
-    margin: 2vh 0;
-}
-.input-row:focus {
-    outline: none;
-    box-shadow: 0 0 1em powderblue;
-}
-.input-row:invalid:not(:placeholder-shown) {
-    box-shadow: 0 0 1em indianred;
-    text-shadow: 0 0 0.5em indianred;
-}
-.input-row:valid {
-    box-shadow: 0 0 1em lightgreen;
-    text-shadow: 0 0 0.5em green;
-}
-.enter-btn {
-    font-family: "One Stroke";
-    width: 18vw;
-    background: transparent;
-    border: none;
-    font-size: 10vh;
-    color: #111111;
-    margin-top: 8vh;
-    text-shadow: 0 0 0.5em cadetblue;
-    cursor: pointer;
-}
-.enter-btn:hover {
-    color: white;
-}
-
-.input-btn-photo input[type="file"] {
-    display: none;
-}
-.input-btn-photo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    background: #111111;
-    width: 20vw;
-    height: 6vh;
-    font-size: 4vh;
-    margin: 2vh 0 0 0;
-    border-radius: 1vh;
-    box-shadow: 0 0 1em cadetblue;
-    cursor: pointer;
-}
-.input-btn-photo:hover {
-    box-shadow: 0 0 1em powderblue;
-}
-.input-btn-photo:focus {
-    outline: none;
-}
-.photo-btn {
-    cursor: pointer;
-}
-.photo-btn-label {
-    cursor: pointer;
-}
+/* LOGIN AND SIGNUP CONTENT */
+  form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  }
+  .login-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  }
+  .signup-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  }
+  .input-row {
+      font-family: "One Stroke";
+      width: 20vw;
+      height: 6vh;
+      font-size: 4vh;
+      border: none;
+      box-shadow: 0 0 1em cadetblue;
+      border-radius: 1vh;
+      margin: 0.5vh 0;
+      text-align: center;
+  }
+  .input-row:focus {
+      outline: none;
+      box-shadow: 0 0 1em powderblue;
+  }
+  .input-row:invalid:not(:placeholder-shown) {
+      box-shadow: 0 0 1em indianred;
+      text-shadow: 0 0 0.5em indianred;
+  }
+  .input-row:valid {
+      box-shadow: 0 0 1em lightgreen;
+  }
+  .enter-btn {
+      font-family: "One Stroke";
+      width: 18vw;
+      background: transparent;
+      border: none;
+      font-size: 10vh;
+      color: #111111;
+      margin-top: 6vh;
+      text-shadow: 0 0 0.5em cadetblue;
+      cursor: pointer;
+  }
+  .enter-btn:hover {
+      color: white;
+  }
+  .input-btn-photo input[type="file"] {
+      display: none;
+  }
+  .input-btn-photo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      background: #111111;
+      width: 20vw;
+      height: 6vh;
+      font-size: 4vh;
+      margin: 2vh 0 0 0;
+      border-radius: 1vh;
+      box-shadow: 0 0 1em cadetblue;
+      cursor: pointer;
+  }
+  .input-btn-photo:hover {
+      box-shadow: 0 0 1em powderblue;
+  }
+  .input-btn-photo:focus {
+      outline: none;
+  }
+  .photo-info {
+      color: white;
+  }
+  .photo-btn {
+      cursor: pointer;
+  }
+  .photo-btn-label {
+      cursor: pointer;
+  }
 
 /* ABOUT CONTENT */
-.main-row-about {
-    width: 100%;
-    text-align: left;
-    font-size: 6vh;
-    text-decoration: none;
-}
-.main-row-about:hover {
-    text-shadow: 0 0 1em powderblue;
-}
+  .main-row-about {
+      width: 100%;
+      text-align: left;
+      font-size: 6vh;
+      text-decoration: none;
+  }
+  .main-row-about:hover {
+      text-shadow: 0 0 1em powderblue;
+  }
 
 /* PROFILE CONTENT */
 .avatar-img {
@@ -364,9 +369,5 @@ form {
     display: flex;
     flex-direction: row;
     margin: 1vh 0;
-<<<<<<< HEAD
     text-decoration: none;
-=======
-
->>>>>>> f8e88f3229427fb6e8621d322e265ddbc5a2a713
 }
