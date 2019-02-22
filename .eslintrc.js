@@ -20,36 +20,5 @@ module.exports = {
             jsx: true
         }
     },
-    rules: {
-        "indent": [
-            "error",
-            4,
-            { "SwitchCase": 1 }
-        ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
-        "quotes": [
-            "warn",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ],
-        "no-console": [
-            "off"
-        ],
-        "no-useless-escape": [
-            "off"
-        ],
-        "keyword-spacing": [
-            "error"
-        ],
-        "space-before-blocks": 
-        [
-            "error"
-        ]
-    }
+    rules: {}
 };
