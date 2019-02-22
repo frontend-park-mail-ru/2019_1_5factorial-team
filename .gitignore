@@ -8,6 +8,10 @@
 !.vscode/launch.json
 !.vscode/extensions.json
 
+.idea
+package.json
+package-lock.json
+
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
