@@ -68,6 +68,12 @@ app.post('/avatar', (req, res) => {
     console.log('GET Avatar');
     console.log(req.headers);
 
+    // user not found
+    if (users[req.body.nickname] === undefined) {
+        res.status(400).json({error: "user not found"});
+        return;
+    }
+
     res.status(200).json(users[req.body.nickname].avatarLink);
 })
 
@@ -84,7 +90,12 @@ app.post('/profile', (req, res) => {
             res.send("An unknown error occurred when uploading");
         }
 
-        // TODO(): проверка на существование пользователя
+        // user not found
+        if (users[req.body.nickname] === undefined) {
+            res.status(400).json({error: "user not found"});
+            return;
+        }
+
         users[req.body.nickname].avatarType = (req.file.mimetype === 'image/png') ? 'png' : 'jpeg';
         users[req.body.nickname].avatarLink = `./avatars/${req.file.filename}`;
 

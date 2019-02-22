@@ -36,34 +36,34 @@ function ajax (callback, method, path, body, isFile) {
 }
 
 submitUpload.addEventListener('click', (event) => {
-    // console.log(event);
     event.preventDefault();
 
-    let userAvatar = document.getElementsByClassName('photo-input')[0].files[0];
-    console.log(userAvatar)
+    const userAvatar = document.getElementsByClassName('photo-input')[0].files[0];
 
     // pseudoValidation (kek)
-    console.log(userAvatar.type);
+    if ((userAvatar.type !== "image/png") && (userAvatar.type !== "image/jpeg")) {
+        alert('only jpeg or png photos!!');
+        return;
+    }
 
-    // if (userAvatar.type !== 'image/png' || userAvatar.type !== 'image/jpeg') {
-    //     alert('ti debil tol`ko png ili jpeg');
-    //     return;
-    // }
-    let nickname = 'kek';
+    let nickname = 'kek1';
 
     let formData = new FormData();
     formData.append('avatar', userAvatar);
     formData.append('nickname', nickname);
-
-    console.log(formData.get('avatar'));
 
     ajax((xhr) => {
         let img_container = document.getElementById('album');
 
         const source = JSON.parse(xhr.responseText);
         const image = document.createElement('IMG');
+
+        // checking returned error
+        if (source.error !== undefined) {
+            return;
+        }
+
         image.src = source;
-        console.log(source);
         img_container.appendChild(image);
     }, 'POST', '/profile', formData, true);
 });
@@ -74,12 +74,10 @@ function getUserAvatar(username) {
     let formData = new FormData();
     formData.append('nickname', username);
 
-    // debugger;
     ajax((xhr) => {
         const source = JSON.parse(xhr.responseText);
         const image = document.createElement('IMG');
         image.src = source;
-        console.log(source);
         img_container.appendChild(image);
     }, 'POST', '/avatar', {
         nickname: username,
