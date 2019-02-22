@@ -8,6 +8,6 @@
     }
   },
   "devDependencies": {
-    "lint-staged": "^8.1.4"
+    "lint-staged": {"*.js": ["eslint --fix", "git add"]}
   }
 }
