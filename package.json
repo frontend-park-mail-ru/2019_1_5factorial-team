@@ -1,13 +1,12 @@
 {
-  "husky": {
-    "hooks": {
-        "pre-commit": "lint-staged",
-      "pre-push": "npm test",
-      
-      "...": "..."
+    "scripts": {
+      "precommit": "lint-staged"
+    },
+    "lint-staged": {
+      "src/**/*.{ts,tsx}": [
+        "prettier --write",
+        "tslint --fix",
+        "git add"
+      ]
     }
-  },
-  "devDependencies": {
-    "lint-staged": {"*.js": ["eslint --fix", "git add"]}
   }
-}
