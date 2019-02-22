@@ -27,7 +27,7 @@ let users = {
 		age: 1,
         score: 100500,
         avatarType: 'jpg',
-        avatarLink: `./static/avatars/default.jpg`
+        avatarLink: `./avatars/default.jpg`
     }, 
     'lol': {
         email: 'lol.l.ol',
@@ -35,7 +35,7 @@ let users = {
 		age: 1,
         score: 100500,
         avatarType: 'jpg',
-        avatarLink: `./static/avatars/default.jpg`
+        avatarLink: `./avatars/default.jpg`
     }, 
 };
 
@@ -61,11 +61,20 @@ app.get('/leaderboard', (req, res) => {
 
 app.get('/profile', (req, res) => {
     res.sendFile('./static/Profile.html', {root: __dirname});
-    // res.sendFile(users['kek'].avatarLink, {root: __dirname});
-    console.log('GET Profile');
 
-    // res.end();
+    console.log('GET Profile');
 });
+
+app.post('/avatar', (req, res) => {
+    console.log('GET Avatar');
+    console.log(req.headers);
+    let nick = req.body.nickname;
+    console.log(users);
+    console.log(req.body);
+    console.log(users[req.body.nickname].avatarLink);
+
+    res.status(200).json(users[req.body.nickname].avatarLink);
+})
 
 // имя пользователя передается в Form-Data по ключу 'nickname'
 // в будущем перекатиться на куку
@@ -88,10 +97,10 @@ app.post('/profile', (req, res) => {
 
         // TODO(): проверка на существование пользователя
         users[req.body.nickname].avatarType = (req.file.mimetype === 'image/png') ? 'png' : 'jpeg';
-        users[req.body.nickname].avatarLink = req.file.filename;
+        users[req.body.nickname].avatarLink = ('./avatars/' + req.file.filename);
 
         console.log(users);
-        res.send("OK");
+        res.status(200).json(users[req.body.nickname].avatarLink);
 
         console.log('----end----');
     })
