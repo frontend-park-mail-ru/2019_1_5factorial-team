@@ -8,6 +8,8 @@ app.use(body.json());
 http.createServer(app).listen(3000);
 console.log('Server started at' + ' http://127.0.0.1:3000');
 
+// сохраняет файлы по пути './static/avatars' 
+// с имененем file.fieldname + '-' + Date.now() + тип файла
 const storage = multer.diskStorage({
     destination: function (req, file, callback) {
         callback(null, './static/avatars')
@@ -19,6 +21,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage: storage});
 
+// пользователи
 let users = {
     'kek': {
         email: 'kek.k.ek',
@@ -64,6 +67,7 @@ app.get('/profile', (req, res) => {
     console.log('GET Profile');
 });
 
+// отправка картинки пользователя
 app.post('/avatar', (req, res) => {
     console.log('GET Avatar');
     console.log(req.headers);
@@ -77,6 +81,7 @@ app.post('/avatar', (req, res) => {
     res.status(200).json(users[req.body.nickname].avatarLink);
 })
 
+// обновляет аватарку пользователя
 // имя пользователя передается в Form-Data по ключу 'nickname'
 // в будущем перекатиться на куку
 app.post('/profile', (req, res) => {

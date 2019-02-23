@@ -1,12 +1,17 @@
 // kek
 'use strict';
 
-const app = document.getElementById('app');
-
-const inputPhotoForm = document.getElementById('upload-photo');
-
 const submitUpload = document.getElementsByClassName('btn btn-default')[0];
 
+/**
+ * Отправляет асинхронный запрос на сервер
+ * 
+ * @param {*} callback - функция, выполняющаяся после ответа сервера на запрос
+ * @param {*} method - POST/GET
+ * @param {*} path - куда идет запрос
+ * @param {*} body - тело запроса
+ * @param {*} isFile - если true - не ставит хэдр и не оборачивает тело запроса
+ */
 function ajax (callback, method, path, body, isFile) {
 	const xhr = new XMLHttpRequest();
 	xhr.open(method, path, true);
@@ -35,6 +40,9 @@ function ajax (callback, method, path, body, isFile) {
 	}
 }
 
+// загрузка картинки на сервер для полтзователя с ником nickname (в теле функции)
+// через FormData, есть проверка на png/jpeg
+// в случае удачи, получает новую картинку пользователя и кладет ее в img_container
 submitUpload.addEventListener('click', (event) => {
     event.preventDefault();
 
@@ -68,15 +76,28 @@ submitUpload.addEventListener('click', (event) => {
     }, 'POST', '/profile', formData, true);
 });
 
+/**
+ * Получает асинхронно аватарку пользователя
+ *
+ * @param {*} username - ник пользователя
+ */
 function getUserAvatar(username) {
+    // кладет новую фотку в контейнер
     let img_container = document.getElementById('album');
 
     let formData = new FormData();
     formData.append('nickname', username);
 
     ajax((xhr) => {
+        // создание элемента img в img_container
         const source = JSON.parse(xhr.responseText);
         const image = document.createElement('IMG');
+
+        // checking returned error
+        if (source.error !== undefined) {
+            return;
+        }
+
         image.src = source;
         img_container.appendChild(image);
     }, 'POST', '/avatar', {
