@@ -12,6 +12,7 @@ package-lock.json
 .DS_Store
 */.DS_Store
 
+package.json
 
 # User-specific stuff
 .idea/**/workspace.xml
