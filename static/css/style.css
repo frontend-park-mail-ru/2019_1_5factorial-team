@@ -16,10 +16,7 @@ body {
 }
 
 .container {
-    margin: 0;
     display: flex;
-    flex-direction: row;
-    height: 100vh;
 }
 
 /* block with sound and info icons */
@@ -481,4 +478,48 @@ form {
     flex-direction: row;
     margin: 1vh 0;
     text-decoration: none;
+}
+
+/*  DYNAMIC ITEMS CONTENT */
+.notification {
+    position: fixed;
+    height: 100vh;
+    width: 40%;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+.notification-block {
+    display: flex;
+    align-items: center;
+    background-color: #111111;
+    width: 100%;
+    height: 100vh;
+    opacity: .9;
+    box-shadow: 0 0 28vh darkslategray;
+    flex-direction: column;
+}
+.close-btn {
+    height: 2em;
+    width: 2em;
+    fill: white;
+    margin: 1em 1em;
+    margin-left: auto;
+    cursor: pointer;
+}
+.notification-head {
+    display: flex;
+    justify-content: center;
+    color: white;
+    font-size: 8vh;
+    margin-top: 2em;
+}
+.form {
+    margin-top: 4em;
+}
+.password-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
