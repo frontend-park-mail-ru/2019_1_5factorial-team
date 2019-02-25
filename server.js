@@ -97,9 +97,13 @@ app.post('/profile', (req, res) => {
 
         // user not found
         if (users[req.body.nickname] === undefined) {
+            console.log('\t{400} Error: user not found')
             res.status(400).json({error: "user not found"});
             return;
         }
+
+        console.log('req.files', req.file);
+        console.log('req.body.nickname', req.body.nickname);
 
         users[req.body.nickname].avatarType = (req.file.mimetype === 'image/png') ? 'png' : 'jpeg';
         users[req.body.nickname].avatarLink = `./avatars/${req.file.filename}`;
