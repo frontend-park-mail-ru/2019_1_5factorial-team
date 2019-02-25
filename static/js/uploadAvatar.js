@@ -44,10 +44,14 @@ function ajax (callback, method, path, body, isFile) {
 // через FormData, есть проверка на png/jpeg
 // в случае удачи, получает новую картинку пользователя и кладет ее в img_container
 submitUpload.addEventListener('click', (event) => {
-    event.preventDefault();
 
     const userAvatar = document.getElementsByClassName('js-change-image')[0].files[0];
 
+    // pseudoValidation (kek)
+    if ((userAvatar.type !== "image/png") && (userAvatar.type !== "image/jpeg")) {
+        alert('only jpeg or png photos!!');
+        return;
+    }
 
     let nickname = 'kek1';
 
@@ -93,7 +97,7 @@ function getUserAvatar(username) {
         }
 
         image.src = source;
-        // img_container.appendChild(image);
+        img_container.appendChild(image);
     }, 'POST', '/avatar', {
         nickname: username,
     }, false);
