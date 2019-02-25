@@ -51,9 +51,12 @@ submitUpload.addEventListener('click', (event) => {
     let formData = new FormData();
 
     if (validate.validateRepeatPasswords(firstPass, secondPass)) {
-        console.log('Changes applied');
+        console.log('Changes applied!');
         formData.append('password', password);
         formData.append('nickname', nickname);
+    } else {
+        console.log('Passwords dont match!');
+        return;
     }
 
     ajax((xhr) => {
