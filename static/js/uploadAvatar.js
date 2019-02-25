@@ -47,12 +47,6 @@ submitUpload.addEventListener('click', (event) => {
 
     const userAvatar = document.getElementsByClassName('js-change-image')[0].files[0];
 
-    // pseudoValidation (kek)
-    if ((userAvatar.type !== "image/png") && (userAvatar.type !== "image/jpeg")) {
-        alert('only jpeg or png photos!!');
-        return;
-    }
-
     let nickname = 'kek1';
 
     let formData = new FormData();
