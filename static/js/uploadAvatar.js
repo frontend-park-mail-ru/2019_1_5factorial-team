@@ -1,7 +1,7 @@
 // kek
 'use strict';
 
-const submitUpload = document.getElementsByClassName('btn btn-default')[0];
+const submitUpload = document.getElementsByClassName('small-btn-light')[0];
 
 /**
  * Отправляет асинхронный запрос на сервер
@@ -46,13 +46,8 @@ function ajax (callback, method, path, body, isFile) {
 submitUpload.addEventListener('click', (event) => {
     event.preventDefault();
 
-    const userAvatar = document.getElementsByClassName('photo-input')[0].files[0];
+    const userAvatar = document.getElementsByClassName('js-change-image')[0].files[0];
 
-    // pseudoValidation (kek)
-    if ((userAvatar.type !== "image/png") && (userAvatar.type !== "image/jpeg")) {
-        alert('only jpeg or png photos!!');
-        return;
-    }
 
     let nickname = 'kek1';
 
@@ -78,7 +73,6 @@ submitUpload.addEventListener('click', (event) => {
 
 /**
  * Получает асинхронно аватарку пользователя
- *
  * @param {*} username - ник пользователя
  */
 function getUserAvatar(username) {
@@ -99,7 +93,7 @@ function getUserAvatar(username) {
         }
 
         image.src = source;
-        img_container.appendChild(image);
+        // img_container.appendChild(image);
     }, 'POST', '/avatar', {
         nickname: username,
     }, false);
