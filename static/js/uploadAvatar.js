@@ -59,7 +59,7 @@ submitUpload.addEventListener('change', (event) => {
         return;
     }
 
-    let nickname = 'kek';
+    let nickname = 'pashaPidor';
 
     let formData = new FormData();
     formData.append('avatar', userAvatar);
@@ -91,13 +91,14 @@ submitUpload.addEventListener('change', (event) => {
  */
 function getUserAvatar(username) {
     // кладет новую фотку в контейнер
-    let img_container = document.getElementById('album');
 
     let formData = new FormData();
     formData.append('nickname', username);
 
     ajax((xhr) => {
         // создание элемента img в img_container
+        let img_container = document.getElementsByClassName('profile-avatar-block')[0];
+
         const source = JSON.parse(xhr.responseText);
         const image = document.createElement('IMG');
 
@@ -107,10 +108,12 @@ function getUserAvatar(username) {
         }
 
         image.src = source;
-        img_container.appendChild(image);
+        image.classList.add('avatar-img');
+        // img_container.appendChild(image);
+        img_container.replaceChild(image, document.getElementsByClassName('avatar-img')[0])
     }, 'POST', '/avatar', {
         nickname: username,
     }, false);
 }
 
-// getUserAvatar('kek');
+getUserAvatar('pashaPidor');
