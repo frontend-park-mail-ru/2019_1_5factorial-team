@@ -40,8 +40,6 @@ function ajax (callback, method, path, body, isFile) {
 	}
 }
 
-
-
 // загрузка картинки на сервер для полтзователя с ником nickname (в теле функции)
 // через FormData, есть проверка на png/jpeg
 // в случае удачи, получает новую картинку пользователя и кладет ее в img_container
@@ -50,8 +48,6 @@ submitUpload.addEventListener('change', (event) => {
     // debugger;
     const userAvatar = document.getElementsByClassName('js-change-image')[0].files[0];
     console.log(userAvatar);
-
-    // document.getElementsByClassName('profile-avatar-block')[0].removeChild(document.getElementsByClassName('avatar-img')[0]);
     
     // pseudoValidation (kek)
     if ((userAvatar.type !== "image/png") && (userAvatar.type !== "image/jpeg")) {
@@ -80,7 +76,8 @@ submitUpload.addEventListener('change', (event) => {
 
         image.src = source;
         image.classList.add('avatar-img');
-        // img_container.appendChild(image);
+
+        // заменяю текущую картинку у пользователя
         img_container.replaceChild(image, document.getElementsByClassName('avatar-img')[0])
     }, 'POST', '/profile', formData, true);
 });

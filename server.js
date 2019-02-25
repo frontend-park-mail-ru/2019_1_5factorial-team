@@ -102,8 +102,8 @@ app.post('/profile', (req, res) => {
             return;
         }
 
-        console.log('req.files', req.file);
-        console.log('req.body.nickname', req.body.nickname);
+        // console.log('req.files', req.file);
+        // console.log('req.body.nickname', req.body.nickname);
 
         users[req.body.nickname].avatarType = (req.file.mimetype === 'image/png') ? 'png' : 'jpeg';
         users[req.body.nickname].avatarLink = `./avatars/${req.file.filename}`;
