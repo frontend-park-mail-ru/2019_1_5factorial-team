@@ -13,47 +13,45 @@
 
 <body>
 <div class="container">
-    <div class="settings-block">
-        <div class="settings-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M6.937 1.291A1 1 0 0 1 8.642 2v12a1 1 0 0 1-1.697.717L3 11H1.25C.56 11 0 10.44 0 9.75v-3.5C0 5.56.56 5 1.25 5H3l3.937-3.709zM14.287 8a5.105 5.105 0 0 0-4.115-4.973l-.021-.007a.862.862 0 0 1 .507-1.646l.303.079A6.821 6.821 0 0 1 16 8a6.821 6.821 0 0 1-5.039 6.547l-.303.079a.861.861 0 0 1-.486-1.653A5.105 5.105 0 0 0 14.287 8zM11 8a1.812 1.812 0 0 0-.952-1.563l-.01-.008a.833.833 0 0 1 .939-1.369l.186.109A3.478 3.478 0 0 1 12.666 8a3.478 3.478 0 0 1-1.503 2.831l-.186.109a.832.832 0 0 1-.939-1.369l.01-.008c.558-.301.94-.887.952-1.563z"/>
-            </svg>
-        </div>
-        <div class="settings-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M8 0c4.415 0 8 3.585 8 8s-3.585 8-8 8-8-3.585-8-8 3.585-8 8-8zm1.331 12a.996.996 0 0 0 0-1.993h-.333v-3.25c0-.443-.239-.757-.68-.757H6.683a1.006 1.006 0 0 0 0 2.01h.312v1.997h-.341a.997.997 0 0 0 0 1.993h2.677zM8 2.658a1.342 1.342 0 1 1 0 2.684 1.342 1.342 0 0 1 0-2.684z"/>
-            </svg>
+    <div class="main-left-block">
+        <div class="settings-block">
+            <div class="settings-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="0.7em" height="0.7em" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M6.937 1.291A1 1 0 0 1 8.642 2v12a1 1 0 0 1-1.697.717L3 11H1.25C.56 11 0 10.44 0 9.75v-3.5C0 5.56.56 5 1.25 5H3l3.937-3.709zM14.287 8a5.105 5.105 0 0 0-4.115-4.973l-.021-.007a.862.862 0 0 1 .507-1.646l.303.079A6.821 6.821 0 0 1 16 8a6.821 6.821 0 0 1-5.039 6.547l-.303.079a.861.861 0 0 1-.486-1.653A5.105 5.105 0 0 0 14.287 8zM11 8a1.812 1.812 0 0 0-.952-1.563l-.01-.008a.833.833 0 0 1 .939-1.369l.186.109A3.478 3.478 0 0 1 12.666 8a3.478 3.478 0 0 1-1.503 2.831l-.186.109a.832.832 0 0 1-.939-1.369l.01-.008c.558-.301.94-.887.952-1.563z"/>
+                </svg>
+            </div>
+            <div class="settings-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="0.7em" height="0.7em" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0c4.415 0 8 3.585 8 8s-3.585 8-8 8-8-3.585-8-8 3.585-8 8-8zm1.331 12a.996.996 0 0 0 0-1.993h-.333v-3.25c0-.443-.239-.757-.68-.757H6.683a1.006 1.006 0 0 0 0 2.01h.312v1.997h-.341a.997.997 0 0 0 0 1.993h2.677zM8 2.658a1.342 1.342 0 1 1 0 2.684 1.342 1.342 0 0 1 0-2.684z"/>
+                </svg>
+            </div>
         </div>
     </div>
 
     <div class="main-container">
         <div class="main-content">
+            <a class="main-content-header">SIGN IN</a>
             <form class="form">
                 <div class="login-block">
-                    <label class="main-label-light">login/email</label>
+                    <label class="form-label">login/email</label>
                     <input class="input-row js-login-or-email" type="text" required name="login-or-email" placeholder=" ">
                 </div>
                 <div class="login-block">
-                    <label class="main-label-light">password</label>
+                    <label class="form-label">password</label>
                     <input class="input-row js-password" type="password" required name="password" placeholder=" ">
                 </div>
-                <input class="enter-btn js-submit" type="submit" name="submit" value="sign in">
+                <input class="enter-btn js-submit" type="submit" name="submit" value="let's go!">
                 <a class="back-menu-btn" href="">back to menu</a>
             </form>
         </div>
     </div>
 
-    <div class="main-header">
-        <a>THE GAME</a>
+    <div class="main-right-block">
+        <div class="users-block">
+            <a class="users-btn">Login</a>
+            <a class="users-btn">Signup</a>
+        </div>
     </div>
-
-    <div class="users-block">
-        <label class="users-btn">Login</label>
-        <label class="users-btn">Signup</label>
-    </div>
-
 </div>
-<audio src="" id="music" loop></audio>
 </body>
-<script src="./js/app.js"></script>
 </html>
