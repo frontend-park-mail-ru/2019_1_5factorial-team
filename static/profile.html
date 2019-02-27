@@ -33,12 +33,14 @@
             <div class="main-profile-block">
                 <div class="profile-avatar-block">
                     <img src="img/default.jpg" class="avatar-img">
-                    <div class="change-btn-photo">
-                        <label>
-                            <input type="file" name="avatar" class="photo-btn js-change-image" multiple accept="image/jpeg, image/png">
-                            <a class="small-btn">CHANGE IMAGE</a>
-                        </label>
-                    </div>
+                    <form class="js-upload-photo">
+                        <div class="change-btn-photo">
+                            <label>
+                                <input type="file" name="avatar" class="photo-btn js-change-image" multiple accept="image/jpeg, image/png"/>
+                                <div class="small-btn">CHANGE IMAGE</div>
+                            </label>
+                        </div>
+                    </form>
                 </div>
                 <div class="profile-block">
                     <div class="profile-subblock js-login-subblock">
@@ -79,4 +81,5 @@
     </div>
 </div>
 </body>
+<script src="./js/upload.js"></script>
 </html>

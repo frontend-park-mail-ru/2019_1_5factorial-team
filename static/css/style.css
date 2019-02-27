@@ -402,14 +402,11 @@ form {
 
 /*  DYNAMIC ITEMS CONTENT */
 .notification {
-    position: fixed;
-    height: 100vh;
-    /*width: 40%;*/
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
+    position: absolute;
+    top: 0;
+    margin-left: 50%;
     display: inline-flex;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, 0);
 }
 .notification-block {
     display: flex;
@@ -459,11 +456,29 @@ form {
 .leaders-table {
     font-family: Helvetica bold;
     font-size: 6vh;
-    width: 30vw;
     border-collapse: collapse;
     display: flex;
     justify-content: center;
+    flex-direction: row;
+    border: none;
+}
+.body-column {
+    display: flex;
     flex-direction: column;
+    align-items: center;
+    color: white;
+    margin: 4vh 4vw;
+    border
+}
+.column-header {
+    font-family: "One Stroke";
+    margin-bottom: 2vh;
+    text-shadow: 0 0 1em rgb(144,180,216);
+    border-bottom: 1px solid white;
+}
+li:nth-child(odd) {
+}
+li:nth-child(even){
 }
 .leaders-table-head {
     font-family: "One Stroke";
