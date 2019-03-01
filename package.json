@@ -2,43 +2,24 @@
   "name": "2019_1_5factorial-team",
   "version": "1.0.0",
   "description": "Репозиторий фронтенда",
-  "main": "./server.js",
-  "dependencies": {
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.14.1",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-config-jest-enzyme": "^7.0.1",
-    "eslint-plugin-jest": "^22.3.0",
-    "express": "^4.16.4",
-    "fest": "^0.12.1",
-    "fest-webpack-loader": "^1.1.1",
-    "husky": "^1.3.1",
-    "lint-staged": "^8.1.4",
-    "prettier": "^1.16.4"
-  },
+
+  "main": "server.js",
+  "dependencies": {},
   "devDependencies": {
-    "body-parser": "^1.18.3",
+    "husky": "^1.3.1",
+    "eslint": "^5.14.1",
+    "eslint-config-standard": "^12.0.0",
     "eslint-plugin-babel": "^5.3.0",
     "eslint-plugin-import": "^2.16.0",
-    "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-prettier": "^3.0.1",
-    "eslint-plugin-react": "^7.12.4",
-    "serviceworker-webpack-plugin": "^1.0.1",
-    "debug": "latest"
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0"
   },
   "scripts": {
-    "start": "node server",
-    "build-dev": "webpack --mode development",
-    "watch": "webpack-dev-server --output-public-path=/static",
-    "lint": "eslint --debug ",
-    "lint:write": "eslint --debug  --fix",
-    "prettier": "prettier --write **/*.js"
+    "lint-fix": "./node_modules/.bin/eslint --fix ."
   },
   "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm test"
-    }
+
   },
   "lint-staged": {
     "*.(js|jsx)": [
