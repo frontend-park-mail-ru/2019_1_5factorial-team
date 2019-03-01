@@ -1,5 +1,5 @@
 // kek
-'use strict';
+'use strict'
 
 const submitUpload = document.querySelector('.js-change-image');
 
@@ -42,12 +42,11 @@ function ajax (callback, method, path, body, isFile) {
 
 // загрузка картинки на сервер для полтзователя с ником nickname (в теле функции)
 // через FormData, есть проверка на png/jpeg
-// в случае удачи, получает новую картинку пользователя и кладет ее в img_container
+// в случае удачи, получает новую картинку пользователя и обновляет текущую (setUserAvatars)
 submitUpload.addEventListener('change', (event) => {
     event.preventDefault();
-    // debugger;
+
     const userAvatar = document.getElementsByClassName('js-change-image')[0].files[0];
-    console.log(userAvatar);
     
     // pseudoValidation (kek)
     if ((userAvatar.type !== "image/png") && (userAvatar.type !== "image/jpeg")) {
@@ -55,62 +54,52 @@ submitUpload.addEventListener('change', (event) => {
         return;
     }
 
-    let nickname = 'pashaPidor';
+    // nickname will get from cookie
+    // or id, will be decided when backend would be done
+    const nickname = 'kek';
 
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append('avatar', userAvatar);
     formData.append('nickname', nickname);
 
-    console.log(formData.get('avatar'));
-
     ajax((xhr) => {
-        let img_container = document.getElementsByClassName('profile-avatar-block')[0];
-
         const source = JSON.parse(xhr.responseText);
-        const image = document.createElement('IMG');
-
-        // checking returned error
-        if (source.error !== undefined) {
-            return;
-        }
-
-        image.src = source;
-        image.classList.add('avatar-img');
-
-        // заменяю текущую картинку у пользователя
-        img_container.replaceChild(image, document.getElementsByClassName('avatar-img')[0])
+        setUserAvatar(source)
     }, 'POST', '/profile', formData, true);
 });
 
 /**
  * Получает асинхронно аватарку пользователя
+ * 
  * @param {*} username - ник пользователя
  */
 function getUserAvatar(username) {
     // кладет новую фотку в контейнер
 
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append('nickname', username);
 
     ajax((xhr) => {
         // создание элемента img в img_container
-        let img_container = document.getElementsByClassName('profile-avatar-block')[0];
-
         const source = JSON.parse(xhr.responseText);
-        const image = document.createElement('IMG');
-
-        // checking returned error
-        if (source.error !== undefined) {
-            return;
-        }
-
-        image.src = source;
-        image.classList.add('avatar-img');
-        // img_container.appendChild(image);
-        img_container.replaceChild(image, document.getElementsByClassName('avatar-img')[0])
+        setUserAvatar(source)
     }, 'POST', '/avatar', {
         nickname: username,
     }, false);
 }
 
-getUserAvatar('pashaPidor');
+getUserAvatar('kek');
+
+/**
+ * получает сурс картинки и меняет src у current-avatar
+ * 
+ * @param {*} source - сурс новой автарки
+ * @returns
+ */
+function setUserAvatar(source) {
+    if (source.error !== undefined) {
+        return;
+    }
+    const current_avatar = document.querySelector('.avatar-img');
+    current_avatar.src = source
+}

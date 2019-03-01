@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 import Validator from './validation.js';
 
@@ -18,9 +18,7 @@ submitLogin.addEventListener('click', (event) => {
     const checkLogin = validate.validateLogin(logInput);
     const checkPass = validate.validatePassword(passInput);
     const checkEmail = validate.validateEmail(logInput);
-    if (checkLogin && checkPass) {
-        console.log('Success!');
-    } else if (checkEmail && checkPass) {
+    if (checkLogin && checkPass || checkEmail && checkPass) {
         console.log('Success!');
     } else {
         console.log('Smth went wrong!');
