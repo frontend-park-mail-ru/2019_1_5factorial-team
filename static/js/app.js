@@ -1,126 +1,51 @@
-'use strict';
+// import 'normalize.css';
+// import './css/style.css';
+import menuController from './controller/menuController.js';
+import Router from './libs/router.js';
+// import EventBus from './libs/event/eventbus.js';
+// import runtime from '/node_modules/serviceworker-webpack-plugin/lib/runtime.js';
 
-class Validator {
-    /**
-     * @return {boolean}
-     */
-    constructor() {}
+document.addEventListener('DOMContentLoaded', () => {
+  // if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost')) {
+  //     runtime.register();
+  // }
 
-    /**
-     * validateEmail - check validity of input email (using RegExp)
-     * @param {string} email
-     * @return {boolean}
-     */
-    validateEmail (email) {
-        const expression = new RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+[^<>()\.,;:\s@\"]{2,})$/);
-        const res = expression.test(email);
-        if (res) {
-            console.log('correct email!');
-            return true;
-        }
-        console.log('incorrect email!');
-        return false;
-    }
+  console.log('start');
+  const page = document.querySelector('.page');
+  createSiteModules(page);
+  const main = document.querySelector('.main');
+  // const header = document.querySelector('header');
 
-    /**
-     * validateLogin - check validity of input login (only for length)
-     * @param {HTMLElement} myInput
-     * @return {boolean}
-     */
-    validateLogin  (myInput)  {
-        const lengthOfLogin = myInput.value.length;
-        if (lengthOfLogin >= 6) {
-            myInput.classList.remove('invalid');
-            myInput.classList.add('valid');
-            console.log('correct login!');
-            return true;
-        } else {
-            myInput.classList.remove('valid');
-            myInput.classList.add('invalid');
-            console.log('incorrect login!');
-            return false;
-        }
-    }
+  const router = new Router(page);
 
-    /**
-     * validatePassword - check validity of input password (only for length)
-     * @param {HTMLElement} myInput
-     * @return {boolean}
-     */
-    validatePassword  (myInput)  {
-        const lengthOfPass = myInput.value.length;
-        if (lengthOfPass >= 4) {
-            myInput.classList.remove('invalid');
-            myInput.classList.add('valid');
-            console.log('correct password!');
-            return true;
-        } else {
-            myInput.classList.remove('valid');
-            myInput.classList.add('invalid');
-            console.log('incorrect password!');
-            return false;
-        }
-    }
+  // const globalEventBus = new EventBus(['ld', 'clh']);
 
-    /**
-     * validateImage - check validity of input image
-     * @param {HTMLElement} myInput
-     * @return {boolean}
-     */
-    validateImage  (myInput)  {
-        const typeOfImage = myInput.type;
-        if ((typeOfImage !== 'image/jpeg') || (typeOfImage !== 'image/png')) {
-            myInput.classList.remove('valid');
-            myInput.classList.add('invalid');
-            console.log('invalid format of image!');
-            return false;
-        } else {
-            myInput.classList.remove('invalid');
-            myInput.classList.add('valid');
-            console.log('valid format of image!');
-            return true;
-        }
-    }
+  // const headerBarController = new HeaderBarController({ globalEventBus, router });
+  // headerBarController.headerBarView.render(header);
 
-    /**
-     * validateRepeatPasswords - check validity of input passwords and compare them
-     * @param first
-     * @param second
-     * @return {boolean}
-     */
-    validateRepeatPasswords  (first, second)  {
-        const firstPass = first.value;
-        const secPass = second.value;
+  // const aboutController = new AboutController();
+  // const scoreboardController = new ScoreboardController();
+  const MenuController = new menuController();
+  // const signinController = new SigninController({ router, globalEventBus });
+  // const signupContoller = new SignupController({ router, globalEventBus });
+  // const profileControlleer = new ProfileController({ router, globalEventBus });
+  // const chatController = new ChatController({ router, globalEventBus });
+  // const gameController = new GameController({ router, globalEventBus });
 
-        if (firstPass !== secPass) {
-            console.log('Passwords not match!');
-            return false;
-        } else {
-            console.log('Passwords match!');
-            return true;
-        }
-    }
-}
-// Temp DOM's elems for future validation!
-// const avatarInput = document.getElementsByClassName('js-avatar')[0];
-// const firstPassInput = document.getElementsByClassName('js-password')[0];
-// const secondPassInput = document.getElementsByClassName('js-password')[1];
+  // router.add('/about', main, aboutController.aboutView);
+  // router.add('/leaderboard', main, scoreboardController.scoreboardView);
+  // router.add('/signin', main, signinController.signinView);
+  // router.add('/profile', main, profileControlleer.profileView);
+  // router.add('/signup', main, signupContoller.signupView);
+  router.add('/', main, MenuController.menuView);
+  // router.add('/multiplayer', main, gameController.multiplayerView);
+  // router.add('/singleplayer', main, gameController.singleplayerView);
+  // router.add('/chat', main, chatController.chatView);
 
-const submit = document.getElementsByClassName('js-submit')[0];
-submit.addEventListener('click', (event) => {
-    event.preventDefault();
-    const passInput = document.getElementsByClassName('js-password')[0];
-    const logInput = document.getElementsByClassName('js-login-or-email')[0];
-
-    const validate = new Validator();
-    const checkLogin = validate.validateLogin(logInput);
-    const checkPass = validate.validatePassword(passInput);
-    const checkEmail = validate.validateEmail(logInput);
-    if (checkLogin && checkPass) {
-        console.log('Success!');
-    } else if (checkEmail && checkPass) {
-        console.log('Success!');
-    } else {
-        console.log('Smth went wrong!');
-    }
+  // router.setNotFoundView(main, new NotFoundView());
+  router.start();
 });
+
+function createSiteModules(root) {
+  root.innerHTML = '<main class="main"></main>';
+}
