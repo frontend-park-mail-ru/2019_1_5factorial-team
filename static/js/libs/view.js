@@ -7,6 +7,7 @@ export default class View {
     this._eventBus = eventBus;
     this.prevRoot = null;
     this.closedView = false;
+    this.fest = window.fest[tmpl];
   }
 
   /**
@@ -24,8 +25,8 @@ export default class View {
     }
 
     // this.element.innerHTML = this.tmpl(data);
-    root.innerHTML = '';
-    root.appendChild(this.element);
+    root.innerHTML = this.fest();
+    // root.appendChild(this.element);
 
     return this;
   }

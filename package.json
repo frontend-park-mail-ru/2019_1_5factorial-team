@@ -27,11 +27,10 @@
     "eslint-plugin-standard": "^4.0.0"
   },
   "scripts": {
+    "build": "fest-build --dir=./static/js/view/menu",
     "lint-fix": "./node_modules/.bin/eslint --fix ."
   },
-  "husky": {
-
-  },
+  "husky": {},
   "lint-staged": {
     "*.(js|jsx)": [
       "git add"
