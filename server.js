@@ -123,7 +123,6 @@ const body = require('body-parser');
 const debug = require('debug');
 
 const log = debug('*');
-const pug = require('pug');
 const fs = require('fs');
 
 log('Starting server');

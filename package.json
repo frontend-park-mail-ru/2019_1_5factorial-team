@@ -2,7 +2,7 @@
   "name": "2019_1_5factorial-team",
   "version": "1.0.0",
   "description": "Репозиторий фронтенда",
-  "main": "server.js",
+  "main": "./server.js",
   "dependencies": {
     "babel-eslint": "^10.0.1",
     "eslint": "^5.14.1",
@@ -23,9 +23,13 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.4",
-    "serviceworker-webpack-plugin": "^1.0.1"
+    "serviceworker-webpack-plugin": "^1.0.1",
+    "debug": "latest"
   },
   "scripts": {
+    "start": "node server",
+    "build-dev": "webpack --mode development",
+    "watch": "webpack-dev-server --output-public-path=/static",
     "lint": "eslint --debug ",
     "lint:write": "eslint --debug  --fix",
     "prettier": "prettier --write **/*.js"
