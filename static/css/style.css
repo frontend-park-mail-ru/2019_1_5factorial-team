@@ -14,6 +14,7 @@ body {
     display: flex;
     flex-direction: row;
     width: 100%;
+    user-select: none;
 }
 
 /* SOUND AND INFO BLOCK */
@@ -24,6 +25,7 @@ body {
     justify-content: space-between;
     align-items: center;
     margin: 0 1vw;
+    z-index: 0;
 }
 .settings-btn {
     font-size: 6vh;
@@ -32,7 +34,7 @@ body {
     margin: 0 10% 0 0;
 }
 .settings-btn:hover {
-    filter: drop-shadow(0 0 1vh white);
+    filter: drop-shadow(0 0 1vh rgb(144,180,216));
 }
 
 /* SIGNIN AND SIGNUP BLOCK */
@@ -52,7 +54,7 @@ body {
 }
 .users-btn:hover {
     font-size: 6vh;
-    text-shadow: 0 0 1em white;
+    text-shadow: 0 0 0.5em rgb(144,180,216);
 }
 
 /* MENU BLOCK */
@@ -64,6 +66,7 @@ body {
     justify-content: center;
     height: 100vh;
     box-shadow: 0 0 4vh rgb(144,180,216);
+    margin-right: 4vw;
 }
 .menu-content {
     padding: 0 2vw;
@@ -93,39 +96,39 @@ body {
     text-shadow:  0 0 4vh rgb(144,180,216);
 }
 .main-header {
-    display: inline-flex;
-    justify-content: center;
-    height: 100%;
-    margin: 8vh 2vw 2vh 2vw;
-    cursor: default;
-    color: white;
+    display: flex;
+    margin: 25vh auto 0 auto;
     font-size: 22vh;
-    user-select: none;
     animation: pulse 1s infinite;
-}
-.game-name {
-    height: 1em;
-    margin: 1vh 1vw;
 }
 @keyframes pulse {
     0% {
-        text-shadow: 0 0 0.8em rgb(144,180,216);
-    }
-    20% {
         text-shadow: 0 0 0.7em rgb(144,180,216);
     }
+    20% {
+        text-shadow: 0 0 0.6em rgb(144,180,216);
+    }
     40% {
-        text-shadow: 0 0 0.9em rgb(144,180,216);
+        text-shadow: 0 0 0.5em rgb(144,180,216);
     }
     60% {
-        text-shadow: 0 0 0.8em rgb(144,180,216);
+        text-shadow: 0 0 0.6em rgb(144,180,216);
     }
     80% {
         text-shadow: 0 0 0.7em rgb(144,180,216);
     }
     100% {
-        text-shadow: 0 0 0.8em rgb(144,180,216);
+        text-shadow: 0 0 0.6em rgb(144,180,216);
     }
+}
+.game-name {
+    display: inline-flex;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+}
+.game-name:hover {
+    text-shadow: 0 0 0.5em rgb(144,180,216);
 }
 
 /* COMMON CONTENT */
@@ -462,13 +465,23 @@ form {
     flex-direction: row;
     border: none;
 }
-.body-column {
+.body-user-column {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     color: white;
-    margin: 4vh 4vw;
-    border
+    text-align: center;
+    margin-right: 2vw;
+}
+.body-score-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    margin-left: 2vw;
 }
 .column-header {
     font-family: "One Stroke";
@@ -480,27 +493,60 @@ li:nth-child(odd) {
 }
 li:nth-child(even){
 }
-.leaders-table-head {
-    font-family: "One Stroke";
+.paginator-block {
+    display: flex;
     color: white;
+    margin-top: 4vh;
+    font-size: 4vh;
+    border-radius: 1em;
+}
+.page-number-left {
+    display: flex;
+    font-size: 4vh;
+    line-height: 3vh;
+    font-family: "One Stroke";
+    padding: 0.4em;
+    color: white;
+    cursor: pointer;
+    border: none;
+    background-color: rgba(144,180,216, .4);
+    text-decoration: none;
+    border-radius: 1em 0 0 1em;
+}
+.page-number-left:hover {
     text-shadow: 0 0 1em rgb(144,180,216);
 }
-.table-row {
-    line-height: 8vh;
-    border: 1px solid rgb(144,180,216);
+.page-number {
+    font-size: 4vh;
+    line-height: 3vh;
+    padding: 0.4em;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.table-head-item {
-    text-align: center;
-    margin: 1vh 1vw;
-}
-.table-body-item {
-    text-align: center;
+    font-family: "One Stroke";
+    background-color: red;
+    text-decoration: none;
+    background-color: rgba(144,180,216, .4);
     color: white;
-    width: 50%;
-    margin: 0 4%;
+    cursor: pointer;
+    border: none;
+    border-left: 1px solid rgba(144,180,216, .3);
+}
+.page-number:hover {
+    text-shadow: 0 0 1em rgb(144,180,216);
+}
+.page-number-right {
     display: flex;
-    justify-content: center;
+    font-size: 4vh;
+    line-height: 3vh;
+    font-family: "One Stroke";
+    padding: 0.4em;
+    color: white;
+    cursor: pointer;
+    background-color: rgba(144,180,216, .4);
+    text-decoration: none;
+    border-radius: 0 1em 1em 0;
+    border: none;
+    border-left: 1px solid rgba(144,180,216, .3);
+}
+.page-number-right:hover {
+    text-shadow: 0 0 1em rgb(144,180,216);
 }
