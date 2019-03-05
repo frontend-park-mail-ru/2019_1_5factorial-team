@@ -8,78 +8,73 @@
     <link rel="shortcut icon" type="image/png" href="./img/test.png"/> <!--favicon 16x16-->
     <link rel="stylesheet" href="./css/reset.css"/>
     <link rel="stylesheet" href="./css/style.css"/>
+    <script src="./js/upload.js" defer></script>
     <title>Game</title>
 </head>
-
 <body>
 <div class="container">
-    <div class="main-left-block">
-        <div class="settings-block">
-            <div class="settings-btn">
+    <section class="left left_position-center">
+        <div class="settings">
+            <div class="settings__btn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="0.7em" height="0.7em" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M6.937 1.291A1 1 0 0 1 8.642 2v12a1 1 0 0 1-1.697.717L3 11H1.25C.56 11 0 10.44 0 9.75v-3.5C0 5.56.56 5 1.25 5H3l3.937-3.709zM14.287 8a5.105 5.105 0 0 0-4.115-4.973l-.021-.007a.862.862 0 0 1 .507-1.646l.303.079A6.821 6.821 0 0 1 16 8a6.821 6.821 0 0 1-5.039 6.547l-.303.079a.861.861 0 0 1-.486-1.653A5.105 5.105 0 0 0 14.287 8zM11 8a1.812 1.812 0 0 0-.952-1.563l-.01-.008a.833.833 0 0 1 .939-1.369l.186.109A3.478 3.478 0 0 1 12.666 8a3.478 3.478 0 0 1-1.503 2.831l-.186.109a.832.832 0 0 1-.939-1.369l.01-.008c.558-.301.94-.887.952-1.563z"/>
                 </svg>
             </div>
-            <div class="settings-btn">
+            <div class="settings__btn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="0.7em" height="0.7em" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M8 0c4.415 0 8 3.585 8 8s-3.585 8-8 8-8-3.585-8-8 3.585-8 8-8zm1.331 12a.996.996 0 0 0 0-1.993h-.333v-3.25c0-.443-.239-.757-.68-.757H6.683a1.006 1.006 0 0 0 0 2.01h.312v1.997h-.341a.997.997 0 0 0 0 1.993h2.677zM8 2.658a1.342 1.342 0 1 1 0 2.684 1.342 1.342 0 0 1 0-2.684z"/>
                 </svg>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div class="main-container">
-        <div class="main-content">
-            <div class="main-profile-block">
-                <div class="profile-avatar-block">
-                    <img src="img/default.jpg" class="avatar-img">
-                    <form class="js-upload-photo">
-                        <div class="change-btn-photo">
-                            <label>
-                                <input type="file" name="avatar" class="photo-btn js-change-image" multiple accept="image/jpeg, image/png"/>
-                                <div class="small-btn">CHANGE IMAGE</div>
-                            </label>
-                        </div>
-                    </form>
+    <main class="center">
+        <div class="content content_profile">
+            <div class="profile-avatar">
+                <img class="avatar-img" src="img/default.jpg">
+                <form class="form js-upload-photo">
+                    <div class="change-btn-photo">
+                        <label>
+                            <input class="btn photo-btn js-change-image" type="file" name="avatar" multiple accept="image/jpeg, image/png"/>
+                            <div class="btn profile__btn">CHANGE IMAGE</div>
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="profile-content">
+                <div class="unit unit_profile js-login-subblock">
+                    <h2 class="text-h2 unit__name">login</h2>
+                    <div class="unit_profile__row js-login-row"></div>
                 </div>
-                <div class="profile-block">
-                    <div class="profile-subblock js-login-subblock">
-                        <label class="small-label">login</label>
-                        <div class="profile-row js-login-row"></div>
-                    </div>
-                    <div class="profile-subblock js-email-subblock">
-                        <label class="small-label">email</label>
-                        <div class="profile-row js-email-row"></div>
-                    </div>
-                    <div class="profile-subblock-row js-balance-subblock">
-                        <label class="small-label">balance:</label>
-                        <div class="profile-balance js-balance-row"></div>
-                    </div>
-                    <div class="profile-subblock-row js-score-subblock">
-                        <label class="small-label">score:</label>
-                        <div class="profile-score js-score-row"></div>
-                    </div>
-                    <div class="actions-block">
-                        <div class="actions-subblock-row">
-                            <button class="small-btn js-change-password">CHANGE PASSWORD</button>
-                        </div>
-                        <div class="actions-subblock-row">
-                            <button class="small-btn js-delete-profile">DELETE PROFILE</button>
-                        </div>
-                    </div>
+                <div class="unit unit_profile js-email-subblock">
+                    <h2 class="text-h2 unit__name">email</h2>
+                    <div class="unit_profile__row js-email-row"></div>
+                </div>
+                <div class="unit unit_profile unit_profile_line js-balance-subblock">
+                    <h2 class="text-h2 unit__name">balance:</h2>
+                    <div class="unit_profile__balance js-balance-row"></div>
+                </div>
+                <div class="unit unit_profile unit_profile_line js-score-subblock">
+                    <h2 class="text-h2 unit__name">score:</h2>
+                    <div class="unit_profile__score js-score-row"></div>
                 </div>
             </div>
-            <a class="back-menu-btn" href="">back to menu</a>
+            <div class="profile-actions">
+                <button class="btn profile__btn profile__btn_action js-change-password">CHANGE PASSWORD</button>
+                <button class="btn profile__btn profile__btn_action js-delete-profile">DELETE PROFILE</button>
+            </div>
+            <div>
+                <a class="btn btn_back-menu" href="">back to menu</a>
+            </div>
         </div>
-    </div>
+    </main>
 
-    <div class="main-right-block">
-        <div class="users-block">
-            <a class="users-btn">Login</a>
-            <a class="users-btn">Signup</a>
+    <section class="right">
+        <div class="users">
+            <a class="btn users__btn">Login</a>
+            <a class="btn users__btn">Signup</a>
         </div>
-    </div>
+    </section>
 </div>
 </body>
-<script src="./js/upload.js"></script>
 </html>
