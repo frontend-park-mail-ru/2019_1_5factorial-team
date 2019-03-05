@@ -23,7 +23,7 @@ const upload = multer({ storage: storage });
 
 // пользователи
 let users = {
-    'pashaPidor': {
+    'kek': {
         email: 'kek.k.ek',
         password: 'password',
         age: 1,
@@ -97,7 +97,7 @@ app.post('/profile', (req, res) => {
 
         // user not found
         if (users[req.body.nickname] === undefined) {
-            console.log('\t{400} Error: user not found');
+            console.error('\t{400} Error: user not found');
             res.status(400).json({error: 'user not found'});
             return;
         }
