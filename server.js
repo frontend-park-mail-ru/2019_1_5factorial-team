@@ -38,6 +38,7 @@ let users = {
         score: 100500,
         avatarType: 'jpg',
         avatarLink: './avatars/default.jpg'
+    }
 };
 
 app.get('/', (req, res) => {
@@ -96,8 +97,8 @@ app.post('/profile', (req, res) => {
 
         // user not found
         if (users[req.body.nickname] === undefined) {
-            console.log('\t{400} Error: user not found')
-            res.status(400).json({error: "user not found"});
+            console.log('\t{400} Error: user not found');
+            res.status(400).json({error: 'user not found'});
             return;
         }
 

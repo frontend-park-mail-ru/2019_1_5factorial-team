@@ -13,73 +13,73 @@ const submitUpload = document.querySelector('.js-change-image');
  * @param {*} isFile - если true - не ставит хэдр и не оборачивает тело запроса
  */
 function ajax (callback, method, path, body, isFile) {
-  const xhr = new XMLHttpRequest();
-  xhr.open(method, path, true);
-  xhr.withCredentials = true;
+    const xhr = new XMLHttpRequest();
+    xhr.open(method, path, true);
+    xhr.withCredentials = true;
 
-  if (body && !isFile) {
-    xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
-  }
-
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState !== 4) {
-      return;
+    if (body && !isFile) {
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
     }
 
-    callback(xhr);
-  };
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState !== 4) {
+            return;
+        }
 
-  if (body) {
-    if (isFile) {
-      xhr.send(body);
+        callback(xhr);
+    };
+
+    if (body) {
+        if (isFile) {
+            xhr.send(body);
+        } else {
+            xhr.send(JSON.stringify(body));
+        }
     } else {
-      xhr.send(JSON.stringify(body));
+        xhr.send();
     }
-  } else {
-    xhr.send();
-  }
 }
 
 // загрузка картинки на сервер для полтзователя с ником nickname (в теле функции)
 // через FormData, есть проверка на png/jpeg
 // в случае удачи, получает новую картинку пользователя и кладет ее в img_container
 submitUpload.addEventListener('change', (event) => {
-  event.preventDefault();
-  // debugger;
-  const userAvatar = document.getElementsByClassName('js-change-image')[0].files[0];
-  console.log(userAvatar);
+    event.preventDefault();
+    // debugger;
+    const userAvatar = document.getElementsByClassName('js-change-image')[0].files[0];
+    console.log(userAvatar);
 
-  // pseudoValidation (kek)
-  if ((userAvatar.type !== "image/png") && (userAvatar.type !== "image/jpeg")) {
-    alert('only jpeg or png photos!!');
-    return;
-  }
-
-  let nickname = 'pashaPidor';
-
-  let formData = new FormData();
-  formData.append('avatar', userAvatar);
-  formData.append('nickname', nickname);
-
-  console.log(formData.get('avatar'));
-
-  ajax((xhr) => {
-    let img_container = document.getElementsByClassName('profile-avatar-block')[0];
-
-    const source = JSON.parse(xhr.responseText);
-    const image = document.createElement('IMG');
-
-    // checking returned error
-    if (source.error !== undefined) {
-      return;
+    // pseudoValidation (kek)
+    if ((userAvatar.type !== 'image/png') && (userAvatar.type !== 'image/jpeg')) {
+        alert('only jpeg or png photos!!');
+        return;
     }
 
-    image.src = source;
-    image.classList.add('avatar-img');
+    let nickname = 'pashaPidor';
 
-    // заменяю текущую картинку у пользователя
-    img_container.replaceChild(image, document.getElementsByClassName('avatar-img')[0])
-  }, 'POST', '/profile', formData, true);
+    let formData = new FormData();
+    formData.append('avatar', userAvatar);
+    formData.append('nickname', nickname);
+
+    console.log(formData.get('avatar'));
+
+    ajax((xhr) => {
+        let img_container = document.getElementsByClassName('profile-avatar-block')[0];
+
+        const source = JSON.parse(xhr.responseText);
+        const image = document.createElement('IMG');
+
+        // checking returned error
+        if (source.error !== undefined) {
+            return;
+        }
+
+        image.src = source;
+        image.classList.add('avatar-img');
+
+        // заменяю текущую картинку у пользователя
+        img_container.replaceChild(image, document.getElementsByClassName('avatar-img')[0]);
+    }, 'POST', '/profile', formData, true);
 });
 
 /**
@@ -87,30 +87,30 @@ submitUpload.addEventListener('change', (event) => {
  * @param {*} username - ник пользователя
  */
 function getUserAvatar(username) {
-  // кладет новую фотку в контейнер
+    // кладет новую фотку в контейнер
 
-  let formData = new FormData();
-  formData.append('nickname', username);
+    let formData = new FormData();
+    formData.append('nickname', username);
 
-  ajax((xhr) => {
-    // создание элемента img в img_container
-    let img_container = document.getElementsByClassName('profile-avatar-block')[0];
+    ajax((xhr) => {
+        // создание элемента img в img_container
+        let img_container = document.getElementsByClassName('profile-avatar-block')[0];
 
-    const source = JSON.parse(xhr.responseText);
-    const image = document.createElement('IMG');
+        const source = JSON.parse(xhr.responseText);
+        const image = document.createElement('IMG');
 
-    // checking returned error
-    if (source.error !== undefined) {
-      return;
-    }
+        // checking returned error
+        if (source.error !== undefined) {
+            return;
+        }
 
-    image.src = source;
-    image.classList.add('avatar-img');
-    // img_container.appendChild(image);
-    img_container.replaceChild(image, document.getElementsByClassName('avatar-img')[0])
-  }, 'POST', '/avatar', {
-    nickname: username,
-  }, false);
+        image.src = source;
+        image.classList.add('avatar-img');
+        // img_container.appendChild(image);
+        img_container.replaceChild(image, document.getElementsByClassName('avatar-img')[0]);
+    }, 'POST', '/avatar', {
+        nickname: username,
+    }, false);
 }
 
 getUserAvatar('pashaPidor');
