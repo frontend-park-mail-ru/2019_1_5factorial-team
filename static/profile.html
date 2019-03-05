@@ -27,20 +27,23 @@
             </div>
         </div>
     </div>
+        <div class="main-container">
+            <div class="main-content">
+                    <div class="main-profile-block">
+                        <div class="profile-avatar-block">
+                            <img src="avatars/default.jpg" class="avatar-img">
+                            <form class="js-upload-photo">
+                                <div class="change-btn-photo">
+                                    <label>
+                                        <input type="file" name="avatar" class="photo-btn js-change-image" multiple accept="image/jpeg, image/png">
+                                        <a class="small-btn-light">change image</a>
+                                    </label>
+                                </div>
+                            </form>
 
-    <div class="main-container">
-        <div class="main-content">
-            <div class="main-profile-block">
-                <div class="profile-avatar-block">
-                    <img src="img/default.jpg" class="avatar-img">
-                    <form class="js-upload-photo">
-                        <div class="change-btn-photo">
-                            <label>
-                                <input type="file" name="avatar" class="photo-btn js-change-image" multiple accept="image/jpeg, image/png"/>
-                                <div class="small-btn">CHANGE IMAGE</div>
-                            </label>
-                        </div>
-                    </form>
+                            <div class="photo-info">
+                                <!--ADD SOME JS PLZ-->
+                            </div>
                 </div>
                 <div class="profile-block">
                     <div class="profile-subblock js-login-subblock">
@@ -81,5 +84,5 @@
     </div>
 </div>
 </body>
-<script src="./js/upload.js"></script>
+<script type="module" src="./js/uploadAvatar.js"></script>
 </html>
