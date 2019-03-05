@@ -23,7 +23,7 @@ const upload = multer({ storage: storage });
 
 // пользователи
 let users = {
-    'pashaPidor': {
+    'kek': {
         email: 'kek.k.ek',
         password: 'password',
         age: 1,
