@@ -23,7 +23,7 @@ const upload = multer({ storage: storage });
 
 // пользователи
 let users = {
-    'kek': {
+    'pashaPidor': {
         email: 'kek.k.ek',
         password: 'password',
         age: 1,
@@ -101,6 +101,9 @@ app.post('/profile', (req, res) => {
             res.status(400).json({error: 'user not found'});
             return;
         }
+
+        // console.log('req.files', req.file);
+        // console.log('req.body.nickname', req.body.nickname);
 
         users[req.body.nickname].avatarType = (req.file.mimetype === 'image/png') ? 'png' : 'jpeg';
         users[req.body.nickname].avatarLink = `./avatars/${req.file.filename}`;
