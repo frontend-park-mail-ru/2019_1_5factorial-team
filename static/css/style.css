@@ -85,11 +85,30 @@ hr {
     align-items: center;
     height: 6vh;
     margin-right: 0;
+    font-size: 5vh;
     margin-left: auto;
 }
 .users__btn {
-    font-size: 6vh;
     margin: 0 1vw;
+}
+.users__btn_action {
+    font-size: 6vh;
+    fill: white;
+    cursor: pointer;
+    margin-right: 0.5vw;
+}
+.users__btn_action:hover {
+    filter: drop-shadow(0 0 1vh rgb(144,180,216));
+}
+.users__avatar {
+    width: 1.2em;
+    height: 1.2em;
+    margin-right: 1vw;
+    border-radius: 0.6em;
+}
+.users__name {
+    color: white;
+    margin-right: 1vw;
 }
 .name {
     display: flex;
