@@ -1,11 +1,11 @@
 // kek
-'use strict'
+'use strict';
 
 const submitUpload = document.querySelector('.js-change-image');
 
 /**
  * Отправляет асинхронный запрос на сервер
- * 
+ *
  * @param {*} callback - функция, выполняющаяся после ответа сервера на запрос
  * @param {*} method - POST/GET
  * @param {*} path - куда идет запрос
@@ -13,31 +13,31 @@ const submitUpload = document.querySelector('.js-change-image');
  * @param {*} isFile - если true - не ставит хэдр и не оборачивает тело запроса
  */
 function ajax (callback, method, path, body, isFile) {
-	const xhr = new XMLHttpRequest();
-	xhr.open(method, path, true);
-	xhr.withCredentials = true;
+    const xhr = new XMLHttpRequest();
+    xhr.open(method, path, true);
+    xhr.withCredentials = true;
 
-	if (body && !isFile) {
-		xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
-	}
+    if (body && !isFile) {
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+    }
 
-	xhr.onreadystatechange = function () {
-		if (xhr.readyState !== 4) {
-			return;
-		}
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState !== 4) {
+            return;
+        }
 
-		callback(xhr);
-	};
+        callback(xhr);
+    };
 
-	if (body) {
+    if (body) {
         if (isFile) {
             xhr.send(body);
         } else {
             xhr.send(JSON.stringify(body));
         }
-	} else {
-		xhr.send();
-	}
+    } else {
+        xhr.send();
+    }
 }
 
 // загрузка картинки на сервер для полтзователя с ником nickname (в теле функции)
@@ -49,7 +49,7 @@ submitUpload.addEventListener('change', (event) => {
     const userAvatar = document.getElementsByClassName('js-change-image')[0].files[0];
     
     // pseudoValidation (kek)
-    if ((userAvatar.type !== "image/png") && (userAvatar.type !== "image/jpeg")) {
+    if ((userAvatar.type !== 'image/png') && (userAvatar.type !== 'image/jpeg')) {
         alert('only jpeg or png photos!!');
         return;
     }
@@ -64,7 +64,7 @@ submitUpload.addEventListener('change', (event) => {
 
     ajax((xhr) => {
         const source = JSON.parse(xhr.responseText);
-        setUserAvatar(source)
+        setUserAvatar(source);
     }, 'POST', '/profile', formData, true);
 });
 
@@ -73,23 +73,22 @@ submitUpload.addEventListener('change', (event) => {
  * 
  * @param {*} username - ник пользователя
  */
-function getUserAvatar(username) {
+function getUserAvatar (username) {
     // кладет новую фотку в контейнер
 
     const formData = new FormData();
     formData.append('nickname', username);
 
     ajax((xhr) => {
-        // создание элемента img в img_container
+    // создание элемента img в img_container
         const source = JSON.parse(xhr.responseText);
-        setUserAvatar(source)
+        setUserAvatar(source);
     }, 'POST', '/avatar', {
-        nickname: username,
+        nickname: username
     }, false);
 }
 
 getUserAvatar('kek');
-
 /**
  * получает сурс картинки и меняет src у current-avatar
  * 
@@ -101,5 +100,5 @@ function setUserAvatar(source) {
         return;
     }
     const current_avatar = document.querySelector('.avatar-img');
-    current_avatar.src = source
+    current_avatar.src = source;
 }
