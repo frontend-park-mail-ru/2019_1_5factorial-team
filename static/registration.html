@@ -12,7 +12,7 @@
 </head>
 <body>
     <div class="container">
-        <section class="left left_position-center">
+        <section class="container__block container__block_side">
             <div class="settings">
                 <div class="settings__btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="0.7em" height="0.7em" viewBox="0 0 16 16">
@@ -27,27 +27,26 @@
             </div>
         </section>
 
-        <main class="center">
+        <main class="container__block container__block_center">
             <div class="content">
                 <h1 class="content__header">SIGN UP</h1>
                 <form class="form">
-                    <label class="label" for="login">login</label>
-                    <input class="input-row js-login" type="text" required name="login" id="login" placeholder=" " autofocus>
+                    <label class="form__label" for="login">login</label>
+                    <input class="form__input js-login" type="text" required name="login" id="login" placeholder=" " autofocus>
 
-                    <label class="label" for="email">email</label>
-                    <input class="input-row js-email" type="email" required name="email" id="email" placeholder=" ">
+                    <label class="form__label" for="email">email</label>
+                    <input class="form__input js-email" type="email" required name="email" id="email" placeholder=" ">
 
-                    <label class="label" for="password">password</label>
-                    <input class="input-row js-password" type="password" required name="password" id="password" placeholder=" ">
+                    <label class="form__label" for="password">password</label>
+                    <input class="form__input js-password" type="password" required name="password" id="password" placeholder=" ">
 
                     <button class="btn form__btn js-submit" type="submit">let's go!</button>
                 </form>
-                <div>
-                    <a class="btn btn_back-menu" href="">back to menu</a>
-                </div>
+
+                <a class="btn btn_back-menu" href="">back to menu</a>
             </div>
         </main>
-        <section class="right">
+        <section class="container__block container__block_side">
             <div class="users">
                 <a class="btn users__btn">Login</a>
                 <a class="btn users__btn">Signup</a>

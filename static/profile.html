@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="description" content="The Game">
-    <meta name="author" content="5! team">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta title="description" content="The Game">
+    <meta title="author" content="5! team">
+    <meta title="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="./img/test.png"/> <!--favicon 16x16-->
     <link rel="stylesheet" href="./css/reset.css"/>
     <link rel="stylesheet" href="./css/style.css"/>
@@ -13,7 +13,7 @@
 </head>
 <body>
 <div class="container">
-    <section class="left left_position-center">
+    <section class="container__block container__block_side">
         <div class="settings">
             <div class="settings__btn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="0.7em" height="0.7em" viewBox="0 0 16 16">
@@ -28,48 +28,49 @@
         </div>
     </section>
 
-    <main class="center">
-        <div class="content content_profile">
-            <div class="profile-avatar">
+    <main class="container__block container__block_center">
+        <div class="content">
+            <div class="content-block content-block_avatar">
                 <img class="avatar-img" src="img/default.jpg">
                 <form class="form js-upload-photo">
                     <div class="change-btn-photo">
                         <label>
-                            <input class="btn photo-btn js-change-image" type="file" name="avatar" multiple accept="image/jpeg, image/png"/>
+                            <input class="btn photo-btn js-change-image" type="file" title="avatar" multiple accept="image/jpeg, image/png"/>
                             <div class="btn profile__btn">CHANGE IMAGE</div>
                         </label>
                     </div>
                 </form>
             </div>
-            <div class="profile-content">
-                <div class="unit unit_profile js-login-subblock">
-                    <h2 class="text-h2 unit__name">login</h2>
-                    <div class="unit_profile__row js-login-row"></div>
+
+            <div class="content-block">
+                <div class="content-block-unit content-block-unit_profile js-login-subblock">
+                    <h2 class="text-title content-block-unit__title">login</h2>
+                    <div class="content-block-unit_profile__row js-login-row"></div>
                 </div>
-                <div class="unit unit_profile js-email-subblock">
-                    <h2 class="text-h2 unit__name">email</h2>
-                    <div class="unit_profile__row js-email-row"></div>
+                <div class="content-block-unit content-block-unit_profile js-email-subblock">
+                    <h2 class="text-title content-block-unit__title">email</h2>
+                    <div class="content-block-unit_profile__row js-email-row"></div>
                 </div>
-                <div class="unit unit_profile unit_profile_line js-balance-subblock">
-                    <h2 class="text-h2 unit__name">balance:</h2>
-                    <div class="unit_profile__balance js-balance-row"></div>
+                <div class="content-block-unit content-block-unit_profile content-block-unit_profile_line js-balance-subblock">
+                    <h2 class="text-title content-block-unit__title">balance:</h2>
+                    <div class="js-balance-row"></div>
                 </div>
-                <div class="unit unit_profile unit_profile_line js-score-subblock">
-                    <h2 class="text-h2 unit__name">score:</h2>
-                    <div class="unit_profile__score js-score-row"></div>
+                <div class="content-block-unit content-block-unit_profile content-block-unit_profile_line js-score-subblock">
+                    <h2 class="text-title content-block-unit__title">score:</h2>
+                    <div class="js-score-row"></div>
                 </div>
             </div>
-            <div class="profile-actions">
+
+            <div class="content-block content-block_actions">
                 <button class="btn profile__btn profile__btn_action js-change-password">CHANGE PASSWORD</button>
                 <button class="btn profile__btn profile__btn_action js-delete-profile">DELETE PROFILE</button>
             </div>
-            <div>
-                <a class="btn btn_back-menu" href="">back to menu</a>
-            </div>
+
+            <a class="btn btn_back-menu" href="">back to menu</a>
         </div>
     </main>
 
-    <section class="right">
+    <section class="container__block container__block_side">
         <div class="users">
             <a class="btn users__btn">Login</a>
             <a class="btn users__btn">Signup</a>
