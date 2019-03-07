@@ -3,12 +3,10 @@ const PORT = 3000;
 const path = require('path');
 const express = require('express');
 const body = require('body-parser');
-const debug = require('debug');
 
-const log = debug('*');
 const fs = require('fs');
 
-log('Starting server');
+console.log('Starting server');
 const app = express();
 const indexPath = path.resolve(__dirname, './static/index.html');
 app.use(express.static(__dirname + '/static'));
@@ -22,16 +20,16 @@ app.get('/favicon.ico', (req, res) => {
 app.get('*', (req, res) => {	
     fs.readFile(indexPath, { encoding: 'utf-8' }, (err, file) => {
         if (err) {
-            log(err);
+            console.log(err);
             res.statusCode = 404;
             res.end();
         }
-        log('request: index.html');
+        console.log('request: index.html');
         res.write(file);
         res.end();
     });
 });
 
 app.listen(process.env.PORT || PORT, () => {
-    log(`Server listening port ${process.env.PORT || PORT}`);
+    console.log(`Server listening port ${process.env.PORT || PORT}`);
 });
