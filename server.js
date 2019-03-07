@@ -1,3 +1,5 @@
+const PORT = 3000;
+
 const path = require('path');
 const express = require('express');
 const body = require('body-parser');
@@ -8,7 +10,7 @@ const fs = require('fs');
 
 log('Starting server');
 const app = express();
-const indexPath = path.resolve(__dirname, '../public/index.html');
+const indexPath = path.resolve(__dirname, './static/index.html');
 app.use(express.static(__dirname + '/static'));
 
 app.use(body.json());
@@ -30,6 +32,6 @@ app.get('*', (req, res) => {
     });
 });
 
-app.listen(process.env.PORT || 3000, () => {
-    log(`Server listening port ${process.env.PORT || 3000}`);
+app.listen(process.env.PORT || PORT, () => {
+    log('Server listening port ${process.env.PORT || PORT}');
 });

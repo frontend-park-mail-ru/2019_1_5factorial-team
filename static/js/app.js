@@ -5,8 +5,8 @@ import Router from './libs/router.js';
 document.addEventListener('DOMContentLoaded', () => {
     console.log('debug point: start work!');
 
-    // const page = document.querySelector('.body-cnt');
-    const page = document.getElementsByTagName('body');
+    const page = document.querySelector('.body-cnt');
+    // const page = document.getElementsByTagName('body');
     createPage(page);
     const main = document.querySelector('.main-container');
     const menuCntl = new menuController();

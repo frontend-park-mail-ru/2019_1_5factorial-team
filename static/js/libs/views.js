@@ -4,7 +4,7 @@ export default class View {
         this.element = document.createElement('div');
         this.element.classList.add('wrapper');
         this.tmpl = tmpl;
-        this._eventBus = eventBus;
+        this.localEventBus = eventBus;
         this.prevRoot = null;
         this.closedView = false;
         this.fest = window.fest[tmpl];
@@ -16,7 +16,7 @@ export default class View {
        * @param data
        * @returns {View}
        */
-    render(root) {
+    render(root, data) {
         this.closedView = false;
         if (root === undefined || root === null) {
             root = this.prevRoot;
@@ -24,6 +24,7 @@ export default class View {
             this.prevRoot = root;
         }
   
+        this.data = data; // Заглушка для линтера
         // this.element.innerHTML = this.tmpl(data);
         root.innerHTML = this.fest();
         // root.appendChild(this.element);
@@ -34,7 +35,7 @@ export default class View {
     close() {
         this.closedView = true;
         try {
-            this._eventBus.triggerEvent('vcl');
+            this.localEventBus.triggerEvent('vcl');
         } catch (e) {
             console.log('no such event - close');
         }

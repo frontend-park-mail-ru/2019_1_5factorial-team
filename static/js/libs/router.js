@@ -8,7 +8,7 @@ export default class Router {
         this.isCurrentNotFound = false;
   
         window.addEventListener('popstate', () => {
-            const pathname = Router._normalizePath(location.pathname);
+            const pathname = Router.normalizePath(location.pathname);
             this.change(pathname, false);
         });
     }
@@ -93,7 +93,7 @@ export default class Router {
        * @returns {string}
        * @private
        */
-    static _normalizePath(path) {
+    static normalizePath(path) {
         return path.charAt(path.length - 1) === '/' && path !== '/' ? path.slice(0, path.length - 1) : path;
     }
   
@@ -101,13 +101,13 @@ export default class Router {
        * Запускает роутер
        */
     start() {
-        this.root.addEventListener('click', (ev) => {
-            if (ev.target.tagName === 'a' && ev.target.hostname === location.hostname) {
-                ev.preventDefault();
-                this.change(Router._normalizePath(ev.target.pathname));
+        this.root.addEventListener('click', (event) => {
+            if (event.target.tagName === 'a' && event.target.hostname === location.hostname) {
+                event.preventDefault();
+                this.change(Router.normalizePath(event.target.pathname));
             }
         });
   
-        this.change(Router._normalizePath(window.location.pathname), false);
+        this.change(Router.normalizePath(window.location.pathname), false);
     }
 }

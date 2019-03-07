@@ -3,7 +3,7 @@ import View from '../../libs/views.js';
 
 export default class viewMenu extends View {
     constructor({ eventBus = {} }) {
-        super('menu/menuView.tmpl', eventBus);
+        super('menuView.tmpl', eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
     }
 
@@ -11,11 +11,11 @@ export default class viewMenu extends View {
         super.render(root, data);
     }
 
-    _onOfflineMultiplayerClick() {
+    onOfflineMultiplayerClick() {
 
     }
 
-    _onNotAuthMultiplayerClick() {
+    onNotAuthMultiplayerClick() {
 
     }
 }
