@@ -7,8 +7,8 @@ static/js/views/menu/menuView.tmpl.js
 static/js/views/leaderboard/leaderboard.tmpl.js
 static/js/views/login/loginView.tmpl.js
 static/js/views/about/about.tmpl.js 
-static/js/views/signup/signup.tmpl.js 
 static/js/views/profile/profile.tmpl.js
+static/js/views/signUp/signUpView.tmpl.js
 
 static/js/views/menu/menuView.tmpl.xml
 static/js/views/leaderboard/leaderboard.tmpl.xml

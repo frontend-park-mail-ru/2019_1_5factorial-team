@@ -32,7 +32,7 @@ export default class api {
         });
     }
 
-    static registrate({ login, email, password }) {
+    static signUp({ login, email, password }) {
         return network.doPost({
             url: '/api/user',
             body: {

@@ -25,7 +25,7 @@
         <div class="menu-right-block">
             <div class="users-block">
                 <a class="users-btn" href="/login">Login</a>
-                <a class="users-btn" href="/reg">Signup</a>
+                <a class="users-btn" href="/signup">Signup</a>
             </div>
             <div class="main-header">
                 <a class="game-name">
