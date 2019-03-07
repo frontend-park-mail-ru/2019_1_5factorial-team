@@ -5,7 +5,9 @@
   "main": "server.js",
   "dependencies": {
     "express": "^4.16.4",
-    "fest": "^0.12.1"
+    "fest": "^0.12.1",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3"
   },
   "devDependencies": {
     "husky": "^1.3.1",

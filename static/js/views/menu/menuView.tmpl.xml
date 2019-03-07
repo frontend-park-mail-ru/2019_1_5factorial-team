@@ -16,10 +16,10 @@
         </div>
         <div class="menu-container">
             <div class="menu-content">
-                <a class="menu-btn">Single</a>
-                <a class="menu-btn">Multi</a>
-                <a class="menu-btn">Shop</a>
-                <a class="menu-btn">Leaders</a>
+                <a class="menu-btn" href="/single">Single</a>
+                <a class="menu-btn" href="/multi">Multi</a>
+                <a class="menu-btn" href="/leaders">Leaders</a>
+                <a class="menu-btn" href="/about">About</a>
             </div>
         </div>
         <div class="menu-right-block">

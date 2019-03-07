@@ -12,7 +12,7 @@ const eventList = [
 export default class menuController {
     constructor({ globalEventBus = {} } = {}) {
         const EventBus = new eventBus(eventList);
-        this.menuView = new menuView({ eventBus: EventBus, globalEventBus });
+        this.menuView = new menuView({ eventBus, globalEventBus });
         this.menuModel = new menuModel(EventBus);
     }
 }
