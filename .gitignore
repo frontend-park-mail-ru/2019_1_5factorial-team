@@ -19,7 +19,7 @@ static/js/views/menu/menuView.tmpl.xml
 static/js/views/leaderboard/leaderboard.tmpl.xml
 static/js/views/login/login.tmpl.xml
 static/js/views/about/about.tmpl.xml 
-static/js/views/signup/signup.tmpl.xml 
+static/js/views/signUp/signUp.tmpl.xml 
 static/js/views/profile/profile.tmpl.xml 
 
 ### VisualStudioCode Patch ###
