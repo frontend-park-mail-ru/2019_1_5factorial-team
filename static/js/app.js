@@ -1,6 +1,7 @@
 // import eventBus from './libs/eventBus.js';
 import menuController from './controllers/menuCtrl.js';
 import aboutController from './controllers/aboutCtrl.js';
+import loginController from './controllers/loginCtrl.js';
 import Router from './libs/router.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -8,13 +9,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const page = document.querySelector('.body-cnt');
     createPage(page);
+    const router = new Router(page);
+    
     const main = document.querySelector('.main-container');
     const menuCntl = new menuController();
     const aboutCtrl = new aboutController();
-
-    const router = new Router(page);
+    const loginCtrl = new loginController({router});
 
     router.add('/about', main, aboutCtrl.aboutView);
+    router.add('/login', main, loginCtrl.loginView);
+    // router.add('/signUp', main, signUpCtrl.singUpView);
+    // router.add('/leaders', main, leadersCtrl.leadersView);
+    // router.add('/profile', main, profileCtrl.profileView);
     router.add('/', main, menuCntl.menuView);
 
     router.start();

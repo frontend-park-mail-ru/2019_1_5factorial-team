@@ -40,7 +40,7 @@
             </div>
         </div>
         <div>
-            <a class="back-menu-btn" href="">back to menu</a>
+            <a class="back-menu-btn" href="/">back to menu</a>
         </div>
     </div>
     <div class="main-right-block">

@@ -43,6 +43,17 @@ export default class Validator {
         }
     }
 
+    validateLoginOrEmail(dataInput) {
+        const loginInput = Validator.validateLogin(dataInput);
+        const emailInput = Validator.validateEmail(dataInput);
+        if (loginInput && emailInput) {
+            return true;
+        } else {
+            console.log('smth went wrong in validateLoginOrEmail!');
+            return false;
+        }
+    }
+
     /**
      * validatePassword - check validity of input password (only for length)
      * @param {HTMLElement} myInput
