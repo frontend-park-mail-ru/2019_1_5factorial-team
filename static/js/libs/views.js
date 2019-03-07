@@ -35,7 +35,7 @@ export default class View {
     close() {
         this.closedView = true;
         try {
-            this.localEventBus.triggerEvent('vcl');
+            this.localEventBus.callEvent('vcl');
         } catch (e) {
             console.log('no such event - close');
         }
