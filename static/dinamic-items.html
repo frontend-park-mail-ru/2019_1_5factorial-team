@@ -8,6 +8,7 @@
     <link rel="shortcut icon" type="image/png" href="./img/test.png"/> <!--favicon 16x16-->
     <link rel="stylesheet" href="./css/reset.css"/>
     <link rel="stylesheet" href="./css/style.css"/>
+    <link href='https://fonts.googleapis.com/css?family=Nova Flat' rel='stylesheet'>
     <title>Game</title>
 </head>
 <body>
@@ -33,7 +34,7 @@
     <section class="container__block container__block_side">
         <div class="users">
             <img class="users__avatar" src="img/default.jpg">
-            <div class="users__name">hello</div>
+            <div class="users__title">hello</div>
             <div class="btn users__btn_action">
                 <svg xmlns="http://www.w3.org/2000/svg" width="0.7em" height="0.7em" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M1.975 10.649l6.591-6.591 3.376 3.376-4.903 4.903-1.688 1.688c-.001.001-.378.35-1.108.487l-2.522.477a.685.685 0 0 1-.56-.15.685.685 0 0 1-.15-.56l.477-2.522c.137-.729.485-1.105.487-1.108zm1.01.916a.387.387 0 0 1 .56-.014l.904.904a.386.386 0 0 1 0 .546l-.059.059s-.162.15-.476.209l-1.083.205a.295.295 0 0 1-.241-.064.295.295 0 0 1-.064-.241l.205-1.083c.059-.314.209-.476.209-.476l.045-.045zm9.761-10.272a.999.999 0 0 0-1.414 0L10 2.624 13.376 6l1.331-1.332a.999.999 0 0 0 0-1.414l-1.961-1.961z"/>
@@ -50,23 +51,26 @@
 
 <div class="modal">
     <div class="content content_modal">
-        <div class="btn modal__btn-close">
-            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M7.983 6.455l4.34-4.34a1.105 1.105 0 0 1 1.562 1.562l-4.34 4.34 4.34 4.34a1.08 1.08 0 1 1-1.528 1.528l-4.34-4.34-4.34 4.34a1.105 1.105 0 0 1-1.562-1.562l4.34-4.34-4.34-4.34a1.08 1.08 0 1 1 1.528-1.528l4.34 4.34z"/>
-            </svg>
-        </div>
+        <!--<div class="btn modal__btn-close">-->
+            <!--<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 16 16">-->
+                <!--<path fill-rule="evenodd" d="M7.983 6.455l4.34-4.34a1.105 1.105 0 0 1 1.562 1.562l-4.34 4.34 4.34 4.34a1.08 1.08 0 1 1-1.528 1.528l-4.34-4.34-4.34 4.34a1.105 1.105 0 0 1-1.562-1.562l4.34-4.34-4.34-4.34a1.08 1.08 0 1 1 1.528-1.528l4.34 4.34z"/>-->
+            <!--</svg>-->
+        <!--</div>-->
 
         <h1 class="content__header content__header_modal">Change password</h1>
 
-        <div class="content-block content-block_modal">
+        <div class="content-block">
             <form class="form">
-                <label class="form__label" for="password">enter new password</label>
+                <label class="form__label" for="password">Enter new password</label>
                 <input class="form__input js-password" type="password" required name="password" id="password" placeholder=" " autofocus>
 
-                <label class="form__label" for="repeated-password">repeat password</label>
+                <label class="form__label" for="repeated-password">Repeat password</label>
                 <input class="form__input js-password-repeat" type="password" required name="password" id="repeated-password" placeholder=" ">
 
-                <button class="btn form__btn js-submit" type="submit">enter</button>
+                <div class="form-btn-block">
+                    <button class="btn form__btn  form__btn-cancel" type="submit">cancel</button>
+                    <button class="btn btn_contained form__btn js-submit" type="submit">enter</button>
+                </div>
             </form>
         </div>
     </div>

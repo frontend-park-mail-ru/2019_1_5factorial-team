@@ -77,9 +77,15 @@ body {
     .content_menu {
         margin-top: 32vh;
     }
+        .content_menu__btn {
+            font-size: 10vh;
+            margin: 1vh 0;
+            color: white;
+        }
+
     .content_modal {
         width: 100%;
-        padding: 2vh 2vw;
+        padding: 4vh 4vw;
     }
 
     .content__header {
@@ -93,7 +99,8 @@ body {
     }
         .content__header_modal {
             width: 100%;
-            font-size: 6vh;
+            font-size: 7.5vh;
+            margin: 2vh 0 8vh 0;
         }
 
     .content-block {
@@ -103,14 +110,10 @@ body {
     }
         .content-block_avatar {
             align-items: center;
-            margin: 2vh 2vw;
         }
         .content-block_actions {
             margin: 2vh 0;
             text-align: center;
-        }
-        .content-block_modal {
-            padding: 4vh 4vw;
         }
         .content-block_about {
             align-items: center;
@@ -129,6 +132,11 @@ body {
                 margin: 2vh 1vw;
                 font-size: 4vh;
             }
+                .content-block-unit_about__btn {
+                    margin: 0 1vw;
+                    font-family: Helvetica bold;
+                    color: white;
+                }
             .content-block-unit_profile {
                 flex-direction: column;
             }
@@ -147,6 +155,53 @@ body {
                 font-size: 4vh;
                 width: 100%;
             }
+                .content-block-unit__title_row {
+                    width: auto;
+                    margin: 2vh 0 0 0;
+                }
+
+
+/* BUTTON */
+.btn {
+    display: flex;
+    cursor: pointer;
+    text-decoration: none;
+    background: transparent;
+    border: none;
+    color: white;
+    font-family: "One Stroke";
+    /*font-family: "Comic Sans MS";*/
+    /*font-family: "Trebuchet MS";*/
+    /*font-family: 'Alegreya Sans SC';*/
+    /*font-family: 'Dekko';*/
+    /*font-family: 'Gruppo';*/
+    /*font-family: 'Nova Flat';*/
+}
+.btn:hover {
+    text-shadow: 0 0 1em rgb(144,180,216);
+}
+.btn:focus {
+    outline: none;
+    border-width: 0;
+}
+    .btn_contained{
+        color: rgba(255,255,255, .8);
+        border-radius: 0.25em;
+        background: rgb(72,108,144);
+        padding: 0.5vh 1vw;
+        margin: 1vh 1vw;
+    }
+    .btn_contained:hover {
+        outline: none;
+        border: none;
+        box-shadow: 0 0 0.5em rgb(144,180,216);
+    }
+
+    .btn_back-menu {
+        justify-content: center;
+        font-size: 3vh;
+        color: white;
+    }
 
 
 /* SETTINGS BLOCK */
@@ -210,9 +265,10 @@ body {
 
 /* FORM */
 .form {
-    margin: 0!important;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    margin-bottom: 2vh;
 }
     .form__input {
         font-family: Helvetica bold;
@@ -220,7 +276,7 @@ body {
         font-size: 4vh;
         border: none;
         box-shadow: 0 0 1em rgb(144,180,216);
-        border-radius: 1vh;
+        border-radius: 0.25em;
         margin: 0.5vh 0;
         text-align: left;
     }
@@ -245,24 +301,17 @@ body {
         margin: 1vh 0;
     }
 
-    .form__btn {
-        color: rgba(144,180,216, .8);
+    .form-btn-block {
         width: 100%;
+        display: flex;
+        flex-direction: row;
         justify-content: center;
-        font-family: "One Stroke";
-        border: none;
-        font-size: 8vh;
-        margin-top: 8vh;
     }
-    .form__btn:hover {
-        color: white;
-        outline: none;
-        border: none;
-        text-shadow: 0 0 0.5em rgb(144,180,216);
-    }
-    .form__btn:focus {
-        outline: none;
-        border-width: 0;
+
+    .form__btn {
+        justify-content: center;
+        font-size: 6vh;
+        margin: 8vh 1vw 1vh 1vw;
     }
 
 
@@ -277,12 +326,11 @@ body {
     .paginator__page {
         font-size: 4vh;
         line-height: 3vh;
-        padding: 0.4em;
+        padding: 0.25em 0.5em;
         display: flex;
         font-family: "One Stroke";
-        background-color: red;
         text-decoration: none;
-        background-color: rgba(144,180,216, .4);
+        background: rgb(72,108,144);
         color: white;
         cursor: pointer;
         border: none;
@@ -290,6 +338,10 @@ body {
     }
     .paginator__page:hover {
         text-shadow: 0 0 1em rgb(144,180,216);
+        background: rgb(118, 160, 196);
+    }
+    .paginator__page:focus  {
+        outline: none;
     }
         .paginator__page_left {
             border-radius: 1em 0 0 1em;
@@ -305,17 +357,18 @@ body {
     font-family: Helvetica bold;
     color: white;
     font-size: 6vh;
-    border-collapse: collapse;
     display: flex;
     justify-content: center;
     flex-direction: row;
     border: none;
+    padding: 0 0 4vh 0;
 }
     .leaders-table__column-header {
         font-family: "One Stroke";
         margin: 2vh 2vw;
         border-bottom: 1px solid white;
     }
+
 .lead-users {
     display: flex;
     flex-direction: column;
@@ -354,43 +407,6 @@ li:nth-child(even){
     }
 
 
-/* BUTTON */
-.btn {
-    display: flex;
-    cursor: pointer;
-    text-decoration: none;
-    background: transparent;
-    font-family: "One Stroke";
-    /*font-family: "Comic Sans MS";*/
-    /*font-family: "Trebuchet MS";*/
-    /*font-family: 'Alegreya Sans SC';*/
-    /*font-family: 'Dekko';*/
-    /*font-family: 'Gruppo';*/
-    /*font-family: 'Nova Flat';*/
-}
-.btn:hover {
-    text-shadow: 0 0 1em rgb(144,180,216);
-}
-.btn:focus {
-    outline: none;
-}
-    .btn_menu {
-        font-size: 10vh;
-        margin: 1vh 0;
-        color: white;
-    }
-    .btn_about {
-        margin: 0 1vw;
-        font-family: Helvetica bold;
-        color: white;
-    }
-    .btn_back-menu {
-        justify-content: center;
-        font-size: 4vh;
-        color: white;
-    }
-
-
 /* MAIN GAME TITLE */
 .name {
     display: flex;
@@ -400,7 +416,6 @@ li:nth-child(even){
 }
     .name__text {
         display: inline-flex;
-        cursor: pointer;
         text-decoration: none;
         color: white;
     }
@@ -432,11 +447,6 @@ li:nth-child(even){
 /* PROFILE */
 .profile__btn {
     font-size: 3vh;
-    padding: 1vh 1vw;
-    background-color: rgba(144,180,216, .4);
-    border-radius: 1em;
-    border: none;
-    color: white;
 }
     .profile__btn_action {
         margin-bottom: 2vh;
@@ -461,7 +471,6 @@ li:nth-child(even){
     justify-content: center;
     align-items: center;
     font-size: 4vh;
-    margin: 2vh 0 0 0;
     color: white;
 }
 
