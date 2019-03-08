@@ -4,14 +4,15 @@ node_modules
 package-lock.json
 
 static/js/views/menu/menuView.tmpl.js
-static/js/views/leaderboard/leaderboard.tmpl.js
 static/js/views/login/loginView.tmpl.js
 static/js/views/about/about.tmpl.js 
 static/js/views/profile/profile.tmpl.js
 static/js/views/signUp/signUpView.tmpl.js
+static/js/views/leaderboard/leaderboardView.tmpl.js
+
 
 static/js/views/menu/menuView.tmpl.xml
-static/js/views/leaderboard/leaderboard.tmpl.xml
+static/js/views/leaderboard/leaderboardView.tmpl.xml
 static/js/views/login/loginView.tmpl.xml
 static/js/views/about/about.tmpl.xml 
 static/js/views/signUp/signUp.tmpl.xml 

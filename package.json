@@ -21,7 +21,7 @@
     "eslint-plugin-standard": "^4.0.0"
   },
   "scripts": {
-    "build": "fest-build --dir=./static/js/views/signUp",
+    "build": "fest-build --dir=./static/js/views/leaderboard",
     "lint": "./node_modules/.bin/eslint .",
     "lint-fix": "./node_modules/.bin/eslint --fix ."
   },

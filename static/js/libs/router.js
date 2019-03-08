@@ -107,7 +107,6 @@ export default class Router {
                 this.change(Router.normalizePath(event.target.pathname));
             }
         });
-  
         this.change(Router.normalizePath(window.location.pathname), false);
     }
 }

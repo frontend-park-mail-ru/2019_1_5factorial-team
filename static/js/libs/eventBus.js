@@ -15,7 +15,7 @@ export default class EventBus {
      */
     getEvent(name, callback) {
         if (!this.list.has(name)) {
-            console.log('Unknown event {$name}');
+            console.log(`Unknown event ${name}`);
         }
         this.list.get(name).push(callback);
     }
@@ -28,7 +28,7 @@ export default class EventBus {
      */
     callEvent(name, ...args) {
         if (!this.list.has(name)) {
-            console.log('Unknown event {$name}');
+            console.log(`Unknown event ${name}`);
         }
         const listener = this.list.get(name);
         listener.forEach((callback) => {

@@ -48,13 +48,13 @@
             </div>
         </div>
         <div>
-            <a class="back-menu-btn" href="">back to menu</a>
+            <a class="back-menu-btn" href="/">back to menu</a>
         </div>
     </div>
     <div class="main-right-block">
         <div class="users-block">
-            <a class="users-btn">Login</a>
-            <a class="users-btn">Signup</a>
+            <a class="users-btn" href="/login">Login</a>
+            <a class="users-btn" href="/signup">Signup</a>
         </div>
     </div>
 
