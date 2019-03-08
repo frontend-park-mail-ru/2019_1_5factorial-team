@@ -2,7 +2,7 @@
 'use strict';
 
 const submitUpload = document.querySelector('.js-change-image');
-ghjghjgjghj
+
 /**
  * Отправляет асинхронный запрос на сервер
  *

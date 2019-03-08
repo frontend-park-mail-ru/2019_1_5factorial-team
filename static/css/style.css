@@ -8,6 +8,8 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 /* BASIC */
@@ -39,7 +41,6 @@ body {
     display: flex;
     flex-direction: row;
     width: 100%;
-    user-select: none;
 }
     .container__block {
         display: flex;
@@ -171,12 +172,6 @@ body {
     border: none;
     color: white;
     font-family: "One Stroke";
-    /*font-family: "Comic Sans MS";*/
-    /*font-family: "Trebuchet MS";*/
-    /*font-family: 'Alegreya Sans SC';*/
-    /*font-family: 'Dekko';*/
-    /*font-family: 'Gruppo';*/
-    /*font-family: 'Nova Flat';*/
 }
 .btn:hover {
     text-shadow: 0 0 1em rgb(144,180,216);
