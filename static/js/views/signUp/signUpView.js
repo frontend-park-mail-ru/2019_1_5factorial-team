@@ -26,7 +26,7 @@ export default class signUpView extends View {
         this.repasswordInput = this.form.elements['password-repeat'];
 
         this.passwordInput.addEventListener('change', this._onChangePass.bind(this, this.passwordInput, this.repasswordInput));
-        this.repasswordInput.addEventListener('change', this._onChangeRepass.bind(this, this.repasswordInput, this.passwordInput));
+        // this.repasswordInput.addEventListener('change', this._onChangeRepass.bind(this, this.repasswordInput, this.passwordInput));
 
         this.emailWarning = this.element.querySelector('.js-warning-email');
         this.loginWarning = this.element.querySelector('.js-warning-login');
