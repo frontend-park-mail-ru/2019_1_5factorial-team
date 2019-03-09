@@ -43,6 +43,12 @@ export default class api {
         });
     }
 
+    static getUserCount () {
+        return network.doGet({
+            url: `/api/user/count`
+        });
+    }
+
     static updateUser ({ user, email, password, avatar } = {}) {
         return network.doPut({
             url: `/api/user/${user}`,

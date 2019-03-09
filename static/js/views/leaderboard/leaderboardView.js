@@ -6,8 +6,8 @@ export default class leaderboardView extends View {
         super('leaderboard/leaderboardView.tmpl', eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('loadResponse', this.loadResponse.bind(this));
-        this.localEventBus.getEvent('loadWaiting', this.loadWaiting.bind(this));
-        this.localEventBus.getEvent('loadPaginationResponse', this.loadPaginatorResponse.bind(this));
+        // this.localEventBus.getEvent('loadWaiting', this.loadWaiting.bind(this));
+        // this.localEventBus.getEvent('loadPaginationResponse', this.loadPaginatorResponse.bind(this));
         this.pagination = null;
         this.isClosed = false;
     }
@@ -36,17 +36,17 @@ export default class leaderboardView extends View {
         }
     }
 
-    loadWaiting () {
-        // Индикатор загрузки появляется только, если загрузка происходит дольше 100 мс
-        this.timOutOfLoading = setTimeout(() => this.localElement.classList.remove('hidden'), 100);
-    }
+    // loadWaiting () {
+    //     // Индикатор загрузки появляется только, если загрузка происходит дольше 100 мс
+    //     this.timOutOfLoading = setTimeout(() => this.loadingElement.classList.remove('hidden'), 100);
+    // }
 
-    endLoadWaiting () {
-        clearTimeout(this.timOutOfLoading);
-        if (!this.localElement.classList.contains('hidden')) {
-            this.localElement.classList.add('hidden');
-        }
-    }
+    // endLoadWaiting () {
+    //     clearTimeout(this.timOutOfLoading);
+    //     if (!this.loadingElement.classList.contains('hidden')) {
+    //         this.loadingElement.classList.add('hidden');
+    //     }
+    // }
 
     loadResponse (data) {
         // При медленном интернете, View могла загрузиться, когда пользователь вернулся в меню
@@ -54,7 +54,7 @@ export default class leaderboardView extends View {
             return;
         }
 
-        this._endLoadWaiting();
+        // this.endLoadWaiting();
 
         super.render(null, { users: data });
 
@@ -66,8 +66,8 @@ export default class leaderboardView extends View {
     }
 
     afterRender () {
-        this.localElement = this.element.querySelector('.loading');
-        const backBtn = this.element.querySelector('.back-menu-btn');
+        // this.loadingElement = this.element.querySelector('.loading');
+        const backBtn = document.querySelector('.back-menu-btn');
         backBtn.addEventListener('click', () => { this.isClosed = true; });
     }
 }
