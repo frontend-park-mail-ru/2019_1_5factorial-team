@@ -12,7 +12,7 @@ export default class Validator {
      * @param {string} email
      * @return {boolean}
      */
-    validateEmail (email) {
+    static validateEmail (email) {
         const expression = new RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+[^<>()\.,;:\s@\"]{2,})$/);
         const res = expression.test(email);
         if (res) {
@@ -28,25 +28,24 @@ export default class Validator {
      * @param {HTMLElement} myInput
      * @return {boolean}
      */
-    validateLogin  (myInput)  {
-        const lengthOfLogin = myInput.value.length;
-        if (lengthOfLogin >= 6) {
-            myInput.classList.remove('invalid');
-            myInput.classList.add('valid');
+    static validateLogin  (data)  {
+        if (data.length >= 6) {
+            // data.classList.remove('invalid');
+            // data.classList.add('valid');
             console.log('correct login!');
             return true;
         } else {
-            myInput.classList.remove('valid');
-            myInput.classList.add('invalid');
+            // data.classList.remove('valid');
+            // data.classList.add('invalid');
             console.log('incorrect login!');
             return false;
         }
     }
 
-    validateLoginOrEmail(dataInput) {
-        const loginInput = Validator.validateLogin(dataInput);
-        const emailInput = Validator.validateEmail(dataInput);
-        if (loginInput && emailInput) {
+    static validateLoginOrEmail(data) {
+        const loginInput = Validator.validateLogin(data);
+        const emailInput = Validator.validateEmail(data);
+        if (loginInput || emailInput) {
             return true;
         } else {
             console.log('smth went wrong in validateLoginOrEmail!');
@@ -56,19 +55,19 @@ export default class Validator {
 
     /**
      * validatePassword - check validity of input password (only for length)
-     * @param {HTMLElement} myInput
+     * @param {string} data
      * @return {boolean}
      */
-    validatePassword  (myInput)  {
-        const lengthOfPass = myInput.value.length;
-        if (lengthOfPass >= 4) {
-            myInput.classList.remove('invalid');
-            myInput.classList.add('valid');
+    static validatePassword (data)  {
+        const pass = data.length;
+        if (pass >= 4) {
+            // data.classList.remove('invalid');
+            // data.classList.add('valid');
             console.log('correct password!');
             return true;
         } else {
-            myInput.classList.remove('valid');
-            myInput.classList.add('invalid');
+            // data.classList.remove('valid');
+            // data.classList.add('invalid');
             console.log('incorrect password!');
             return false;
         }
@@ -79,7 +78,7 @@ export default class Validator {
      * @param {HTMLElement} myInput
      * @return {boolean}
      */
-    validateImage  (myInput)  {
+    static validateImage  (myInput)  {
         const typeOfImage = myInput.type;
         if ((typeOfImage !== 'image/jpeg') || (typeOfImage !== 'image/png')) {
             myInput.classList.remove('valid');
@@ -100,7 +99,7 @@ export default class Validator {
      * @param second
      * @return {boolean}
      */
-    validateRepeatPasswords  (first, second)  {
+    static validateRepeatPasswords  (first, second)  {
         const firstPass = first.value;
         const secPass = second.value;
 

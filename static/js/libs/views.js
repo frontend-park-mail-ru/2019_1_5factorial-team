@@ -9,7 +9,7 @@ export default class View {
         this.closedView = false;
         this.fest = window.fest[tmpl];
     }
-  
+
     /**
        * Функция рендера с сохранением предыдущей страницы в prevRoot
        * @param root, если null, то рендерится this.prevRoot
@@ -23,15 +23,15 @@ export default class View {
         } else {
             this.prevRoot = root;
         }
-  
+
         this.data = data; // Заглушка для линтера
         // this.element.innerHTML = this.tmpl(data);
         root.innerHTML = this.fest();
         // root.appendChild(this.element);
-  
+
         return this;
     }
-  
+
     close() {
         this.closedView = true;
         try {
@@ -40,7 +40,7 @@ export default class View {
             console.log('no such event - close');
         }
     }
-  
+
     hide(root) {
         root.innerHTML = '';
         return this;

@@ -9,9 +9,8 @@ export default class loginModel {
 
     onLogin(data) {
         const loginOrEmailData = data.loginOrEmail;
-        const password = data.Password;
-        const validate = new Validator();
-        const validateLoginOrEmail = validate.validateLoginOrEmail(loginOrEmailData);
+        const password = data.pass;
+        const validateLoginOrEmail = Validator.validateLoginOrEmail(loginOrEmailData);
 
         if (!validateLoginOrEmail) {
             const response = {
@@ -22,7 +21,7 @@ export default class loginModel {
             return;
         }
 
-        const validatePassword = validate.validatePassword(password);
+        const validatePassword = Validator.validatePassword(password);
 
         if (!validatePassword) {
             const response = {
@@ -37,13 +36,14 @@ export default class loginModel {
 
         api.login({
             loginOrEmailData,
-            password: data.Password
+            password: data.password
         }).then(res => {
             if (res.status === 200) {
                 res.json().then(data => this.localEventBus.callEvent('loginSuccess', data));
             } else {
                 res.json().then(data => this.localEventBus.callEvent('loginResponse', data));
             }
+            console.log('success login!');
         });
     }
 }

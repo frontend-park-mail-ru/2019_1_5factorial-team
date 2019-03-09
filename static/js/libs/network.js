@@ -1,4 +1,6 @@
 
+const serverUrl1 = 'http://localhost:5051';
+
 export default class Network {
     /**
     * Пост запрос, с JSON body
@@ -45,7 +47,7 @@ export default class Network {
     }
 
     static getServerURL() {
-        return 'https://localhost:3000';
+        return serverUrl1;
     }
 
     /**

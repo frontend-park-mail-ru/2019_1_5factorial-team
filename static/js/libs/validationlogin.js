@@ -14,10 +14,9 @@ submitLogin.addEventListener('click', (event) => {
     const passInput = document.getElementsByClassName('js-password')[0];
     const logInput = document.getElementsByClassName('js-login-or-email')[0];
 
-    const validate = new Validator();
-    const checkLogin = validate.validateLogin(logInput);
-    const checkPass = validate.validatePassword(passInput);
-    const checkEmail = validate.validateEmail(logInput);
+    const checkLogin = Validator.validateLogin(logInput);
+    const checkPass = Validator.validatePassword(passInput);
+    const checkEmail = Validator.validateEmail(logInput);
     if (checkLogin && checkPass || checkEmail && checkPass) {
         console.log('Success!');
     } else {

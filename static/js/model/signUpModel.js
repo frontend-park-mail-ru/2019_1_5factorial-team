@@ -50,10 +50,9 @@ export default class signUpModel {
     }
 
     checkChangePasswordRepeat (data) {
-        const validator = new Validator();
         const repass = data.repass;
         const pass = data.pass;
-        const errRepass = validator.validateRepeatPasswords(repass, pass);
+        const errRepass = Validator.validateRepeatPasswords(repass, pass);
 
         if (!errRepass) {
             this.defaultInputVals['repass'] = false;
@@ -66,9 +65,8 @@ export default class signUpModel {
     }
 
     checkChangePassword (data) {
-        const validator = new Validator();
         const pass = data.pass;
-        const errPass = validator.validatePassword(pass);
+        const errPass = Validator.validatePassword(pass);
         if (!errPass) {
             this.defaultInputVals['pass'] = false;
             this.localEventBus.callEvent('changePasswordResponse', { error: errPass });
@@ -80,9 +78,8 @@ export default class signUpModel {
     }
 
     checkChangeEmail (data) {
-        const validator = new Validator();
         const email = data.email;
-        const errEmail = validator.validateEmail(email);
+        const errEmail = Validator.validateEmail(email);
         if (!errEmail) {
             this.defaultInputVals['email'] = false;
             this.localEventBus.callEvent('changeEmailResponse', { error: errEmail });
@@ -94,9 +91,8 @@ export default class signUpModel {
     }
 
     checkChangeLogin (data) {
-        const validator = new Validator();
         const login = data.login;
-        const errLogin = validator.validateLogin(login);
+        const errLogin = Validator.validateLogin(login);
         if (!errLogin) {
             this.defaultInputVals['login'] = false;
             this.localEventBus.callEvent('changeLoginResponse', { error: errLogin });
