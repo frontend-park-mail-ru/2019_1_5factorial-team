@@ -12,9 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const page = document.querySelector('.body-cnt');
     createPage(page);
-    const router = new Router(page);
-    
     const main = document.querySelector('.main-container');
+    const router = new Router(page);
+
     const menuCntl = new menuController();
     const aboutCtrl = new aboutController();
     const loginCtrl = new loginController({router});
@@ -23,8 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     router.add('/about', main, aboutCtrl.aboutView);
     router.add('/login', main, loginCtrl.loginView);
-    router.add('/signup', main, signUpCtrl.singUpView);
-    router.add('/leaders', main, leaderboardCtrl.leadersView);
+    router.add('/signup', main, signUpCtrl.signUpView);
+    router.add('/leaders', main, leaderboardCtrl.leaderboardView);
     // router.add('/profile', main, profileCtrl.profileView);
     router.add('/', main, menuCntl.menuView);
 
@@ -32,5 +32,5 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function createPage(page) {
-    page.innerHtml = '<main class="main-container"></main>';
+    page.innerHTML = `<main class="main-container"></main>`;
 }

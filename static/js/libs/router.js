@@ -32,11 +32,11 @@ export default class Router {
        * @param view компонент, который отрисуется
        * @param data router data
        */
-    add(path, root = this.root, view, data) {
+    add (path, root = this.root, view, data) {
         this.routes.set(path, {
             root,
             view,
-            data,
+            data
         });
     }
   
@@ -78,7 +78,7 @@ export default class Router {
   
         if (this.routes.has(path)) {
             const route = this.routes.get(path);
-            route.view.render(route.root, route.data);
+            route.view.render(route.data);
             this.currentRoute = path;
         } else {
             this.notFoundView.render(this.notFoundViewRoot);

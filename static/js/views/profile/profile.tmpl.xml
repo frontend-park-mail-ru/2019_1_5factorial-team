@@ -18,33 +18,39 @@
     <main class="container__block container__block_center">
         <div class="content">
             <div class="content-block content-block_avatar">
-                <img class="avatar-img" src="img/default.jpg">
-                <form class="form js-upload-photo">
+                <img class="avatar-img" src="img/{avatar}">
+                <div class="form js-upload-photo">
                     <div class="change-btn-photo">
-                        <label>
-                            <input class="btn photo-btn js-change-image" type="file" title="avatar" accept="image/jpeg, image/png"/>
-                            <div class="btn profile__btn">CHANGE IMAGE</div>
-                        </label>
+                        <input type="file" class="ibtn photo-btn js-change-image" name="avatar" accept="image/jpeg,image/png"></input>
+                        <div class="btn profile__btn">CHANGE IMAGE</div>
                     </div>
-                </form>
+                </div>
             </div>
 
             <div class="content-block">
                 <div class="content-block-unit content-block-unit_profile js-login-subblock">
                     <h2 class="text-title content-block-unit__title">login</h2>
-                    <div class="content-block-unit_profile__row js-login-row"></div>
+                    <div class="content-block-unit_profile__row js-login-row">
+                        <fest:value>param.user.login</fest:value>
+                    </div>
                 </div>
                 <div class="content-block-unit content-block-unit_profile js-email-subblock">
                     <h2 class="text-title content-block-unit__title">email</h2>
-                    <div class="content-block-unit_profile__row js-email-row"></div>
+                    <div class="content-block-unit_profile__row js-email-row">
+                        <fest:value>param.user.email</fest:value>
+                    </div>
                 </div>
                 <div class="content-block-unit content-block-unit_profile content-block-unit_profile_line js-balance-subblock">
                     <h2 class="text-title content-block-unit__title">balance:</h2>
-                    <div class="js-balance-row"></div>
+                    <div class="js-balance-row">
+                        <fest:value>param.user.balance</fest:value>
+                    </div>
                 </div>
                 <div class="content-block-unit content-block-unit_profile content-block-unit_profile_line js-score-subblock">
                     <h2 class="text-title content-block-unit__title">score:</h2>
-                    <div class="js-score-row"></div>
+                    <div class="js-score-row">
+                        <fest:value>param.user.score</fest:value>
+                    </div>
                 </div>
             </div>
 

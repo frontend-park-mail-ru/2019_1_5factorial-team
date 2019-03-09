@@ -25,7 +25,7 @@ export default class signUpController {
             router.toStartPage();
         });
 
-        this.signupView = new signUpView({ eventBus });
+        this.signUpView = new signUpView({ eventBus });
         this.signupModel = new signUpModel(eventBus);
     }
 }
