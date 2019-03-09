@@ -45,7 +45,7 @@ export default class api {
 
     static getUserCount () {
         return network.doGet({
-            url: `/api/user/count`
+            url: '/api/user/count'
         });
     }
 
