@@ -18,7 +18,7 @@ export default class Network {
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
             },
-        });
+        }, console.log('Body is ', body));
     }
 
     /**

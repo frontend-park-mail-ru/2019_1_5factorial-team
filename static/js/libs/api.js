@@ -22,7 +22,8 @@ export default class api {
         }).catch(error => console.error(error));
     }
 
-    static login({ loginOrEmail, password }) {
+    static login({ loginOrEmail, password } = {}) {
+        console.log(loginOrEmail);
         return network.doPost({
             url: '/api/session',
             body: {

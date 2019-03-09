@@ -35,15 +35,15 @@ export default class loginModel {
         this.localEventBus.callEvent('loadWaiting');
 
         api.login({
-            loginOrEmailData,
-            password: data.password
+            loginOrEmail: loginOrEmailData,
+            password: data.pass
         }).then(res => {
             if (res.status === 200) {
                 res.json().then(data => this.localEventBus.callEvent('loginSuccess', data));
             } else {
                 res.json().then(data => this.localEventBus.callEvent('loginResponse', data));
             }
-            console.log('success login!');
+            console.log(data);
         });
     }
 }
