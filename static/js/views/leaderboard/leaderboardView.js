@@ -3,7 +3,7 @@ import paginator from '../../libs/pagination.js';
 
 export default class leaderboardView extends View {
     constructor({ eventBus = {} }) {
-        super('leaderboardView.tmpl', eventBus);
+        super('leaderboard/leaderboardView.tmpl', eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('loadResponse', this.loadResponse.bind(this));
         this.localEventBus.getEvent('loadWaiting', this.loadWaiting.bind(this));
