@@ -32,5 +32,5 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function createPage(page) {
-    page.innerHTML = `<main class="main-container"></main>`;
+    page.innerHTML = '<main class="main-container"></main>';
 }
