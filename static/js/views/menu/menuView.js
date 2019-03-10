@@ -31,7 +31,7 @@ export default class viewMenu extends View {
                     clickCallback: this.onOfflineMultiplayerClick.bind(this),
                     isNavigate: false },
                 { textLabel: 'Leaders',
-                    href: '',
+                    href: '/leaderboard',
                     clickCallback: this.onOfflineMultiplayerClick.bind(this),
                     isNavigate: false },
                 { textLabel: 'About', href: '/about' }
@@ -50,7 +50,7 @@ export default class viewMenu extends View {
 
     render(root, data = {}) {
         super.render(root, data);
-        // this.localEventBus.callEvent('checkAuthorization');
+        this.localEventBus.callEvent('checkAuthorization');
     }
 
     onOfflineMultiplayerClick() {

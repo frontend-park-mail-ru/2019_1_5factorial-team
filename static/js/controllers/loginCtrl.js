@@ -12,11 +12,9 @@ const eventList = [
 export default class loginController {
     constructor(router) {
         const eventBus = new EventBus(eventList);
-
         eventBus.getEvent('loginSuccess', () => {
             router.toStartPage();
         });
-
         this.loginView = new loginView({eventBus});
         this.loginModel = new loginModel(eventBus);
     }

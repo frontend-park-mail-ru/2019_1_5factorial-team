@@ -31,6 +31,8 @@ export default class signUpView extends View {
 
     _onSignupResponse (data) {
         const field = data.field;
+        const error = data.error;
+        console.log(error);
 
         switch (field) {
             case 'email':
