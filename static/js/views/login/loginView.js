@@ -11,6 +11,7 @@ export default class loginView extends View {
         super.render(root, data);
 
         let form = document.querySelector('.form');
+        this.warning = this.element.querySelector('.signin__warning');
         form.addEventListener('submit', this._onSubmit.bind(this, form));
     }
 
@@ -25,17 +26,6 @@ export default class loginView extends View {
 
     _onSubmitResponse (data) {
         const error = data.error;
-        if (error) {
-            this.showWarning(error);
-        }
-    }
-
-    showWarning (text) {
-        this._clearWarning();
-        this.warning.innerHTML = `<p>${text}</p>`;
-    }
-
-    _clearWarning () {
-        this.warning.innerHTML = '';
+        console.log(error);
     }
 }

@@ -41,7 +41,7 @@ export default class api {
                 login,
                 password
             }
-        });
+        }, console.log('signup api debug'));
     }
 
     static getUserCount () {

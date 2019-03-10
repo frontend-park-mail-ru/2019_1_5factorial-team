@@ -80,11 +80,12 @@ export default class Router {
             const route = this.routes.get(path);
             route.view.render(route.data);
             this.currentRoute = path;
-        } else {
-            this.notFoundView.render(this.notFoundViewRoot);
-            this.currentRoute = null;
-            this.isCurrentNotFound = true;
         }
+        // else {
+        //     this.notFoundView.render(this.notFoundViewRoot);
+        //     this.currentRoute = null;
+        //     this.isCurrentNotFound = true;
+        // }
     }
   
     /**

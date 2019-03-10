@@ -6,7 +6,7 @@ package-lock.json
 static/js/views/menu/menuView.tmpl.js
 static/js/views/login/loginView.tmpl.js
 static/js/views/about/about.tmpl.js 
-static/js/views/profile/profile.tmpl.js
+static/js/views/profile/profileView.tmpl.js
 static/js/views/signUp/signUpView.tmpl.js
 static/js/views/leaderboard/leaderboardView.tmpl.js
 
@@ -16,4 +16,4 @@ static/js/views/leaderboard/leaderboardView.tmpl.xml
 static/js/views/login/loginView.tmpl.xml
 static/js/views/about/about.tmpl.xml 
 static/js/views/signUp/signUp.tmpl.xml 
-static/js/views/profile/profile.tmpl.xml 
+static/js/views/profile/profileView.tmpl.xml 

@@ -7,13 +7,11 @@ export default class signUpModel {
         this.localEventBus.getEvent('changeEmail', this.checkChangeEmail.bind(this));
         this.localEventBus.getEvent('changeLogin', this.checkChangeLogin.bind(this));
         this.localEventBus.getEvent('changePassword', this.checkChangePassword.bind(this));
-        this.localEventBus.getEvent('changePasswordRepeat', this.checkChangePasswordRepeat.bind(this));
         this.localEventBus.getEvent('signup', this.checkSignUp.bind(this));
 
         this.defaultInputVals = {
             pass: false,
             login: false,
-            repass: false,
             email: false
         };
     }
@@ -43,25 +41,9 @@ export default class signUpModel {
             });
         } else {
             this.checkChangePassword(data);
-            this.checkChangePasswordRepeat(data);
             this.checkChangeEmail(data);
             this.checkChangeLogin(data);
         }
-    }
-
-    checkChangePasswordRepeat (data) {
-        const repass = data.repass;
-        const pass = data.pass;
-        const errRepass = Validator.validateRepeatPasswords(repass, pass);
-
-        if (!errRepass) {
-            this.defaultInputVals['repass'] = false;
-            this.localEventBus.callEvent('changePasswordRepeatResponse', { error: errRepass });
-            return;
-        }
-
-        this.defaultInputVals['repass'] = true;
-        this.localEventBus.callEvent('changePasswordRepeatResponse', {});
     }
 
     checkChangePassword (data) {

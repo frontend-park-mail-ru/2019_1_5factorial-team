@@ -2,7 +2,7 @@ import View from '../../libs/views.js';
 
 export default class signUpView extends View {
     constructor({ eventBus = {} }) {
-        super('signUpView.tmpl', eventBus);
+        super('signUp/signUpView.tmpl', eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('changeEmailResponse', this._onChangeEmailResponse.bind(this));
         this.localEventBus.getEvent('changeLoginResponse', this._onChangeLoginResponse.bind(this));
@@ -23,15 +23,8 @@ export default class signUpView extends View {
         this.loginInput.addEventListener('change', this._onChangeLogin.bind(this, this.loginInput));
 
         this.passwordInput = this.form.elements['password'];
-        this.repasswordInput = this.form.elements['password-repeat'];
 
-        this.passwordInput.addEventListener('change', this._onChangePass.bind(this, this.passwordInput, this.repasswordInput));
-        // this.repasswordInput.addEventListener('change', this._onChangeRepass.bind(this, this.repasswordInput, this.passwordInput));
-
-        this.emailWarning = this.element.querySelector('.js-warning-email');
-        this.loginWarning = this.element.querySelector('.js-warning-login');
-        this.passWarning = this.element.querySelector('.js-warning-password');
-        this.repassWarning = this.element.querySelector('.js-warning-repassword');
+        this.passwordInput.addEventListener('change', this._onChangePass.bind(this, this.passwordInput));
 
         this.form.addEventListener('submit', this._onSubmit.bind(this));
     }
@@ -76,20 +69,11 @@ export default class signUpView extends View {
             signUpView.showWarning(el, warning, error);
             return;
         }
-
-        signUpView._clearWarning(el, warning);
     }
 
-    _onChangeRepass (repassEl, passEl) {
-        const repass = repassEl.value;
+    _onChangePass (passEl) {
         const pass = passEl.value;
-        this.localEventBus.callEvent('changePasswordRepeat', { repass, pass });
-    }
-
-    _onChangePass (passEl, repassEl) {
-        const pass = passEl.value;
-        const repass = repassEl.value;
-        this.localEventBus.callEvent('changePassword', { pass, repass });
+        this.localEventBus.callEvent('changePassword', { pass });
     }
 
     _onChangeEmail (emailInput) {
@@ -105,11 +89,11 @@ export default class signUpView extends View {
 
     _onSubmit (ev) {
         ev.preventDefault();
+        console.log('_onsubmit method in view');
         const email = this.form.elements['email'].value;
         const login = this.form.elements['login'].value;
         const pass = this.form.elements['password'].value;
-        const repass = this.form.elements['password-repeat'].value;
 
-        this.localEventBus.callEvent('signup', { email, login, pass, repass });
+        this.localEventBus.callEvent('signup', { email, login, pass });
     }
 }

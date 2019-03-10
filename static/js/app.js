@@ -4,6 +4,7 @@ import aboutController from './controllers/aboutCtrl.js';
 import loginController from './controllers/loginCtrl.js';
 import signUpController from './controllers/signUpCtrl.js';
 import leaderboardController from './controllers/leaderboardCtrl.js';
+import profileController from './controllers/profileCtrl.js';
 
 import Router from './libs/router.js';
 
@@ -20,12 +21,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginCtrl = new loginController({router});
     const signUpCtrl = new signUpController({router});
     const leaderboardCtrl = new leaderboardController();
+    const profileCtrl = new profileController({router});
 
     router.add('/about', main, aboutCtrl.aboutView);
     router.add('/login', main, loginCtrl.loginView);
     router.add('/signup', main, signUpCtrl.signUpView);
     router.add('/leaders', main, leaderboardCtrl.leaderboardView);
-    // router.add('/profile', main, profileCtrl.profileView);
+    router.add('/profile', main, profileCtrl.profileView);
     router.add('/', main, menuCntl.menuView);
 
     router.start();

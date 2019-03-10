@@ -18,7 +18,7 @@
     <main class="container__block container__block_center">
         <div class="content">
             <div class="content-block content-block_avatar">
-                <img class="avatar-img" src="img/{avatar}">
+                <img class="avatar-img" src="img/{avatar}"/>
                 <div class="form js-upload-photo">
                     <div class="change-btn-photo">
                         <input type="file" class="ibtn photo-btn js-change-image" name="avatar" accept="image/jpeg,image/png"></input>
@@ -59,7 +59,7 @@
                 <button class="btn profile__btn profile__btn_action js-delete-profile">DELETE PROFILE</button>
             </div>
 
-            <a class="btn btn_back-menu" href="">back to menu</a>
+            <a class="btn btn_back-menu" href="/">back to menu</a>
         </div>
     </main>
 
