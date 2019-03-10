@@ -1,6 +1,6 @@
 import menuModel from '../model/menuModel.js';
 import menuView from '../views/menu/menuView.js';
-import EventBus from '../libs/eventBus.js';
+import eventBus from '../libs/eventBus.js';
 
 const eventList = [
     'checkAuthorizationResponse',
@@ -11,8 +11,8 @@ const eventList = [
 
 export default class menuController {
     constructor() {
-        const eventBus = new EventBus(eventList);
-        this.menuView = new menuView({ eventBus });
+        const EventBus = new eventBus(eventList);
+        this.menuView = new menuView({eventBus});
         this.menuModel = new menuModel(EventBus);
     }
 }

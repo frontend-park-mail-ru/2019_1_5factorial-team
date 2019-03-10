@@ -56,7 +56,7 @@ export default class leaderboardView extends View {
 
         // this.endLoadWaiting();
 
-        super.render(null, { users: data });
+        super.render(null, { users: data.score });
 
         if (this.pagination !== null) {
             this.pagination.render(this.element.querySelector('.paginator'));

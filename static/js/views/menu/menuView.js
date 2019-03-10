@@ -7,7 +7,7 @@ export default class viewMenu extends View {
     constructor({ eventBus = {} } = {}) {
         super('menu/menuView.tmpl', eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
-        // this.localEventBus.getEvent('checkAuthorizationResponse', this.onCheckAuthResponse.bind(this));
+        this.localEventBus.getEvent('checkAuthorizationResponse', this.onCheckAuthResponse.bind(this));
     }
 
     onCheckAuthResponse ({ isAuth, online = true } = {}) {
@@ -50,7 +50,7 @@ export default class viewMenu extends View {
 
     render(root, data = {}) {
         super.render(root, data);
-        this.localEventBus.callEvent('checkAuthorization');
+        // this.localEventBus.callEvent('checkAuthorization');
     }
 
     onOfflineMultiplayerClick() {

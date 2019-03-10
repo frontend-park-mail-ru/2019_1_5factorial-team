@@ -26,8 +26,8 @@ export default class View {
 
         this.data = data; // Заглушка для линтера
         // this.element.innerHTML = this.tmpl(data);
-        root.innerHTML = this.fest();
-        // root.appendChild(this.element);
+        root.innerHTML = this.fest(data);
+        root.appendChild(this.element);
 
         return this;
     }
