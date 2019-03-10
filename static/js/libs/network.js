@@ -50,6 +50,10 @@ export default class Network {
         return serverUrl1;
     }
 
+    static getStorageURL () {
+        return serverUrl1 + '/storage/';
+    }
+
     /**
     * Put запрос, с JSON body
     * @param url

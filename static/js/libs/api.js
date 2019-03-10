@@ -7,7 +7,8 @@ export default class api {
      * @param {*} user 
      */
     static loadUser(user) {
-        return network.doGet({ url:`/api/user/${user}` }).then(res => res.json());
+        this.user = user; //временная заглушка для линтеров
+        return network.doGet({ url:'/api/user' }).then(res => res.json());
     }
 
     static sessionCheck() {
@@ -46,7 +47,7 @@ export default class api {
 
     static getUserCount () {
         return network.doGet({
-            url: '/api/user/count'
+            url: '/api/users/count'
         });
     }
 
@@ -72,7 +73,7 @@ export default class api {
 
     static getScore ({ limit = 5, offset = 0 } = {}) {
         return network.doGet({
-            url: `/api/user/score/?limit=${limit}&offset=${offset}`
+            url: `/api/users/score/?limit=${limit}&offset=${offset}`
         });
     }
 

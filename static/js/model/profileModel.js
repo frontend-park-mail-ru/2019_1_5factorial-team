@@ -16,6 +16,7 @@ export default class profileModel {
         this.localEventBus.getEvent('submitPassword', this._onSubmitPassword.bind(this));
         this.localEventBus.getEvent('checkAuth', this._onCheckAuth.bind(this));
         this.localEventBus.getEvent('loadUser', this._onLoadUser.bind(this));
+        this.localEventBus.getEvent('sout', this._onLogout.bind(this));
     }
 
     _onChangeAvatar(data) {
@@ -39,6 +40,12 @@ export default class profileModel {
                     User.removeUser();
                 }
             });
+    }
+
+    _onLogout() {
+        api.deleteSession();
+        this.localEventBus.callEvent('car', { isAuth: false, signout: true });
+        User.removeUser();
     }
 
     _onSubmitPassword(data) {
@@ -113,7 +120,7 @@ export default class profileModel {
     }
 
 
-    _onLoadUser(data = {}) {
+    _onLoadUser(data) {
         this._currentUserGUID = data.user_guid;
 
         if (!User.checkUser()) {
@@ -121,6 +128,7 @@ export default class profileModel {
                 this.localEventBus.callEvent('loadUserResponse', {});
             }
 
+            console.log(this._currentUserGUID);
             api.loadUser(this._currentUserGUID)
                 .then(user => {
                     if (user.error) {
@@ -129,7 +137,7 @@ export default class profileModel {
                         const toSetUser = {
                             avatar: (user.avatar === '' ? 'images/default-avatar.svg' : Network.getStorageURL() + user.avatar),
                             score: user.score || 0,
-                            login: user.login || 'Nouserlogin',
+                            login: user.nickname || 'Nouserlogin',
                             email: user.email,
                             guid: user.guid,
                         };
@@ -141,7 +149,7 @@ export default class profileModel {
                 });
         } else {
             this.localEventBus.callEvent('loadUserResponse', {user: {
-                login: User.login,
+                login: User.nickname,
                 guid: User.guid,
                 score: User.score,
                 avatar: User.avatar,

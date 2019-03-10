@@ -31,25 +31,25 @@
                 <div class="content-block-unit content-block-unit_profile js-login-subblock">
                     <h2 class="text-title content-block-unit__title">login</h2>
                     <div class="content-block-unit_profile__row js-login-row">
-                        <fest:value>param.user.login</fest:value>
+                        <fest:value>params.user.login</fest:value>
                     </div>
                 </div>
                 <div class="content-block-unit content-block-unit_profile js-email-subblock">
                     <h2 class="text-title content-block-unit__title">email</h2>
                     <div class="content-block-unit_profile__row js-email-row">
-                        <fest:value>param.user.email</fest:value>
+                        <fest:value>params.user.email</fest:value>
                     </div>
                 </div>
                 <div class="content-block-unit content-block-unit_profile content-block-unit_profile_line js-balance-subblock">
                     <h2 class="text-title content-block-unit__title">balance:</h2>
                     <div class="js-balance-row">
-                        <fest:value>param.user.balance</fest:value>
+                        <fest:value>params.user.balance</fest:value>
                     </div>
                 </div>
                 <div class="content-block-unit content-block-unit_profile content-block-unit_profile_line js-score-subblock">
                     <h2 class="text-title content-block-unit__title">score:</h2>
                     <div class="js-score-row">
-                        <fest:value>param.user.score</fest:value>
+                        <fest:value>params.user.score</fest:value>
                     </div>
                 </div>
             </div>
@@ -67,6 +67,7 @@
         <div class="users">
             <a class="btn users__btn">Login</a>
             <a class="btn users__btn">Signup</a>
+            <a class="btn users__btn js-signout" href="/">Signout</a>
         </div>
     </section>
 </div>

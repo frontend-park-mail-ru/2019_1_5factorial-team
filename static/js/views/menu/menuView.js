@@ -4,10 +4,13 @@ import Menu from '../../components/menu/menuComponent.js';
 // import tmpl from './menuView.tmpl';
 
 export default class viewMenu extends View {
-    constructor({ eventBus = {} } = {}) {
+    constructor(eventBus) {
         super('menu/menuView.tmpl', eventBus);
+        console.log(eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
-        this.localEventBus.getEvent('checkAuthorizationResponse', this.onCheckAuthResponse.bind(this));
+        console.log(this.localEventBus);
+        // this.localEventBus.getEvent('checkAuthorizationResponse', this.onCheckAuthResponse.bind(this));
+        // this.localEventBus.getEvent('checkAuthorizationResponse', this.onCheckAuthResponse.bind(this));
     }
 
     onCheckAuthResponse ({ isAuth, online = true } = {}) {
