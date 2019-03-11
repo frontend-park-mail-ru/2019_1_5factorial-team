@@ -11,7 +11,16 @@ export default class viewMenu extends View {
     }
 
     //{ isAuth, online = true } = {}
-    onCheckAuthResponse () {
+    onCheckAuthResponse ({isAuthorized} = {}) {
+        const rightBlock = document.querySelector('.menu-right-block');
+        console.log(isAuthorized);
+    
+        if (!isAuthorized) {
+            console.log('no auth in menu');
+        } else {
+            rightBlock.innerHTML = '';
+            console.log('auth in menu');
+        }
         // let menu;
         // const menuSection = this.element.querySelector('.menu-content');
         // if (!isAuth && online) {

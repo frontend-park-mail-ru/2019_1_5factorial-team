@@ -7,14 +7,16 @@ export default class menuModel {
     }
 
     checkAuthorization() {
-        Network.doGet({ url: 'api/session' }).then(res => {
+        Network.doGet({ url: '/api/session' }).then(res => {
             if (res.status !== 200) {
-                res.json().then(data => this.localEvents.callEvent('checkAuthorizationResponse', {
-                    isAuthorized: false,
-                    error: data.error
-                }));
+                res.json()
+                    .then(data => this.localEvents.callEvent('checkAuthorizationResponse', {
+                        isAuthorized: false,
+                        error: data.error
+                    }));
             } else {
                 this.localEvents.callEvent('checkAuthorizationResponse', {
+                    isAuthorized: true,
                     online: navigator.onLine
                 });
             }
