@@ -51,26 +51,33 @@
                     <h2 class="text-title content-block-unit__title">email</h2>
                     <div class="content-block-unit_profile__row js-email-row"></div>
                 </div>
-                <div class="content-block-unit content-block-unit_profile content-block-unit_profile_line js-balance-subblock">
-                    <h2 class="text-title content-block-unit__title content-block-unit__title_row">balance:</h2>
-                    <div class="js-balance-row"></div>
-                </div>
+                <hr class="hr"/>
                 <div class="content-block-unit content-block-unit_profile content-block-unit_profile_line js-score-subblock">
                     <h2 class="text-title content-block-unit__title content-block-unit__title_row">score:</h2>
                     <div class="js-score-row"></div>
                 </div>
+                <hr class="hr"/>
                 <div class="content-block-unit content-block-unit_profile">
-                    <form class="form js-change-password">
-                        <label class="text-title content-block-unit__title" for="password">password</label>
-                        <input class="input-row js-password" type="password" id="password" placeholder=" ">
-                        <button class="btn btn_contained" type="submit">Change</button>
+                    <form class="form js-change-password js-new">
+                        <label class="form__label">
+                            <input class="content-block-unit_profile__row js-password-old" type="password" id="old-password" placeholder="old password">
+                        </label>
+                        <label class="form__label">
+                            <input class="content-block-unit_profile__row js-password-new" type="password" id="new-password" placeholder="new password">
+                        </label>
+                        <button class="btn btn_contained profile__btn profile__btn_action js-button-submit" type="submit">Change password</button>
+                        <hr class="hr"/>
                     </form>
                 </div>
-            </div>
-
-            <div class="content-block content-block_actions">
-                <!--<button class="btn btn_contained profile__btn profile__btn_action js-change-password">CHANGE PASSWORD</button>-->
-                <button class="btn btn_contained profile__btn profile__btn_action js-delete-profile">DELETE PROFILE</button>
+                <!--<div class="content-block-unit content-block-unit_profile">-->
+                    <!--<form class="form js-change-password js-new">-->
+                        <!--<label class="text-title content-block-unit__title" for="password">password NEW</label>-->
+                        <!--<input class="input-row js-password js-password-old" name ="password" type="password" id="password-new" placeholder=" "/>-->
+                        <!--<label class="text-title content-block-unit__title" for="password">password OLD</label>-->
+                        <!--<input class="input-row js-password js-password-new" name ="password" type="password" id="passwor-old" placeholder=" "/>-->
+                        <!--<button class="btn btn_contained js-button-submit" type="submit">Change</button>-->
+                    <!--</form>-->
+                <!--</div>-->
             </div>
 
             <a class="btn btn_back-menu" href="">back to menu</a>
@@ -86,3 +93,6 @@
 </div>
 </body>
 </html>
+
+
+
