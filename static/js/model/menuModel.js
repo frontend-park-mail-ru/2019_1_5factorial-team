@@ -8,7 +8,7 @@ export default class menuModel {
         this.localEvents.getEvent('checkAuthorization', this.checkAuthorization.bind(this));
         this.localEvents.getEvent('signOut', this._onLogout.bind(this));
     }
-
+    
     _onLogout() {
         api.deleteSession();
         this.localEvents.callEvent('car', { isAuth: false, signout: true });

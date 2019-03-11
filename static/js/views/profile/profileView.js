@@ -83,6 +83,7 @@ export default class profileView extends View {
         this._avatarUploader.addEventListener('change', () => {
             this.localEventBus.callEvent('changeAvatar', { avatar: this._avatarUploader.files[0] });
         });
+        
         signoutButton.addEventListener('click', () => {
             this.localEventBus.callEvent('sout');
         });

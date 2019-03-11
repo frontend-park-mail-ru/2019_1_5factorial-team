@@ -55,7 +55,7 @@
             </div>
 
             <div class="content-block content-block_actions">
-                <button class="btn profile__btn profile__btn_action js-change-password">CHANGE PASSWORD</button>
+                <a class="btn profile__btn profile__btn_action js-change-password" href="/changePassword">CHANGE PASSWORD</a>
                 <button class="btn profile__btn profile__btn_action js-delete-profile">DELETE PROFILE</button>
             </div>
 

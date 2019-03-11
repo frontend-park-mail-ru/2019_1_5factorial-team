@@ -58,12 +58,12 @@ export default class leaderboardModel {
     }
 
     //{ pageNum = 1 } = {}
-    loadPage () {
+    loadPage ({pageNum = 1} = {}) {
         this.localEventBus.callEvent('loadWaiting');
         api.getScore({
             limit: this.numOfPositions,
-            // offset: this.numOfPositions * (pageNum - 1)
-            offset: 1
+            offset: pageNum
+            // offset: 1
         }).then(res => {
             if (res.status === 200) {
                 return res.json();

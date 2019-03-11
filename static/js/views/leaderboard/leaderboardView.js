@@ -26,10 +26,10 @@ export default class leaderboardView extends View {
         if (!isAuthorized) {
             console.log('no auth in menu');
         } else {
+            // <img class="users__avatar" src="img/default.jpg">
+            // <div class="users__title">hello</div>
             rightBlock.innerHTML = `<section class="container__block container__block_side">
             <div class="users">
-                <img class="users__avatar" src="img/default.jpg">
-                <div class="users__title">hello</div>
                 <a class="btn users__btn_action" href="/profile">profile</a>
                 <a class="btn users__btn_action js-signout" href="/">SignOut</a>
             </div>

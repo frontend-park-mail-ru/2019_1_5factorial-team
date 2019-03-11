@@ -122,13 +122,13 @@ export default class profileModel {
 
     _onLoadUser(data) {
         this._currentUserGUID = data.user_guid;
+        console.log('onLoadUser data ', data);
 
         if (!User.checkUser()) {
             if (!this._currentUserGUID) {
                 this.localEventBus.callEvent('loadUserResponse', {});
             }
 
-            console.log(this._currentUserGUID);
             api.loadUser(this._currentUserGUID)
                 .then(user => {
                     if (user.error) {
