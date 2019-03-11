@@ -1,9 +1,18 @@
 import Network from '../libs/network.js';
+import api from '../libs/api.js';
+import {User} from '../libs/users.js';
 
 export default class menuModel {
     constructor(events) {
         this.localEvents = events;
         this.localEvents.getEvent('checkAuthorization', this.checkAuthorization.bind(this));
+        this.localEvents.getEvent('signOut', this._onLogout.bind(this));
+    }
+
+    _onLogout() {
+        api.deleteSession();
+        this.localEvents.callEvent('car', { isAuth: false, signout: true });
+        User.removeUser();
     }
 
     checkAuthorization() {
