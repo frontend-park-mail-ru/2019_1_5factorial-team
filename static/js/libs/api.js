@@ -51,13 +51,14 @@ export default class api {
         });
     }
 
-    static updateUser ({ user, email, password, avatar } = {}) {
+    static updateUser ({ old_password, new_password, avatar } = {}) {
+        console.log('updateUser ', {old_password, new_password});
         return network.doPut({
-            url: `/api/user/${user}`,
+            url: '/api/user',
             body: {
-                email,
-                password,
-                avatar
+                avatar,
+                'new_password': new_password,
+                'old_password': old_password
             }
         });
     }

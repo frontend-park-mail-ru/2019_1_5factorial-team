@@ -18,7 +18,7 @@
     <main class="container__block container__block_center">
         <div class="content">
             <div class="content-block content-block_avatar">
-                <img class="avatar-img" src="img/{avatar}"/>
+                <img class="avatar-img" src="{avatar}"/>
                 <div class="form js-upload-photo">
                     <div class="change-btn-photo">
                         <input type="file" class="ibtn photo-btn js-change-image" name="avatar" accept="image/jpeg,image/png"></input>
@@ -51,6 +51,15 @@
                     <div class="js-score-row">
                         <fest:value>params.user.score</fest:value>
                     </div>
+                </div>
+                <div class="content-block-unit content-block-unit_profile">
+                    <form class="form js-change-password js-new">
+                    <label class="text-title content-block-unit__title" for="password">password NEW</label>
+                        <input class="input-row js-password js-password-old" name ="password" type="password" id="password" placeholder=" "/>
+                        <label class="text-title content-block-unit__title" for="password">password OLD</label>
+                        <input class="input-row js-password js-password-new" name ="password" type="password" id="password" placeholder=" "/>
+                        <button class="btn btn_contained js-button-submit" type="submit">Change</button>
+                    </form>
                 </div>
             </div>
 

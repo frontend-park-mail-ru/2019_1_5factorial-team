@@ -8,11 +8,11 @@ export default class profileView extends View {
         this.localEventBus.getEvent('loadUserResponse', this._onLoadUserResponse.bind(this));
 
         // this.localEventBus.getEvent('changeEmailResponse', this._onChangeEmailResponse.bind(this));
-        // this.localEventBus.getEvent('changePasswordResponse', this._onChangePassResponse.bind(this));
+        this.localEventBus.getEvent('changePasswordResponse', this._onChangePassResponse.bind(this));
         this.localEventBus.getEvent('changeAvatarResponse', this._onChangeAvatarResponse.bind(this));
         this.localEventBus.getEvent('changeAvatarSuccess', this._onChangeAvatarSuccess.bind(this));
         // this.localEventBus.getEvent('submitEmailSuccess', this._onSubmitEmailSucces.bind(this));
-        // this.localEventBus.getEvent('submitPasswordSuccess', this._onSubmitPasswordSucces.bind(this));
+        this.localEventBus.getEvent('submitPasswordSuccess', this._onSubmitPasswordSuccess.bind(this));
     }
 
     render(root, data = {}) {
@@ -20,14 +20,16 @@ export default class profileView extends View {
         this.localEventBus.callEvent('checkAuth');
     }
 
-    _onChangeAvatarResponse (data) {
-        if (data.error) {
-            this._showElement(this._avatarUploaderWarning);
-            this._avatarUploaderWarning.innerHTML = data.error;
-        } else {
-            this._hideElement(this._avatarUploaderWarning);
-            this._avatarUploaderWarning.innerHTML = '';
-        }
+    _onSubmitPasswordSuccess(data) {
+        this._onChangeResponseTmpl(data.error, this._passwordInputPasswordForm, this._passWarning);
+    }
+
+    _onChangePassResponse(data) {
+        this._onChangeResponseTmpl(data.error, this._emailInputEmailForm, this._emailWarning);
+    }
+
+    _onChangeAvatarResponse () {
+        
     }
 
     _onChangeAvatarSuccess (data) {
@@ -57,6 +59,9 @@ export default class profileView extends View {
         }
         console.log('data is ', data);
         super.render(null, data);
+        const imgTemp = document.querySelector('.avatar-img');
+        console.log('avatar is ', data.avatar);
+        imgTemp.src = data.user.avatar;
 
         this._initElements();
     }
@@ -66,6 +71,15 @@ export default class profileView extends View {
         this._avatarUploader = document.querySelector('.js-change-image');
         this._avatarUploaderWarning = this.element.querySelector('.js-warning-avatar');
         this.loginText = document.querySelector('.js-login-row');
+
+        this.formInput =  document.querySelector('.js-change-password');
+        console.log(this.formInput);
+
+        this.passwordSubmit = this.formInput.querySelector('.js-button-submit');
+        console.log(this.formInput);
+        this.imputPasswordOld = this.formInput.getElementsByClassName('js-password-old')[0];
+        this.imputPasswordNew = this.formInput.getElementsByClassName('js-password-new')[0];
+        console.log(this.imputPassword);
 
         this._emailBlock = document.querySelector('.js-email-subblock');
         // this._emailEditButton = this._emailBlock.querySelector('button');
@@ -83,9 +97,15 @@ export default class profileView extends View {
         this._avatarUploader.addEventListener('change', () => {
             this.localEventBus.callEvent('changeAvatar', { avatar: this._avatarUploader.files[0] });
         });
-        
+
         signoutButton.addEventListener('click', () => {
             this.localEventBus.callEvent('sout');
+        });
+
+        this.passwordSubmit.addEventListener('click', (ev) => {
+            ev.preventDefault();
+            console.log({ oldPassword: this.imputPasswordOld.value, newPassword: this.imputPasswordNew.value});
+            this.localEventBus.callEvent('submitPassword', { newPassword: this.imputPasswordNew.value, oldPassword: this.imputPasswordOld.value });
         });
     }
 

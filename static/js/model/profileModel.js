@@ -8,11 +8,9 @@ export default class profileModel {
         this.localEventBus = eventBus;
         this._globalEventBus = globalEventBus;
 
-        this.localEventBus.getEvent('changeEmail', this._onChangeEmail.bind(this));
         this.localEventBus.getEvent('changePassword', this._onChangePassword.bind(this));
         this.localEventBus.getEvent('changeAvatar', this._onChangeAvatar.bind(this));
 
-        this.localEventBus.getEvent('submitEmail', this._onSubmitEmail.bind(this));
         this.localEventBus.getEvent('submitPassword', this._onSubmitPassword.bind(this));
         this.localEventBus.getEvent('checkAuth', this._onCheckAuth.bind(this));
         this.localEventBus.getEvent('loadUser', this._onLoadUser.bind(this));
@@ -49,48 +47,35 @@ export default class profileModel {
     }
 
     _onSubmitPassword(data) {
-        const pass = data.pass;
-        const errPass = Validation.validatePassword(pass, true);
-        if (errPass) {
-            this.localEventBus.callEvent('changePasswordResponse', {error: errPass});
+        console.log(data);
+        const passOld = data.oldPassword;
+        const passNew = data.newPassword;
+        const errPassOld = Validation.validatePassword(passOld);
+        if (!errPassOld) {
+            this.localEventBus.callEvent('changePasswordResponse', {error: errPassOld});
+            return;
+        }
+        const errPassNew = Validation.validatePassword(passNew);
+        if (!errPassNew) {
+            this.localEventBus.callEvent('changePasswordResponse', {error: errPassNew});
             return;
         }
 
         api.updateUser({
             guid: this._currentUserGUID,
-            password: pass
+            avatar: this.avatar,
+            // password: pass
+            old_password: passOld,
+            new_password: passNew
         }).then(res => {
             if (res.ok) {
-                this.localEventBus.callEvent('submitPasswordSuccess', {password: pass});
+                this.localEventBus.callEvent('submitPasswordSuccess', {newPassword: passNew});
             } else {
                 res.json().then(dataResponse => {
                     if (dataResponse.field === 'password') {
                         this.localEventBus.callEvent('changePasswordResponse', {error: dataResponse.error});
                     }
-                });
-            }
-        });
-    }
-
-    _onSubmitEmail(data) {
-        const email = data.email;
-        const errEmail = Validation.validateEmail(email, true);
-        if (errEmail) {
-            this.localEventBus.callEvent('changeEmailResponse', {error: errEmail});
-            return;
-        }
-
-        api.updateUser({
-            guid: this._currentUserGUID,
-            email
-        }).then(res => {
-            if (res.ok) {
-                this.localEventBus.callEvent('submitEmailSuccess', {email});
-            } else {
-                res.json().then(dataResponse => {
-                    if (dataResponse.field === 'email') {
-                        this.localEventBus.callEvent('changeEmailResponse', {error: dataResponse.error});
-                    }
+                    console.log('res body of updat', res.body);
                 });
             }
         });
@@ -135,12 +120,13 @@ export default class profileModel {
                         this.localEventBus.callEvent('loadUserResponse', {});
                     } else {
                         const toSetUser = {
-                            avatar: (user.avatar === '' ? 'images/default-avatar.svg' : Network.getStorageURL() + user.avatar),
+                            avatar: user.avatar_link,
                             score: user.score || 0,
                             login: user.nickname || 'Nouserlogin',
                             email: user.email,
                             guid: user.guid,
                         };
+                        console.log('loadUser in profile ', toSetUser);
                         User.setUser({ toSetUser });
 
                         this._currentUserGUID = user.guid;
@@ -152,7 +138,7 @@ export default class profileModel {
                 login: User.nickname,
                 guid: User.guid,
                 score: User.score,
-                avatar: User.avatar,
+                avatar: User.avatar_link,
                 email: User.email,
             }});
         }
