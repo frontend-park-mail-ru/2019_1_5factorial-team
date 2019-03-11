@@ -29,7 +29,7 @@ export default class profileView extends View {
     }
 
     _onChangeAvatarResponse () {
-        
+
     }
 
     _onChangeAvatarSuccess (data) {
@@ -37,8 +37,6 @@ export default class profileView extends View {
             console.log('No avatar');
             return;
         }
-        // this._avatarUploaderWarning.classList.add('hidden');
-        this._avatarUploaderWarning.innerHTML = '';
 
         this._avatar.src = data.avatar;
     }

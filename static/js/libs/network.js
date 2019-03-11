@@ -1,5 +1,5 @@
 
-const serverUrl1 = 'http://localhost:5051';
+const serverUrl1 = 'http://89.208.197.199:80';
 
 export default class Network {
     /**

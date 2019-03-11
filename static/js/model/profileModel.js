@@ -19,15 +19,17 @@ export default class profileModel {
 
     _onChangeAvatar(data) {
         const avatar = data.avatar;
+        console.log(avatar);
 
-        const errAvatar = Validation.validateAvatar(avatar);
-        if (errAvatar) {
-            this.localEventBus.callEvent('changeAvatarResponse', {error: errAvatar});
-            console.log(errAvatar);
-            return;
-        }
+        // const errAvatar = Validation.validateImage(avatar);
+        // if (!errAvatar) {
+        //     this.localEventBus.callEvent('changeAvatarResponse', {error: errAvatar});
+        //     console.log(errAvatar);
+        //     return;
+        // }
 
-        api.uploadAvatar({avatar})
+        const avatar_input = avatar;
+        api.updateUser({avatar_input})
             .then(res => res.json())
             .then(res => {
                 if (!res.avatar || res.error) {
