@@ -35,7 +35,6 @@ export default class profileView extends View {
             console.log('No avatar');
             return;
         }
-
         // this._avatarUploaderWarning.classList.add('hidden');
         this._avatarUploaderWarning.innerHTML = '';
 
