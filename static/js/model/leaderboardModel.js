@@ -9,8 +9,9 @@ export default class leaderboardModel {
         this.localEventBus.getEvent('loadPaginator', this.loadPaginator.bind(this));
         this.localEventBus.getEvent('checkAuthorization', this.checkAuthorization.bind(this));
         this.localEventBus.getEvent('signOut', this._onLogout.bind(this));
+        this.localEventBus.getEvent('loadUser', this._onLoadUser.bind(this));
 
-        this.countOfPages = 5;
+        this.countOfPages = 4;
         this.numOfPositions = 5;
     }
 
@@ -21,25 +22,60 @@ export default class leaderboardModel {
     }
 
     checkAuthorization() {
-        Network.doGet({ url: '/api/session' }).then(res => {
-            if (res.status !== 200) {
-                res.json()
-                    .then(data => this.localEventBus.callEvent('checkAuthorizationResponse', {
-                        isAuthorized: false,
+        Network.doGet({url: '/api/session'})
+            .then(response => {
+                if (response.status !== 200) {
+                    response.json().then(data => this.localEventBus.callEvent('checkAuthorizationResponse', {
+                        isAuth: false,
                         error: data.error
                     }));
-            } else {
-                this.localEventBus.callEvent('checkAuthorizationResponse', {
-                    isAuthorized: true,
-                    online: navigator.onLine
-                });
-            }
-        }).catch((error) => {
-            this.localEventBus.callEvent('checkAuthorizationResponse', {
-                online: navigator.onLine,
-                error
+                } else {
+                    response.json().then(data => {
+                        this.localEventBus.callEvent('checkAuthorizationResponse', {
+                            isAuth: true,
+                            user_guid: data.user_guid
+                        });
+                    });
+                }
+            })
+            .catch((error) => {
+                this.localEventBus.callEvent('checkAuthorizationResponse', {error});
             });
-        });
+    }
+
+    _onLoadUser(data) {
+        this._currentUserGUID = data.user_guid;
+        console.log('onLoadUser data ', data);
+
+        if (!User.checkUser()) {
+            if (!this._currentUserGUID) {
+                this.localEventBus.callEvent('loadUserResponse', {});
+            }
+
+            console.log(this._currentUserGUID);
+            api.loadUser(this._currentUserGUID)
+                .then(user => {
+                    if (user.error) {
+                        this.localEventBus.callEvent('loadUserResponse', {});
+                    } else {
+                        const toSetUser = {
+                            avatar: (user.avatar === '' ? 'images/default-avatar.svg' : Network.getStorageURL() + user.avatar),
+                            login: user.nickname || 'Nouserlogin',
+                            guid: user.guid
+                        };
+                        User.setUser({ toSetUser });
+
+                        this._currentUserGUID = user.guid;
+                        this.localEventBus.callEvent('loadUserResponse', {user: toSetUser});
+                    }
+                });
+        } else {
+            this.localEventBus.callEvent('loadUserResponse', {user: {
+                login: User.nickname,
+                guid: User.guid,
+                avatar: User.avatar
+            }});
+        }
     }
 
     loadPaginator () {
@@ -58,12 +94,12 @@ export default class leaderboardModel {
     }
 
     //{ pageNum = 1 } = {}
-    loadPage () {
+    loadPage ({pageNum = 1} = {}) {
         this.localEventBus.callEvent('loadWaiting');
         api.getScore({
             limit: this.numOfPositions,
-            // offset: this.numOfPositions * (pageNum - 1)
-            offset: 1
+            offset: this.numOfPositions * (pageNum - 1)
+            // offset: 1
         }).then(res => {
             if (res.status === 200) {
                 return res.json();

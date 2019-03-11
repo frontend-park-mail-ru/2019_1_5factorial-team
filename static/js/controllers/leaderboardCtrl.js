@@ -10,8 +10,12 @@ const eventList = [
     'loadPaginatorResponse',
     'checkAuthorization',
     'checkAuthorizationResponse',
+    'checkAuthError',
     'signOut',
-    'car'
+    'car',
+    'loadUserResponse',
+    'checkAuthError',
+    'loadUser'
 ];
 
 export default class leaderboardController {

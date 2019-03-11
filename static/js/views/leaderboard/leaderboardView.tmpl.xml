@@ -20,7 +20,7 @@
             <div class="main-content">
                 <a class="main-content-header">leaders</a>
                 <fest:for iterate="params.users" index="i" value="userData">
-                <div class="leaders-table">
+                    <div class="leaders-table">
                         <div class="body-user-column">
                             <div class="column-header">USER</div>
                             <ul>
@@ -37,15 +37,25 @@
                                 </li>
                             </ul>
                         </div>
-                </div>
+                    </div>
                 </fest:for>
                 <div class="paginator-block">
-                    
+
                 </div>
             </div>
             <div>
                 <a class="back-menu-btn" href="/">back to menu</a>
             </div>
+        </div>
+        <div class="main-right-block-auth hidden_users">
+            <section class="container__block container__block_side">
+                <div class="users">
+                    <img class="users__avatar" src="img/default.jpg"/>
+                    <div class="users__title">params.userName.login</div>
+                    <a class="btn users__btn_action" href="/profile">Profile</a>
+                    <a class="btn users__btn_action js-signout" href="/">SignOut</a>
+                </div>
+            </section>
         </div>
         <div class="main-right-block">
             <div class="users-block">
