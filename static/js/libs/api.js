@@ -63,6 +63,17 @@ export default class api {
         });
     }
 
+    static uploadAvatarNode ({ formData } = {}) {
+        // let formData = new FormData();
+        // formData.append('avatar', avatar);
+        return network.doPostFormData({
+            url: '/profile',
+            body: formData
+        });
+
+
+    }
+
     static uploadAvatar ({ avatar } = {}) {
         let formData = new FormData();
         formData.append('avatar', avatar);

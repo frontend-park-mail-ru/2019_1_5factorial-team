@@ -65,8 +65,11 @@ export default class profileView extends View {
     }
 
     _initElements () {
-        this._avatar = this.element.querySelector('.avatar-img');
+        this._avatar = document.querySelector('.avatar-img');
         this._avatarUploader = document.querySelector('.js-change-image');
+
+        console.log(this._avatarUploader);
+
         this._avatarUploaderWarning = this.element.querySelector('.js-warning-avatar');
         this.loginText = document.querySelector('.js-login-row');
 
@@ -92,7 +95,8 @@ export default class profileView extends View {
 
     _initElementsEvents () {
         const signoutButton = document.querySelector('.js-signout');
-        this._avatarUploader.addEventListener('change', () => {
+        const buttonUp = this._avatarUploader;
+        buttonUp.addEventListener('change', () => {
             this.localEventBus.callEvent('changeAvatar', { avatar: this._avatarUploader.files[0] });
         });
 

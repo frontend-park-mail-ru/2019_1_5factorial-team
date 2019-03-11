@@ -29,17 +29,49 @@ export default class profileModel {
         // }
 
         const avatar_input = avatar;
-        api.updateUser({avatar_input})
-            .then(res => res.json())
-            .then(res => {
-                if (!res.avatar || res.error) {
-                    this.localEventBus.callEvent('changeAvatarResponse', res);
-                } else {
-                    api.updateUser({guid: this._currentUserGUID, avatar: res.avatar});
-                    this.localEventBus.callEvent('changeAvatarSuccess', {avatar: Network.getStorageURL() + res.avatar});
-                    User.removeUser();
-                }
-            });
+        const formData = new FormData();
+        formData.append('avatar', avatar_input);
+        api.uploadAvatarNode({formData}).then(res => res.json()).then(res => {
+            if (res !== 200) {
+                console.log('error on wpload');
+                console.log(res);
+                const avatarName = '../../../img/' + res;
+
+                console.log(avatarName);
+
+                api.updateUser({
+                    avatar_input: avatarName,
+                    // password: pass
+                    old_password: undefined,
+                    new_password: undefined
+                }).then(res => {
+                    if (res.ok) {
+                        this.localEventBus.callEvent('changeAvatarSuccess', {avatar: avatarName});
+                    } else {
+                        res.json().then(dataResponse => {
+                            if (dataResponse.field === 'avatar') {
+                                this.localEventBus.callEvent('changeAvatarResponse', {error: dataResponse.error});
+                            }
+                            console.log('res body of updat', res.body);
+                        });
+                    }
+                });
+            } else {
+                console.log('success on upload');
+            }
+        });
+
+        // api.updateUser({avatar_input})
+        //     .then(res => res.json())
+        //     .then(res => {
+        //         if (!res.avatar || res.error) {
+        //             this.localEventBus.callEvent('changeAvatarResponse', res);
+        //         } else {
+        //             api.updateUser({guid: this._currentUserGUID, avatar: res.avatar});
+        //             this.localEventBus.callEvent('changeAvatarSuccess', {avatar: Network.getStorageURL() + res.avatar});
+        //             User.removeUser();
+        //         }
+        //     });
     }
 
     _onLogout() {
