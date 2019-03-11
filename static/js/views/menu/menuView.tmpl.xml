@@ -18,17 +18,17 @@
             <div class="content content_menu">
                 <a class="btn content_menu__btn" href="/single">Single</a>
                 <a class="btn content_menu__btn" href="/multi">Multi</a>
-                <a class="btn content_menu__btn" href="/leaders">Shop</a>
-                <a class="btn content_menu__btn" href="/about">Leaders</a>
+                <a class="btn content_menu__btn" href="/leaders">Leaders</a>
+                <a class="btn content_menu__btn" href="/about">About</a>
             </div>
         </main>
-        <section class="container__block container__block_side">
+        <section class="container__block container__block_side right-elems">
             <div class="users">
-                <a class="btn users__btn" href="/login">Login</a>
-                <a class="btn users__btn" href="/signup">Signup</a>
+                <a class="btn users__btn login-btn" href="/login">Login</a>
+                <a class="btn users__btn signup-btn" href="/signup">Signup</a>
             </div>
             <div class="name">
-                <h1 class="name__text">THE&nbspGAME</h1>
+                <h1 class="name__text">THE GAME</h1>
             </div>
         </section>
     </div>

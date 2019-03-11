@@ -1,6 +1,5 @@
 
-const serverUrl1 = 'http://89.208.197.199:80';
-const serverUrlAvatar = 'http://localhost:4000';
+const serverBackUrlLocal = 'http://localhost:5051';
 
 export default class Network {
     /**
@@ -19,11 +18,11 @@ export default class Network {
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
             },
-        }, console.log('Body is ', body));
+        });
     }
 
     /**
-    * Гет запрос
+    * Get запрос
     * @param url
     * @returns {Promise<Response>}
     */
@@ -47,12 +46,11 @@ export default class Network {
         });
     }
 
+    /**
+     * Get на урл сервера
+     */
     static getServerURL() {
-        return serverUrl1;
-    }
-
-    static getStorageURL () {
-        return serverUrl1 + '/storage/';
+        return serverBackUrlLocal;
     }
 
     /**
@@ -73,10 +71,6 @@ export default class Network {
         });
     }
 
-    static getServerURLAvatar() {
-        return serverUrlAvatar;
-    }
-
     /**
     * Post запрос с multipart form data. Fetch сам выставляет необходимые заголовки
     * @param url
@@ -84,7 +78,7 @@ export default class Network {
     * @returns {Promise<Response>}
     */
     static doPostFormData({ url = '/', body = {} } = {}) {
-        return fetch(Network.getServerURLAvatar() + url, {
+        return fetch(Network.getServerURL() + url, {
             method: 'POST',
             body,
             mode: 'cors',

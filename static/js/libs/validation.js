@@ -25,7 +25,7 @@ export default class Validator {
 
     /**
      * validateLogin - check validity of input login (only for length)
-     * @param {HTMLElement} myInput
+     * @param {string} data
      * @return {boolean}
      */
     static validateLogin  (data)  {
@@ -42,6 +42,11 @@ export default class Validator {
         }
     }
 
+    /**
+     * validateLogin - check validity of input login or email (only for length)
+     * @param {string} data
+     * @return {boolean}
+     */
     static validateLoginOrEmail(data) {
         const loginInput = Validator.validateLogin(data);
         const emailInput = Validator.validateEmail(data);

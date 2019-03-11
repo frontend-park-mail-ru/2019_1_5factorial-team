@@ -11,7 +11,6 @@ export default class loginView extends View {
         super.render(root, data);
 
         let form = document.querySelector('.form');
-        this.warning = this.element.querySelector('.signin__warning');
         form.addEventListener('submit', this._onSubmit.bind(this, form));
     }
 
@@ -19,7 +18,7 @@ export default class loginView extends View {
         event.preventDefault();
         const data = {
             loginOrEmail: form.elements['login-or-email'].value,
-            pass: form.elements['password-imput'].value
+            pass: form.elements['password-input'].value
         };
         this.localEventBus.callEvent('login', data);
     }

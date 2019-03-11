@@ -7,6 +7,10 @@ export default class loginModel {
         this.localEventBus.getEvent('login', this.onLogin.bind(this));
     }
 
+    /**
+     * Проверяем данные на логин
+     * @param {*} data
+     */
     onLogin(data) {
         const loginOrEmailData = data.loginOrEmail;
         const password = data.pass;
@@ -43,7 +47,6 @@ export default class loginModel {
             } else {
                 res.json().then(data => this.localEventBus.callEvent('loginResponse', data));
             }
-            console.log(data);
         });
     }
 }

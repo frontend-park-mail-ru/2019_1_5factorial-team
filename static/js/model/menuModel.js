@@ -8,13 +8,19 @@ export default class menuModel {
         this.localEvents.getEvent('checkAuthorization', this.checkAuthorization.bind(this));
         this.localEvents.getEvent('signOut', this._onLogout.bind(this));
     }
-    
+
+    /**
+     * Заканчиваем сессию пользователя
+     */
     _onLogout() {
         api.deleteSession();
         this.localEvents.callEvent('car', { isAuth: false, signout: true });
         User.removeUser();
     }
 
+    /**
+     * Проверяем пользователя - авторизован ли
+     */
     checkAuthorization() {
         Network.doGet({ url: '/api/session' }).then(res => {
             if (res.status !== 200) {

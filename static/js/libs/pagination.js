@@ -3,11 +3,9 @@ const noop = () => null;
 export default class paginator {
     /**
      * Создает пагинатор
-     * @param pagesCount сколько всего страниц в пагинаторе
-     * @param linksCount сколько кнопок в пагинаторе
-     * @param clickCallback действие при клике на кнопку
-     * @param styleClassesCurrent стили для кнопки, которая указывает на текущую страницу
-     * @param styleClassesOther общие стили для кнопки
+     * @param countOfPages сколько всего страниц в пагинаторе
+     * @param numOfPositions сколько кнопок в пагинаторе
+     * @param callbackOnClick действие при клике на кнопку
      */
     constructor ({ countOfPages, numOfPositions, callbackOnClick = noop } = {}) {
         this.localCountOfPages = countOfPages;
@@ -31,11 +29,13 @@ export default class paginator {
      */
     render (root) {
         root.innerHTML = '';
-        // Отменить выделение блока
-        root.addEventListener('mousedown', (event) => event.preventDefault());
         this.localLinks.forEach(val => root.appendChild(val));
     }
 
+    /**
+     * Отрисовка страниц с учетом того, на какой находимся
+     * @param {*} event
+     */
     onLinkClick (event) {
         event.preventDefault();
         const linkStr = event.target.textContent;

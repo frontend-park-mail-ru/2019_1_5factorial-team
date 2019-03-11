@@ -9,6 +9,9 @@ export default class aboutModel {
         this.localEventBus.getEvent('signOut', this._onLogout.bind(this));
     }
 
+    /**
+     * Проверяем пользователя - авторизован ли
+     */
     checkAuthorization() {
         Network.doGet({ url: '/api/session' }).then(res => {
             if (res.status !== 200) {
@@ -31,6 +34,9 @@ export default class aboutModel {
         });
     }
 
+    /**
+     * Заканчиваем сессию пользователя
+     */
     _onLogout() {
         api.deleteSession();
         this.localEventBus.callEvent('car', { isAuth: false, signout: true });

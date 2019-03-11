@@ -91,7 +91,6 @@ export default class signUpView extends View {
 
     _onSubmit (ev) {
         ev.preventDefault();
-        console.log('_onsubmit method in view');
         const email = this.form.elements['email'].value;
         const login = this.form.elements['login'].value;
         const pass = this.form.elements['password'].value;

@@ -22,8 +22,8 @@
                 <form class="form js-upload-photo">
                     <div class="change-btn-photo">
                         <label>
-                            <input class="btn photo-btn js-change-image" type="file" title="avatar" multiple accept="image/jpeg, image/png"/>
-                            <div class="btn btn_contained profile__btn">CHANGE IMAGE</div>
+                            <input class="btn photo-btn js-change-image" type="file" title="avatar" accept="image/jpeg, image/png"/>
+                            <div class="btn btn_contained profile__btn js-change-image js-submit-avatar">CHANGE IMAGE</div>
                         </label>
                     </div>
                 </form>

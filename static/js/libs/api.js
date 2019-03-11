@@ -4,17 +4,23 @@ export default class api {
 
     /**
      * Загрузка пользователя
-     * @param {*} user 
+     * @param {*} user
      */
     static loadUser(user) {
         this.user = user; //временная заглушка для линтеров
         return network.doGet({ url:'/api/user' }).then(res => res.json());
     }
 
+    /**
+     * Проверка сессии пользователя
+     */
     static sessionCheck() {
         return network.doGet({ url:'/api/session' });
     }
 
+    /**
+     * Удаление сессии для логаута
+     */
     static deleteSession() {
         network.doDelete({ url:'/api/session' }).then(response => {
             if (!response.ok) {
@@ -23,8 +29,12 @@ export default class api {
         }).catch(error => console.error(error));
     }
 
+    /**
+     * Авторизация пользователя
+     * @param {*} loginOrEmail
+     * @param {*} password
+     */
     static login({ loginOrEmail, password } = {}) {
-        console.log(loginOrEmail);
         return network.doPost({
             url: '/api/session',
             body: {
@@ -34,6 +44,12 @@ export default class api {
         });
     }
 
+    /**
+     * Регистрация пользователя
+     * @param {*} login
+     * @param {*} email
+     * @param {*} password
+     */
     static signUp({ login, email, password }) {
         return network.doPost({
             url: '/api/user',
@@ -42,17 +58,25 @@ export default class api {
                 login,
                 password
             }
-        }, console.log('signup api debug'));
+        });
     }
 
+    /**
+     * Счетчик пользователей для лидерборда
+     */
     static getUserCount () {
         return network.doGet({
             url: '/api/users/count'
         });
     }
 
+    /**
+     * Обновление данных пользователя
+     * @param {*} old_password
+     * @param {*} new_password
+     * @param {*} avatar_input
+     */
     static updateUser ({ old_password, new_password, avatar_input } = {}) {
-        console.log('updateUser ', {old_password, new_password, avatar_input});
         return network.doPut({
             url: '/api/user',
             body: {
@@ -63,17 +87,10 @@ export default class api {
         });
     }
 
-    static uploadAvatarNode ({ formData } = {}) {
-        // let formData = new FormData();
-        // formData.append('avatar', avatar);
-        return network.doPostFormData({
-            url: '/profile',
-            body: formData
-        });
-
-
-    }
-
+    /**
+     * Загрузка нового аватара на бэк
+     * @param {*} avatar
+     */
     static uploadAvatar ({ avatar } = {}) {
         let formData = new FormData();
         formData.append('avatar', avatar);
@@ -83,12 +100,14 @@ export default class api {
         });
     }
 
+    /**
+     * Получение рекордов пользователей
+     * @param {*} limit
+     * @param {*} offset
+     */
     static getScore ({ limit = 5, offset = 0 } = {}) {
-        console.log('offset & limit', offset, limit);
         return network.doGet({
             url: `/api/users/score?limit=${limit}&offset=${offset}`
         });
     }
-
-
 }

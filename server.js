@@ -13,8 +13,6 @@ const indexPath = path.resolve(__dirname, './static/index.html');
 app.use(express.static(__dirname + '/static'));
 
 app.use(body.json());
-// сохраняет файлы по пути './static/avatars'
-// с имененем file.fieldname + '-' + Date.now() + тип файла
 const storage = multer.diskStorage({
     destination: function (req, file, callback) {
         callback(null, './static/img');
@@ -28,7 +26,7 @@ const upload = multer({ storage: storage });
 
 app.post('/profile', (req, res) => {
     console.log('POST Profile');
-    console.log(req.headers);
+    console.log('req.headers ', req.headers);
 
     upload.single('avatar')(req, res, (err) => {
         if (err instanceof multer.MulterError) {
@@ -39,17 +37,13 @@ app.post('/profile', (req, res) => {
             return;
         }
 
-        // console.log(req.file.filename);
+        console.log(req.file.filename);
 
         res.status(200).json(req.file.filename);
     });
 });
 
-app.get('/favicon.ico', (req, res) => {
-    res.sendFile('./static/img/test.png');
-});
-
-app.get('*', (req, res) => {	
+app.get('*', (req, res) => {
     fs.readFile(indexPath, { encoding: 'utf-8' }, (err, file) => {
         if (err) {
             console.log(err);

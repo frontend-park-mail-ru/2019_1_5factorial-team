@@ -14,6 +14,9 @@ export default class leaderboardModel {
         this.numOfPositions = 5;
     }
 
+    /**
+     * Проверяем пользователя - авторизован ли
+     */
     checkAuthorization() {
         Network.doGet({ url: '/api/session' }).then(res => {
             if (res.status !== 200) {
@@ -36,12 +39,18 @@ export default class leaderboardModel {
         });
     }
 
+    /**
+     * Заканчиваем сессию пользователя
+     */
     _onLogout() {
         api.deleteSession();
         this.localEventBus.callEvent('car', { isAuth: false, signout: true });
         User.removeUser();
     }
 
+    /**
+     * Подгружаем пагинацию
+     */
     loadPaginator () {
         api.getUserCount()
             .then(resp => resp.json())
@@ -52,12 +61,13 @@ export default class leaderboardModel {
                         pagesCount: this.sumOfUsers / this.countOfPages,
                         linksCount: this.numOfPositions
                     });
-                    console.log(users.count);
                 }
             });
     }
 
-    //{ pageNum = 1 } = {}
+    /**
+     * Загружаем страницы, которые необходимо пагинировать
+     */
     loadPage ({pageNum = 1} = {}) {
         this.localEventBus.callEvent('loadWaiting');
         api.getScore({
@@ -70,7 +80,6 @@ export default class leaderboardModel {
             }
             throw new Error('Can`t load scoreboard: ' + res.status);
         }).then(data => {
-            console.log('before callEvent ', data.scores);
             this.localEventBus.callEvent('loadResponse', data.scores);
         }
         ).catch(err => {

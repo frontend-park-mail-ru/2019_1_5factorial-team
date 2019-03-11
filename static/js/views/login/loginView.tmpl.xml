@@ -21,7 +21,7 @@
                 <label class="form__label" for="login-or-email">login/email</label>
                 <input class="form__input js-login-or-email" type="text" name="login-or-email" placeholder=" " id="login-or-email"/>
                 <label class="form__label" for="password">password</label>
-                <input class="form__input js-password" type="password" name="password" placeholder=" " id="password"/>
+                <input class="form__input js-password" type="password" name="password-input" placeholder=" " id="password"/>
                 <button class="btn btn_contained form__btn js-submit" type="submit" name="submit">let's go!</button>
             </form>
             <a class="btn btn_back-menu" href="/">back to menu</a>
