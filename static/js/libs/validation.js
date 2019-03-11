@@ -81,13 +81,13 @@ export default class Validator {
     static validateImage  (myInput)  {
         const typeOfImage = myInput.type;
         if ((typeOfImage !== 'image/jpeg') || (typeOfImage !== 'image/png')) {
-            myInput.classList.remove('valid');
-            myInput.classList.add('invalid');
+            // myInput.classList.remove('valid');
+            // myInput.classList.add('invalid');
             console.log('invalid format of image!');
             return false;
         } else {
-            myInput.classList.remove('invalid');
-            myInput.classList.add('valid');
+            // myInput.classList.remove('invalid');
+            // myInput.classList.add('valid');
             console.log('valid format of image!');
             return true;
         }

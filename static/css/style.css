@@ -477,3 +477,8 @@ li:nth-child(even){
 .change-btn-label {
     cursor: pointer;
 }
+
+.hidden_users {
+    display: none !important;
+}
+

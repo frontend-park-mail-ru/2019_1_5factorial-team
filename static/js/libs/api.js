@@ -51,15 +51,27 @@ export default class api {
         });
     }
 
-    static updateUser ({ user, email, password, avatar } = {}) {
+    static updateUser ({ old_password, new_password, avatar_input } = {}) {
+        console.log('updateUser ', {old_password, new_password, avatar_input});
         return network.doPut({
-            url: `/api/user/${user}`,
+            url: '/api/user',
             body: {
-                email,
-                password,
-                avatar
+                'avatar': avatar_input,
+                'new_password': new_password,
+                'old_password': old_password
             }
         });
+    }
+
+    static uploadAvatarNode ({ formData } = {}) {
+        // let formData = new FormData();
+        // formData.append('avatar', avatar);
+        return network.doPostFormData({
+            url: '/profile',
+            body: formData
+        });
+
+
     }
 
     static uploadAvatar ({ avatar } = {}) {

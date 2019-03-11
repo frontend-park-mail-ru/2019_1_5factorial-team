@@ -1,5 +1,6 @@
 
-const serverUrl1 = 'http://localhost:5051';
+const serverUrl1 = 'http://89.208.197.199:80';
+const serverUrlAvatar = 'http://localhost:4000';
 
 export default class Network {
     /**
@@ -72,6 +73,10 @@ export default class Network {
         });
     }
 
+    static getServerURLAvatar() {
+        return serverUrlAvatar;
+    }
+
     /**
     * Post запрос с multipart form data. Fetch сам выставляет необходимые заголовки
     * @param url
@@ -79,7 +84,7 @@ export default class Network {
     * @returns {Promise<Response>}
     */
     static doPostFormData({ url = '/', body = {} } = {}) {
-        return fetch(Network.getServerURL() + url, {
+        return fetch(Network.getServerURLAvatar() + url, {
             method: 'POST',
             body,
             mode: 'cors',
