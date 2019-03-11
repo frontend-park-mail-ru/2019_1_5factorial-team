@@ -6,7 +6,7 @@ export default class aboutModel {
     constructor (eventBus) {
         this.localEventBus = eventBus;
         this.localEventBus.getEvent('checkAuthorization', this.checkAuthorization.bind(this));
-        this.localEventBus.getEvent('signOut', this._onLogout.bind(this));
+        this.localEventBus.getEvent('signOut', this.onLogout.bind(this));
     }
 
     /**
@@ -37,7 +37,7 @@ export default class aboutModel {
     /**
      * Заканчиваем сессию пользователя
      */
-    _onLogout() {
+    onLogout() {
         api.deleteSession();
         this.localEventBus.callEvent('car', { isAuth: false, signout: true });
         User.removeUser();

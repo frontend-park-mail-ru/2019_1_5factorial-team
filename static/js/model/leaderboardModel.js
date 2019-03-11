@@ -8,7 +8,7 @@ export default class leaderboardModel {
         this.localEventBus.getEvent('load', this.loadPage.bind(this));
         this.localEventBus.getEvent('loadPaginator', this.loadPaginator.bind(this));
         this.localEventBus.getEvent('checkAuthorization', this.checkAuthorization.bind(this));
-        this.localEventBus.getEvent('signOut', this._onLogout.bind(this));
+        this.localEventBus.getEvent('signOut', this.onLogout.bind(this));
 
         this.countOfPages = 4;
         this.numOfPositions = 5;
@@ -42,7 +42,7 @@ export default class leaderboardModel {
     /**
      * Заканчиваем сессию пользователя
      */
-    _onLogout() {
+    onLogout() {
         api.deleteSession();
         this.localEventBus.callEvent('car', { isAuth: false, signout: true });
         User.removeUser();

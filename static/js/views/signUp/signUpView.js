@@ -4,11 +4,11 @@ export default class signUpView extends View {
     constructor({ eventBus = {} }) {
         super('signUp/signUpView.tmpl', eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
-        this.localEventBus.getEvent('changeEmailResponse', this._onChangeEmailResponse.bind(this));
-        this.localEventBus.getEvent('changeLoginResponse', this._onChangeLoginResponse.bind(this));
-        this.localEventBus.getEvent('changePasswordResponse', this._onChangePassResponse.bind(this));
-        this.localEventBus.getEvent('changePasswordRepeatResponse', this._onChangeRepassResponse.bind(this));
-        this.localEventBus.getEvent('signupResponse', this._onSignupResponse.bind(this));
+        this.localEventBus.getEvent('changeEmailResponse', this.onChangeEmailResponse.bind(this));
+        this.localEventBus.getEvent('changeLoginResponse', this.onChangeLoginResponse.bind(this));
+        this.localEventBus.getEvent('changePasswordResponse', this.onChangePassResponse.bind(this));
+        this.localEventBus.getEvent('changePasswordRepeatResponse', this.onChangeRepassResponse.bind(this));
+        this.localEventBus.getEvent('signupResponse', this.onSignupResponse.bind(this));
     }
 
     render(root, data = {}) {
@@ -16,33 +16,20 @@ export default class signUpView extends View {
 
         this.form = document.querySelector('.form');
 
-        this.emailInput = this.form.elements['email'];
-        this.emailInput.addEventListener('change', this._onChangeEmail.bind(this, this.emailInput));
-
-        this.loginInput = this.form.elements['login'];
-        this.loginInput.addEventListener('change', this._onChangeLogin.bind(this, this.loginInput));
-
         this.passwordInput = this.form.elements['password'];
+        this.passwordInput.addEventListener('change', this.onChangePass.bind(this, this.passwordInput));
 
-        this.passwordInput.addEventListener('change', this._onChangePass.bind(this, this.passwordInput));
-
-        this.form.addEventListener('submit', this._onSubmit.bind(this));
+        this.form.addEventListener('submit', this.onSubmit.bind(this));
     }
 
-    _onSignupResponse (data) {
+    onSignupResponse (data) {
         const field = data.field;
         const error = data.error;
         console.log(error);
 
         switch (field) {
-            case 'email':
-                this._onChangeEmailResponse(data);
-                break;
-            case 'login':
-                this._onChangeLoginResponse(data);
-                break;
             case 'password':
-                this._onChangePassResponse(data);
+                this.onChangePassResponse(data);
                 break;
             default:
                 console.error('Undefined field:' + field);
@@ -50,46 +37,35 @@ export default class signUpView extends View {
         }
     }
 
-    _onChangeRepassResponse (data) {
-        this._onChangeResponseTmpl(data.error, this.repasswordInput, this.repassWarning);
+    onChangeRepassResponse (data) {
+        this.onChangeResponseTmpl(data.error, this.repasswordInput, this.repassWarning);
     }
 
-    _onChangePassResponse (data) {
-        this._onChangeResponseTmpl(data.error, this.passwordInput, this.passWarning);
+    onChangePassResponse (data) {
+        this.onChangeResponseTmpl(data.error, this.passwordInput, this.passWarning);
     }
 
-    _onChangeEmailResponse (data) {
-        this._onChangeResponseTmpl(data.error, this.emailInput, this.emailWarning);
+    onChangeEmailResponse (data) {
+        this.onChangeResponseTmpl(data.error, this.emailInput, this.emailWarning);
     }
 
-    _onChangeLoginResponse (data) {
-        this._onChangeResponseTmpl(data.error, this.loginInput, this.loginWarning);
+    onChangeLoginResponse (data) {
+        this.onChangeResponseTmpl(data.error, this.loginInput, this.loginWarning);
     }
 
-    _onChangeResponseTmpl (error, el, warning) {
+    onChangeResponseTmpl (error) {
         if (error) {
-            signUpView.showWarning(el, warning, error);
             return;
         }
     }
 
-    _onChangePass (passEl) {
+    onChangePass (passEl) {
         const pass = passEl.value;
         this.localEventBus.callEvent('changePassword', { pass });
     }
 
-    _onChangeEmail (emailInput) {
-        const email = emailInput.value;
-        this.localEventBus.callEvent('changeEmail', { email });
-    }
 
-    _onChangeLogin (loginInput) {
-        const login = loginInput.value;
-        this.localEventBus.callEvent('changeLogin', { login });
-    }
-
-
-    _onSubmit (ev) {
+    onSubmit (ev) {
         ev.preventDefault();
         const email = this.form.elements['email'].value;
         const login = this.form.elements['login'].value;

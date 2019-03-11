@@ -6,13 +6,13 @@ export default class menuModel {
     constructor(events) {
         this.localEvents = events;
         this.localEvents.getEvent('checkAuthorization', this.checkAuthorization.bind(this));
-        this.localEvents.getEvent('signOut', this._onLogout.bind(this));
+        this.localEvents.getEvent('signOut', this.onLogout.bind(this));
     }
 
     /**
      * Заканчиваем сессию пользователя
      */
-    _onLogout() {
+    onLogout() {
         api.deleteSession();
         this.localEvents.callEvent('car', { isAuth: false, signout: true });
         User.removeUser();

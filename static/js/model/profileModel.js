@@ -7,26 +7,26 @@ export default class profileModel {
     constructor(eventBus) {
         this.localEventBus = eventBus;
 
-        this.localEventBus.getEvent('changePassword', this._onChangePassword.bind(this));
-        this.localEventBus.getEvent('changeAvatar', this._onChangeAvatar.bind(this));
+        this.localEventBus.getEvent('changePassword', this.onChangePassword.bind(this));
+        this.localEventBus.getEvent('changeAvatar', this.onChangeAvatar.bind(this));
 
-        this.localEventBus.getEvent('submitPassword', this._onSubmitPassword.bind(this));
-        this.localEventBus.getEvent('checkAuth', this._onCheckAuth.bind(this));
-        this.localEventBus.getEvent('loadUser', this._onLoadUser.bind(this));
-        this.localEventBus.getEvent('sout', this._onLogout.bind(this));
+        this.localEventBus.getEvent('submitPassword', this.onSubmitPassword.bind(this));
+        this.localEventBus.getEvent('checkAuth', this.onCheckAuth.bind(this));
+        this.localEventBus.getEvent('loadUser', this.onLoadUser.bind(this));
+        this.localEventBus.getEvent('sout', this.onLogout.bind(this));
     }
 
     /**
      * Проверяем смену аватара
      */
-    _onChangeAvatar(data) {
+    onChangeAvatar(data) {
         this.data = data;
     }
 
     /**
      * Заканчиваем сессию пользователя
      */
-    _onLogout() {
+    onLogout() {
         api.deleteSession();
         this.localEventBus.callEvent('car', { isAuth: false, signout: true });
         User.removeUser();
@@ -36,7 +36,7 @@ export default class profileModel {
      * Вызываем смену пароля пользователя
      * @param {*} data
      */
-    _onSubmitPassword(data) {
+    onSubmitPassword(data) {
         const passOld = data.oldPassword;
         const passNew = data.newPassword;
         const errPassOld = Validation.validatePassword(passOld);
@@ -72,7 +72,7 @@ export default class profileModel {
      * Вызываем смену пароля пользователя
      * @param {*} data
      */
-    _onChangePassword(data) {
+    onChangePassword(data) {
         const pass = data.pass;
         const errPass = Validation.validatePassword(pass);
         if (errPass) {
@@ -87,7 +87,7 @@ export default class profileModel {
      * Загружаем данные пользователя с сервера
      * @param {*} data
      */
-    _onLoadUser(data) {
+    onLoadUser(data) {
         this._currentUserGUID = data.user_guid;
 
         if (!User.checkUser()) {
@@ -127,7 +127,7 @@ export default class profileModel {
     /**
      * Проверяем пользователя - авторизован ли
      */
-    _onCheckAuth() {
+    onCheckAuth() {
         Network.doGet({url: '/api/session'})
             .then(response => {
                 if (response.status !== 200) {
