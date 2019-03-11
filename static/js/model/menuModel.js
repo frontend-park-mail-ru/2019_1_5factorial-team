@@ -7,7 +7,7 @@ export default class menuModel {
     }
 
     checkAuthorization() {
-        Network.Get({ url: 'api/session' }).then(res => {
+        Network.doGet({ url: 'api/session' }).then(res => {
             if (res.status !== 200) {
                 res.json().then(data => this.localEvents.callEvent('checkAuthorizationResponse', {
                     isAuthorized: false,

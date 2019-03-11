@@ -19,28 +19,28 @@
         <div class="main-container">
             <div class="main-content">
                 <a class="main-content-header">leaders</a>
+                <fest:for iterate="params.users" index="i" value="userData">
                 <div class="leaders-table">
-                    <fest:for iterate="params.users" index="i" value="userData">
                         <div class="body-user-column">
                             <div class="column-header">USER</div>
                             <ul>
-                                <fest:value>userData.userName</fest:value>
+                                <li>
+                                    <fest:value>userData.nickname</fest:value>
+                                </li>
                             </ul>
                         </div>
                         <div class="body-score-column">
                             <div class="column-header">SCORE</div>
                             <ul>
-                                <fest:value>userData.score</fest:value>
+                                <li>
+                                    <fest:value>userData.score</fest:value>
+                                </li>
                             </ul>
                         </div>
-                    </fest:for>
                 </div>
+                </fest:for>
                 <div class="paginator-block">
-                    <button class="page-number-left">First</button>
-                    <button class="page-number">2</button>
-                    <button class="page-number">3</button>
-                    <button class="page-number">4</button>
-                    <button class="page-number-right">Last</button>
+                    
                 </div>
             </div>
             <div>

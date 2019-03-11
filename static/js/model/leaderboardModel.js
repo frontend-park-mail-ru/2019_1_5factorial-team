@@ -20,22 +20,27 @@ export default class leaderboardModel {
                         pagesCount: this.sumOfUsers / this.countOfPages,
                         linksCount: this.numOfPositions
                     });
+                    console.log(users.count);
                 }
             });
     }
 
-    loadPage ({ pageNum = 1 } = {}) {
+    //{ pageNum = 1 } = {}
+    loadPage () {
         this.localEventBus.callEvent('loadWaiting');
         api.getScore({
             limit: this.numOfPositions,
-            offset: this.numOfPositions * (pageNum - 1)
+            // offset: this.numOfPositions * (pageNum - 1)
+            offset: 1
         }).then(res => {
             if (res.status === 200) {
                 return res.json();
             }
             throw new Error('Can`t load scoreboard: ' + res.status);
-        }).then(data =>
-            this.localEventBus.callEvent('loadResponse', data.scores)
+        }).then(data => {
+            console.log('before callEvent ', data.scores);
+            this.localEventBus.callEvent('loadResponse', data.scores);
+        }
         ).catch(err => {
             console.error(err);
             this.localEventBus.callEvent('loadResponse', {});

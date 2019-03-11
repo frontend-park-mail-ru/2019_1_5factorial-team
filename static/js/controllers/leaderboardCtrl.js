@@ -7,7 +7,7 @@ const eventList = [
     'loadResponse',
     'loadWaiting',
     'loadPaginator',
-    'loadPaginationResponse'
+    'loadPaginatorResponse'
 ];
 
 export default class leaderboardController {

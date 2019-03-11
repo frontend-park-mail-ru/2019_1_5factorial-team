@@ -65,8 +65,6 @@
 
     <section class="container__block container__block_side">
         <div class="users">
-            <a class="btn users__btn">Login</a>
-            <a class="btn users__btn">Signup</a>
             <a class="btn users__btn js-signout" href="/">Signout</a>
         </div>
     </section>

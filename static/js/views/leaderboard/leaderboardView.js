@@ -6,8 +6,7 @@ export default class leaderboardView extends View {
         super('leaderboard/leaderboardView.tmpl', eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('loadResponse', this.loadResponse.bind(this));
-        // this.localEventBus.getEvent('loadWaiting', this.loadWaiting.bind(this));
-        // this.localEventBus.getEvent('loadPaginationResponse', this.loadPaginatorResponse.bind(this));
+        this.localEventBus.getEvent('loadPaginatorResponse', this.loadPaginatorResponse.bind(this));
         this.pagination = null;
         this.isClosed = false;
     }
@@ -24,7 +23,7 @@ export default class leaderboardView extends View {
                 this.localEventBus.callEvent('load', { pageNum });
             };
 
-            const root = this.element.querySelector('.paginator');
+            const root = document.querySelector('.paginator-block');
             this.pagination = new paginator({
                 countOfPages: data.pagesCount,
                 numOfPositions: data.linksCount,
@@ -36,37 +35,22 @@ export default class leaderboardView extends View {
         }
     }
 
-    // loadWaiting () {
-    //     // Индикатор загрузки появляется только, если загрузка происходит дольше 100 мс
-    //     this.timOutOfLoading = setTimeout(() => this.loadingElement.classList.remove('hidden'), 100);
-    // }
-
-    // endLoadWaiting () {
-    //     clearTimeout(this.timOutOfLoading);
-    //     if (!this.loadingElement.classList.contains('hidden')) {
-    //         this.loadingElement.classList.add('hidden');
-    //     }
-    // }
-
     loadResponse (data) {
-        // При медленном интернете, View могла загрузиться, когда пользователь вернулся в меню
         if (this.isClosed) {
             return;
         }
 
-        // this.endLoadWaiting();
-
-        super.render(null, { users: data.score });
+        super.render(null, { users: data });
+        console.log('data.score ', data);
 
         if (this.pagination !== null) {
-            this.pagination.render(this.element.querySelector('.paginator'));
+            this.pagination.render(document.querySelector('.paginator-block'));
         }
 
         this.afterRender();
     }
 
     afterRender () {
-        // this.loadingElement = this.element.querySelector('.loading');
         const backBtn = document.querySelector('.back-menu-btn');
         backBtn.addEventListener('click', () => { this.isClosed = true; });
     }

@@ -73,7 +73,7 @@ export default class api {
 
     static getScore ({ limit = 5, offset = 0 } = {}) {
         return network.doGet({
-            url: `/api/users/score/?limit=${limit}&offset=${offset}`
+            url: `/api/users/score?limit=${limit}&offset=${offset}`
         });
     }
 
