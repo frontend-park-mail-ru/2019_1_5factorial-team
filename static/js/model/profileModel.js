@@ -80,6 +80,7 @@ export default class profileModel {
             return;
         }
 
+        // TODO: update page on success change avatar
         this.localEventBus.callEvent('changePasswordResponse', {});
     }
 
@@ -89,41 +90,24 @@ export default class profileModel {
      */
     onLoadUser(data) {
         this._currentUserGUID = data.user_guid;
+        api.loadUser(this._currentUserGUID)
+            .then(user => {
+                if (user.error) {
+                    this.localEventBus.callEvent('loadUserResponse', {});
+                } else {
+                    const toSetUser = {
+                        avatar: user.avatar_link,
+                        score: user.score || 0,
+                        login: user.nickname || 'Nouserlogin',
+                        email: user.email,
+                        guid: user.guid,
+                    };
+                    User.setUser({ toSetUser });
 
-
-        if (!User.checkUser()) {
-            if (this._currentUserGUID) {
-                this.localEventBus.callEvent('loadUserResponse', {});
-                return;
-            }
-
-            api.loadUser(this._currentUserGUID)
-                .then(user => {
-                    if (user.error) {
-                        this.localEventBus.callEvent('loadUserResponse', {});
-                    } else {
-                        const toSetUser = {
-                            avatar: user.avatar_link,
-                            score: user.score || 0,
-                            login: user.nickname || 'Nouserlogin',
-                            email: user.email,
-                            guid: user.guid,
-                        };
-                        User.setUser({ toSetUser });
-
-                        this._currentUserGUID = user.guid;
-                        this.localEventBus.callEvent('loadUserResponse', {user: toSetUser});
-                    }
-                });
-        } else {
-            this.localEventBus.callEvent('loadUserResponse', {user: {
-                login: User.nickname,
-                guid: User.guid,
-                score: User.score,
-                avatar: User.avatar_link,
-                email: User.email,
-            }});
-        }
+                    this._currentUserGUID = user.guid;
+                    this.localEventBus.callEvent('loadUserResponse', {user: toSetUser});
+                }
+            });
     }
 
     /**

@@ -55,9 +55,11 @@ export default class leaderboardView extends View {
     }
 
     loadResponse (data) {
-        if (this.isClosed) {
-            return;
-        }
+        // TODO: change state of closed pages when is render again
+        
+        // if (this.isClosed) {
+        //     return;
+        // }
 
         super.render(null, { users: data });
 

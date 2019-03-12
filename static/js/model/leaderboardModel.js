@@ -10,7 +10,7 @@ export default class leaderboardModel {
         this.localEventBus.getEvent('checkAuthorization', this.checkAuthorization.bind(this));
         this.localEventBus.getEvent('signOut', this.onLogout.bind(this));
 
-        this.countOfPages = 4;
+        this.countOfPages = 5;
         this.numOfPositions = 5;
     }
 
