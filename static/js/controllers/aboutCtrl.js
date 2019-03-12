@@ -1,6 +1,6 @@
 import aboutView from '../views/about/aboutView.js';
-import EventBus from '../libs/eventBus.js';
 import aboutModel from '../model/aboutModel.js';
+import EventBus from '../libs/eventBus.js';
 
 const eventList = [
     'checkAuthorizationResponse',
