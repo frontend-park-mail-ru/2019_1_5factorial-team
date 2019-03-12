@@ -14,7 +14,7 @@ export default class menuModel {
      */
     onLogout() {
         api.deleteSession();
-        this.localEvents.callEvent('car', { isAuth: false, signout: true });
+        this.localEvents.callEvent('closeView', { isAuth: false, signout: true });
         User.removeUser();
     }
 

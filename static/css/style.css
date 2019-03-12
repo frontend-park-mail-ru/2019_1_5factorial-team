@@ -183,8 +183,8 @@ body {
     flex-wrap: wrap;
     align-items: center;
     width: 100%;
-    margin: 2vh 1vw;
-    font-size: 5vh;
+    /* margin: 2vh 1vw; */
+    /* font-size: 5vh; */
 }
 .main-row {
     display: flex;
@@ -586,6 +586,7 @@ body {
     color: white;
     text-shadow: 0 0 0.5em rgb(144,180,216);
     margin: 1vh 0;
+    flex-direction: column;
 }
 
 
@@ -627,6 +628,7 @@ body {
     align-items: center;
     padding: 4vh 4vw;
     margin: 0;
+    flex-wrap: wrap-reverse;
 }
     .content_menu {
         margin-top: 32vh;
@@ -660,7 +662,7 @@ body {
 
     .content-block {
         display: flex;
-        flex-direction: column;
+        /* flex-direction: column; */
         justify-content: center;
     }
         .content-block_avatar {
@@ -1030,4 +1032,9 @@ li:nth-child(even){
 
 .hidden {
     display: none !important;
+}
+
+.paginator-page {
+    margin-right: 5px;
+    margin-left: 5px;
 }

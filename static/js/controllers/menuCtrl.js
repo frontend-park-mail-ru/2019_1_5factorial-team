@@ -7,7 +7,7 @@ const eventList = [
     'checkAuthorization',
     'signoutResponse',
     'signOut',
-    'car'
+    'closeView'
 ];
 
 export default class menuController {

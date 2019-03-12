@@ -10,9 +10,9 @@ import Router from './libs/router.js';
 document.addEventListener('DOMContentLoaded', () => {
     console.log('debug point: start work!');
 
-    const page = document.querySelector('.body-cnt');
+    const page = document.getElementsByClassName('body-cnt')[0];
     createPage(page);
-    const main = document.querySelector('.main-container');
+    const main = document.getElementsByClassName('main-container')[0];
     const router = new Router(page);
 
     const menuCntl = new menuController();

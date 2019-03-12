@@ -1,8 +1,6 @@
 
 export default class View {
     constructor(tmpl, eventBus) {
-        this.element = document.createElement('div');
-        this.element.classList.add('wrapper');
         this.tmpl = tmpl;
         this.localEventBus = eventBus;
         this.prevRoot = null;
@@ -27,7 +25,6 @@ export default class View {
         // this.element.innerHTML = this.tmpl(data);
         console.log(data);
         root.innerHTML = this.fest(data);
-        root.appendChild(this.element);
 
         return this;
     }

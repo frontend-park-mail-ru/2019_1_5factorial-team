@@ -13,7 +13,7 @@ export default class profileModel {
         this.localEventBus.getEvent('submitPassword', this.onSubmitPassword.bind(this));
         this.localEventBus.getEvent('checkAuth', this.onCheckAuth.bind(this));
         this.localEventBus.getEvent('loadUser', this.onLoadUser.bind(this));
-        this.localEventBus.getEvent('sout', this.onLogout.bind(this));
+        this.localEventBus.getEvent('signOut', this.onLogout.bind(this));
     }
 
     /**
@@ -28,7 +28,7 @@ export default class profileModel {
      */
     onLogout() {
         api.deleteSession();
-        this.localEventBus.callEvent('car', { isAuth: false, signout: true });
+        this.localEventBus.callEvent('closeView', { isAuth: false, signout: true });
         User.removeUser();
     }
 

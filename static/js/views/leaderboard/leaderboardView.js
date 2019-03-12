@@ -20,17 +20,15 @@ export default class leaderboardView extends View {
     }
 
     onCheckAuthResponse ({isAuthorized = false} = {}) {
-        const rightBlock = document.querySelector('.right-elems');
+        const rightBlock = document.getElementsByClassName('users')[0];
 
         if (!isAuthorized) {
             return;
         } else {
-            rightBlock.innerHTML = `<div class="users">
-                <a class="btn users__btn_action" href="/profile">profile</a>
-                <a class="btn users__btn_action js-signout" href="/">SignOut</a>
-            </div>`;
+            rightBlock.innerHTML = `<a class="btn users__btn_action" href="/profile">profile</a>
+                <a class="btn users__btn_action js-signout" href="/">SignOut</a>`;
         }
-        const signoutButton = document.querySelector('.js-signout');
+        const signoutButton = document.getElementsByClassName('js-signout')[0];
         signoutButton.addEventListener('click', () => {
             this.localEventBus.callEvent('signOut');
         });
@@ -42,7 +40,7 @@ export default class leaderboardView extends View {
                 this.localEventBus.callEvent('load', { pageNum });
             };
 
-            const root = document.querySelector('.paginator-block');
+            const root = document.getElementsByClassName('paginator-block')[0];
             this.pagination = new paginator({
                 countOfPages: data.pagesCount,
                 numOfPositions: data.linksCount,
@@ -55,23 +53,17 @@ export default class leaderboardView extends View {
     }
 
     loadResponse (data) {
-        // TODO: change state of closed pages when is render again
-        
-        // if (this.isClosed) {
-        //     return;
-        // }
-
         super.render(null, { users: data });
 
         if (this.pagination !== null) {
-            this.pagination.render(document.querySelector('.paginator-block'));
+            this.pagination.render(document.getElementsByClassName('paginator-block')[0]);
         }
 
         this.afterRender();
     }
 
     afterRender () {
-        const backBtn = document.querySelector('.back-menu-btn');
+        const backBtn = document.getElementsByClassName('back-menu-btn')[0];
         backBtn.addEventListener('click', () => { this.isClosed = true; });
     }
 }

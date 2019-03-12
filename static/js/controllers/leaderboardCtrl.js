@@ -12,7 +12,7 @@ const eventList = [
     'checkAuthorizationResponse',
     'checkAuthError',
     'signOut',
-    'car'
+    'closeView'
 ];
 
 export default class leaderboardController {

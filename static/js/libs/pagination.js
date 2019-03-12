@@ -17,7 +17,9 @@ export default class paginator {
         this.lastPos = (this.localNumOfPositions < this.localCountOfPages ? this.localNumOfPositions : this.localCountOfPages);
 
         for (let i = this.firstPos - 1; i < this.lastPos; i++) {
-            this.localLinks.push(document.createElement('div'));
+            const paginatorElem = document.createElement('div');
+            paginatorElem.classList.add('paginator-page');
+            this.localLinks.push(paginatorElem);
             this.localLinks[i].addEventListener('click', this.onLinkClick.bind(this));
             this.localLinks[i].textContent = i + 1;
         }
@@ -32,6 +34,7 @@ export default class paginator {
         this.localLinks.forEach(val => root.appendChild(val));
     }
 
+    // TODO(4taa): поправить ифы + намазать JSDoc
     /**
      * Отрисовка страниц с учетом того, на какой находимся
      * @param {*} event

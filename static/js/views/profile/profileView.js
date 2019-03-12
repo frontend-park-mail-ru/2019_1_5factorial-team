@@ -53,19 +53,19 @@ export default class profileView extends View {
             return;
         }
         super.render(null, data);
-        const imgTemp = document.querySelector('.avatar-img');
+        const imgTemp = document.getElementsByClassName('avatar-img')[0];
         imgTemp.src = data.user.avatar;
 
         this.initElements();
     }
 
     initElements () {
-        this.localAvatar = document.querySelector('.avatar-img');
-        this.localAvatarUploader = document.querySelector('.js-change-image');
+        this.localAvatar = document.getElementsByClassName('avatar-img')[0];
+        this.localAvatarUploader = document.getElementsByClassName('js-change-image')[0];
 
-        this.formInput =  document.querySelector('.js-change-password');
+        this.formInput =  document.getElementsByClassName('js-change-password')[0];
 
-        this.passwordSubmit = this.formInput.querySelector('.js-button-submit');
+        this.passwordSubmit = this.formInput.getElementsByClassName('js-button-submit')[0];
         this.imputPasswordOld = this.formInput.getElementsByClassName('js-password-old')[0];
         this.imputPasswordNew = this.formInput.getElementsByClassName('js-password-new')[0];
 
@@ -73,19 +73,22 @@ export default class profileView extends View {
     }
 
     initElementsEvents () {
-        const signoutButton = document.querySelector('.js-signout');
+        const signoutButton = document.getElementsByClassName('js-signout')[0];
         const buttonUp = this.localAvatarUploader;
         buttonUp.addEventListener('change', () => {
             this.localEventBus.callEvent('changeAvatar', { avatar: this.localAvatarUploader.files[0] });
         });
 
         signoutButton.addEventListener('click', () => {
-            this.localEventBus.callEvent('sout');
+            this.localEventBus.callEvent('signOut');
         });
 
-        this.passwordSubmit.addEventListener('click', (ev) => {
-            ev.preventDefault();
-            this.localEventBus.callEvent('submitPassword', { newPassword: this.imputPasswordNew.value, oldPassword: this.imputPasswordOld.value });
+        this.passwordSubmit.addEventListener('click', (event) => {
+            event.preventDefault();
+            this.localEventBus.callEvent('submitPassword', { 
+                newPassword: this.imputPasswordNew.value, 
+                oldPassword: this.imputPasswordOld.value 
+            });
         });
     }
 }

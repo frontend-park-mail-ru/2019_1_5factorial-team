@@ -39,7 +39,7 @@ export default class aboutModel {
      */
     onLogout() {
         api.deleteSession();
-        this.localEventBus.callEvent('car', { isAuth: false, signout: true });
+        this.localEventBus.callEvent('closeView', { isAuth: false, signout: true });
         User.removeUser();
     }
 }

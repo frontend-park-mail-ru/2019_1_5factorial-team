@@ -6,7 +6,7 @@ const eventList = [
     'checkAuthorizationResponse',
     'checkAuthorization',
     'signOut',
-    'car'
+    'closeView'
 ];
 
 export default class aboutController {

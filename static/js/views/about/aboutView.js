@@ -13,17 +13,15 @@ export default class aboutView extends View {
     }
 
     onCheckAuthResponse ({isAuthorized = false} = {}) {
-        const rightBlock = document.querySelector('.right-elems');
+        const rightBlock = document.getElementsByClassName('users')[0];
 
         if (!isAuthorized) {
             return;
         } else {
-            rightBlock.innerHTML = `<div class="users">
-                <a class="btn users__btn_action" href="/profile">profile</a>
-                <a class="btn users__btn_action js-signout" href="/">SignOut</a>
-            </div>`;
+            rightBlock.innerHTML = `<a class="btn users__btn_action" href="/profile">profile</a>
+                <a class="btn users__btn_action js-signout" href="/">SignOut</a>`;
         }
-        const signoutButton = document.querySelector('.js-signout');
+        const signoutButton = document.getElementsByClassName('js-signout')[0];
         signoutButton.addEventListener('click', () => {
             this.localEventBus.callEvent('signOut');
         });

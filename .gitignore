@@ -14,6 +14,7 @@ static/js/views/about/aboutView.tmpl.js
 static/js/views/profile/profileView.tmpl.js
 static/js/views/signUp/signUpView.tmpl.js
 static/js/views/leaderboard/leaderboardView.tmpl.js
+static/js/views/leaderboard/leaderboardView.tmpl.js
 
 # static/js/views/menu/menuView.tmpl.xml
 # static/js/views/leaderboard/leaderboard.tmpl.xml

@@ -1,11 +1,7 @@
 'use strict';
+const EMAIL_EXPRESSION = new RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+[^<>()\.,;:\s@\"]{2,})$/);
 
 export default class Validator {
-    /**
-     * @return {boolean}
-     */
-    constructor() {
-    }
 
     /**
      * validateEmail - check validity of input email (using RegExp)
@@ -13,14 +9,7 @@ export default class Validator {
      * @return {boolean}
      */
     static validateEmail (email) {
-        const expression = new RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+[^<>()\.,;:\s@\"]{2,})$/);
-        const res = expression.test(email);
-        if (res) {
-            console.log('correct email!');
-            return true;
-        }
-        console.log('incorrect email!');
-        return false;
+        return EMAIL_EXPRESSION.test(email) ? true : false;
     }
 
     /**
@@ -29,17 +18,7 @@ export default class Validator {
      * @return {boolean}
      */
     static validateLogin  (data)  {
-        if (data.length >= 6) {
-            // data.classList.remove('invalid');
-            // data.classList.add('valid');
-            console.log('correct login!');
-            return true;
-        } else {
-            // data.classList.remove('valid');
-            // data.classList.add('invalid');
-            console.log('incorrect login!');
-            return false;
-        }
+        return data.length >= 4 ? true : false;
     }
 
     /**
@@ -50,12 +29,7 @@ export default class Validator {
     static validateLoginOrEmail(data) {
         const loginInput = Validator.validateLogin(data);
         const emailInput = Validator.validateEmail(data);
-        if (loginInput || emailInput) {
-            return true;
-        } else {
-            console.log('smth went wrong in validateLoginOrEmail!');
-            return false;
-        }
+        return loginInput || emailInput ? true : false;
     }
 
     /**
@@ -64,18 +38,7 @@ export default class Validator {
      * @return {boolean}
      */
     static validatePassword (data)  {
-        const pass = data.length;
-        if (pass >= 4) {
-            // data.classList.remove('invalid');
-            // data.classList.add('valid');
-            console.log('correct password!');
-            return true;
-        } else {
-            // data.classList.remove('valid');
-            // data.classList.add('invalid');
-            console.log('incorrect password!');
-            return false;
-        }
+        return data.length >= 4 ? true : false;
     }
 
     /**
@@ -84,18 +47,7 @@ export default class Validator {
      * @return {boolean}
      */
     static validateImage  (myInput)  {
-        const typeOfImage = myInput.type;
-        if ((typeOfImage !== 'image/jpeg') || (typeOfImage !== 'image/png')) {
-            // myInput.classList.remove('valid');
-            // myInput.classList.add('invalid');
-            console.log('invalid format of image!');
-            return false;
-        } else {
-            // myInput.classList.remove('invalid');
-            // myInput.classList.add('valid');
-            console.log('valid format of image!');
-            return true;
-        }
+        return ((myInput.type !== 'image/jpeg') || (myInput.type !== 'image/png')) ? true : false;
     }
 
     /**
@@ -105,15 +57,6 @@ export default class Validator {
      * @return {boolean}
      */
     static validateRepeatPasswords  (first, second)  {
-        const firstPass = first.value;
-        const secPass = second.value;
-
-        if (firstPass !== secPass) {
-            console.log('Passwords not match!');
-            return false;
-        } else {
-            console.log('Passwords match!');
-            return true;
-        }
+        return first.value !== second.value ? false : true;
     }
 }

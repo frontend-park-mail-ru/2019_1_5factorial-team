@@ -14,7 +14,7 @@ export default class signUpView extends View {
     render(root, data = {}) {
         super.render(root, data);
 
-        this.form = document.querySelector('.form');
+        this.form = document.getElementsByClassName('form')[0];
 
         this.passwordInput = this.form.elements['password'];
         this.passwordInput.addEventListener('change', this.onChangePass.bind(this, this.passwordInput));

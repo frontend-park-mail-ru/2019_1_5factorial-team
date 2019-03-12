@@ -46,9 +46,6 @@
                 <a class="btn users__btn login-btn" href="/login">Login</a>
                 <a class="btn users__btn signup-btn" href="/signup">Signup</a>
             </div>
-            <div class="name">
-                <h1 class="name__text">THE GAME</h1>
-            </div>
         </section>
 </div>
 </fest:template>
