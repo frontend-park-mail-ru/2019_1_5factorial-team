@@ -1,5 +1,6 @@
 
-const serverBackUrlLocal = 'http://localhost:5051';
+// const serverBackUrlLocal = 'http://localhost:5051';
+const serverBackUrlProd = 'http://89.208.197.199:80';
 
 export default class Network {
     /**
@@ -50,7 +51,7 @@ export default class Network {
      * Get на урл сервера
      */
     static getServerURL() {
-        return serverBackUrlLocal;
+        return serverBackUrlProd;
     }
 
     /**

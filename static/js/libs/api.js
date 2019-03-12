@@ -66,7 +66,7 @@ export default class api {
      */
     static getUserCount () {
         return network.doGet({
-            url: '/api/users/count'
+            url: '/api/user/count'
         });
     }
 
@@ -107,7 +107,7 @@ export default class api {
      */
     static getScore ({ limit = 5, offset = 0 } = {}) {
         return network.doGet({
-            url: `/api/users/score?limit=${limit}&offset=${offset}`
+            url: `/api/user/score?limit=${limit}&offset=${offset}`
         });
     }
 }

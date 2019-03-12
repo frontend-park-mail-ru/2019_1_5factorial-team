@@ -24,9 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     router.add('/about', main, aboutCtrl.aboutView);
     router.add('/login', main, loginCtrl.loginView);
+    router.add('/profile', main, profileCtrl.profileView);
     router.add('/signup', main, signUpCtrl.signUpView);
     router.add('/leaders', main, leaderboardCtrl.leaderboardView);
-    router.add('/profile', main, profileCtrl.profileView);
     router.add('/', main, menuCntl.menuView);
 
     router.start();
