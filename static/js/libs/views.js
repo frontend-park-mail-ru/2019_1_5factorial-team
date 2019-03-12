@@ -25,6 +25,7 @@ export default class View {
         }
 
         // this.element.innerHTML = this.tmpl(data);
+        console.log(data);
         root.innerHTML = this.fest(data);
         root.appendChild(this.element);
 

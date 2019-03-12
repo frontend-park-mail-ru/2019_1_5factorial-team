@@ -7,7 +7,7 @@ export default class viewMenu extends View {
         this.localEventBus.getEvent('checkAuthorizationResponse', this.onCheckAuthResponse.bind(this));
     }
 
-    onCheckAuthResponse ({isAuthorized = {}}) {
+    onCheckAuthResponse ({isAuthorized = false}) {
         const rightBlock = document.querySelector('.right-elems');
 
         if (!isAuthorized) {

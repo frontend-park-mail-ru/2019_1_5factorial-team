@@ -12,7 +12,7 @@ export default class aboutView extends View {
         this.localEventBus.callEvent('checkAuthorization');
     }
 
-    onCheckAuthResponse ({isAuthorized} = {}) {
+    onCheckAuthResponse ({isAuthorized = false} = {}) {
         const rightBlock = document.querySelector('.right-elems');
 
         if (!isAuthorized) {
