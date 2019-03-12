@@ -90,9 +90,11 @@ export default class profileModel {
     onLoadUser(data) {
         this._currentUserGUID = data.user_guid;
 
+
         if (!User.checkUser()) {
-            if (!this._currentUserGUID) {
+            if (this._currentUserGUID) {
                 this.localEventBus.callEvent('loadUserResponse', {});
+                return;
             }
 
             api.loadUser(this._currentUserGUID)
