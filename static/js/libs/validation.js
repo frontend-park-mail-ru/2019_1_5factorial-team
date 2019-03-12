@@ -8,7 +8,7 @@ export default class Validator {
      * @param {string} email
      * @return {boolean}
      */
-    static validateEmail (email) {
+    static validateEmail(email) {
         return EMAIL_EXPRESSION.test(email) ? true : false;
     }
 
@@ -17,7 +17,7 @@ export default class Validator {
      * @param {string} data
      * @return {boolean}
      */
-    static validateLogin  (data)  {
+    static validateLogin(data)  {
         return data.length >= 4 ? true : false;
     }
 
@@ -37,7 +37,7 @@ export default class Validator {
      * @param {string} data
      * @return {boolean}
      */
-    static validatePassword (data)  {
+    static validatePassword(data)  {
         return data.length >= 4 ? true : false;
     }
 
@@ -46,7 +46,7 @@ export default class Validator {
      * @param {HTMLElement} myInput
      * @return {boolean}
      */
-    static validateImage  (myInput)  {
+    static validateImage(myInput)  {
         return ((myInput.type !== 'image/jpeg') || (myInput.type !== 'image/png')) ? true : false;
     }
 
@@ -56,7 +56,7 @@ export default class Validator {
      * @param second
      * @return {boolean}
      */
-    static validateRepeatPasswords  (first, second)  {
+    static validateRepeatPasswords(first, second)  {
         return first.value !== second.value ? false : true;
     }
 }

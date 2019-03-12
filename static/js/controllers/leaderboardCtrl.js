@@ -3,13 +3,12 @@ import leaderboardModel from '../model/leaderboardModel.js';
 import EventBus from '../libs/eventBus.js';
 
 const eventList = [
+    'checkAuthorizationResponse',
+    'checkAuthorization',
     'load',
     'loadResponse',
-    'loadWaiting',
     'loadPaginator',
     'loadPaginatorResponse',
-    'checkAuthorization',
-    'checkAuthorizationResponse',
     'checkAuthError',
     'signOut',
     'closeView'

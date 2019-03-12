@@ -3,10 +3,6 @@ import profileModel from '../model/profileModel.js';
 import EventBus from '../libs/eventBus.js';
 
 const eventList = [
-    'ca',
-    'car',
-    'lu',
-    'lur',
     'checkAuth',
     'checkAuthResponse',
     'loadUser',
@@ -30,7 +26,7 @@ const eventList = [
 ];
 
 export default class ProfileController {
-    constructor ({ router } = {}) {
+    constructor({ router } = {}) {
         const eventBus = new EventBus(eventList);
 
         eventBus.getEvent('checkAuthError', () => {

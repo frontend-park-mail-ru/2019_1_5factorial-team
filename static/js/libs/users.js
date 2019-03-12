@@ -1,6 +1,6 @@
 
 class UserSingleton {
-    constructor () {
+    constructor() {
         this.login = null;
         this.email = null;
         this.score = null;
@@ -12,7 +12,7 @@ class UserSingleton {
      * Если хотя бы одно поле не задано, то пользователь считается не загруженным.
      * Перед тем как пойти на сервер, нужно проверить есть ли уже пользователь или нет
      */
-    checkUser () {
+    checkUser() {
         return !(this.email === null || this.score === null ||
             this.avatar === null || this.guid === null || this.login === null);
     }
@@ -25,7 +25,7 @@ class UserSingleton {
      * @param guid
      * @param login
      */
-    setUser ({ email, score, avatar, guid, login} = {}) {
+    setUser({ email, score, avatar, guid, login} = {}) {
 
         this.email = email;
         this.score = score;
@@ -37,7 +37,7 @@ class UserSingleton {
     /**
      * Удаляет данные пользователя
      */
-    removeUser () {
+    removeUser() {
         this.email = null;
         this.score = null;
         this.avatar = null;

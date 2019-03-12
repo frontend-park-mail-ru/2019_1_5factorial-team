@@ -3,7 +3,7 @@ import Network from '../libs/network.js';
 import {User} from '../libs/users.js';
 
 export default class leaderboardModel {
-    constructor (eventBus) {
+    constructor(eventBus) {
         this.localEventBus = eventBus;
         this.localEventBus.getEvent('load', this.loadPage.bind(this));
         this.localEventBus.getEvent('loadPaginator', this.loadPaginator.bind(this));
@@ -51,7 +51,7 @@ export default class leaderboardModel {
     /**
      * Подгружаем пагинацию
      */
-    loadPaginator () {
+    loadPaginator() {
         api.getUserCount()
             .then(resp => resp.json())
             .then(users => {
@@ -68,8 +68,7 @@ export default class leaderboardModel {
     /**
      * Загружаем страницы, которые необходимо пагинировать
      */
-    loadPage ({pageNum = 1} = {}) {
-        this.localEventBus.callEvent('loadWaiting');
+    loadPage({pageNum = 1} = {}) {
         api.getScore({
             limit: this.numOfPositions,
             offset: pageNum

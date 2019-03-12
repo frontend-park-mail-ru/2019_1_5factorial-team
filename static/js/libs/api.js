@@ -64,7 +64,7 @@ export default class api {
     /**
      * Счетчик пользователей для лидерборда
      */
-    static getUserCount () {
+    static getUserCount() {
         return network.doGet({
             url: '/api/user/count'
         });
@@ -76,7 +76,7 @@ export default class api {
      * @param {*} new_password
      * @param {*} avatar_input
      */
-    static updateUser ({ old_password, new_password, avatar_input } = {}) {
+    static updateUser({ old_password, new_password, avatar_input } = {}) {
         return network.doPut({
             url: '/api/user',
             body: {
@@ -91,7 +91,7 @@ export default class api {
      * Загрузка нового аватара на бэк
      * @param {*} avatar
      */
-    static uploadAvatar ({ avatar } = {}) {
+    static uploadAvatar({ avatar } = {}) {
         const formData = new FormData();
         formData.append('avatar', avatar);
         return network.doPostFormData({
@@ -105,7 +105,7 @@ export default class api {
      * @param {*} limit
      * @param {*} offset
      */
-    static getScore ({ limit = 5, offset = 0 } = {}) {
+    static getScore({ limit = 5, offset = 0 } = {}) {
         return network.doGet({
             url: `/api/user/score?limit=${limit}&offset=${offset}`
         });

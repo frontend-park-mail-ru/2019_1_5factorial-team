@@ -18,7 +18,7 @@ const eventList = [
 ];
 
 export default class signUpController {
-    constructor ({ router } = {}) {
+    constructor({ router } = {}) {
         const eventBus = new EventBus(eventList);
 
         eventBus.getEvent('signupSuccess', () => {

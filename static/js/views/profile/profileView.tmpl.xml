@@ -18,7 +18,7 @@
     <main class="container__block container__block_center">
         <div class="content">
             <div class="content-block content-block_avatar">
-                <img class="avatar-img" src="img/{avatar}"/>
+                <img class="avatar-img js-upload-avatar" src="img/{avatar}"/>
                 <form class="form js-upload-photo">
                     <div class="change-btn-photo">
                         <label>
@@ -42,16 +42,11 @@
                         <fest:value>params.user.email</fest:value>
                     </div>
                 </div>
-                <div class="content-block-unit content-block-unit_profile content-block-unit_profile_line js-balance-subblock">
-                    <h2 class="text-title content-block-unit__title content-block-unit__title_row">balance:</h2>
-                    <div class="js-balance-row">
-                    </div>
-                </div>
                 <div class="content-block-unit content-block-unit_profile content-block-unit_profile_line js-score-subblock">
                     <h2 class="text-title content-block-unit__title content-block-unit__title_row">score:</h2>
-                    <div class="js-score-row">
-                        <fest:value>params.user.score</fest:value>
-                    </div>
+                        <div class="profile-score js-score-row">
+                            <fest:value>params.user.score</fest:value>
+                        </div>
                 </div>
                 <hr class="hr"/>
                 <div class="content-block-unit content-block-unit_profile">
@@ -68,7 +63,6 @@
                 </div>
             </div>
             <div class="content-block content-block_actions">
-                <a class="btn btn_contained profile__btn profile__btn_action js-change-password" href="/changePassword">CHANGE PASSWORD</a>
                 <button class="btn btn_contained profile__btn profile__btn_action js-delete-profile">DELETE PROFILE</button>
             </div>
 

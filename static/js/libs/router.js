@@ -1,5 +1,5 @@
 export default class Router {
-    constructor (root) {
+    constructor(root) {
         this.root = root;
         this.routes = new Map();
 
@@ -16,7 +16,7 @@ export default class Router {
      * Переходит на начальную страницу с путем '/'
      * @param delPrev удаляет из истории Путь из которого сделан переход
      */
-    toStartPage (delPrev = false) {
+    toStartPage(delPrev = false) {
         if (delPrev) {
             window.history.replaceState(null, null, '/');
         }
@@ -31,7 +31,7 @@ export default class Router {
      * @param view компонент, который отрисуется
      * @param data router data
      */
-    add (path, root = this.root, view, data) {
+    add(path, root = this.root, view, data) {
         this.routes.set(path, {
             root,
             view,
@@ -44,7 +44,7 @@ export default class Router {
      * @param root элемент куда будет рисоваться view, по-умолчание это this.root
      * @param view компонент, который отрисуется
      */
-    setNotFoundView (root = this.root, view) {
+    setNotFoundView(root = this.root, view) {
         this.notFoundView = view;
         this.notFoundViewRoot = root;
     }
@@ -55,7 +55,7 @@ export default class Router {
      * @param addToHistory добавлять Path в History Api или нет.
      * @private
      */
-    change (path, addToHistory = true) {
+    change(path, addToHistory = true) {
         if (this.currentRoute === path) {
             return;
         }
@@ -92,14 +92,14 @@ export default class Router {
      * @returns {string}
      * @private
      */
-    static normalizePath (path) {
+    static normalizePath(path) {
         return path.charAt(path.length - 1) === '/' && path !== '/' ? path.slice(0, path.length - 1) : path;
     }
 
     /**
      * Запускает роутер
      */
-    start () {
+    start() {
         this.root.addEventListener('click', (event) => {
             if (event.target.tagName === 'A' && event.target.hostname === location.hostname) {
                 event.preventDefault();

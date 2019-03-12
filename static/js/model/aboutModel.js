@@ -3,7 +3,7 @@ import Network from '../libs/network.js';
 import {User} from '../libs/users.js';
 
 export default class aboutModel {
-    constructor (eventBus) {
+    constructor(eventBus) {
         this.localEventBus = eventBus;
         this.localEventBus.getEvent('checkAuthorization', this.checkAuthorization.bind(this));
         this.localEventBus.getEvent('signOut', this.onLogout.bind(this));

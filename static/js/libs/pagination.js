@@ -7,7 +7,7 @@ export default class paginator {
      * @param numOfPositions сколько кнопок в пагинаторе
      * @param callbackOnClick действие при клике на кнопку
      */
-    constructor ({ countOfPages, numOfPositions, callbackOnClick = noop } = {}) {
+    constructor({ countOfPages, numOfPositions, callbackOnClick = noop } = {}) {
         this.localCountOfPages = countOfPages;
         this.localNumOfPositions = numOfPositions;
         this.localCallbackOnClick = callbackOnClick;
@@ -16,9 +16,10 @@ export default class paginator {
         this.firstPos = 1;
         this.lastPos = (this.localNumOfPositions < this.localCountOfPages ? this.localNumOfPositions : this.localCountOfPages);
 
+        // TODO(): сделать две кнопки - First page и Last page для проброски в начало и конец
         for (let i = this.firstPos - 1; i < this.lastPos; i++) {
             const paginatorElem = document.createElement('div');
-            paginatorElem.classList.add('paginator-page');
+            paginatorElem.classList.add('page-number');
             this.localLinks.push(paginatorElem);
             this.localLinks[i].addEventListener('click', this.onLinkClick.bind(this));
             this.localLinks[i].textContent = i + 1;
@@ -29,7 +30,7 @@ export default class paginator {
      * Вставляет пагинатор в root элемент
      * @param root
      */
-    render (root) {
+    render(root) {
         root.innerHTML = '';
         this.localLinks.forEach(val => root.appendChild(val));
     }
@@ -39,7 +40,7 @@ export default class paginator {
      * Отрисовка страниц с учетом того, на какой находимся
      * @param {*} event
      */
-    onLinkClick (event) {
+    onLinkClick(event) {
         event.preventDefault();
         const linkStr = event.target.textContent;
 
@@ -62,7 +63,7 @@ export default class paginator {
         }
     }
 
-    localChanges (firstNum, lastNum) {
+    localChanges(firstNum, lastNum) {
         this.firstPos = firstNum;
         this.lastPos = (lastNum >= this.localCountOfPages ? this.localCountOfPages : lastNum);
         this.localLinks.forEach(val => val.textContent = firstNum++);

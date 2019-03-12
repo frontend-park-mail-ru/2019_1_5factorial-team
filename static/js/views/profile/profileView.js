@@ -26,11 +26,11 @@ export default class profileView extends View {
         this.data = data;
     }
 
-    onChangeAvatarResponse () {
+    onChangeAvatarResponse() {
 
     }
 
-    onChangeAvatarSuccess (data) {
+    onChangeAvatarSuccess(data) {
         if (!data.avatar) {
             return;
         }
@@ -38,7 +38,7 @@ export default class profileView extends View {
         this.localAvatar.src = data.avatar;
     }
 
-    onCheckAuthorizationResponse (data = {}) {
+    onCheckAuthorizationResponse(data = {}) {
         if (data.error || !data.isAuth) {
             this.localEventBus.callEvent('checkAuthError');
             return;
@@ -47,7 +47,7 @@ export default class profileView extends View {
         this.localEventBus.callEvent('loadUser', data);
     }
 
-    onLoadUserResponse (data = {}) {
+    onLoadUserResponse(data = {}) {
         if (data.error || !data.user) {
             this.localEventBus.callEvent('checkAuthError');
             return;
@@ -59,8 +59,8 @@ export default class profileView extends View {
         this.initElements();
     }
 
-    initElements () {
-        this.localAvatar = document.getElementsByClassName('avatar-img')[0];
+    initElements() {
+        this.localAvatar = document.getElementsByClassName('js-upload-avatar')[0];
         this.localAvatarUploader = document.getElementsByClassName('js-change-image')[0];
 
         this.formInput =  document.getElementsByClassName('js-change-password')[0];
@@ -72,7 +72,7 @@ export default class profileView extends View {
         this.initElementsEvents();
     }
 
-    initElementsEvents () {
+    initElementsEvents() {
         const signoutButton = document.getElementsByClassName('js-signout')[0];
         const buttonUp = this.localAvatarUploader;
         buttonUp.addEventListener('change', () => {

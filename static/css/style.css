@@ -1038,3 +1038,7 @@ li:nth-child(even){
     margin-right: 5px;
     margin-left: 5px;
 }
+
+.profile-score {
+    color: white;
+}

@@ -12,8 +12,8 @@ export default class aboutView extends View {
         this.localEventBus.callEvent('checkAuthorization');
     }
 
-    onCheckAuthResponse ({isAuthorized = false} = {}) {
-        const rightBlock = document.getElementsByClassName('users')[0];
+    onCheckAuthResponse({isAuthorized = false} = {}) {
+        const rightBlock = document.getElementsByClassName('js-check-auth')[0];
 
         if (!isAuthorized) {
             return;

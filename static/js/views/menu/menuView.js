@@ -7,8 +7,9 @@ export default class viewMenu extends View {
         this.localEventBus.getEvent('checkAuthorizationResponse', this.onCheckAuthResponse.bind(this));
     }
 
-    onCheckAuthResponse ({isAuthorized = false}) {
-        const rightBlock = document.getElementsByClassName('users')[0];
+    // TODO(): сменить 'хеддер' после логаута
+    onCheckAuthResponse({isAuthorized = false}) {
+        const rightBlock = document.getElementsByClassName('js-check-auth')[0];
 
         if (!isAuthorized) {
             return;

@@ -16,11 +16,10 @@ export default class leaderboardView extends View {
         super.render(root, data);
         this.localEventBus.callEvent('loadPaginator');
         this.localEventBus.callEvent('load', { pageNum: 1 });
-        this.localEventBus.callEvent('checkAuthorization');
     }
 
-    onCheckAuthResponse ({isAuthorized = false} = {}) {
-        const rightBlock = document.getElementsByClassName('users')[0];
+    onCheckAuthResponse({isAuthorized = false} = {}) {
+        const rightBlock = document.getElementsByClassName('js-check-auth')[0];
 
         if (!isAuthorized) {
             return;
@@ -34,13 +33,13 @@ export default class leaderboardView extends View {
         });
     }
 
-    loadPaginatorResponse (data) {
+    loadPaginatorResponse(data) {
         if (data.pagesCount !== undefined && data.linksCount !== undefined) {
             const callbackOnClick = (pageNum) => {
                 this.localEventBus.callEvent('load', { pageNum });
             };
 
-            const root = document.getElementsByClassName('paginator-block')[0];
+            const root = document.getElementsByClassName('js-paginator-buttons')[0];
             this.pagination = new paginator({
                 countOfPages: data.pagesCount,
                 numOfPositions: data.linksCount,
@@ -52,18 +51,18 @@ export default class leaderboardView extends View {
         }
     }
 
-    loadResponse (data) {
+    loadResponse(data) {
         super.render(null, { users: data });
 
         if (this.pagination !== null) {
-            this.pagination.render(document.getElementsByClassName('paginator-block')[0]);
+            this.pagination.render(document.getElementsByClassName('js-paginator-buttons')[0]);
         }
-
         this.afterRender();
     }
 
-    afterRender () {
-        const backBtn = document.getElementsByClassName('back-menu-btn')[0];
+    afterRender() {
+        const backBtn = document.getElementsByClassName('js-back-to-menu')[0];
         backBtn.addEventListener('click', () => { this.isClosed = true; });
+        this.localEventBus.callEvent('checkAuthorization');
     }
 }

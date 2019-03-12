@@ -20,7 +20,7 @@ export default class signUpModel {
      * Проверка данных на регистрацию
      * @param {*} data
      */
-    checkSignUp (data) {
+    checkSignUp(data) {
         const isValid = Object.entries(this.defaultInputVals).reduce((res, el) => (res && el[1]), true);
 
         if (isValid) {
@@ -54,7 +54,7 @@ export default class signUpModel {
      * Проверка данных на смену пароля
      * @param {*} data
      */
-    checkChangePassword (data) {
+    checkChangePassword(data) {
         const pass = data.pass;
         const errPass = Validator.validatePassword(pass);
         if (!errPass) {
@@ -71,7 +71,7 @@ export default class signUpModel {
      * Проверка данных на смену email
      * @param {*} data
      */
-    checkChangeEmail (data) {
+    checkChangeEmail(data) {
         const email = data.email;
         const errEmail = Validator.validateEmail(email);
         if (!errEmail) {
@@ -88,7 +88,7 @@ export default class signUpModel {
      * Проверка данных на смену логина
      * @param {*} data
      */
-    checkChangeLogin (data) {
+    checkChangeLogin(data) {
         const login = data.login;
         const errLogin = Validator.validateLogin(login);
         if (!errLogin) {

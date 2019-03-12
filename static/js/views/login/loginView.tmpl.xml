@@ -17,7 +17,7 @@
     <main class="container__block container__block_center">
         <div class="content">
             <h1 class="content__header">SIGN IN</h1>
-            <form class="form">
+            <form class="form js-login-form">
                 <label class="form__label" for="login-or-email">login/email</label>
                 <input class="form__input js-login-or-email" type="text" name="login-or-email" placeholder=" " id="login-or-email"/>
                 <label class="form__label" for="password">password</label>

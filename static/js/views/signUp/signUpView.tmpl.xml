@@ -17,7 +17,7 @@
         <main class="container__block container__block_center">
             <div class="content">
                 <h1 class="content__header">SIGN UP</h1>
-                <form class="form">
+                <form class="form js-signup-form">
                     <label class="form__label" for="login">login</label>
                     <input class="form__input js-login" type="text" name="login" id="login" placeholder=" "/>
                     <label class="form__label" for="email">email</label>

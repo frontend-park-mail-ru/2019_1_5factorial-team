@@ -14,7 +14,7 @@ export default class signUpView extends View {
     render(root, data = {}) {
         super.render(root, data);
 
-        this.form = document.getElementsByClassName('form')[0];
+        this.form = document.getElementsByClassName('js-signup-form')[0];
 
         this.passwordInput = this.form.elements['password'];
         this.passwordInput.addEventListener('change', this.onChangePass.bind(this, this.passwordInput));
@@ -22,7 +22,8 @@ export default class signUpView extends View {
         this.form.addEventListener('submit', this.onSubmit.bind(this));
     }
 
-    onSignupResponse (data) {
+    // TODO(): переброс на стартовую страницу после успешной регистрации
+    onSignupResponse(data) {
         const field = data.field;
         const error = data.error;
         console.log(error);
@@ -37,36 +38,37 @@ export default class signUpView extends View {
         }
     }
 
-    onChangeRepassResponse (data) {
+    onChangeRepassResponse(data) {
         this.onChangeResponseTmpl(data.error, this.repasswordInput, this.repassWarning);
     }
 
-    onChangePassResponse (data) {
+    onChangePassResponse(data) {
         this.onChangeResponseTmpl(data.error, this.passwordInput, this.passWarning);
     }
 
-    onChangeEmailResponse (data) {
+    onChangeEmailResponse(data) {
         this.onChangeResponseTmpl(data.error, this.emailInput, this.emailWarning);
     }
 
-    onChangeLoginResponse (data) {
+    onChangeLoginResponse(data) {
         this.onChangeResponseTmpl(data.error, this.loginInput, this.loginWarning);
     }
 
-    onChangeResponseTmpl (error) {
+    onChangeResponseTmpl(error) {
         if (error) {
+            console.log(error);
             return;
         }
     }
 
-    onChangePass (passEl) {
+    onChangePass(passEl) {
         const pass = passEl.value;
         this.localEventBus.callEvent('changePassword', { pass });
     }
 
 
-    onSubmit (ev) {
-        ev.preventDefault();
+    onSubmit(event) {
+        event.preventDefault();
         const email = this.form.elements['email'].value;
         const login = this.form.elements['login'].value;
         const pass = this.form.elements['password'].value;
