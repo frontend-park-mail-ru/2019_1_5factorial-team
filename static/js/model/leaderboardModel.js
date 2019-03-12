@@ -73,7 +73,6 @@ export default class leaderboardModel {
         api.getScore({
             limit: this.numOfPositions,
             offset: pageNum
-            // offset: 1
         }).then(res => {
             if (res.status === 200) {
                 return res.json();
