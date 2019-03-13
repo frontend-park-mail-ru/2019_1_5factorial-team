@@ -52,6 +52,9 @@ export default class profileView extends View {
             this.localEventBus.callEvent('checkAuthError');
             return;
         }
+        if (data.avatar !== '') {
+            data.user.avatar = 'http://78.155.207.69:5051' + data.user.avatar;
+        }
         super.render(null, data);
         const imgTemp = document.getElementsByClassName('avatar-img')[0];
         imgTemp.src = data.user.avatar;
