@@ -8,7 +8,6 @@ import profileController from './controllers/profileCtrl.js';
 import Router from './libs/router.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('debug point: start work!');
 
     const page = document.getElementsByClassName('body-cnt')[0];
     createPage(page);

@@ -31,13 +31,11 @@ export default class menuModel {
                     }));
             } else {
                 this.localEvents.callEvent('checkAuthorizationResponse', {
-                    isAuthorized: true,
-                    online: navigator.onLine
+                    isAuthorized: true
                 });
             }
         }).catch((error) => {
             this.localEvents.callEvent('checkAuthorizationResponse', {
-                online: navigator.onLine,
                 error
             });
         });

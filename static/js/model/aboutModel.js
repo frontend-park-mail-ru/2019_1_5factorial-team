@@ -22,13 +22,11 @@ export default class aboutModel {
                     }));
             } else {
                 this.localEventBus.callEvent('checkAuthorizationResponse', {
-                    isAuthorized: true,
-                    online: navigator.onLine
+                    isAuthorized: true
                 });
             }
         }).catch((error) => {
             this.localEventBus.callEvent('checkAuthorizationResponse', {
-                online: navigator.onLine,
                 error
             });
         });

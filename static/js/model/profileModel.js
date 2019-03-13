@@ -35,7 +35,6 @@ export default class profileModel {
                 }).then(res => {
                     if (res.ok) {
                         const avatarLink = 'http://78.155.207.69:5051' + avatarName;
-                        console.log('changing avatar finished');
                         this.localEventBus.callEvent('changeAvatarSuccess', {avatar: avatarLink});
                     } else {
                         res.json().then(dataResponse => {
@@ -115,7 +114,6 @@ export default class profileModel {
      * @param {*} data
      */
     onLoadUser(data) {
-        console.log('loading user with data ', data);
         this._currentUserGUID = data.user_guid;
         api.loadUser(this._currentUserGUID)
             .then(user => {
