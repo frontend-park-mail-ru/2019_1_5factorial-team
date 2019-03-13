@@ -18,7 +18,7 @@
     <main class="container__block container__block_center">
         <div class="content">
             <div class="content-block content-block_avatar">
-                <img class="avatar-img js-upload-avatar" src="{avatar}"/>
+                <img class="avatar-img js-upload-avatar" src="{params.user.avatar}"/>
                 <form class="form js-upload-photo">
                     <div class="change-btn-photo">
                         <label>
