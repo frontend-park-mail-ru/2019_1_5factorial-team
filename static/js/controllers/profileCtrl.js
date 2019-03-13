@@ -1,4 +1,4 @@
-import profileView from '../views/profile/ProfileView.js';
+import profileView from '../views/profile/profileView.js';
 import profileModel from '../model/profileModel.js';
 import EventBus from '../libs/eventBus.js';
 
