@@ -55,13 +55,11 @@ export default class profileView extends View {
             this.localEventBus.callEvent('checkAuthError');
             return;
         }
-        console.log(data.user.avatar);
         if (data.user.avatar === 'http://78.155.207.69:5051../../../img/default.jpg' || data.user.avatar === '../../../img/default.jpg') {
             data.user.avatar = '../../../img/default.jpg';
         } else {
-            data.user.avatar = 'http://78.155.207.69:5051/static/' + data.user.avatar;
+            data.user.avatar = 'http://78.155.207.69:5051' + data.user.avatar;
         }
-        console.log('before insert ', data.user.avatar);
         super.render(this.prevRoot, data);
         const imgTemp = document.getElementsByClassName('avatar-img')[0];
         imgTemp.src = data.user.avatar;
