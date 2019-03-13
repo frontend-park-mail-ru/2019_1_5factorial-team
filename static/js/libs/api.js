@@ -91,12 +91,12 @@ export default class api {
      * Загрузка нового аватара на бэк
      * @param {*} avatar
      */
-    static uploadAvatar({ avatar } = {}) {
-        // const formData = new FormData();
-        // formData.append('upload', avatar);
+    static uploadAvatar(avatar) {
+        const formData = new FormData();
+        formData.append('upload', avatar);
         return network.doPostFormData({
             url: '/api/upload_avatar',
-            body: avatar
+            body: formData
         });
     }
 

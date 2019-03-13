@@ -1,6 +1,6 @@
 
-const serverBackUrlProd = 'http://localhost:5051';
-// const serverBackUrlProd = 'http://78.155.207.69:5051';
+// const serverBackUrlProd = 'http://localhost:5051';
+const serverBackUrlProd = 'http://78.155.207.69:5051';
 
 export default class Network {
     /**

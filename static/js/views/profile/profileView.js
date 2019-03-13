@@ -75,7 +75,6 @@ export default class profileView extends View {
     initElementsEvents() {
         const signoutButton = document.getElementsByClassName('js-signout')[0];
         const buttonUp = this.localAvatarUploader;
-        // console.log('file to upload ', this.localAvatar.files[0]);
         buttonUp.addEventListener('change', () => {
             this.localEventBus.callEvent('changeAvatar', { avatar: this.localAvatarUploader.files[0] });
         });
