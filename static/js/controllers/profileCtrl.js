@@ -22,7 +22,8 @@ const eventList = [
     'submitPasswordResponse',
     'submitPasswordSuccess',
     'logOutResponse',
-    'signOut'
+    'signOut',
+    'closeView'
 ];
 
 export default class ProfileController {

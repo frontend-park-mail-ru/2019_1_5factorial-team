@@ -21,9 +21,7 @@ export default class View {
         } else {
             this.prevRoot = root;
         }
-
         // this.element.innerHTML = this.tmpl(data);
-        console.log(data);
         root.innerHTML = this.fest(data);
 
         return this;
@@ -35,7 +33,7 @@ export default class View {
     close() {
         this.closedView = true;
         try {
-            this.localEventBus.callEvent('vcl');
+            this.localEventBus.callEvent('close');
         } catch (e) {
             console.log('no such event - close');
         }

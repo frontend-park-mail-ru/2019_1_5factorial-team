@@ -14,7 +14,10 @@ export default class profileView extends View {
     }
 
     render(root, data = {}) {
-        super.render(root, data);
+        if (root !== undefined) {
+            this.prevRoot = root;
+        }
+        this.data = data; //заглушка для линтера
         this.localEventBus.callEvent('checkAuth');
     }
 
@@ -57,7 +60,7 @@ export default class profileView extends View {
         } else {
             data.user.avatar = 'http://78.155.207.69:5051' + data.user.avatar;
         }
-        super.render(null, data);
+        super.render(this.prevRoot, data);
         const imgTemp = document.getElementsByClassName('avatar-img')[0];
         imgTemp.src = data.user.avatar;
 
