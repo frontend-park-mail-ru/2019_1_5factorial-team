@@ -20,7 +20,45 @@ export default class profileModel {
      * Проверяем смену аватара
      */
     onChangeAvatar(data) {
-        this.data = data;
+        const formData = new FormData();
+        const temp = data.avatar;
+        formData.append('avatar', temp);
+        console.log('get ', formData.get('upload'));
+        // api.uploadAvatar({formData}).then(res => res.json()).then(res => {
+        //     if (res !== 200) {
+
+        //     }
+        // })
+        console.log(formData);
+        api.uploadAvatar(formData).then(res => res.json()).then(res => {
+            if (res !== 200) {
+                console.log(res.error);
+                console.log('error on wpload');
+                console.log(res);
+            } else {
+                console.log('success on upload');
+                console.log(res);
+                const avatarName = res.body.AvatarLink;
+                console.log(avatarName);
+
+                api.updateUser({
+                    avatar_input: avatarName,
+                    old_password: undefined,
+                    new_password: undefined
+                }).then(res => {
+                    if (res.ok) {
+                        this.localEventBus.callEvent('changeAvatarSuccess', {avatar: avatarName});
+                    } else {
+                        res.json().then(dataResponse => {
+                            if (dataResponse.field === 'avatar') {
+                                this.localEventBus.callEvent('changeAvatarResponse', {error: dataResponse.error});
+                            }
+                            console.log('res body of updat', res.body);
+                        });
+                    }
+                });
+            }
+        });
     }
 
     /**

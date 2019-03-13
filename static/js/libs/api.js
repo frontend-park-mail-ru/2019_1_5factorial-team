@@ -92,11 +92,11 @@ export default class api {
      * @param {*} avatar
      */
     static uploadAvatar({ avatar } = {}) {
-        const formData = new FormData();
-        formData.append('avatar', avatar);
+        // const formData = new FormData();
+        // formData.append('upload', avatar);
         return network.doPostFormData({
-            url: '/api/avatar',
-            body: formData
+            url: '/api/upload_avatar',
+            body: avatar
         });
     }
 
