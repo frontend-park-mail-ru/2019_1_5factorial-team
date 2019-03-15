@@ -20,11 +20,10 @@ export default class leaderboardModel {
     checkAuthorization() {
         Network.doGet({ url: '/api/session' }).then(res => {
             if (res.status !== 200) {
-                res.json()
-                    .then(data => this.localEventBus.callEvent('checkAuthorizationResponse', {
-                        isAuthorized: false,
-                        error: data.error
-                    }));
+                data => this.localEventBus.callEvent('checkAuthorizationResponse', {
+                    isAuthorized: false,
+                    error: data.error
+                });
             } else {
                 this.localEventBus.callEvent('checkAuthorizationResponse', {
                     isAuthorized: true
