@@ -1,12 +1,13 @@
 import Network from '../libs/network.js';
 import api from '../libs/api.js';
 import {User} from '../libs/users.js';
+import userBlock from '../components/userBlock.js';
 
 export default class menuModel {
     constructor(events) {
-        this.localEvents = events;
-        this.localEvents.getEvent('checkAuthorization', this.checkAuthorization.bind(this));
-        this.localEvents.getEvent('signOut', this.onLogout.bind(this));
+        this.localEventBus = events;
+        this.localEventBus.getEvent('checkAuthorization', this.checkAuthorization.bind(this));
+        this.localEventBus.getEvent('signOut', this.onLogout.bind(this));
     }
 
     /**
@@ -14,7 +15,10 @@ export default class menuModel {
      */
     onLogout() {
         api.deleteSession();
-        this.localEvents.callEvent('closeView', { isAuth: false, signout: true });
+        const isAuthorized = false;
+        this.localEventBus.callEvent('closeView', { isAuth: isAuthorized, signout: true });
+        const checkHeader = new userBlock();
+        checkHeader.changeButtons(isAuthorized);
         User.removeUser();
     }
 
@@ -22,21 +26,18 @@ export default class menuModel {
      * Проверяем пользователя - авторизован ли
      */
     checkAuthorization() {
-        Network.doGet({ url: '/api/session' }).then(res => {
-            if (res.status !== 200) {
-                data => this.localEvents.callEvent('checkAuthorizationResponse', {
+        const res = Network.doGet({ url: '/api/session' });
+        res.then(res => {
+            if (res.status === 401) {
+                this.localEventBus.callEvent('checkAuthorizationResponse', {
                     isAuthorized: false,
-                    error: data.error
+                    error: res.error
                 });
             } else {
-                this.localEvents.callEvent('checkAuthorizationResponse', {
-                    isAuthorized: true
+                this.localEventBus.callEvent('checkAuthorizationResponse', {
+                    isAuthorized: true,
                 });
             }
-        }).catch((error) => {
-            this.localEvents.callEvent('checkAuthorizationResponse', {
-                error
-            });
         });
     }
 }

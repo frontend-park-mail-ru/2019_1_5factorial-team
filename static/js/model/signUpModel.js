@@ -24,7 +24,6 @@ export default class signUpModel {
         const isValid = Object.entries(this.defaultInputVals).reduce((res, el) => (res && el[1]), true);
 
         if (isValid) {
-            this.localEventBus.callEvent('loadWaiting');
             api.signUp({
                 email: data.email,
                 login: data.login,

@@ -1,5 +1,6 @@
 import View from '../../libs/views.js';
 import paginator from '../../libs/pagination.js';
+import userBlock from '../../components/userBlock.js';
 
 export default class leaderboardView extends View {
     constructor({ eventBus = {} }) {
@@ -19,18 +20,13 @@ export default class leaderboardView extends View {
     }
 
     onCheckAuthResponse({isAuthorized = false} = {}) {
-        const rightBlock = document.getElementsByClassName('js-check-auth')[0];
-
-        if (!isAuthorized) {
-            return;
-        } else {
-            rightBlock.innerHTML = `<a class="btn users__btn_action" href="/profile">profile</a>
-                <a class="btn users__btn_action js-signout" href="/">SignOut</a>`;
+        const checkHeader = new userBlock();
+        if (checkHeader.changeButtons(isAuthorized)) {
+            const signoutButton = document.getElementsByClassName('js-signout')[0];
+            signoutButton.addEventListener('click', () => {
+                this.localEventBus.callEvent('signOut');
+            });
         }
-        const signoutButton = document.getElementsByClassName('js-signout')[0];
-        signoutButton.addEventListener('click', () => {
-            this.localEventBus.callEvent('signOut');
-        });
     }
 
     loadPaginatorResponse(data) {

@@ -9,6 +9,7 @@ export default class signUpView extends View {
         this.localEventBus.getEvent('changePasswordResponse', this.onChangePassResponse.bind(this));
         this.localEventBus.getEvent('changePasswordRepeatResponse', this.onChangeRepassResponse.bind(this));
         this.localEventBus.getEvent('signupResponse', this.onSignupResponse.bind(this));
+        this.localEventBus.getEvent('signupSuccess', this.onSignUpSuccess.bind(this));
     }
 
     render(root, data = {}) {
@@ -20,6 +21,10 @@ export default class signUpView extends View {
         this.passwordInput.addEventListener('change', this.onChangePass.bind(this, this.passwordInput));
 
         this.form.addEventListener('submit', this.onSubmit.bind(this));
+    }
+
+    onSignUpSuccess(isAuth = true) {
+        this.isAuth = isAuth;
     }
 
     // TODO(): переброс на стартовую страницу после успешной регистрации

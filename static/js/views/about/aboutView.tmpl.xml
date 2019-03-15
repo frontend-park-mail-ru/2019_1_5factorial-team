@@ -43,8 +43,6 @@
     </main>
         <section class="container__block container__block_side right-elems">
             <div class="users js-check-auth">
-                <a class="btn users__btn login-btn" href="/login">Login</a>
-                <a class="btn users__btn signup-btn" href="/signup">Signup</a>
             </div>
         </section>
 </div>

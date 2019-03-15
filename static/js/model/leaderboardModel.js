@@ -1,6 +1,7 @@
 import api from '../libs/api.js';
 import Network from '../libs/network.js';
 import {User} from '../libs/users.js';
+import userBlock from '../components/userBlock.js';
 
 export default class leaderboardModel {
     constructor(eventBus) {
@@ -18,21 +19,18 @@ export default class leaderboardModel {
      * Проверяем пользователя - авторизован ли
      */
     checkAuthorization() {
-        Network.doGet({ url: '/api/session' }).then(res => {
-            if (res.status !== 200) {
-                data => this.localEventBus.callEvent('checkAuthorizationResponse', {
+        const res = Network.doGet({ url: '/api/session' });
+        res.then(res => {
+            if (res.status === 401) {
+                this.localEventBus.callEvent('checkAuthorizationResponse', {
                     isAuthorized: false,
-                    error: data.error
+                    error: res.error
                 });
             } else {
                 this.localEventBus.callEvent('checkAuthorizationResponse', {
-                    isAuthorized: true
+                    isAuthorized: true,
                 });
             }
-        }).catch((error) => {
-            this.localEventBus.callEvent('checkAuthorizationResponse', {
-                error
-            });
         });
     }
 
@@ -41,6 +39,9 @@ export default class leaderboardModel {
      */
     onLogout() {
         api.deleteSession();
+        const isAuthorized = false;
+        const checkHeader = new userBlock();
+        checkHeader.changeButtons(isAuthorized);
         this.localEventBus.callEvent('closeView', { isAuth: false, signout: true });
         User.removeUser();
     }
