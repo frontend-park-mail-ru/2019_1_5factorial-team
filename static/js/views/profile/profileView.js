@@ -1,5 +1,10 @@
 import View from '../../libs/views.js';
 
+const AVATAR_BROKEN_LINK = 'http://78.155.207.69:5051../../../img/default.jpg';
+const AVATAR_BASE_LINK = '../../../img/default.jpg';
+const NETWORK_ADRESS = 'http://78.155.207.69:5051';
+
+
 export default class profileView extends View {
     constructor({ eventBus = {} }) {
         super('profile/profileView.tmpl', eventBus);
@@ -55,10 +60,10 @@ export default class profileView extends View {
             this.localEventBus.callEvent('checkAuthError');
             return;
         }
-        if (data.user.avatar === 'http://78.155.207.69:5051../../../img/default.jpg' || data.user.avatar === '../../../img/default.jpg') {
-            data.user.avatar = '../../../img/default.jpg';
+        if (data.user.avatar === AVATAR_BROKEN_LINK || data.user.avatar === AVATAR_BASE_LINK) {
+            data.user.avatar = AVATAR_BASE_LINK;
         } else {
-            data.user.avatar = 'http://78.155.207.69:5051' + data.user.avatar;
+            data.user.avatar = NETWORK_ADRESS + data.user.avatar;
         }
         super.render(this.prevRoot, data);
         const imgTemp = document.getElementsByClassName('avatar-img')[0];

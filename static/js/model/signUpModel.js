@@ -1,6 +1,8 @@
 import api from '../libs/api.js';
 import Validator from '../libs/validation.js';
 
+const OK_RESPONSE = 200;
+
 export default class signUpModel {
     constructor(eventBus) {
         this.localEventBus = eventBus;
@@ -24,13 +26,12 @@ export default class signUpModel {
         const isValid = Object.entries(this.defaultInputVals).reduce((res, el) => (res && el[1]), true);
 
         if (isValid) {
-            this.localEventBus.callEvent('loadWaiting');
             api.signUp({
                 email: data.email,
                 login: data.login,
                 password: data.pass
             }).then(resp => {
-                if (resp.status === 200) {
+                if (resp.status === OK_RESPONSE) {
                     api.login({loginOrEmail: data.login, password: data.pass})
                         .then(() => {
                             this.localEventBus.callEvent('signupSuccess', {});

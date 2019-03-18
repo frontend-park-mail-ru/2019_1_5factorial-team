@@ -9,15 +9,6 @@ class UserSingleton {
     }
 
     /**
-     * Если хотя бы одно поле не задано, то пользователь считается не загруженным.
-     * Перед тем как пойти на сервер, нужно проверить есть ли уже пользователь или нет
-     */
-    checkUser() {
-        return !(this.email === null || this.score === null ||
-            this.avatar === null || this.guid === null || this.login === null);
-    }
-
-    /**
      * Устанавливает значения для юзера, можно тригерить 'setUser' -ом глобального EventBus
      * @param email
      * @param score

@@ -3,6 +3,10 @@ import Network from '../libs/network.js';
 import api from '../libs/api.js';
 import {User} from '../libs/users.js';
 
+const OK_RESPONSE = 200;
+const NETWORK_ADRESS = 'http://78.155.207.69:5051';
+const AVATAR_ERROR_RESPONSE = '';
+
 export default class profileModel {
     constructor(eventBus) {
         this.localEventBus = eventBus;
@@ -22,7 +26,7 @@ export default class profileModel {
     onChangeAvatar(data) {
         const newAvatar = data.avatar;
         api.uploadAvatar(newAvatar).then(res => res.json().then(res => {
-            if (res === '') {
+            if (res === AVATAR_ERROR_RESPONSE) {
                 console.log(res);
                 return;
             } else {
@@ -34,7 +38,7 @@ export default class profileModel {
                     new_password: undefined
                 }).then(res => {
                     if (res.ok) {
-                        const avatarLink = 'http://78.155.207.69:5051' + avatarName;
+                        const avatarLink = NETWORK_ADRESS + avatarName;
                         this.localEventBus.callEvent('changeAvatarSuccess', {avatar: avatarLink});
                     } else {
                         res.json().then(dataResponse => {
@@ -113,9 +117,8 @@ export default class profileModel {
      * Загружаем данные пользователя с сервера
      * @param {*} data
      */
-    onLoadUser(data) {
-        this._currentUserGUID = data.user_guid;
-        api.loadUser(this._currentUserGUID)
+    onLoadUser() {
+        api.loadUser()
             .then(user => {
                 if (user.error) {
                     this.localEventBus.callEvent('loadUserResponse', {});
@@ -129,7 +132,6 @@ export default class profileModel {
                     };
                     User.setUser({ toSetUser });
 
-                    this._currentUserGUID = user.guid;
                     this.localEventBus.callEvent('loadUserResponse', {user: toSetUser});
                 }
             });
@@ -141,16 +143,15 @@ export default class profileModel {
     onCheckAuth() {
         Network.doGet({url: '/api/session'})
             .then(response => {
-                if (response.status !== 200) {
+                if (response.status !== OK_RESPONSE) {
                     response.json().then(data => this.localEventBus.callEvent('checkAuthResponse', {
                         isAuth: false,
                         error: data.error
                     }));
                 } else {
-                    response.json().then(data => {
+                    response.json().then(() => {
                         this.localEventBus.callEvent('checkAuthResponse', {
                             isAuth: true,
-                            user_guid: data.user_guid
                         });
                     });
                 }
