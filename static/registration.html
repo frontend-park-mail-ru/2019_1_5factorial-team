@@ -33,12 +33,15 @@
                 <form class="form">
                     <label class="form__label" for="login">login</label>
                     <input class="form__input js-login" type="text" required name="login" id="login" placeholder=" " autofocus>
+                    <div class="form__warning js-warning-login hidden"></div>
 
                     <label class="form__label" for="email">email</label>
                     <input class="form__input js-email" type="email" required name="email" id="email" placeholder=" ">
+                    <div class="form__warning hidden js-warning-email hidden"></div>
 
                     <label class="form__label" for="password">password</label>
                     <input class="form__input js-password" type="password" required name="password" id="password" placeholder=" ">
+                    <div class="form__warning hidden js-warning-password hidden"></div>
 
                     <button class="btn btn_contained form__btn js-submit" type="submit">let's&nbspgo!</button>
                 </form>

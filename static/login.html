@@ -37,10 +37,12 @@
                 <label class="form__label" for="login-or-email">login/email</label>
                 <input class="form__input js-login-or-email" type="text" required name="login-or-email"
                        placeholder=" " id="login-or-email" autofocus>
+                <div class="form__warning js-warning-login-or-email hidden"></div>
 
                 <label class="form__label" for="password">password</label>
-                <input class="form__input js-password" type="password" required name="password"
+                <input class="form__input js-password hidden" type="password" required name="password"
                        placeholder=" " id="password">
+                <div class="form__warning js-warning-password hidden"></div>
 
                 <button class="btn btn_contained form__btn js-submit" type="submit">let's&nbspgo!</button>
             </form>
