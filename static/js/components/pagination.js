@@ -1,4 +1,5 @@
 const noop = () => null;
+const FIRST_POS = 1;
 
 export default class paginator {
     /**
@@ -13,7 +14,7 @@ export default class paginator {
         this.localCallbackOnClick = callbackOnClick;
         this.localLinks = [];
 
-        this.firstPos = 1;
+        this.firstPos = FIRST_POS;
         this.lastPos = (this.localNumOfPositions < this.localCountOfPages ? this.localNumOfPositions : this.localCountOfPages);
 
         // TODO(): сделать две кнопки - First page и Last page для проброски в начало и конец

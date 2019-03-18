@@ -3,6 +3,8 @@ import api from '../libs/api.js';
 import {User} from '../libs/users.js';
 import userBlock from '../components/userBlock.js';
 
+const ANAUTH_RESPONSE = 401;
+
 export default class menuModel {
     constructor(events) {
         this.localEventBus = events;
@@ -28,7 +30,7 @@ export default class menuModel {
     checkAuthorization() {
         const res = Network.doGet({ url: '/api/session' });
         res.then(res => {
-            if (res.status === 401) {
+            if (res.status === ANAUTH_RESPONSE) {
                 this.localEventBus.callEvent('checkAuthorizationResponse', {
                     isAuthorized: false,
                     error: res.error

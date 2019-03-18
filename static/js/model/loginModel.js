@@ -1,6 +1,8 @@
 import api from '../libs/api.js';
 import Validator from '../libs/validation.js';
 
+const OK_RESPONSE = 200;
+
 export default class loginModel {
     constructor(eventBus) {
         this.localEventBus = eventBus;
@@ -42,7 +44,7 @@ export default class loginModel {
             loginOrEmail: loginOrEmailData,
             password: data.pass
         }).then(res => {
-            if (res.status === 200) {
+            if (res.status === OK_RESPONSE) {
                 res.json().then(data => this.localEventBus.callEvent('loginSuccess', data));
             } else {
                 res.json().then(data => this.localEventBus.callEvent('loginResponse', data));

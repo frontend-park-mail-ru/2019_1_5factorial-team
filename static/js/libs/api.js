@@ -6,8 +6,7 @@ export default class api {
      * Загрузка пользователя
      * @param {*} user
      */
-    static loadUser(user) {
-        this.user = user; //временная заглушка для линтеров
+    static loadUser() {
         return network.doGet({ url:'/api/user' }).then(res => res.json());
     }
 

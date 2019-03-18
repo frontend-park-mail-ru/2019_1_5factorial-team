@@ -1,5 +1,6 @@
 'use strict';
 const EMAIL_EXPRESSION = new RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+[^<>()\.,;:\s@\"]{2,})$/);
+const MAX_LENGTH = 4;
 
 export default class Validator {
 
@@ -18,7 +19,7 @@ export default class Validator {
      * @return {boolean}
      */
     static validateLogin(data)  {
-        return data.length >= 4 ? true : false;
+        return data.length >= MAX_LENGTH ? true : false;
     }
 
     /**
@@ -38,7 +39,7 @@ export default class Validator {
      * @return {boolean}
      */
     static validatePassword(data)  {
-        return data.length >= 4 ? true : false;
+        return data.length >= MAX_LENGTH ? true : false;
     }
 
     /**

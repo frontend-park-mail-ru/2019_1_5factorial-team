@@ -1,5 +1,5 @@
 import View from '../../libs/views.js';
-import paginator from '../../libs/pagination.js';
+import paginator from '../../components/pagination.js';
 import userBlock from '../../components/userBlock.js';
 
 export default class leaderboardView extends View {

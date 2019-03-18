@@ -3,6 +3,11 @@ import Network from '../libs/network.js';
 import {User} from '../libs/users.js';
 import userBlock from '../components/userBlock.js';
 
+const ANAUTH_RESPONSE = 401;
+const OK_RESPONSE = 200;
+const COUNT_OF_PAGES = 5;
+const NUM_OF_POSITIONS = 5;
+
 export default class leaderboardModel {
     constructor(eventBus) {
         this.localEventBus = eventBus;
@@ -11,8 +16,8 @@ export default class leaderboardModel {
         this.localEventBus.getEvent('checkAuthorization', this.checkAuthorization.bind(this));
         this.localEventBus.getEvent('signOut', this.onLogout.bind(this));
 
-        this.countOfPages = 5;
-        this.numOfPositions = 5;
+        this.countOfPages = COUNT_OF_PAGES;
+        this.numOfPositions = NUM_OF_POSITIONS;
     }
 
     /**
@@ -21,7 +26,7 @@ export default class leaderboardModel {
     checkAuthorization() {
         const res = Network.doGet({ url: '/api/session' });
         res.then(res => {
-            if (res.status === 401) {
+            if (res.status === ANAUTH_RESPONSE) {
                 this.localEventBus.callEvent('checkAuthorizationResponse', {
                     isAuthorized: false,
                     error: res.error
@@ -71,7 +76,7 @@ export default class leaderboardModel {
             limit: this.numOfPositions,
             offset: pageNum
         }).then(res => {
-            if (res.status === 200) {
+            if (res.status === OK_RESPONSE) {
                 return res.json();
             }
             throw new Error('Can`t load scoreboard: ' + res.status);
