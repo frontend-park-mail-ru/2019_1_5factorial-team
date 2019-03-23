@@ -20,7 +20,7 @@ export default class paginator {
         // TODO(): сделать две кнопки - First page и Last page для проброски в начало и конец
         for (let i = this.firstPos - 1; i < this.lastPos; i++) {
             const paginatorElem = document.createElement('div');
-            paginatorElem.classList.add('page-number');
+            paginatorElem.classList.add('paginator__page');
             this.localLinks.push(paginatorElem);
             this.localLinks[i].addEventListener('click', this.onLinkClick.bind(this));
             this.localLinks[i].textContent = i + 1;
