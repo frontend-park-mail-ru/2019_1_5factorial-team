@@ -14,14 +14,14 @@
                 </a>
             </div>
         </section>
-        <main class="container__block container__block_center container__block_center_menu">
+        <section class="container__block container__block_center container__block_center_menu">
             <div class="content content_menu">
                 <a class="btn content_menu__btn" href="/single">Single</a>
                 <a class="btn content_menu__btn" href="/multi">Multi</a>
                 <a class="btn content_menu__btn" href="/leaders">Leaders</a>
                 <a class="btn content_menu__btn" href="/about">About</a>
             </div>
-        </main>
+        </section>
         <section class="container__block container__block_side right-elems">
             <div class="users js-check-auth">
             </div>
