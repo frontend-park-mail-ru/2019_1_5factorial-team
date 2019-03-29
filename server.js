@@ -9,7 +9,7 @@ const fs = require('fs');
 console.log('Starting server');
 const app = express();
 const indexPath = path.resolve(__dirname, './static/index.html');
-app.use(express.static(__dirname + '/static'));
+app.use(express.static(__dirname + '/static/'));
 
 app.use(body.json());
 

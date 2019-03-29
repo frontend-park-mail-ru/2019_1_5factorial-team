@@ -2,11 +2,7 @@ import api from '../libs/api.js';
 import Network from '../libs/network.js';
 import {User} from '../libs/users.js';
 import userBlock from '../components/userBlock.js';
-
-const ANAUTH_RESPONSE = 401;
-const OK_RESPONSE = 200;
-const COUNT_OF_PAGES = 5;
-const NUM_OF_POSITIONS = 5;
+import { ANAUTH_RESPONSE, OK_RESPONSE, COUNT_OF_PAGES, NUM_OF_POSITIONS } from '../components/constants.js';
 
 export default class leaderboardModel {
     constructor(eventBus) {

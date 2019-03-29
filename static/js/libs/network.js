@@ -1,5 +1,4 @@
-
-const serverBackUrl = 'http://78.155.207.69:5051';
+import { NETWORK_ADRESS } from '../components/constants.js';
 
 export default class Network {
     /**
@@ -50,7 +49,7 @@ export default class Network {
      * Get на урл сервера
      */
     static getServerURL() {
-        return serverBackUrl;
+        return NETWORK_ADRESS;
     }
 
     /**
