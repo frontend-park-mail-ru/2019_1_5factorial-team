@@ -8,9 +8,16 @@ const fs = require('fs');
 console.log('Starting server');
 const app = express();
 const indexPath = path.resolve(__dirname, './static/index.html');
+const publicRoot = path.resolve(__dirname, 'static');
 app.use(express.static(__dirname + '/static'));
 
 app.use(body.json());
+
+app.get('/sw.js', (req, res) => {
+    console.log('sw.js');
+    res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.sendFile(publicRoot + '/js/sw.js');
+});
 
 app.get('*', (req, res) => {
     fs.readFile(indexPath, { encoding: 'utf-8' }, (err, file) => {

@@ -1,5 +1,6 @@
 const path = require('path');
 const build = path.resolve(__dirname, 'static/dist');
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
@@ -61,7 +62,9 @@ module.exports = {
             },
         ]
     },
-    // plugins: [
-    //     new ExtractTextPlugin('style.css'),
-    // ]
+    plugins: [
+        new ServiceWorkerWebpackPlugin({
+            entry: './static/js/sw.js',
+        }),
+    ]
 };

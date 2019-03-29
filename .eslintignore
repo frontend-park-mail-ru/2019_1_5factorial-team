@@ -5,4 +5,5 @@ static/js/views/profile/profileView.tmpl.js
 static/js/views/signUp/signUpView.tmpl.js
 static/js/views/login/loginView.tmpl.js
 static/dist/bundle.js
+static/dist/sw.js
 
