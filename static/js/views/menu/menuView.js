@@ -3,7 +3,7 @@ import userBlock from '../../components/userBlock.js';
 import template from './menuView.tmpl.xml';
 
 export default class viewMenu extends View {
-    constructor({ eventBus = {} }) {
+    constructor({ eventBus = {} } = {}) {
         super(template, eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('checkAuthorizationResponse', this.onCheckAuthResponse.bind(this));

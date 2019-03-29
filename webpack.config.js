@@ -1,19 +1,17 @@
 const path = require('path');
-const src = path.resolve(__dirname, 'static/');
-const build = path.resolve(__dirname, 'dist/');
+const build = path.resolve(__dirname, 'static/dist');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     mode: 'development',
-    entry: path.resolve(src, 'js/app.js'),
+    entry: './static/js/app.js',
     output: {
         path: build,
         filename: 'bundle.js'
     },
     resolve: {
         alias : {
-            Styles: path.resolve(__dirname, 'static/css/'),
+            Styles: path.resolve(__dirname, 'static/css'),
         },
     },
     module: {
@@ -60,13 +58,10 @@ module.exports = {
             {
                 test: /\.xml$/,
                 loader: 'fest-webpack-loader',
-                // options:{
-                //     pretty: true
-                // }
             },
         ]
     },
-    plugins: [
-        new ExtractTextPlugin('style.css'),
-    ]
+    // plugins: [
+    //     new ExtractTextPlugin('style.css'),
+    // ]
 };

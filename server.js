@@ -3,7 +3,6 @@ const PORT = 4000;
 const path = require('path');
 const express = require('express');
 const body = require('body-parser');
-
 const fs = require('fs');
 
 console.log('Starting server');

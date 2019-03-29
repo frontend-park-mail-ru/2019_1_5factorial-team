@@ -1,11 +1,12 @@
 
 export default class View {
     constructor(tmpl, eventBus) {
+        this.element = document.createElement('div');
         this.tmpl = tmpl;
         this.localEventBus = eventBus;
         this.prevRoot = null;
         this.closedView = false;
-        this.fest = window.fest[tmpl];
+        // this.fest = window.fest[tmpl];
     }
 
     /**
@@ -21,8 +22,10 @@ export default class View {
         } else {
             this.prevRoot = root;
         }
-        // this.element.innerHTML = this.tmpl(data);
-        root.innerHTML = this.fest(data);
+        this.element.innerHTML = this.tmpl(data);
+        root.innerHTML = '';
+        root.appendChild(this.element);
+        // root.innerHTML = this.fest(data);
 
         return this;
     }
