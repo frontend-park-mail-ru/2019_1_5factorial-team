@@ -1,8 +1,9 @@
 import View from '../../libs/views.js';
+import template from './loginView.tmpl.xml';
 
 export default class loginView extends View {
     constructor({ eventBus = {} }) {
-        super('login/loginView.tmpl', eventBus);
+        super(template, eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('loginResponse', this.onSubmitResponse.bind(this));
     }

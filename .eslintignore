@@ -2,10 +2,11 @@
 /.vscode
 node_modules
 package-lock.json
+dist
 
 static/js/views/menu/menuView.tmpl.js
 static/js/views/login/loginView.tmpl.js
-static/js/views/about/aboutView.tmpl.js 
+static/js/views/about/aboutView.tmpl.js
 static/js/views/profile/profileView.tmpl.js
 static/js/views/signUp/signUpView.tmpl.js
 static/js/views/leaderboard/leaderboardView.tmpl.js
@@ -14,6 +15,6 @@ static/js/views/leaderboard/leaderboardView.tmpl.js
 static/js/views/menu/menuView.tmpl.xml
 static/js/views/leaderboard/leaderboardView.tmpl.xml
 static/js/views/login/loginView.tmpl.xml
-static/js/views/about/about.tmpl.xml 
-static/js/views/signUp/signUp.tmpl.xml 
-static/js/views/profile/profileView.tmpl.xml 
+static/js/views/about/about.tmpl.xml
+static/js/views/signUp/signUp.tmpl.xml
+static/js/views/profile/profileView.tmpl.xml

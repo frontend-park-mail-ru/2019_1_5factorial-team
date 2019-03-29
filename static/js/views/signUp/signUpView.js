@@ -1,8 +1,9 @@
 import View from '../../libs/views.js';
+import template from './signUpView.tmpl.xml';
 
 export default class signUpView extends View {
     constructor({ eventBus = {} }) {
-        super('signUp/signUpView.tmpl', eventBus);
+        super(template, eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('changeEmailResponse', this.onChangeEmailResponse.bind(this));
         this.localEventBus.getEvent('changeLoginResponse', this.onChangeLoginResponse.bind(this));

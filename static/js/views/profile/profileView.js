@@ -1,4 +1,5 @@
 import View from '../../libs/views.js';
+import template from './profileView.tmpl.xml';
 
 const AVATAR_BROKEN_LINK = 'http://78.155.207.69:5051../../../img/default.jpg';
 const AVATAR_BASE_LINK = '../../../img/default.jpg';
@@ -7,7 +8,7 @@ const NETWORK_ADRESS = 'http://78.155.207.69:5051';
 
 export default class profileView extends View {
     constructor({ eventBus = {} }) {
-        super('profile/profileView.tmpl', eventBus);
+        super(template, eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('checkAuthResponse', this.onCheckAuthorizationResponse.bind(this));
         this.localEventBus.getEvent('loadUserResponse', this.onLoadUserResponse.bind(this));
@@ -98,9 +99,9 @@ export default class profileView extends View {
 
         this.passwordSubmit.addEventListener('click', (event) => {
             event.preventDefault();
-            this.localEventBus.callEvent('submitPassword', { 
-                newPassword: this.imputPasswordNew.value, 
-                oldPassword: this.imputPasswordOld.value 
+            this.localEventBus.callEvent('submitPassword', {
+                newPassword: this.imputPasswordNew.value,
+                oldPassword: this.imputPasswordOld.value
             });
         });
     }
