@@ -4,9 +4,11 @@ const path = require('path');
 const express = require('express');
 const body = require('body-parser');
 const fs = require('fs');
+const morgan = require('morgan');
 
 console.log('Starting server');
 const app = express();
+app.use(morgan('dev'));
 const indexPath = path.resolve(__dirname, './static/index.html');
 const publicRoot = path.resolve(__dirname, 'static');
 app.use(express.static(__dirname + '/static'));
@@ -16,7 +18,7 @@ app.use(body.json());
 app.get('/sw.js', (req, res) => {
     console.log('sw.js');
     res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
-    res.sendFile(publicRoot + '/js/sw.js');
+    res.sendFile(publicRoot + '/dist/sw.js');
 });
 
 app.get('*', (req, res) => {

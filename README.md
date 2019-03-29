@@ -19,6 +19,7 @@
  
 [Бекенд](https://github.com/go-park-mail-ru/2019_1_5factorial-team)
 
+**npm install** - установит все необходимые пакеты
 
 ### Запуск lint и lint-fix
 **npm run lint** - запускает lint, на выходе получаем места где допустили ошибку исходя из правил которые мы установили в ***.eslintrc.js***.

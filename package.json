@@ -1,6 +1,6 @@
 {
   "name": "2019_1_5factorial-team",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Репозиторий фронтенда",
   "main": "temp/server.js",
   "dependencies": {
