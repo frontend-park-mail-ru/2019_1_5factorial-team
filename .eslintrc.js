@@ -35,7 +35,7 @@ module.exports = {
         "keyword-spacing": [
             "error"
         ],
-        "space-before-blocks": 
+        "space-before-blocks":
         [
             "error"
         ]
