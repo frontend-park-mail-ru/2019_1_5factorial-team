@@ -1,6 +1,8 @@
 'use strict';
 const EMAIL_EXPRESSION = new RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+[^<>()\.,;:\s@\"]{2,})$/);
 const MAX_LENGTH = 4;
+const OK_RESPONSE_VALIDATOR = 'OK';
+const TOO_SHORT_INPUT = 'Password must be 4 symbols atleast';
 
 export default class Validator {
 
@@ -18,6 +20,7 @@ export default class Validator {
      * @param {string} data
      * @return {boolean}
      */
+    
     static validateLogin(data)  {
         return data.length >= MAX_LENGTH ? true : false;
     }
@@ -39,7 +42,7 @@ export default class Validator {
      * @return {boolean}
      */
     static validatePassword(data)  {
-        return data.length >= MAX_LENGTH ? true : false;
+        return data.length >= MAX_LENGTH ? OK_RESPONSE_VALIDATOR : TOO_SHORT_INPUT;
     }
 
     /**

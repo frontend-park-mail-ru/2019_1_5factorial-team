@@ -2,6 +2,7 @@ import api from '../libs/api.js';
 import Validator from '../libs/validation.js';
 
 const OK_RESPONSE = 200;
+const TOO_SHORT_INPUT = 'Password must be 4 symbols atleast';
 
 export default class loginModel {
     constructor(eventBus) {
@@ -29,7 +30,7 @@ export default class loginModel {
 
         const validatePassword = Validator.validatePassword(password);
 
-        if (!validatePassword) {
+        if (validatePassword === TOO_SHORT_INPUT) {
             const response = {
                 inputField: 'inputPassword',
                 error: validatePassword
