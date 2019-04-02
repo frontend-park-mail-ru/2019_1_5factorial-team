@@ -85,6 +85,3 @@ export const OK_RESPONSE = 200;
 
 export const COUNT_OF_PAGES = 5;
 export const NUM_OF_POSITIONS = 5;
-
-
-

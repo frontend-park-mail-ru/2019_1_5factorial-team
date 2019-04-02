@@ -84,7 +84,7 @@ export default class profileModel {
             new_password: passNew
         }).then(res => {
             if (res.ok) {
-                this.localEventBus.callEvent('submitPasswordSuccess', {newPassword: passNew});
+                this.localEventBus.callEvent('submitPasswordSuccess', {isOk: true});
             } else {
                 res.json().then(dataResponse => {
                     if (dataResponse.field === 'password') {

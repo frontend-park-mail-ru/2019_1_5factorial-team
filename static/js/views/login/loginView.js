@@ -9,7 +9,6 @@ export default class loginView extends View {
 
     render(root, data = {}) {
         super.render(root, data);
-
         const form = document.getElementsByClassName('js-login-form')[0];
         form.addEventListener('submit', this.onSubmit.bind(this, form));
     }
