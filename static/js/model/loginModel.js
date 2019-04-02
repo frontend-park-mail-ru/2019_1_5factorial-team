@@ -57,9 +57,7 @@ export default class loginModel {
         const params = new URLSearchParams(window.location.hash.slice(1));
         const token = params.get('access_token');
         const qparams = new URLSearchParams(window.location.search);
-        let service = qparams.get('service');
-        service = service ? service : 'vk';
-
+        const service = qparams.get('service') || 'vk';
         if (token) {
             api.loginOauth({
                 token,
