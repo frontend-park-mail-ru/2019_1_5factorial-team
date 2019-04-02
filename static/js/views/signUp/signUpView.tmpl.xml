@@ -19,7 +19,7 @@
                 <h1 class="content__header">SIGN UP</h1>
                 <form class="form js-signup-form">
                     <label class="form__label" for="login">Login</label>
-                    <input class="form__input js-login" type="text" id="login"/>
+                    <input class="form__input js-login" type="text" id="login" autofocus="true"/>
                     <label class="form__label" for="email">Email</label>
                     <input class="form__input js-email" type="email" id="email"/>
                     <label class="form__label" for="password">Password</label>
