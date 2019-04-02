@@ -43,6 +43,11 @@ export default class api {
         });
     }
 
+    /**
+     * Авторизация через сторонние сервисы
+     * @param {*} token
+     * @param {*} service
+     * */
     static loginOauth({ token, service } = {}) {
         return network.doPost({
             url: `/api/login_${service}`,

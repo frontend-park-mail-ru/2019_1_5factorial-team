@@ -6,7 +6,8 @@ const eventList = [
     'login',
     'loginResponse',
     'loginSuccess',
-    'loadWaiting'
+    'loadWaiting',
+    'loginService'
 ];
 
 export default class loginController {

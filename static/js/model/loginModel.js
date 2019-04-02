@@ -6,7 +6,8 @@ const OK_RESPONSE = 200;
 export default class loginModel {
     constructor(eventBus) {
         this.localEventBus = eventBus;
-        this._oauthLogin();
+        this.localEventBus.getEvent('loginService', this.oauthLogin.bind(this));
+        this.oauthLogin();
         this.localEventBus.getEvent('login', this.onLogin.bind(this));
     }
 
@@ -53,7 +54,10 @@ export default class loginModel {
         });
     }
 
-    _oauthLogin() {
+    /**
+     * Авторизация через сторонние сервисы
+     */
+    oauthLogin() {
         const params = new URLSearchParams(window.location.hash.slice(1));
         const token = params.get('access_token');
         const qparams = new URLSearchParams(window.location.search);
