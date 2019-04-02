@@ -1,5 +1,5 @@
+import { FIRST_POS } from './constants.js';
 const noop = () => null;
-const FIRST_POS = 1;
 
 export default class paginator {
     /**

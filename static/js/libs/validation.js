@@ -1,6 +1,4 @@
-'use strict';
-const EMAIL_EXPRESSION = new RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+[^<>()\.,;:\s@\"]{2,})$/);
-const MAX_LENGTH = 4;
+import { EMAIL_EXPRESSION, MIN_LENGTH} from '../components/constants.js';
 
 export default class Validator {
 
@@ -10,7 +8,7 @@ export default class Validator {
      * @return {boolean}
      */
     static validateEmail(email) {
-        return EMAIL_EXPRESSION.test(email) ? true : false;
+        return EMAIL_EXPRESSION.test(email);
     }
 
     /**
@@ -19,7 +17,7 @@ export default class Validator {
      * @return {boolean}
      */
     static validateLogin(data)  {
-        return data.length >= MAX_LENGTH ? true : false;
+        return data.length >= MIN_LENGTH;
     }
 
     /**
@@ -30,7 +28,7 @@ export default class Validator {
     static validateLoginOrEmail(data) {
         const loginInput = Validator.validateLogin(data);
         const emailInput = Validator.validateEmail(data);
-        return loginInput || emailInput ? true : false;
+        return loginInput || emailInput;
     }
 
     /**
@@ -39,7 +37,7 @@ export default class Validator {
      * @return {boolean}
      */
     static validatePassword(data)  {
-        return data.length >= MAX_LENGTH ? true : false;
+        return data.length >= MIN_LENGTH;
     }
 
     /**
@@ -48,7 +46,7 @@ export default class Validator {
      * @return {boolean}
      */
     static validateImage(myInput)  {
-        return ((myInput.type !== 'image/jpeg') || (myInput.type !== 'image/png')) ? true : false;
+        return ((myInput.type !== 'image/jpeg') || (myInput.type !== 'image/png'));
     }
 
     /**
@@ -58,6 +56,6 @@ export default class Validator {
      * @return {boolean}
      */
     static validateRepeatPasswords(first, second)  {
-        return first.value !== second.value ? false : true;
+        return first.value === second.value;
     }
 }
