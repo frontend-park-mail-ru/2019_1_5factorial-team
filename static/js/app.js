@@ -10,13 +10,7 @@ import Router from './libs/router.js';
 document.addEventListener('DOMContentLoaded', () => {
 
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js')
-            .then((reg) => {
-                console.log('sw reg success:', reg);
-            })
-            .catch((err) => {
-                console.error('sw reg err:', err);
-            });
+        navigator.serviceWorker.register('sw.js');
     }
 
     const page = document.getElementsByClassName('body-cnt')[0];

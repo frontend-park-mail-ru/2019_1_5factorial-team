@@ -13,7 +13,6 @@ export default class profileModel {
 
         this.localEventBus.getEvent('changePassword', this.onChangePassword.bind(this));
         this.localEventBus.getEvent('changeAvatar', this.onChangeAvatar.bind(this));
-
         this.localEventBus.getEvent('submitPassword', this.onSubmitPassword.bind(this));
         this.localEventBus.getEvent('checkAuth', this.onCheckAuth.bind(this));
         this.localEventBus.getEvent('loadUser', this.onLoadUser.bind(this));
@@ -68,6 +67,8 @@ export default class profileModel {
     onSubmitPassword(data) {
         const passOld = data.oldPassword;
         const passNew = data.newPassword;
+        console.log('old', passOld);
+        console.log('new', passNew);
         const errPassOld = Validation.validatePassword(passOld);
         if (!errPassOld) {
             this.localEventBus.callEvent('changePasswordResponse', {error: errPassOld});
