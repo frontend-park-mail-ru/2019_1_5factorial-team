@@ -8,6 +8,9 @@
 !.vscode/launch.json
 !.vscode/extensions.json
 
+static/dist/bundle.js
+static/dist/sw.js
+
 static/js/views/menu/menuView.tmpl.js
 
 static/js/views/login/loginView.tmpl.js
