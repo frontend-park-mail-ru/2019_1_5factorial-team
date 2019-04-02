@@ -1,5 +1,7 @@
 
-const serverBackUrl = 'http://78.155.207.69:5051';
+// const serverBackUrl = 'http://78.155.207.69:5051';
+const serverBackUrl = 'http://127.0.0.1:5051';
+
 
 export default class Network {
     /**

@@ -6,6 +6,7 @@ const OK_RESPONSE = 200;
 export default class loginModel {
     constructor(eventBus) {
         this.localEventBus = eventBus;
+        this._oauthLogin();
         this.localEventBus.getEvent('login', this.onLogin.bind(this));
     }
 
@@ -51,4 +52,26 @@ export default class loginModel {
             }
         });
     }
+
+    _oauthLogin() {
+        const params = new URLSearchParams(window.location.hash.slice(1));
+        const token = params.get('access_token');
+        const qparams = new URLSearchParams(window.location.search);
+        let service = qparams.get('service');
+        service = service ? service : 'vk';
+
+        if (token) {
+            api.loginOauth({
+                token,
+                service
+            }).then(res => {
+                if (res.status === OK_RESPONSE) {
+                    res.json().then(data => this.localEventBus.callEvent('loginSuccess', data));
+                } else {
+                    res.json().then(data => this.localEventBus.callEvent('loginResponse', data));
+                }
+            });
+        }
+    }
+
 }
