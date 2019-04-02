@@ -5,7 +5,7 @@ export default class signUpView extends View {
         super('signUp/signUpView.tmpl', eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('signupResponse', this.onSignupResponse.bind(this));
-        this.localEventBus.getEvent('signupSuccess', this.onSignUpSuccess.bind(this));
+        // this.localEventBus.getEvent('signupSuccess', this.onSignUpSuccess.bind(this));
     }
 
     render(root, data = {}) {
@@ -16,9 +16,9 @@ export default class signUpView extends View {
         this.form.addEventListener('submit', this.onSubmit.bind(this));
     }
 
-    onSignUpSuccess(isAuth = true) {
-        this.isAuth = isAuth;
-    }
+    // onSignUpSuccess(isAuth = true) {
+    //     this.isAuth = isAuth;
+    // }
 
     // TODO(): переброс на стартовую страницу после успешной регистрации
     onSignupResponse(data) {

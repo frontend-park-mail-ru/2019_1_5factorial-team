@@ -28,6 +28,7 @@ export default class loginView extends View {
         console.log(error);
 
         // Временная заглушка
+        console.log(data);
         const fieldToChange = data.inputField;
         fieldToChange.classList.add('incorrect');
     }

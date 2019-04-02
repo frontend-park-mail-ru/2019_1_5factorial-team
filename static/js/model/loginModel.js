@@ -18,7 +18,7 @@ export default class loginModel {
         const password = data.pass;
         const validateLoginOrEmail = Validator.validateLoginOrEmail(loginOrEmailData);
 
-        if (validateLoginOrEmail !== OK_VALIDATE_EMAIL || validateLoginOrEmail !== OK_VALIDATE_LOGIN) {
+        if (validateLoginOrEmail !== OK_VALIDATE_EMAIL && validateLoginOrEmail !== OK_VALIDATE_LOGIN) {
             const response = {
                 inputField: 'loginOrEmail',
                 error: validateLoginOrEmail
