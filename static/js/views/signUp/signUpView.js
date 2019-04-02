@@ -26,12 +26,12 @@ export default class signUpView extends View {
                 break;
             }
             case TOO_SHORT_LOGIN: {
-                const element = document.getElementsByClassName('js-email')[0];
+                const element = document.getElementsByClassName('js-login')[0];
                 element.classList.add('invalid');
                 break;
             }
             case TOO_SHORT_PASSWORD: {
-                const element = document.getElementsByClassName('js-email')[0];
+                const element = document.getElementsByClassName('js-password')[0];
                 element.classList.add('invalid');
                 break;
             }

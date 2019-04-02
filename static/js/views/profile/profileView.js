@@ -36,9 +36,6 @@ export default class profileView extends View {
     }
 
     onChangeAvatarSuccess(data) {
-        if (!data.avatar) {
-            return;
-        }
         this.localAvatar.src = data.avatar;
         this.localEventBus.callEvent('loadUser', data);
     }
@@ -77,8 +74,8 @@ export default class profileView extends View {
         this.formInput =  document.getElementsByClassName('js-change-password')[0];
 
         this.passwordSubmit = this.formInput.getElementsByClassName('js-button-submit')[0];
-        this.imputPasswordOld = this.formInput.getElementsByClassName('js-password-old')[0];
-        this.imputPasswordNew = this.formInput.getElementsByClassName('js-password-new')[0];
+        this.inputPasswordOld = this.formInput.getElementsByClassName('js-password-old')[0];
+        this.inputPasswordNew = this.formInput.getElementsByClassName('js-password-new')[0];
 
         this.initElementsEvents();
     }
@@ -97,8 +94,8 @@ export default class profileView extends View {
         this.passwordSubmit.addEventListener('click', (event) => {
             event.preventDefault();
             this.localEventBus.callEvent('submitPassword', {
-                newPassword: this.imputPasswordNew.value,
-                oldPassword: this.imputPasswordOld.value
+                newPassword: this.inputPasswordNew.value,
+                oldPassword: this.inputPasswordOld.value
             });
         });
     }
