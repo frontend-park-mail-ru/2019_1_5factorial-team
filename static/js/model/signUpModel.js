@@ -1,20 +1,11 @@
 import api from '../libs/api.js';
 import Validator from '../libs/validation.js';
-import { OK_RESPONSE } from '../components/constants.js';
+import { OK_RESPONSE, OK_VALIDATE_LOGIN, OK_VALIDATE_EMAIL, OK_VALIDATE_PASSWORD } from '../components/constants.js';
 
 export default class signUpModel {
     constructor(eventBus) {
         this.localEventBus = eventBus;
-        this.localEventBus.getEvent('changeEmail', this.checkChangeEmail.bind(this));
-        this.localEventBus.getEvent('changeLogin', this.checkChangeLogin.bind(this));
-        this.localEventBus.getEvent('changePassword', this.checkChangePassword.bind(this));
         this.localEventBus.getEvent('signup', this.checkSignUp.bind(this));
-
-        this.defaultInputVals = {
-            pass: false,
-            login: false,
-            email: false
-        };
     }
 
     /**
@@ -22,82 +13,38 @@ export default class signUpModel {
      * @param {*} data
      */
     checkSignUp(data) {
-        const isValid = Object.entries(this.defaultInputVals).reduce((res, el) => (res && el[1]), true);
-
-        if (isValid) {
-            api.signUp({
-                email: data.email,
-                login: data.login,
-                password: data.pass
-            }).then(resp => {
-                if (resp.status === OK_RESPONSE) {
-                    api.login({loginOrEmail: data.login, password: data.pass})
-                        .then(() => {
-                            this.localEventBus.callEvent('signupSuccess', {});
-                        });
-                } else {
-                    resp
-                        .json()
-                        .then(data => this.localEventBus.callEvent('signupResponse', data));
-                }
-            }).catch(err => {
-                console.error(err.message);
-            });
-        } else {
-            this.checkChangePassword(data);
-            this.checkChangeEmail(data);
-            this.checkChangeLogin(data);
-        }
-    }
-
-    /**
-     * Проверка данных на смену пароля
-     * @param {*} data
-     */
-    checkChangePassword(data) {
-        const pass = data.pass;
-        const errPass = Validator.validatePassword(pass);
-        if (!errPass) {
-            this.defaultInputVals['pass'] = false;
-            this.localEventBus.callEvent('changePasswordResponse', { error: errPass });
+        const validateEmail = Validator.validateEmail(data.email);
+        const validateLogin = Validator.validateLogin(data.login);
+        const validatePassword = Validator.validatePassword(data.pass);
+        if (validateEmail !== OK_VALIDATE_EMAIL) {
+            this.localEventBus.callEvent('signupResponse', validateEmail);
             return;
         }
-
-        this.defaultInputVals['pass'] = true;
-        this.localEventBus.callEvent('changePasswordResponse', {});
-    }
-
-    /**
-     * Проверка данных на смену email
-     * @param {*} data
-     */
-    checkChangeEmail(data) {
-        const email = data.email;
-        const errEmail = Validator.validateEmail(email);
-        if (!errEmail) {
-            this.defaultInputVals['email'] = false;
-            this.localEventBus.callEvent('changeEmailResponse', { error: errEmail });
+        if (validateLogin !== OK_VALIDATE_LOGIN) {
+            this.localEventBus.callEvent('signupResponse', validateLogin);
             return;
         }
-
-        this.defaultInputVals['email'] = true;
-        this.localEventBus.callEvent('changeEmailResponse', {});
-    }
-
-    /**
-     * Проверка данных на смену логина
-     * @param {*} data
-     */
-    checkChangeLogin(data) {
-        const login = data.login;
-        const errLogin = Validator.validateLogin(login);
-        if (!errLogin) {
-            this.defaultInputVals['login'] = false;
-            this.localEventBus.callEvent('changeLoginResponse', { error: errLogin });
+        if (validatePassword !== OK_VALIDATE_PASSWORD) {
+            this.localEventBus.callEvent('signupResponse', validatePassword);
             return;
         }
-
-        this.defaultInputVals['login'] = true;
-        this.localEventBus.callEvent('changeLoginResponse', {});
+        api.signUp({
+            email: data.email,
+            login: data.login,
+            password: data.pass
+        }).then(resp => {
+            if (resp.status === OK_RESPONSE) {
+                api.login({loginOrEmail: data.login, password: data.pass})
+                    .then(() => {
+                        this.localEventBus.callEvent('signupSuccess', {});
+                    });
+            } else {
+                resp
+                    .json()
+                    .then(data => this.localEventBus.callEvent('signupResponse', data));
+            }
+        }).catch(err => {
+            console.error(err.message);
+        });
     }
 }

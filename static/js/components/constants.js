@@ -85,3 +85,11 @@ export const OK_RESPONSE = 200;
 
 export const COUNT_OF_PAGES = 5;
 export const NUM_OF_POSITIONS = 5;
+
+export const OK_VALIDATE_LOGIN = 'Ok login';
+export const OK_VALIDATE_EMAIL = 'Ok email';
+export const OK_VALIDATE_PASSWORD = 'Ok password';
+export const INCORRECT_EMAIL = 'Email is incorrect!';
+export const TOO_SHORT_LOGIN = 'Login needs to be at least 4 symbols!';
+export const TOO_SHORT_PASSWORD = 'Password needs to be at least 4 symbols!';
+export const INCORRECT_LOGIN_OR_EMAIL = 'Incorrect login or email!';
