@@ -1,9 +1,10 @@
 import View from '../../libs/views.js';
 import { NETWORK_ADRESS, AVATAR_DEFAULT, DEFAULT_AVATAR } from '../../components/constants.js';
+import template from './profileView.tmpl.xml';
 
 export default class profileView extends View {
     constructor({ eventBus = {} }) {
-        super('profile/profileView.tmpl', eventBus);
+        super(template, eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('checkAuthResponse', this.onCheckAuthorizationResponse.bind(this));
         this.localEventBus.getEvent('loadUserResponse', this.onLoadUserResponse.bind(this));

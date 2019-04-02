@@ -1,11 +1,12 @@
 import View from '../../libs/views.js';
+import { INCORRECT_EMAIL, TOO_SHORT_LOGIN, TOO_SHORT_PASSWORD } from '../../components/constants.js';
+import template from './signUpView.tmpl.xml';
 
 export default class signUpView extends View {
     constructor({ eventBus = {} }) {
-        super('signUp/signUpView.tmpl', eventBus);
+        super(template, eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('signupResponse', this.onSignupResponse.bind(this));
-        // this.localEventBus.getEvent('signupSuccess', this.onSignUpSuccess.bind(this));
     }
 
     render(root, data = {}) {
@@ -16,15 +17,25 @@ export default class signUpView extends View {
         this.form.addEventListener('submit', this.onSubmit.bind(this));
     }
 
-    // onSignUpSuccess(isAuth = true) {
-    //     this.isAuth = isAuth;
-    // }
-
-    // TODO(): переброс на стартовую страницу после успешной регистрации
     onSignupResponse(data) {
-        // switch-case на ответы валидации и нужные поля DOM'a
-        // data - validate* возвращает стрингу из валидации
         console.log(data);
+        switch (data) {
+            case INCORRECT_EMAIL: {
+                const element = document.getElementsByClassName('js-email')[0];
+                element.classList.add('invalid');
+                break;
+            }
+            case TOO_SHORT_LOGIN: {
+                const element = document.getElementsByClassName('js-email')[0];
+                element.classList.add('invalid');
+                break;
+            }
+            case TOO_SHORT_PASSWORD: {
+                const element = document.getElementsByClassName('js-email')[0];
+                element.classList.add('invalid');
+                break;
+            }
+        } 
     }
 
     onSubmit(event) {

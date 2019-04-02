@@ -1,10 +1,11 @@
 import View from '../../libs/views.js';
 import paginator from '../../components/pagination.js';
 import userBlock from '../../components/userBlock.js';
+import template from './leaderboardView.tmpl.xml';
 
 export default class leaderboardView extends View {
     constructor({ eventBus = {} }) {
-        super('leaderboard/leaderboardView.tmpl', eventBus);
+        super(template, eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('loadResponse', this.loadResponse.bind(this));
         this.localEventBus.getEvent('loadPaginatorResponse', this.loadPaginatorResponse.bind(this));
