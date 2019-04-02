@@ -97,6 +97,7 @@ body {
 .btn:focus {
     border-width: 0;
     outline: none;
+    text-shadow: var(--common-shdw);
 }
     .btn_contained {
         align-items: center;
@@ -107,6 +108,9 @@ body {
         padding: 1vh 1vw;
     }
     .btn_contained:hover {
+        box-shadow: var(--small-shdw);
+    }
+    .btn_contained:focus {
         box-shadow: var(--small-shdw);
     }
 
@@ -278,6 +282,10 @@ body {
     .settings__btn:hover {
         filter: drop-shadow(0 0 1vh var(--light-blue-clr));
     }
+    .settings__btn:focus {
+        outline: none;
+        filter: drop-shadow(0 0 1vh var(--light-blue-clr));
+    }
 
 /* USERS BLOCK */
 .users {
@@ -389,9 +397,10 @@ body {
         border: 0.075em solid var(--blue-clr);
         text-shadow: none;
     }
-    /*.form__btn_back:focus {*/
-        /*outline: none;*/
-    /*}*/
+    .form__btn_back:focus {
+        border: 0.075em solid var(--blue-clr);
+        outline: none;
+    }
 
 /* LEADERBOARD */
 .leaders-table {
