@@ -1,9 +1,5 @@
 import View from '../../libs/views.js';
-
-const AVATAR_BROKEN_LINK = 'http://78.155.207.69:5051../../../img/default.jpg';
-const AVATAR_BASE_LINK = '../../../img/default.jpg';
-const NETWORK_ADRESS = 'http://78.155.207.69:5051';
-
+import { NETWORK_ADRESS, AVATAR_DEFAULT, DEFAULT_AVATAR } from '../../components/constants.js';
 
 export default class profileView extends View {
     constructor({ eventBus = {} }) {
@@ -60,8 +56,9 @@ export default class profileView extends View {
             this.localEventBus.callEvent('checkAuthError');
             return;
         }
-        if (data.user.avatar === AVATAR_BROKEN_LINK || data.user.avatar === AVATAR_BASE_LINK) {
-            data.user.avatar = AVATAR_BASE_LINK;
+        // TODO(): перехать просто на пустую строку вида ''
+        if (data.user.avatar === DEFAULT_AVATAR || data.user.avatar === AVATAR_DEFAULT) {
+            data.user.avatar = AVATAR_DEFAULT;
         } else {
             data.user.avatar = NETWORK_ADRESS + data.user.avatar;
         }
@@ -98,9 +95,9 @@ export default class profileView extends View {
 
         this.passwordSubmit.addEventListener('click', (event) => {
             event.preventDefault();
-            this.localEventBus.callEvent('submitPassword', { 
-                newPassword: this.imputPasswordNew.value, 
-                oldPassword: this.imputPasswordOld.value 
+            this.localEventBus.callEvent('submitPassword', {
+                newPassword: this.imputPasswordNew.value,
+                oldPassword: this.imputPasswordOld.value
             });
         });
     }

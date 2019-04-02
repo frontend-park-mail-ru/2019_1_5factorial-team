@@ -2,10 +2,7 @@ import Validation from '../libs/validation.js';
 import Network from '../libs/network.js';
 import api from '../libs/api.js';
 import {User} from '../libs/users.js';
-
-const OK_RESPONSE = 200;
-const NETWORK_ADRESS = 'http://78.155.207.69:5051';
-const AVATAR_ERROR_RESPONSE = '';
+import { OK_RESPONSE, NETWORK_ADRESS, DEFAULT_AVATAR } from '../components/constants.js';
 
 export default class profileModel {
     constructor(eventBus) {
@@ -26,8 +23,9 @@ export default class profileModel {
     onChangeAvatar(data) {
         const newAvatar = data.avatar;
         api.uploadAvatar(newAvatar).then(res => res.json().then(res => {
-            if (res === AVATAR_ERROR_RESPONSE) {
+            if (res === DEFAULT_AVATAR) {
                 console.log(res);
+                // TODO() : редирект на дефолтную аватарку
                 return;
             } else {
                 const avatarName = res.avatar_link;

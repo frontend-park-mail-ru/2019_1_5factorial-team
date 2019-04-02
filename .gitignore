@@ -8,11 +8,15 @@
 !.vscode/launch.json
 !.vscode/extensions.json
 
+static/dist/bundle.js
+static/dist/
+static/dist/sw.js
+
 static/js/views/menu/menuView.tmpl.js
 
 static/js/views/login/loginView.tmpl.js
 
-static/js/views/about/aboutView.tmpl.js 
+static/js/views/about/aboutView.tmpl.js
 
 static/js/views/profile/profileView.tmpl.js
 
@@ -25,9 +29,9 @@ static/js/views/leaderboard/leaderboardView.tmpl.js
 # static/js/views/menu/menuView.tmpl.xml
 # static/js/views/leaderboard/leaderboard.tmpl.xml
 # static/js/views/login/login.tmpl.xml
-# static/js/views/about/about.tmpl.xml 
-# static/js/views/signUp/signUp.tmpl.xml 
-# static/js/views/profile/profile.tmpl.xml 
+# static/js/views/about/about.tmpl.xml
+# static/js/views/signUp/signUp.tmpl.xml
+# static/js/views/profile/profile.tmpl.xml
 
 ### VisualStudioCode Patch ###
 # Ignore all local history of files

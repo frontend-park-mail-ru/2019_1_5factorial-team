@@ -1,7 +1,6 @@
 import api from '../libs/api.js';
 import Validator from '../libs/validation.js';
-
-const OK_RESPONSE = 200;
+import { OK_RESPONSE } from '../components/constants.js';
 
 export default class loginModel {
     constructor(eventBus) {

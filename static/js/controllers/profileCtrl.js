@@ -1,30 +1,9 @@
 import profileView from '../views/profile/profileView.js';
 import profileModel from '../model/profileModel.js';
 import EventBus from '../libs/eventBus.js';
+import { EVENT_LIST_PROFILE} from '../components/constants.js';
 
-const eventList = [
-    'checkAuth',
-    'checkAuthResponse',
-    'loadUser',
-    'loadUserResponse',
-    'checkAuthError',
-    'changeEmail',
-    'changeEmailResponse',
-    'changePassword',
-    'changePasswordResponse',
-    'changeAvatar',
-    'changeAvatarResponse',
-    'changeAvatarSuccess',
-    'submitEmail',
-    'submitEmailResponse',
-    'submitEmailSuccess',
-    'submitPassword',
-    'submitPasswordResponse',
-    'submitPasswordSuccess',
-    'logOutResponse',
-    'signOut',
-    'closeView'
-];
+const eventList = EVENT_LIST_PROFILE;
 
 export default class ProfileController {
     constructor({ router } = {}) {

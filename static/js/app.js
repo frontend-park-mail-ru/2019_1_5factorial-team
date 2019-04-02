@@ -8,6 +8,9 @@ import profileController from './controllers/profileCtrl.js';
 import Router from './libs/router.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js');
+    }
 
     const page = document.getElementsByClassName('body-cnt')[0];
     createPage(page);
