@@ -2,6 +2,7 @@
 /.vscode
 node_modules
 package-lock.json
+static/dist/
 
 static/js/views/menu/menuView.tmpl.js
 static/js/views/login/loginView.tmpl.js
