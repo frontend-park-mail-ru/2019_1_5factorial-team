@@ -6,13 +6,7 @@ export default class ModalWindow {
         console.log('!');
         const modalElement = document.getElementsByClassName('modal-window')[0];
         modalElement.classList.remove('hide');
-        modalElement.innerHTML = `<div class="blur">
-        </div>
-        <div class="modal">
-            <div class="content content_modal">
-                <h1 class="content__header content__header_modal">Change password</h1>
-            </div>
-        </div>`;
+        modalElement.innerHTML = '<div class="blur"></div><div class="modal"><div class="content content_modal"><h1 class="content__header content__header_modal">Change password</h1></div></div>';
         const divToAppend = document.getElementsByClassName('content_modal')[0];
 
         const temp = MAP_OF_MODALS.get(element);

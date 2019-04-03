@@ -100,20 +100,14 @@ export const INCORRECT_LOGIN_OR_EMAIL = 'Incorrect login or email!';
 export const INCORRECT_AVATAR_FORMAT = 'Avatar must be jpeg or png format!';
 
 export const MAP_OF_MODALS = new Map ([
-    ['Game multi end', ``],
-    ['Game multi leave', ``],
-    ['Game training', ``],
-    ['Game single end', ``],
-    ['Game single pause', ``],
-    ['Game single leave', ``],
-    ['Menu multi waiting for player', ``],
-    ['Menu multi error login', ``],
-    ['Profile change password', `<label class="form__label">
-    <input class="form__input form__input_profile js-password-old" type="password" id="old-password" placeholder="Enter old password" autocomplete="current-password"/>
-</label>
-<label class="form__label">
-    <input class="form__input form__input_profile js-password-new" type="password" id="new-password" placeholder="Enter new password" autocomplete="new-password"/>
-</label>
-<button class="btn btn_contained form__btn form__btn_change-password js-button-submit" type="submit">Change password</button>`],
-    ['Shop error login', ``],
+    ['Game multi end', ''],
+    ['Game multi leave', ''],
+    ['Game training', ''],
+    ['Game single end', ''],
+    ['Game single pause', ''],
+    ['Game single leave', ''],
+    ['Menu multi waiting for player', ''],
+    ['Menu multi error login', ''],
+    ['Profile change password', '<label class="form__label"><input class="form__input form__input_profile js-password-old" type="password" id="old-password" placeholder="Enter old password" autocomplete="current-password"/></label><label class="form__label"><input class="form__input form__input_profile js-password-new" type="password" id="new-password" placeholder="Enter new password" autocomplete="new-password"/></label><button class="btn btn_contained form__btn form__btn_change-password js-button-submit" type="submit">Change password</button>'],
+    ['Shop error login', ''],
 ]);
