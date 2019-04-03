@@ -118,6 +118,10 @@ body {
         text-decoration: none;
     }
 
+    .btn_singin {
+        margin: 0 0.5vw;
+    }
+
 /* MAIN CONTAINERS */
 .container {
     display: flex;
@@ -167,6 +171,7 @@ body {
 
     .content_modal {
         padding: 4vh 4vw;
+        color: white;
         width: 100%;
     }
 
@@ -365,6 +370,12 @@ body {
         width: 100%;
     }
 
+    .form__singins {
+        display: flex;
+        flex-direction: row;
+        margin-top: 4vh;
+    }
+
     .form-btn-block {
         display: flex;
         flex-direction: row;
@@ -481,6 +492,7 @@ body {
 
 /* MODAL WINDOW */
 .modal {
+    z-index: 2;
     background: var(--bg-black-clr);
     border-radius: 0.75em;
     box-shadow: 0 0 3vw var(--light-blue-clr);
@@ -564,4 +576,14 @@ body {
     align-items: center;
     display: flex;
     margin-left: 0.25em;
+}
+
+.blur {
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
 }
