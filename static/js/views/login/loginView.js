@@ -14,7 +14,6 @@ export default class loginView extends View {
         form.addEventListener('submit', this.onSubmit.bind(this, form));
     }
 
-    // TODO(): переброс на стартовую страницу после авторизации
     onSubmit(form, event) {
         event.preventDefault();
         const data = {
@@ -28,9 +27,9 @@ export default class loginView extends View {
         const error = data.error;
         console.log(error);
 
-        // Временная заглушка
+        // TODO(): добавление стиля к полям, что все хуево, понять - почему не светится красным
         console.log(data);
-        const fieldToChange = data.inputField;
-        fieldToChange.classList.add('incorrect');
+        const incorrectField = document.getElementsByClassName(data.inputField)[0];
+        incorrectField.classList.add('invalid');
     }
 }

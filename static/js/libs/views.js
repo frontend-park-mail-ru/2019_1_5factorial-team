@@ -6,7 +6,6 @@ export default class View {
         this.localEventBus = eventBus;
         this.prevRoot = null;
         this.closedView = false;
-        // this.fest = window.fest[tmpl];
     }
 
     /**
@@ -22,12 +21,9 @@ export default class View {
         } else {
             this.prevRoot = root;
         }
-        // this.element.innerHTML = this.tmpl(data);
-        // root.innerHTML = this.fest(data);
         this.element.innerHTML = this.tmpl(data);
         root.innerHTML = '';
         root.appendChild(this.element);
-
         return this;
     }
 

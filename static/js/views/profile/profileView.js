@@ -15,27 +15,36 @@ export default class profileView extends View {
         this.localEventBus.getEvent('submitPasswordSuccess', this.onSubmitPasswordSuccess.bind(this));
     }
 
-    render(root, data = {}) {
+    render(root) {
         if (root !== undefined) {
             this.prevRoot = root;
         }
-        this.data = data; //заглушка для линтера
         this.localEventBus.callEvent('checkAuth');
     }
 
     onSubmitPasswordSuccess(data) {
-        this.data = data;
+        if (data.newPassword) {
+            // TODO(): все вкинуть в модальное окно, добавить некий алерт об удачном исходе
+            console.log('Password changed!');
+        }
     }
 
     onChangePasswodResponse(data) {
-        this.data = data;
+        //TODO(): добавить обработку ошибки в верстке
+        console.log(data.error);
     }
 
-    onChangeAvatarResponse() {
-
+    onChangeAvatarResponse(data) {
+        if (data.error !== undefined) {
+            console.log(data.error);
+            return;
+        }
+        this.localAvatar.src = AVATAR_DEFAULT;
+        this.localEventBus.callEvent('loadUser', data);
     }
 
     onChangeAvatarSuccess(data) {
+        console.log(data.avatar);
         this.localAvatar.src = data.avatar;
         this.localEventBus.callEvent('loadUser', data);
     }
@@ -45,7 +54,6 @@ export default class profileView extends View {
             this.localEventBus.callEvent('checkAuthError');
             return;
         }
-
         this.localEventBus.callEvent('loadUser', data);
     }
 
@@ -61,8 +69,8 @@ export default class profileView extends View {
             data.user.avatar = NETWORK_ADRESS + data.user.avatar;
         }
         super.render(this.prevRoot, data);
-        const imgTemp = document.getElementsByClassName('avatar-img')[0];
-        imgTemp.src = data.user.avatar;
+        const imgToSet = document.getElementsByClassName('avatar-img')[0];
+        imgToSet.src = data.user.avatar;
 
         this.initElements();
     }

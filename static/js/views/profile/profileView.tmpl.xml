@@ -23,7 +23,7 @@
                 <form class="form js-upload-photo">
                     <div class="change-btn-photo">
                         <label>
-                            <input class="btn photo-btn js-change-image" type="file" title="avatar" accept="image/jpeg, image/png"/>
+                            <input class="btn photo-btn js-change-image" type="file" title="avatar" accept=""/>
                             <div class="btn btn_contained profile__btn js-change-image js-submit-avatar">Change Avatar</div>
                         </label>
                     </div>

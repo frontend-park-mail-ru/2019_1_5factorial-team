@@ -5,7 +5,6 @@ class UserSingleton {
         this.email = null;
         this.score = null;
         this.avatar = null;
-        this.guid = null;
     }
 
     /**
@@ -13,16 +12,14 @@ class UserSingleton {
      * @param email
      * @param score
      * @param avatar
-     * @param guid
      * @param login
      */
-    setUser({ email, score, avatar, guid, login} = {}) {
+    setUser({ email, score, avatar, login} = {}) {
 
         this.email = email;
         this.score = score;
-        this.avatar = avatar || 'images/default-avatar.svg';
-        this.guid = guid;
-        this.login = login || 'Nouserlogin';
+        this.avatar = avatar;
+        this.login = login;
     }
 
     /**
@@ -32,7 +29,6 @@ class UserSingleton {
         this.email = null;
         this.score = null;
         this.avatar = null;
-        this.guid = null;
         this.login = null;
     }
 }
