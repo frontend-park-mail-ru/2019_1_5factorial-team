@@ -109,5 +109,6 @@ export const MAP_OF_MODALS = new Map ([
     ['Menu multi waiting for player', ''],
     ['Menu multi error login', ''],
     ['Profile change password', '<label class="form__label"><input class="form__input form__input_profile js-password-old" type="password" id="old-password" placeholder="Enter old password" autocomplete="current-password"/></label><label class="form__label"><input class="form__input form__input_profile js-password-new" type="password" id="new-password" placeholder="Enter new password" autocomplete="new-password"/></label><button class="btn btn_contained form__btn form__btn_change-password js-button-submit" type="submit">Change password</button>'],
+    ['Profile change password success', '<h1>Password changed</h1><button class="btn btn_contained js-close-mw">Close</button>'],
     ['Shop error login', ''],
 ]);

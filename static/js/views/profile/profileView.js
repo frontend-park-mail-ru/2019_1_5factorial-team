@@ -25,8 +25,8 @@ export default class profileView extends View {
 
     onSubmitPasswordSuccess(data) {
         if (data.newPassword) {
-            // TODO(): все вкинуть в модальное окно, добавить некий алерт об удачном исходе
-            console.log('Password changed!');
+            const MW = new ModalWindow();
+            MW.createModal('Profile change password success');
         }
     }
 
@@ -105,12 +105,6 @@ export default class profileView extends View {
             this.inputPasswordOld = document.getElementsByClassName('js-password-old')[0];
             this.inputPasswordNew = document.getElementsByClassName('js-password-new')[0];
             this.submitPassword = document.getElementsByClassName('js-button-submit')[0];
-            this.blur = document.getElementsByClassName('blur')[0];
-
-            this.blur.addEventListener('click', (event) => {
-                event.preventDefault();
-                MW.remveModal();
-            });
 
             this.submitPassword.addEventListener('click', (event) => {
                 event.preventDefault();
@@ -119,10 +113,6 @@ export default class profileView extends View {
                     oldPassword: this.inputPasswordOld.value
                 });
             });
-            // this.localEventBus.callEvent('submitPassword', {
-            //     newPassword: this.inputPasswordNew.value,
-            //     oldPassword: this.inputPasswordOld.value
-            // });
         });
     }
 }
