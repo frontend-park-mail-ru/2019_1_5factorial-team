@@ -87,11 +87,13 @@
             </div>
         </section>
     </div>
-    <div class="blur">
-    </div>
-    <div class="modal">
-        <div class="content content_modal">
-            <h1 class="content__header content__header_modal">Change password</h1>
+    <section class="modal-window">
+        <div class="blur">
         </div>
-    </div>
+        <div class="modal">
+            <div class="content content_modal">
+                <h1 class="content__header content__header_modal">Change password</h1>
+            </div>
+        </div>
+    </section>
 </fest:template>
