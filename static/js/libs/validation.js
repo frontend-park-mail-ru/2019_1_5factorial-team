@@ -1,4 +1,4 @@
-import { EMAIL_EXPRESSION, MIN_LENGTH, OK_VALIDATE_EMAIL, OK_VALIDATE_LOGIN, OK_VALIDATE_PASSWORD, OK_VALIDATE_AVATAR, INCORRECT_EMAIL, TOO_SHORT_LOGIN, INCORRECT_LOGIN_OR_EMAIL, TOO_SHORT_PASSWORD, INCORRECT_AVATAR_FORMAT } from '../components/constants.js';
+import { EMAIL_EXPRESSION, MIN_LENGTH, OK_VALIDATE_EMAIL, OK_VALIDATE_LOGIN, OK_VALIDATE_PASSWORD, OK_VALIDATE_AVATAR, INCORRECT_EMAIL, TOO_SHORT_LOGIN, INCORRECT_LOGIN_OR_EMAIL, TOO_SHORT_PASSWORD, INCORRECT_AVATAR_FORMAT, JPEG_AVATAR_FORMAT, PNG_AVATAR_FORMAT } from '../components/constants.js';
 
 export default class Validator {
 
@@ -48,20 +48,15 @@ export default class Validator {
 
     /**
      * validateImage - check validity of input image
-     * @param {HTMLElement} myInput
+     * @param {HTMLElement} data
      * @return {boolean}
      */
-    static validateImage(myInput)  {
-        return ((myInput.type !== 'image/jpeg') || (myInput.type !== 'image/png')) ? OK_VALIDATE_AVATAR : INCORRECT_AVATAR_FORMAT;
-    }
-
-    /**
-     * validateRepeatPasswords - check validity of input passwords and compare them
-     * @param first
-     * @param second
-     * @return {boolean}
-     */
-    static validateRepeatPasswords(first, second)  {
-        return first.value === second.value;
+    static validateImage(data)  {
+        if (data.type !== JPEG_AVATAR_FORMAT) {
+            if (data.type !== PNG_AVATAR_FORMAT) {
+                return INCORRECT_AVATAR_FORMAT;
+            }
+        }
+        return OK_VALIDATE_AVATAR;
     }
 }

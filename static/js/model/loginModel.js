@@ -20,7 +20,7 @@ export default class loginModel {
 
         if (validateLoginOrEmail !== OK_VALIDATE_EMAIL && validateLoginOrEmail !== OK_VALIDATE_LOGIN) {
             const response = {
-                inputField: 'loginOrEmail',
+                inputField: 'js-login-or-email',
                 error: validateLoginOrEmail
             };
             this.localEventBus.callEvent('loginResponse', response);
@@ -31,7 +31,7 @@ export default class loginModel {
 
         if (validatePassword !== OK_VALIDATE_PASSWORD) {
             const response = {
-                inputField: 'inputPassword',
+                inputField: 'js-password',
                 error: validatePassword
             };
             this.localEventBus.callEvent('loginResponse', response);

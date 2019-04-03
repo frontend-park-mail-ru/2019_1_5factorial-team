@@ -74,6 +74,7 @@ export const EVENT_LIST_SIGNUP = [
 ];
 
 export const NETWORK_ADRESS = 'http://78.155.207.69:5051';
+// export const NETWORK_ADRESS = 'http://localhost:5051';
 
 export const EMAIL_EXPRESSION = new RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+[^<>()\.,;:\s@\"]{2,})$/);
 export const MIN_LENGTH = 4;
@@ -90,6 +91,8 @@ export const OK_VALIDATE_LOGIN = 'Ok login';
 export const OK_VALIDATE_EMAIL = 'Ok email';
 export const OK_VALIDATE_PASSWORD = 'Ok password';
 export const OK_VALIDATE_AVATAR = 'Ok avatar';
+export const JPEG_AVATAR_FORMAT = 'image/jpeg';
+export const PNG_AVATAR_FORMAT = 'image/png';
 export const INCORRECT_EMAIL = 'Email is incorrect!';
 export const TOO_SHORT_LOGIN = 'Login needs to be at least 4 symbols!';
 export const TOO_SHORT_PASSWORD = 'Password needs to be at least 4 symbols!';

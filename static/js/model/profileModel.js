@@ -7,8 +7,6 @@ import { OK_RESPONSE, NETWORK_ADRESS, DEFAULT_AVATAR, OK_VALIDATE_PASSWORD, OK_V
 export default class profileModel {
     constructor(eventBus) {
         this.localEventBus = eventBus;
-
-        this.localEventBus.getEvent('changePassword', this.onChangePassword.bind(this));
         this.localEventBus.getEvent('changeAvatar', this.onChangeAvatar.bind(this));
 
         this.localEventBus.getEvent('submitPassword', this.onSubmitPassword.bind(this));
@@ -21,42 +19,39 @@ export default class profileModel {
      * Проверяем смену аватара
      */
     onChangeAvatar(data) {
-        const newAvatar = data.avatar;
-        const validateNewAvatar = Validation.validateImage(newAvatar);
+        const validateNewAvatar = Validation.validateImage(data.avatar);
         if (validateNewAvatar !== OK_VALIDATE_AVATAR) {
-            this.localEventBus.callEvent('changAvatarResponse', {error: validateNewAvatar});
+            this.localEventBus.callEvent('changeAvatarResponse', {error: validateNewAvatar});
             return;
         }
 
-        //TODO(): проверить валидации файлов на загрузку
-        api.uploadAvatar(newAvatar).then(res => res.json().then(res => {
-            if (res === DEFAULT_AVATAR) {
-                //TODO(): обработка события, когда аватарка не обновилась и вернулся 400
-                console.log(res);
-                this.localEventBus.callEvent('changeAvatarResponse', {avatar: AVATAR_DEFAULT});
+        api.uploadAvatar(data.avatar).then(res => {
+            if (res.status !== OK_RESPONSE) {
+                this.localEventBus.callEvent('changeAvatarResponse', {error: res.error});
                 return;
-            } else {
-                console.log(res);
-                const avatarName = res.avatar_link;
-
-                api.updateUser({
-                    avatar_input: avatarName,
-                    old_password: undefined,
-                    new_password: undefined
-                }).then(res => {
-                    if (res.status === OK_RESPONSE) {
-                        const avatarLink = NETWORK_ADRESS + avatarName;
-                        this.localEventBus.callEvent('changeAvatarSuccess', {avatar: avatarLink});
-                    } else {
-                        res.json().then(dataResponse => {
-                            if (dataResponse.field === 'avatar') {
-                                this.localEventBus.callEvent('changeAvatarResponse', {error: dataResponse.error});
-                            }
-                        });
-                    }
-                });
             }
-        }));
+            res.json().then(res => {
+                if (res === DEFAULT_AVATAR || res === AVATAR_DEFAULT) {
+                    this.localEventBus.callEvent('changeAvatarResponse', {avatar: AVATAR_DEFAULT});
+                    return;
+                } else {
+                    api.updateUser({
+                        avatar_input: res.avatar_link,
+                        old_password: undefined,
+                        new_password: undefined
+                    }).then(res => {
+                        if (res.status === OK_RESPONSE) {
+                            const avatarLink = NETWORK_ADRESS + res.avatar_link;
+                            this.localEventBus.callEvent('changeAvatarSuccess', {avatar: avatarLink});
+                        } else {
+                            res.json().then(res => {
+                                this.localEventBus.callEvent('changeAvatarResponse', {error: res.error});
+                            });
+                        }
+                    });
+                }
+            });
+        });
     }
 
     /**
@@ -87,7 +82,6 @@ export default class profileModel {
         }
 
         api.updateUser({
-            guid: this._currentUserGUID,
             avatar: this.avatar,
             old_password: passOld,
             new_password: passNew
@@ -95,28 +89,11 @@ export default class profileModel {
             if (res.ok) {
                 this.localEventBus.callEvent('submitPasswordSuccess', {newPassword: passNew});
             } else {
-                res.json().then(dataResponse => {
-                    // console.log(res.error);
-                    this.localEventBus.callEvent('changePasswordResponse', {error: dataResponse.error});
+                res.json().then(res => {
+                    this.localEventBus.callEvent('changePasswordResponse', {error: res.error});
                 });
             }
         });
-    }
-
-    /**
-     * Вызываем смену пароля пользователя
-     * @param {*} data
-     */
-    onChangePassword(data) {
-        const pass = data.pass;
-        const errPass = Validation.validatePassword(pass);
-        if (errPass) {
-            this.localEventBus.callEvent('changePasswordResponse', {error: errPass});
-            return;
-        }
-
-        // TODO: update page on success change avatar
-        this.localEventBus.callEvent('changePasswordResponse', {});
     }
 
     /**
@@ -125,16 +102,15 @@ export default class profileModel {
      */
     onLoadUser() {
         api.loadUser()
-            .then(user => {
-                if (user.error) {
+            .then(res => {
+                if (res.error) {
                     this.localEventBus.callEvent('loadUserResponse', {});
                 } else {
                     const toSetUser = {
-                        avatar: user.avatar_link,
-                        score: user.score || 0,
-                        login: user.nickname || 'Nouserlogin',
-                        email: user.email,
-                        guid: user.guid,
+                        avatar: res.avatar_link,
+                        score: res.score,
+                        login: res.nickname,
+                        email: res.email,
                     };
                     User.setUser({ toSetUser });
 
@@ -150,10 +126,10 @@ export default class profileModel {
         Network.doGet({url: '/api/session'})
             .then(response => {
                 if (response.status !== OK_RESPONSE) {
-                    response.json().then(data => this.localEventBus.callEvent('checkAuthResponse', {
+                    this.localEventBus.callEvent('checkAuthResponse', {
                         isAuth: false,
-                        error: data.error
-                    }));
+                        error: response.error
+                    });
                 } else {
                     response.json().then(() => {
                         this.localEventBus.callEvent('checkAuthResponse', {
