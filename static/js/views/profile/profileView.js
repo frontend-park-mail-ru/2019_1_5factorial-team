@@ -1,4 +1,5 @@
 import View from '../../libs/views.js';
+import ModalWindow from '../../components/modalWindow.js';
 import { NETWORK_ADRESS, AVATAR_DEFAULT, DEFAULT_AVATAR } from '../../components/constants.js';
 import template from './profileView.tmpl.xml';
 
@@ -81,16 +82,14 @@ export default class profileView extends View {
 
         this.formInput =  document.getElementsByClassName('js-change-password')[0];
 
-        this.passwordSubmit = this.formInput.getElementsByClassName('js-button-submit')[0];
-        this.inputPasswordOld = this.formInput.getElementsByClassName('js-password-old')[0];
-        this.inputPasswordNew = this.formInput.getElementsByClassName('js-password-new')[0];
-
+        this.callSubmit = this.formInput.getElementsByClassName('js-call-submit')[0];
         this.initElementsEvents();
     }
 
     initElementsEvents() {
         const signoutButton = document.getElementsByClassName('js-signout')[0];
         const buttonUp = this.localAvatarUploader;
+        const MW = new ModalWindow();
         buttonUp.addEventListener('change', () => {
             this.localEventBus.callEvent('changeAvatar', { avatar: this.localAvatarUploader.files[0] });
         });
@@ -99,12 +98,31 @@ export default class profileView extends View {
             this.localEventBus.callEvent('signOut');
         });
 
-        this.passwordSubmit.addEventListener('click', (event) => {
+        this.callSubmit.addEventListener('click', (event) => {
             event.preventDefault();
-            this.localEventBus.callEvent('submitPassword', {
-                newPassword: this.inputPasswordNew.value,
-                oldPassword: this.inputPasswordOld.value
+
+            MW.createModal('Profile change password');
+            this.inputPasswordOld = document.getElementsByClassName('js-password-old')[0];
+            this.inputPasswordNew = document.getElementsByClassName('js-password-new')[0];
+            this.submitPassword = document.getElementsByClassName('js-button-submit')[0];
+            this.blur = document.getElementsByClassName('blur')[0];
+
+            this.blur.addEventListener('click', (event) => {
+                event.preventDefault();
+                MW.remveModal();
             });
+
+            this.submitPassword.addEventListener('click', (event) => {
+                event.preventDefault();
+                this.localEventBus.callEvent('submitPassword', {
+                    newPassword: this.inputPasswordNew.value,
+                    oldPassword: this.inputPasswordOld.value
+                });
+            });
+            // this.localEventBus.callEvent('submitPassword', {
+            //     newPassword: this.inputPasswordNew.value,
+            //     oldPassword: this.inputPasswordOld.value
+            // });
         });
     }
 }

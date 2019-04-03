@@ -52,13 +52,7 @@
                 <hr class="hr"/>
                 <div class="content-block-unit content-block-unit_profile">
                     <form class="form js-change-password js-new">
-                        <label class="form__label">
-                            <input class="form__input form__input_profile js-password-old" type="password" id="old-password" placeholder="Enter old password" autocomplete="current-password"/>
-                        </label>
-                        <label class="form__label">
-                            <input class="form__input form__input_profile js-password-new" type="password" id="new-password" placeholder="Enter new password" autocomplete="new-password"/>
-                        </label>
-                        <button class="btn btn_contained form__btn form__btn_change-password js-button-submit" type="submit">Change password</button>
+                        <button class="btn btn_contained form__btn form__btn_change-password js-call-submit" type="submit">Change password</button>
                         <hr class="hr"/>
                     </form>
                 </div>
@@ -68,6 +62,9 @@
 
             <a class="btn btn_contained btn_back-menu" href="/">↩ Back</a>
         </div>
+    </section>
+
+    <section class="modal-window hide">
     </section>
 
     <section class="container__block container__block_side">
