@@ -24,18 +24,25 @@ export default class profileView extends View {
     }
 
     onSubmitPasswordSuccess(data) {
-        this.data = data;
+        if (data.newPassword) {
+            // TODO(): все вкинуть в модальное окно, добавить некий алерт об удачном исходе
+            console.log('Password changed!');
+        }
     }
 
     onChangePasswodResponse(data) {
-        this.data = data;
+        //TODO(): добавить обработку ошибки в верстке
+        console.log(data.error);
     }
 
     onChangeAvatarResponse() {
-
+        //TODO(): обработка ошибки в верстке
+        // console.log(data.error);
     }
 
     onChangeAvatarSuccess(data) {
+        //TODO(): check default avatar
+        console.log(data.avatar);
         this.localAvatar.src = data.avatar;
         this.localEventBus.callEvent('loadUser', data);
     }

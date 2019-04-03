@@ -2,7 +2,7 @@ import Validation from '../libs/validation.js';
 import Network from '../libs/network.js';
 import api from '../libs/api.js';
 import {User} from '../libs/users.js';
-import { OK_RESPONSE, NETWORK_ADRESS, DEFAULT_AVATAR } from '../components/constants.js';
+import { OK_RESPONSE, NETWORK_ADRESS, DEFAULT_AVATAR, OK_VALIDATE_PASSWORD, OK_VALIDATE_AVATAR, AVATAR_DEFAULT } from '../components/constants.js';
 
 export default class profileModel {
     constructor(eventBus) {
@@ -22,12 +22,21 @@ export default class profileModel {
      */
     onChangeAvatar(data) {
         const newAvatar = data.avatar;
+        const validateNewAvatar = Validation.validateImage(newAvatar);
+        if (validateNewAvatar !== OK_VALIDATE_AVATAR) {
+            this.localEventBus.callEvent('changAvatarResponse', {error: validateNewAvatar});
+            return;
+        }
+
+        //TODO(): проверить валидации файлов на загрузку
         api.uploadAvatar(newAvatar).then(res => res.json().then(res => {
             if (res === DEFAULT_AVATAR) {
+                //TODO(): обработка события, когда аватарка не обновилась и вернулся 400
                 console.log(res);
-                // TODO() : редирект на дефолтную аватарку
+                this.localEventBus.callEvent('changeAvatarResponse', {avatar: AVATAR_DEFAULT});
                 return;
             } else {
+                console.log(res);
                 const avatarName = res.avatar_link;
 
                 api.updateUser({
@@ -35,7 +44,7 @@ export default class profileModel {
                     old_password: undefined,
                     new_password: undefined
                 }).then(res => {
-                    if (res.ok) {
+                    if (res.status === OK_RESPONSE) {
                         const avatarLink = NETWORK_ADRESS + avatarName;
                         this.localEventBus.callEvent('changeAvatarSuccess', {avatar: avatarLink});
                     } else {
@@ -67,12 +76,12 @@ export default class profileModel {
         const passOld = data.oldPassword;
         const passNew = data.newPassword;
         const errPassOld = Validation.validatePassword(passOld);
-        if (!errPassOld) {
+        if (errPassOld !== OK_VALIDATE_PASSWORD) {
             this.localEventBus.callEvent('changePasswordResponse', {error: errPassOld});
             return;
         }
         const errPassNew = Validation.validatePassword(passNew);
-        if (!errPassNew) {
+        if (errPassNew !== OK_VALIDATE_PASSWORD) {
             this.localEventBus.callEvent('changePasswordResponse', {error: errPassNew});
             return;
         }
@@ -87,9 +96,8 @@ export default class profileModel {
                 this.localEventBus.callEvent('submitPasswordSuccess', {newPassword: passNew});
             } else {
                 res.json().then(dataResponse => {
-                    if (dataResponse.field === 'password') {
-                        this.localEventBus.callEvent('changePasswordResponse', {error: dataResponse.error});
-                    }
+                    // console.log(res.error);
+                    this.localEventBus.callEvent('changePasswordResponse', {error: dataResponse.error});
                 });
             }
         });
