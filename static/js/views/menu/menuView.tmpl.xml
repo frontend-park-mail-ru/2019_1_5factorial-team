@@ -16,11 +16,13 @@
         </section>
         <section class="container__block container__block_center container__block_center_menu">
             <div class="content content_menu">
-                <a class="btn content_menu__btn" href="/single">Single</a>
-                <a class="btn content_menu__btn" href="/multi">Multi</a>
-                <a class="btn content_menu__btn" href="/leaders">Leaders</a>
-                <a class="btn content_menu__btn" href="/about">About</a>
+                <a class="btn content_menu__btn js-single" href="/single">Single</a>
+                <a class="btn content_menu__btn js-multi" href="/multi">Multi</a>
+                <a class="btn content_menu__btn js-leaderboard" href="/leaders">Leaders</a>
+                <a class="btn content_menu__btn js-avout" href="/about">About</a>
             </div>
+        </section>
+        <section class="modal-window hide">
         </section>
         <section class="container__block container__block_side right-elems">
             <div class="users js-check-auth">

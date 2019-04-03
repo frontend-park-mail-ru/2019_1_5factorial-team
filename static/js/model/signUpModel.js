@@ -13,19 +13,25 @@ export default class signUpModel {
      * @param {*} data
      */
     checkSignUp(data) {
-        const validateEmail = Validator.validateEmail(data.email);
-        const validateLogin = Validator.validateLogin(data.login);
-        const validatePassword = Validator.validatePassword(data.pass);
+        let validateEmail = Validator.validateEmail(data.email);
+        let validateLogin = Validator.validateLogin(data.login);
+        let validatePassword = Validator.validatePassword(data.pass);
+        let arrReturn = [];
+        let check = 0;
         if (validateEmail !== OK_VALIDATE_EMAIL) {
-            this.localEventBus.callEvent('signupResponse', validateEmail);
-            return;
+            arrReturn[0] = validateEmail;
+            check++;
         }
         if (validateLogin !== OK_VALIDATE_LOGIN) {
-            this.localEventBus.callEvent('signupResponse', validateLogin);
-            return;
+            arrReturn[1] = validateLogin;
+            check++;
         }
         if (validatePassword !== OK_VALIDATE_PASSWORD) {
-            this.localEventBus.callEvent('signupResponse', validatePassword);
+            arrReturn[2] = validatePassword;
+            check++;
+        }
+        if (check > 0) {
+            this.localEventBus.callEvent('signupResponse', {arrReturn});
             return;
         }
         api.signUp({

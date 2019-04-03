@@ -19,23 +19,18 @@ export default class signUpView extends View {
 
     onSignupResponse(data) {
         console.log(data);
-        switch (data) {
-            case INCORRECT_EMAIL: {
-                const element = document.getElementsByClassName('js-email')[0];
-                element.classList.add('invalid');
-                break;
-            }
-            case TOO_SHORT_LOGIN: {
-                const element = document.getElementsByClassName('js-login')[0];
-                element.classList.add('invalid');
-                break;
-            }
-            case TOO_SHORT_PASSWORD: {
-                const element = document.getElementsByClassName('js-password')[0];
-                element.classList.add('invalid');
-                break;
-            }
-        } 
+        const elementEmail = document.getElementsByClassName('js-email')[0];
+        const elementLogin = document.getElementsByClassName('js-login')[0];
+        const elementPassword = document.getElementsByClassName('js-password')[0];
+        if (data.arrReturn[0] === INCORRECT_EMAIL) {
+            elementEmail.classList.add('invalid');
+        }
+        if (data.arrReturn[1] === TOO_SHORT_LOGIN) {
+            elementLogin.classList.add('invalid');
+        }
+        if (data.arrReturn[2] === TOO_SHORT_PASSWORD) {
+            elementPassword.classList.add('invalid');
+        }
     }
 
     onSubmit(event) {

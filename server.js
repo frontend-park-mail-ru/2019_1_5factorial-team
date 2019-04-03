@@ -10,14 +10,14 @@ const app = express();
 app.use(morgan('dev'));
 
 const indexPath = path.resolve(__dirname, './static/index.html');
-const publicRoot = path.resolve(__dirname, 'static');
+const root = path.resolve(__dirname, 'static');
 app.use(express.static(__dirname + '/static'));
 
 app.use(body.json());
 
 app.get('/sw.js', (req, res) => {
     res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
-    res.sendFile(publicRoot + '/dist/sw.js');
+    res.sendFile(root + '/dist/sw.js');
 });
 
 app.get('*', (req, res) => {
