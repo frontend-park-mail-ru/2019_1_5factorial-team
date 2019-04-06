@@ -40,7 +40,6 @@ export default class ModalWindow {
         const modalElement = document.getElementsByClassName('modal-window')[0];
         const toDeleteModal = document.getElementsByClassName('content content_modal')[0];
         modalElement.classList.add('hide');
-        console.log(modalElement.childNodes);
         toDeleteModal.remove();
     }
 }

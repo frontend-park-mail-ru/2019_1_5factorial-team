@@ -18,7 +18,6 @@ export default class signUpView extends View {
     }
 
     onSignupResponse(data) {
-        console.log(data);
         const elementEmail = document.getElementsByClassName('js-email')[0];
         const elementLogin = document.getElementsByClassName('js-login')[0];
         const elementPassword = document.getElementsByClassName('js-password')[0];
