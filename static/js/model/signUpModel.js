@@ -13,9 +13,9 @@ export default class signUpModel {
      * @param {*} data
      */
     checkSignUp(data) {
-        let validateEmail = Validator.validateEmail(data.email);
-        let validateLogin = Validator.validateLogin(data.login);
-        let validatePassword = Validator.validatePassword(data.pass);
+        const validateEmail = Validator.validateEmail(data.email);
+        const validateLogin = Validator.validateLogin(data.login);
+        const validatePassword = Validator.validatePassword(data.pass);
         let arrReturn = [];
         let check = 0;
         if (validateEmail !== OK_VALIDATE_EMAIL) {

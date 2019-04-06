@@ -52,10 +52,8 @@ export default class Validator {
      * @return {boolean}
      */
     static validateImage(data)  {
-        if (data.type !== JPEG_AVATAR_FORMAT) {
-            if (data.type !== PNG_AVATAR_FORMAT) {
-                return INCORRECT_AVATAR_FORMAT;
-            }
+        if (data.type !== JPEG_AVATAR_FORMAT && data.type !== PNG_AVATAR_FORMAT) {
+            return INCORRECT_AVATAR_FORMAT;
         }
         return OK_VALIDATE_AVATAR;
     }
