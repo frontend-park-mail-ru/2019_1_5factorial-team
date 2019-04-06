@@ -340,10 +340,10 @@ body {
         outline: none;
     }
     .form__input {
-        /* box-shadow: var(--invalid-shdw); */
+        box-shadow: var(--invalid-shdw);
     }
     .form__input {
-        /* box-shadow: var(--valid-shdw); */
+        box-shadow: var(--valid-shdw);
     }
 
     ::placeholder {
