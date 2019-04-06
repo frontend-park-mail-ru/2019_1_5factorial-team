@@ -73,6 +73,10 @@ export const EVENT_LIST_SIGNUP = [
     'loadWaiting'
 ];
 
+export const EVENT_LIST_GAME = [
+    'gameOver'
+];
+
 export const NETWORK_ADRESS = 'http://78.155.207.69:5051';
 // export const NETWORK_ADRESS = 'http://localhost:5051';
 
