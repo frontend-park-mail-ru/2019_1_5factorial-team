@@ -74,6 +74,7 @@ export const EVENT_LIST_SIGNUP = [
 ];
 
 export const NETWORK_ADRESS = 'http://78.155.207.69:5051';
+// export const NETWORK_ADRESS = 'http://localhost:5051';
 
 export const EMAIL_EXPRESSION = new RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+[^<>()\.,;:\s@\"]{2,})$/);
 export const MIN_LENGTH = 4;
@@ -85,3 +86,29 @@ export const OK_RESPONSE = 200;
 
 export const COUNT_OF_PAGES = 5;
 export const NUM_OF_POSITIONS = 5;
+
+export const OK_VALIDATE_LOGIN = 'Ok login';
+export const OK_VALIDATE_EMAIL = 'Ok email';
+export const OK_VALIDATE_PASSWORD = 'Ok password';
+export const OK_VALIDATE_AVATAR = 'Ok avatar';
+export const JPEG_AVATAR_FORMAT = 'image/jpeg';
+export const PNG_AVATAR_FORMAT = 'image/png';
+export const INCORRECT_EMAIL = 'Email is incorrect!';
+export const TOO_SHORT_LOGIN = 'Login needs to be at least 4 symbols!';
+export const TOO_SHORT_PASSWORD = 'Password needs to be at least 4 symbols!';
+export const INCORRECT_LOGIN_OR_EMAIL = 'Incorrect login or email!';
+export const INCORRECT_AVATAR_FORMAT = 'Avatar must be jpeg or png format!';
+
+export const MAP_OF_MODALS = new Map ([
+    ['Game multi end', ''],
+    ['Game multi leave', ''],
+    ['Game training', '<h2 class="text-title content-block-unit__title content-block-unit__title_row">Do you want to start training?</h2><button class="btn btn_contained js-skip-training">No</button><button class="btn btn_contained js-start-training">Yes</button>'],
+    ['Game single end', ''],
+    ['Game single pause', ''],
+    ['Game single leave', ''],
+    ['Menu multi waiting for player', '<h2 class="text-title content-block-unit__title content-block-unit__title_row">Please, wait. We are looking for your opponent...</h2><button class="btn btn_contained js-close-mw">Cancel</button>'],
+    ['Menu multi error login', '<h2 class="text-title content-block-unit__title content-block-unit__title_row">To play multiplayer you need to be logged in!</h2><button class="btn btn_contained js-close-mw">Close</button>'],
+    ['Profile change password', '<h2 class="text-title content-block-unit__title content-block-unit__title_row">Change password</h2><label class="form__label"><input class="form__input form__input_profile js-password-old" type="password" id="old-password" placeholder="Enter old password" autocomplete="current-password"/></label><label class="form__label"><input class="form__input form__input_profile js-password-new" type="password" id="new-password" placeholder="Enter new password" autocomplete="new-password"/></label><button class="btn btn_contained form__btn form__btn_change-password js-button-submit" type="submit">Change password</button>'],
+    ['Profile change password success', '<h1>Password changed</h1><button class="btn btn_contained js-close-mw">Close</button>'],
+    ['Shop error login', ''],
+]);

@@ -1,13 +1,12 @@
 import api from '../libs/api.js';
 import Validator from '../libs/validation.js';
-import { OK_RESPONSE } from '../components/constants.js';
+import { OK_RESPONSE, OK_VALIDATE_EMAIL, OK_VALIDATE_LOGIN, OK_VALIDATE_PASSWORD } from '../components/constants.js';
 
 export default class loginModel {
     constructor(eventBus) {
         this.localEventBus = eventBus;
-        this.localEventBus.getEvent('loginService', this.oauthLogin.bind(this));
-        this.oauthLogin();
         this.localEventBus.getEvent('login', this.onLogin.bind(this));
+        this.oauthLogin();
     }
 
     /**
@@ -19,9 +18,9 @@ export default class loginModel {
         const password = data.pass;
         const validateLoginOrEmail = Validator.validateLoginOrEmail(loginOrEmailData);
 
-        if (!validateLoginOrEmail) {
+        if (validateLoginOrEmail !== OK_VALIDATE_EMAIL && validateLoginOrEmail !== OK_VALIDATE_LOGIN) {
             const response = {
-                inputField: 'loginOrEmail',
+                inputField: 'js-login-or-email',
                 error: validateLoginOrEmail
             };
             this.localEventBus.callEvent('loginResponse', response);
@@ -30,16 +29,14 @@ export default class loginModel {
 
         const validatePassword = Validator.validatePassword(password);
 
-        if (!validatePassword) {
+        if (validatePassword !== OK_VALIDATE_PASSWORD) {
             const response = {
-                inputField: 'inputPassword',
+                inputField: 'js-password',
                 error: validatePassword
             };
             this.localEventBus.callEvent('loginResponse', response);
             return;
         }
-
-        this.localEventBus.callEvent('loadWaiting');
 
         api.login({
             loginOrEmail: loginOrEmailData,
