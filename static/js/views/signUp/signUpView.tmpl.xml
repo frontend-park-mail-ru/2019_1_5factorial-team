@@ -20,10 +20,16 @@
                 <form class="form js-signup-form">
                     <label class="form__label" for="login">Login</label>
                     <input class="form__input js-login" type="text" id="login" autofocus="true"/>
+                    <div class="form__warning js-warning-login hide"></div>
+
                     <label class="form__label" for="email">Email</label>
                     <input class="form__input js-email" type="email" id="email"/>
+                    <div class="form__warning js-warning-email hide"></div>
+
                     <label class="form__label" for="password">Password</label>
                     <input class="form__input js-password" type="password" id="password"/>
+                    <div class="form__warning js-warning-password hide"></div>
+
                     <div class="form-btn-block">
                         <a class="btn btn_contained form__btn form__btn_back" href="/">Back</a>
                         <button class="btn btn_contained form__btn js-submit" type="submit">Sign Up</button>
