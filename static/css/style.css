@@ -110,6 +110,18 @@ body {
         box-shadow: var(--small-shdw);
     }
 
+    .btn_change-password {
+        border-bottom: 0.1em dotted;
+        margin: 0 0 0 0.25em;
+        font-size: 2.5vh;
+    }
+    .btn_change-password:hover {
+        border-bottom: 0.1em dotted;
+    }
+    .btn_change-password:focus {
+        border-bottom: 0.1em dotted;
+        outline: none;
+    }
 
     .btn_inlined {
         background: transparent;
@@ -536,6 +548,54 @@ body {
         margin-left: auto;
     }
 
+.blur {
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.hide {
+    display: none !important;
+}
+
+.modal-window {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    }
+.modal-window-btns {
+    display: flex;
+    flex-direction: row;
+}
+
+.modal-window__btn {
+    margin-top: 3vh;
+    font-size: 3vh;
+}
+
+.modal-window__header {
+    font-size: 4vh;
+    text-align: center;
+}
+
+.modal-window__input-rows {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 1vh 0;
+    width: 100%;
+}
+.text-change-password {
+    display: flex;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+
 /* MAIN GAME TITLE */
 .name {
     animation: pulse 1s infinite;
@@ -602,65 +662,4 @@ body {
     align-items: center;
     display: flex;
     margin-left: 0.25em;
-}
-
-.blur {
-    z-index: 1;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-}
-
-.hide {
-    display: none !important;
-}
-
-.modal-window {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-}
-.modal-btns {
-    display: flex;
-    flex-direction: row;
-}
-
-.modal__btn {
-    margin-top: 3vh;
-    font-size: 3vh;
-}
-
-.modal-window__header {
-    font-size: 4vh;
-    text-align: center;
-}
-
-.modal-window__input-rows {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: 1vh 0;
-    width: 100%;
-}
-
-.btn_change-password {
-    border-bottom: 0.1em dotted;
-    margin: 0 0 0 0.25em;
-    font-size: 2.5vh;
-}
-.btn_change-password:hover {
-    border-bottom: 0.1em dotted;
-}
-.btn_change-password:focus {
-    border-bottom: 0.1em dotted;
-    outline: none;
-}
-
-.text-change-password {
-    display: flex;
-    flex-wrap: nowrap;
-    white-space: nowrap;
 }
