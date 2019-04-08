@@ -343,6 +343,13 @@ body {
     flex-direction: column;
     margin-bottom: 2vh;
 }
+.form_change-password {
+    font-size: 2.5vh;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 1vh;
+    flex-wrap: nowrap;
+}
     .form__input {
         border: none;
         border-radius: 0.25em;
@@ -628,4 +635,22 @@ body {
 .modal-window__header {
     font-size: 4vh;
     text-align: center;
+}
+
+.btn_change-password {
+    border-bottom: 0.1em dotted;
+    margin: 0 0 0.5vh 0.5em;
+    font-size: 2.5vh;
+}
+.btn_change-password:hover {
+    border-bottom: 0.1em dotted;
+}
+.btn_change-password:focus {
+    border-bottom: 0.1em dotted;
+    outline: none;
+}
+
+.text-change-password {
+    display: flex;
+    flex-wrap: nowrap;
 }
