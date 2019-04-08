@@ -7,8 +7,6 @@ export default class gameView extends View {
     constructor({eventBus = {}} = {}) {
         super(template, eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
-        // this.main = document.getElementsByClassName('main-container')[0];
-        // this.main.innerHTML = `<canvas class="temp_class_canvas" id="canvas" width="500" height="500"></canvas>`;
         // this.localEventBus.getEvent('gameOver', this.gameOver.bind(this));
         // this.numOfPlayers = numOfPlayers; //заглушка, надо перевести в нормальный вид
     }
@@ -20,14 +18,9 @@ export default class gameView extends View {
         this.renderScene(this.canvas);
     }
 
-    //TODO(): class City - игровое поле, на котором происходит рендер всего, что движется и прочее
     renderScene(canvas) {
-        // this.data = data; //заглушка, рендерить будем с никами и прочим
-        // this.root = root;
         this.scene = new gameScene(canvas);
         this.scene.render();
-        // this.city = new City();
-        // this.city.render();
     }
 
     //TODO(): Notificate players in game (Modal or not)
