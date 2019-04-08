@@ -26,10 +26,10 @@ export default class viewMenu extends View {
             });
         }
 
-        singleButton.addEventListener('click', (event) => {
-            event.preventDefault();
-            MW.createModal('Game training');
-        });
+        // singleButton.addEventListener('click', (event) => {
+        //     event.preventDefault();
+        //     MW.createModal('Game training');
+        // });
 
         multiButton.addEventListener('click', (event) => {
             if (this.isAuth) {
