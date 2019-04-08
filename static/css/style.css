@@ -110,6 +110,21 @@ body {
         box-shadow: var(--small-shdw);
     }
 
+
+    .btn_inlined {
+        background: transparent;
+        border: 0.075em solid var(--blue-clr);
+        border-radius: 0.25em;
+        align-items: center;
+        margin: 1vh 1vw;
+        padding: 1vh 1vw;
+    }
+
+    .btn_inlined:hover {
+        border: 0.075em solid var(--blue-clr);
+        box-shadow: var(--small-shdw);
+    }
+
     .btn_back-menu {
         display: inline-flex;
         font-size: 3vh;
@@ -596,4 +611,19 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
+}
+.modal-btns {
+    display: flex;
+    flex-direction: row;
+    margin-top: 1vh;
+}
+
+.modal__btn {
+    font-size: 3vh;
+}
+
+.modal-window__header {
+    font-size: 4vh;
+    text-align: center;
+    width: 10em;
 }
