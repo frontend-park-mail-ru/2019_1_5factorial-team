@@ -255,7 +255,7 @@ body {
                 outline: none;
             }
         .content-block-unit_profile {
-            flex-direction: column;
+            flex-direction: row;
             font-size: 3vh;
             text-align: left;
         }
@@ -346,9 +346,10 @@ body {
 .form_change-password {
     font-size: 2.5vh;
     flex-direction: row;
+    align-content: center;
     justify-content: center;
-    margin-top: 1vh;
-    flex-wrap: nowrap;
+    margin: 2vh 0 4vh 0;
+    white-space: nowrap;
 }
     .form__input {
         border: none;
@@ -637,9 +638,17 @@ body {
     text-align: center;
 }
 
+.modal-window__input-rows {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 1vh 0;
+    width: 100%;
+}
+
 .btn_change-password {
     border-bottom: 0.1em dotted;
-    margin: 0 0 0.5vh 0.5em;
+    margin: 0 0 0 0.25em;
     font-size: 2.5vh;
 }
 .btn_change-password:hover {
@@ -653,4 +662,5 @@ body {
 .text-change-password {
     display: flex;
     flex-wrap: nowrap;
+    white-space: nowrap;
 }
