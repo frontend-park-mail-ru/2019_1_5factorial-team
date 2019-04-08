@@ -615,15 +615,15 @@ body {
 .modal-btns {
     display: flex;
     flex-direction: row;
-    margin-top: 1vh;
 }
 
 .modal__btn {
+    margin-top: 3vh;
     font-size: 3vh;
 }
 
 .modal-window__header {
     font-size: 4vh;
     text-align: center;
-    width: 10em;
+    /*width: 10em;*/
 }
