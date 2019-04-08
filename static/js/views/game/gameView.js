@@ -1,17 +1,21 @@
 import View from '../../libs/views.js';
+import gameScene from '../../components/game/gameScene.js';
 
 
 export default class gameView extends View {
     constructor({eventBus, numOfPlayers = 1} = {}) {
         super(null, eventBus);
+        this.canvas = document.getElementById('canvas');
         this.localEventBus.getEvent('gameOver', this.gameOver.bind(this));
+        this.render(this.canvas);
         this.numOfPlayers = numOfPlayers; //заглушка, надо перевести в нормальный вид
     }
 
     //TODO(): class City - игровое поле, на котором происходит рендер всего, что движется и прочее
-    render(root, data) {
-        this.data = data; //заглушка, рендерить будем с никами и прочим
-        this.root = root;
+    render(canvas) {
+        // this.data = data; //заглушка, рендерить будем с никами и прочим
+        // this.root = root;
+        this.scene = new gameScene(canvas);
         // this.city = new City();
         // this.city.render();
     }
