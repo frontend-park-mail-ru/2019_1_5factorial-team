@@ -24,12 +24,11 @@
                     <div class="change-btn-photo">
                         <label>
                             <input class="btn photo-btn js-change-image" type="file" title="avatar" accept=""/>
-                            <div class="btn btn_contained profile__btn js-change-image js-submit-avatar">Change Avatar</div>
+                            <div class="btn btn_contained profile__btn js-change-image js-submit-avatar">Change</div>
                         </label>
                     </div>
                 </form>
             </div>
-            <hr class="hr"/>
             <div class="content-block">
                 <div class="content-block-unit content-block-unit_profile content-block-unit_profile_line js-login-subblock">
                     <h2 class="text-title content-block-unit__title content-block-unit__title_row">Login:</h2>
@@ -49,11 +48,9 @@
                             <fest:value>params.user.score</fest:value>
                         </div>
                 </div>
-                <hr class="hr"/>
                 <div class="content-block-unit content-block-unit_profile">
                     <form class="form js-change-password js-new">
                         <button class="btn btn_contained form__btn form__btn_change-password js-call-submit" type="submit">Change password</button>
-                        <hr class="hr"/>
                     </form>
                 </div>
             </div>

@@ -216,7 +216,10 @@ body {
         flex-direction: column;
     }
         .content-block_avatar {
+            font-size: 1.75vh;
             align-items: center;
+            width: 10em;
+            margin-bottom: 2vh;
         }
         .content-block_actions {
             display: none;
@@ -258,7 +261,7 @@ body {
         }
             .content-block-unit_profile_line {
                 flex-direction: row;
-                font-size: 3.5vh;
+                font-size: 2.5vh;
                 margin: 0.5em 0 1vh 0;
             }
             .content-block-unit_profile__row {
@@ -461,7 +464,10 @@ body {
 
 /* PROFILE */
 .profile__btn {
-    font-size: 2vh;
+    border-radius: 0 0 1em 1em;
+    margin: 0;
+    text-align: center;
+    justify-content: center;
 }
     .profile__btn_action {
         justify-content: center;
@@ -563,19 +569,16 @@ body {
 }
 
 .avatar-img {
-    border-radius: 6em;
-    filter: drop-shadow(var(--common-shdw));
-    height: 8em;
-    width: 8em;
+    border-radius: 1em 1em 0 0;
+    height: 10em;
+    width: 10em;
 }
 
 .change-btn-photo input[type="file"] {
     display: none;
 }
 .change-btn-photo {
-    align-items: center;
-    font-size: 4vh;
-    justify-content: center;
+    width: 10em;
 }
 
 .change-btn-label {
@@ -625,5 +628,4 @@ body {
 .modal-window__header {
     font-size: 4vh;
     text-align: center;
-    /*width: 10em;*/
 }
