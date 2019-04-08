@@ -1,9 +1,8 @@
 export default class gameScene {
     constructor(canvas) {
         this.canvas = canvas;
+        console.log(this.canvas);
         this.ctx = this.canvas.getContext('2d');
-
-
     }
 
     render() {

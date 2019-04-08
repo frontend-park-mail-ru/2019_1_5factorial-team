@@ -18,13 +18,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const main = document.getElementsByClassName('main-container')[0];
     const router = new Router(page);
 
+    const gameCtrl = new gameController();
     const menuCntl = new menuController();
     const aboutCtrl = new aboutController();
     const loginCtrl = new loginController(router);
     const signUpCtrl = new signUpController({router});
     const leaderboardCtrl = new leaderboardController();
     const profileCtrl = new profileController({router});
-    const gameCtrl = new gameController();
 
     router.add('/about', main, aboutCtrl.aboutView);
     router.add('/login', main, loginCtrl.loginView);
@@ -39,5 +39,5 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function createPage(page) {
-    page.innerHTML = '<main class="main-container"></main>';
+    page.innerHTML = '<main class="main-container"></canvas></main>';
 }
