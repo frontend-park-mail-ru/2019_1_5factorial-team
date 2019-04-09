@@ -1,12 +1,15 @@
-import View from '../../libs/views.js';
+import Game from '../../components/game/game.js';
 import gameScene from '../../components/game/gameScene.js';
 import template from './gameView.tmpl.xml';
+import View from '../../libs/views.js';
 
 
 export default class gameView extends View {
-    constructor({eventBus = {}} = {}, ghosts = {}) {
+    constructor({eventBus = {}} = {}, mode,  ghosts = {}) {
         super(template, eventBus);
+        this.mode = mode;
         this.ghosts = ghosts;
+        this.canvas = null;
         this.render(document.getElementsByClassName('body-cnt')[0]);
         // this.localEventBus.getEvent('gameOver', this.gameOver.bind(this));
         // this.numOfPlayers = numOfPlayers; //заглушка, надо перевести в нормальный вид
@@ -15,8 +18,14 @@ export default class gameView extends View {
     render(root, data = {}) {
         super.render(root, data);
         this.canvas = document.getElementsByClassName('temp_class_canvas')[0];
-        console.log('gameView', this.canvas);
-        this.renderScene(this.canvas);
+        this.ctx = this.canvas.getContext('2d');
+        this.startGame(this.mode);
+    }
+
+    startGame(mode) {
+        // check game mode
+        this.game = new Game(mode, this.canvas);
+        this.game.startGame();
     }
 
     renderScene(canvas) {

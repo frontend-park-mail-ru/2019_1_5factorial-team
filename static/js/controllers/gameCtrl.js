@@ -14,10 +14,12 @@ const ghosts = {
     }
 };
 
+const mode = 'offline';
+
 export default class gameController {
     constructor() {
         const eventBus = new EventBus(eventList);
-        this.gameView = new gameView({ eventBus }, ghosts);
+        this.gameView = new gameView({ eventBus }, mode, ghosts);
         this.gameModel = new gameModel(eventBus, ghosts);
     }
 }
