@@ -24,15 +24,19 @@ export default class gameScene {
     initPlayer(player) {
         const ctx = this.ctx;
         const offsetByY = this.canvas.height / 40;
-        const heroWidth = this.canvas.width / 10;
-        const heroHeight = this.canvas.width / 10;
+
+        const heroX = this.canvas.width / 2;
+        const heroY = this.canvas.height - offsetByY;
+
         console.log('initPlayer');
-        
-        ctx.fillStyle = 'red';
+
+        let heroImg = new Image();
+        heroImg.onload = function() {
+            ctx.drawImage(heroImg, heroX - heroImg.width / 2, heroY - heroImg.height);
+        };
+        heroImg.src = '../../../img/game/hero.png';
+
         this.player = player;
-        // ctx.fillStyle = player.sprite;
-        ctx.fillRect((this.canvas.width - heroWidth) / 2, this.canvas.height - heroHeight - offsetByY,
-            heroWidth, heroHeight);
     }
 
     initGhosts(ghosts) {
@@ -40,7 +44,7 @@ export default class gameScene {
         const offsetByY = this.canvas.height / 40;
         const ghostWidth = this.canvas.width / 10;
         const ghostHeight = this.canvas.width / 10;
-        
+
         ctx.fillStyle = ghosts.first.color;
         ctx.fillRect((this.canvas.width - ghostWidth) / 16, this.canvas.height - ghostHeight - offsetByY, ghostWidth, ghostHeight);
 
