@@ -1,12 +1,11 @@
 export default class GameCore {
     constructor(scene) {
         this.scene = scene;
-
     }
 
     start() {
         this.gameInterval = setInterval(function() {
-            console.log('try');
+            // console.log('try');
         }, 50);
     }
 

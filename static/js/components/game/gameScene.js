@@ -8,6 +8,7 @@ export default class gameScene {
 
         console.log(this.canvas);
         this.ctx = this.canvas.getContext('2d');
+        this.renderScene = this.renderScene.bind(this);
     }
 
     renderScene(now) {
@@ -15,6 +16,7 @@ export default class gameScene {
         const scene = this.scene;
         // const delay = now - this.lastFrameTime;
         this.lastFrameTime = now;
+        console.log('got inside');
         // debugger;
         const ghostsInside = this.state.ghostsInside.map(() => {
             const offsetByY = this.canvas.height / 40;
@@ -35,6 +37,7 @@ export default class gameScene {
     }
 
     start() {
+        console.log('got inside start');
         this.lastFrameTime = performance.now();
         this.requestFrameId = requestAnimationFrame(this.renderScene);
     }
