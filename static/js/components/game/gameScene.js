@@ -3,7 +3,7 @@ export default class gameScene {
         this.canvas = canvas;
         this.ghosts = ghosts;
         this.state = null;
-        this.bindedResizer = this.resizer.bind(this);
+        this.bindedResizer = this.resizer.bind(this); // TODO(): переехать на шину событий, хезе как
 
         window.addEventListener('resize', this.bindedResizer);
         this.resizer();
