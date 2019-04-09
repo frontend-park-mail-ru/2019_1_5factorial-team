@@ -17,8 +17,6 @@ export default class gameScene {
         console.log('got inside gs');
         this.initGhosts(this.ghosts);
         this.initPlayer(this.player);
-
-        this.requestFrameId = requestAnimationFrame(this.renderScene);
     }
 
     initPlayer(player) {
@@ -32,6 +30,7 @@ export default class gameScene {
 
         let heroImg = new Image();
         heroImg.onload = function() {
+            ctx.beginPath();
             ctx.drawImage(heroImg, heroX - heroImg.width / 2, heroY - heroImg.height);
         };
         heroImg.src = '../../../img/game/hero.png';
@@ -42,14 +41,24 @@ export default class gameScene {
     initGhosts(ghosts) {
         const ctx = this.ctx;
         const offsetByY = this.canvas.height / 40;
-        const ghostWidth = this.canvas.width / 10;
-        const ghostHeight = this.canvas.width / 10;
+        const ghostX = this.canvas.width / 16;
+        const ghostY = this.canvas.height - offsetByY;
 
-        ctx.fillStyle = ghosts.first.color;
-        ctx.fillRect((this.canvas.width - ghostWidth) / 16, this.canvas.height - ghostHeight - offsetByY, ghostWidth, ghostHeight);
+        let ghostLeftImg = new Image();
+        ghostLeftImg.onload = function() {
+            ghosts.first.img = ghostLeftImg;
+            ctx.beginPath();
+            ctx.drawImage(ghostLeftImg, ghostX - ghostLeftImg.width / 16, ghostY - ghostLeftImg.height);
+        };
+        ghostLeftImg.src = '../../../img/game/ghost_l.png';
 
-        ctx.fillStyle = ghosts.second.color;
-        ctx.fillRect((this.canvas.width - ghostWidth) * 15 / 16, this.canvas.height - ghostHeight - offsetByY, ghostWidth, ghostHeight);
+        let ghostRightImg = new Image();
+        ghostRightImg.onload = function() {
+            ghosts.second.img = ghostRightImg;
+            ctx.beginPath();
+            ctx.drawImage(ghostRightImg, (ghostX - ghostRightImg.width / 16) * 15, ghostY - ghostRightImg.height);
+        };
+        ghostRightImg.src = '../../../img/game/ghost_r.png';
     }
 
     start() {
