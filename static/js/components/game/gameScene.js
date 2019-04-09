@@ -1,7 +1,8 @@
 export default class gameScene {
-    constructor(canvas) {
+    constructor(canvas, ghosts = {}) {
         this.canvas = canvas;
 
+        this.ghosts = ghosts;
         this.bindedResizer = this.resizer.bind(this);
         window.addEventListener('resize', this.bindedResizer);
         this.resizer();
@@ -11,6 +12,7 @@ export default class gameScene {
     }
 
     render() {
+        console.log('rendering gameScene');
         const ctx = this.ctx;
         ctx.fillStyle = 'transparent';
         ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
@@ -27,11 +29,11 @@ export default class gameScene {
         const ghostWidth = this.canvas.width / 10;
         const ghostHeight = this.canvas.width / 10;
 
-        ctx.fillStyle = 'yellow';
+        ctx.fillStyle = this.ghosts.first.color;
         ctx.fillRect((this.canvas.width - ghostWidth) / 16, this.canvas.height - ghostHeight - offsetByY,
             ghostWidth, ghostHeight);
 
-        ctx.fillStyle = 'blue';
+        ctx.fillStyle = this.ghosts.second.color;
         ctx.fillRect((this.canvas.width - ghostWidth) * 15 / 16, this.canvas.height - ghostHeight - offsetByY,
             ghostWidth, ghostHeight);
 

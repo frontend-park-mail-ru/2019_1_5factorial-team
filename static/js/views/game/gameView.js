@@ -4,8 +4,9 @@ import template from './gameView.tmpl.xml';
 
 
 export default class gameView extends View {
-    constructor({eventBus = {}} = {}) {
+    constructor({eventBus = {}} = {}, ghosts = {}) {
         super(template, eventBus);
+        this.ghosts = ghosts;
         this.render(document.getElementsByClassName('body-cnt')[0]);
         // this.localEventBus.getEvent('gameOver', this.gameOver.bind(this));
         // this.numOfPlayers = numOfPlayers; //заглушка, надо перевести в нормальный вид
@@ -19,7 +20,7 @@ export default class gameView extends View {
     }
 
     renderScene(canvas) {
-        this.scene = new gameScene(canvas);
+        this.scene = new gameScene(canvas, this.ghosts);
         this.scene.render();
     }
 
