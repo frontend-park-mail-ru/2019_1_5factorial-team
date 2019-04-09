@@ -2,11 +2,12 @@ import GameCore from './gameCore.js';
 // const Ws = require('Ws');    
 // const ws = new Ws();
 
-export default class onlineGame extends GameCore {
+export default class offlineGame extends GameCore {
     start() {
         super.start();
-        console.log('inside got');
+        console.log('inside got off');
         // ws.send('start-game', null);
+        this.scene.start();
     }
 
     // onControllsPressed(evt) {

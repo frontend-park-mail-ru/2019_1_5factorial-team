@@ -24,7 +24,7 @@ export default class gameView extends View {
 
     startGame(mode) {
         // check game mode
-        this.game = new Game(mode, this.canvas);
+        this.game = new Game(mode, this.canvas, this.ghosts);
         this.game.startGame();
     }
 
