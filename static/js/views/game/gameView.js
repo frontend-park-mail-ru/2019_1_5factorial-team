@@ -1,6 +1,5 @@
 import View from '../../libs/views.js';
 
-
 export default class gameView extends View {
     constructor({eventBus, numOfPlayers = 1} = {}) {
         super(null, eventBus);
