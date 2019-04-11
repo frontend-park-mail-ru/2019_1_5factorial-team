@@ -9,6 +9,8 @@ export default class GameScene {
         window.addEventListener('resize', this.bindedResizer);
         this.resizer();
 
+        this.requestID = null;
+
         this.renderLoop();
     }
 
@@ -21,6 +23,9 @@ export default class GameScene {
     }
 
     destroy() {
+        if (this.requestID) {
+            cancelAnimationFrame(this.requestID);
+        }
         window.removeEventListener('resize', this.bindedResizer);
     }
 
