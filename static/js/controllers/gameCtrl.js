@@ -6,13 +6,13 @@ import { EVENT_LIST_GAME } from '../components/constants.js';
 const eventList = EVENT_LIST_GAME;
 
 // пока что
-// const mode = 'offline';
+const mode = 'offline';
 
 export default class gameController {
     constructor() {
         const eventBus = new EventBus(eventList);
 
         this.gameView = new gameView({ eventBus });
-        this.gameModel = new gameModel(eventBus);
+        this.gameModel = new gameModel(eventBus, mode);
     }
 }

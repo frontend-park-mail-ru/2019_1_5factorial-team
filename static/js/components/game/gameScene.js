@@ -1,8 +1,10 @@
 export default class GameScene {
     constructor() {
-        console.log('GameScene called');
+        this.buttonsPressed = [];
 
         this.canvas = document.getElementsByClassName('temp_class_canvas')[0];
+        window.addEventListener('keydown', this.buttonsHandler);
+
         this.ctx = this.canvas.getContext('2d');
 
         this.bindedResizer = this.resizer.bind(this); // TODO(): переехать на шину событий, хезе как
@@ -12,6 +14,30 @@ export default class GameScene {
         this.requestID = null;
 
         this.renderLoop();
+    }
+
+    buttonsHandler(e) {
+        switch (e.keyCode) {
+            case 37:  // если нажата клавиша влево
+                // this.buttonsPressed.push('left');
+                console.log('left');
+                break;
+            case 38:   // если нажата клавиша вверх
+                // this.buttonsPressed.push('up');
+                console.log('up');
+                break;
+            case 39:   // если нажата клавиша вправо
+                // this.buttonsPressed.push('right');
+                console.log('right');
+                break;
+            case 40:   // если нажата клавиша вниз
+                // this.buttonsPressed.push('down');
+                console.log('down');
+                break;
+            default:
+                console.log('unknown');
+                break;
+        }
     }
 
     resizer() {
@@ -37,7 +63,7 @@ export default class GameScene {
     renderScene() {
         const ctx = this.ctx;
 
-        console.log('render scene called');
+        // console.log('render scene called');
 
         // смещение по Y - расстояние от нижнего края экрана
         const offsetByY = this.canvas.height / 40;
@@ -69,5 +95,13 @@ export default class GameScene {
             // console.log('ghost_r img drawn: ' + '(' + ghostRightImg.x + ', ' + ghostRightImg.y + '), W: ' +  ghostRightImg.width + ' H: ' + ghostRightImg.height);
         };
         ghostRightImg.src = '../../../img/game/ghost_r.png';
+
+        this.buttonsPressed.forEach(function(item) {
+            console.log('item drown: ' + item);
+            ctx.fillStyle = '#00F';
+            ctx.strokeStyle = '#F00';
+            ctx.font = 'italic 30pt Arial';
+            ctx.fillText(item, 20, 50);
+        });
     }
 }

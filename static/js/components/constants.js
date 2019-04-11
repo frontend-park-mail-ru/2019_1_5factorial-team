@@ -76,7 +76,8 @@ export const EVENT_LIST_SIGNUP = [
 export const EVENT_LIST_GAME = [
     'gameOver',
     'startGame',
-    'newState'
+    'newState',
+    'newCommand'
 ];
 
 export const NETWORK_ADRESS = 'http://78.155.207.69:5051';
