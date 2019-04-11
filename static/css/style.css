@@ -8,8 +8,14 @@
     --bg-black-clr: rgba(15, 15, 20, .95);
     --blue-clr: rgb(72,108,144);
     --light-blue-clr: rgb(144,180,216);
-    --invalid-red-clr: indianred;
-    --valid-green-clr: lightgreen;
+
+    /*--invalid-red-clr: indianred;*/
+    /*--valid-green-clr: lightgreen;*/
+
+    /* заглушка for interface test */
+    --invalid-red-clr: rgb(144,180,216);
+    --valid-green-clr: rgb(144,180,216);
+
     /* shadows */
     --common-shdw: 0 0 1em var(--light-blue-clr);
     --small-shdw: 0 0 0.5em var(--light-blue-clr);
