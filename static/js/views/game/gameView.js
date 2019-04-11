@@ -1,40 +1,30 @@
-import Game from '../../components/game/game.js';
-import gameScene from '../../components/game/gameScene.js';
 import template from './gameView.tmpl.xml';
 import View from '../../libs/views.js';
+import GameScene from '../../components/game/gameScene';
 
 
 export default class gameView extends View {
-    constructor({eventBus = {}} = {}, mode,  ghosts = {}) {
+    constructor({eventBus = {}} = {}) {
         super(template, eventBus);
-        this.mode = mode;
-        this.ghosts = ghosts;
-        this.canvas = null;
+
         this.render(document.getElementsByClassName('body-cnt')[0]);
-        // this.localEventBus.getEvent('gameOver', this.gameOver.bind(this));
-        // this.numOfPlayers = numOfPlayers; //заглушка, надо перевести в нормальный вид
-    }
 
-    render(root, data = {}) {
-        super.render(root, data);
+        // this.mode = mode;
         this.canvas = document.getElementsByClassName('temp_class_canvas')[0];
-        this.ctx = this.canvas.getContext('2d');
-        this.startGame(this.mode);
+        console.log('canvas: ' + this.canvas);
+
+        this.scene = new GameScene(this.canvas);
+
+
+        this.startRenderLoop();
     }
 
-    startGame(mode) {
-        // check game mode
-        this.game = new Game(mode, this.canvas, this.ghosts);
-        this.game.startGame();
+    startRenderLoop() {
+        this.requestID = requestAnimationFrame(this.renderLoop);
     }
 
-    renderScene(canvas) {
-        this.scene = new gameScene(canvas, this.ghosts);
-        this.scene.render();
-    }
-
-    //TODO(): Notificate players in game (Modal or not)
-    gameOver({winner, looser}) {
-        console.log(looser, 'lost! Gratz to', winner);        
+    renderLoop() {
+        this.scene.renderScene();
+        this.requestID = requestAnimationFrame(this.renderLoop);
     }
 }
