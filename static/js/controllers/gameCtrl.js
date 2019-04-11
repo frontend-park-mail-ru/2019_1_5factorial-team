@@ -13,6 +13,6 @@ export default class gameController {
         const eventBus = new EventBus(eventList);
 
         this.gameView = new gameView({ eventBus });
-        // this.gameModel = new gameModel(eventBus);
+        this.gameModel = new gameModel(eventBus);
     }
 }
