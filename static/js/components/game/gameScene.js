@@ -7,8 +7,6 @@ export default class GameScene {
 
         this.bindedButtonsHandler = this.buttonsHandler.bind(this);
         window.addEventListener('keydown', this.bindedButtonsHandler);
-        // this.buttonsHandler();
-        // window.addEventListener('keyup', this.buttonsHandler);
 
         this.bindedResizer = this.resizer.bind(this); // TODO(): переехать на шину событий, хезе как
         window.addEventListener('resize', this.bindedResizer);
@@ -20,73 +18,51 @@ export default class GameScene {
     }
 
     buttonsHandler(e) {
-        const buttonImgX = this.canvas.width / 2;
-        const buttonImgY = 0;
+        const dirNameX = this.canvas.width / 2;
+        const dirNameY = this.canvas.height / 4;
 
-        let buttonImgLeft = new Image();
-        buttonImgLeft.src = '../../../img/game/left.png';
+        this.ctx.font = '30pt Comfortaa-Regular';
+        /*
+         * TODO: настроить загрузку шрифта
+         * пока что при первом нажатии вывод надписи проходит в дефолтном шрифте :(
+        */
 
-        let buttonImgUp = new Image();
-        buttonImgUp.src = '../../../img/game/up.png';
+        this.ctx.fillStyle = 'white';
 
-        let buttonImgRight = new Image();
-        buttonImgRight.src = '../../../img/game/right.png';
+        let left = this.ctx.measureText('left');
+        let up = this.ctx.measureText('up');
+        let right = this.ctx.measureText('right');
+        let down = this.ctx.measureText('down');
 
-        let buttonImgDown = new Image();
-        buttonImgDown.src = '../../../img/game/down.png';
+        // очистка по ширине самого длинного прямоугольника - с
+        this.ctx.clearRect(dirNameX - down.width / 2, dirNameY - 50, 200, 100);
 
         switch (e.keyCode) {
             case 37:  // если нажата клавиша влево
                 this.buttonsPressed.push('left');
-
-                // this.ctx.clearRect(buttonImgX, buttonImgY, buttonImgLeft.width, buttonImgLeft.height);
-
-                // buttonImg.onload = function() {
-                this.ctx.drawImage(buttonImgLeft, 0, 0, buttonImgLeft.width, buttonImgLeft.height);
-                // };
-                // buttonImg.src = '../../../img/game/left.png';
-
-
-                // this.ctx.fillStyle = '#00F';
-                // this.ctx.strokeStyle = '#F00';
-                // this.ctx.font = '30pt Comfortaa-Regular';
-                // this.ctx.fillText('left', this.canvas.width  / 2, this.canvas.height / 2);
+                
+                this.ctx.fillText('left', dirNameX - left.width / 2, dirNameY, 200, 100);
 
                 console.log('left');
                 break;
             case 38:   // если нажата клавиша вверх
                 this.buttonsPressed.push('up');
 
-                // this.ctx.clearRect(buttonImgX, buttonImgY, buttonImgUp.width, buttonImgUp.height);
-
-                // buttonImg.onload = function() {
-                this.ctx.drawImage(buttonImgUp, buttonImgX - buttonImgUp.width / 2, buttonImgY);
-                // };
-                // buttonImg.src = '../../../img/game/up.png';
+                this.ctx.fillText('up', dirNameX - up.width / 2, dirNameY, 200, 100);
 
                 console.log('up');
                 break;
             case 39:   // если нажата клавиша вправо
                 this.buttonsPressed.push('right');
 
-                // this.ctx.clearRect(buttonImgX, buttonImgY, buttonImgRight.width, buttonImgRight.height);
-
-                // buttonImg.onload = function() {
-                this.ctx.drawImage(buttonImgRight, buttonImgX - buttonImgRight.width / 2, buttonImgY);
-                // };
-                // buttonImg.src = '../../../img/game/right.png';
+                this.ctx.fillText('right', dirNameX - right.width / 2, dirNameY, 200, 100);
 
                 console.log('right');
                 break;
             case 40:   // если нажата клавиша вниз
                 this.buttonsPressed.push('down');
 
-                // this.ctx.clearRect(buttonImgX, buttonImgY, buttonImgDown.width, buttonImgDown.height);
-
-                // buttonImg.onload = function() {
-                this.ctx.drawImage(buttonImgDown, buttonImgX - buttonImgDown.width / 2, buttonImgY);
-                // };
-                // buttonImg.src = '../../../img/game/down.png';
+                this.ctx.fillText('down', dirNameX - down.width / 2, dirNameY, 200, 100);
 
                 console.log('down');
                 break;
@@ -99,6 +75,8 @@ export default class GameScene {
     resizer() {
         this.canvas.height = window.innerHeight;
         this.canvas.width = window.innerWidth;
+
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         // console.log('resized H: ' + this.canvas.height);
         // console.log('resized W: ' + this.canvas.width);
