@@ -3,9 +3,12 @@ export default class GameScene {
         this.buttonsPressed = [];
 
         this.canvas = document.getElementsByClassName('temp_class_canvas')[0];
-        window.addEventListener('keydown', this.buttonsHandler);
-
         this.ctx = this.canvas.getContext('2d');
+
+        this.bindedButtonsHandler = this.buttonsHandler.bind(this);
+        window.addEventListener('keydown', this.bindedButtonsHandler);
+        // this.buttonsHandler();
+        // window.addEventListener('keyup', this.buttonsHandler);
 
         this.bindedResizer = this.resizer.bind(this); // TODO(): переехать на шину событий, хезе как
         window.addEventListener('resize', this.bindedResizer);
@@ -17,21 +20,74 @@ export default class GameScene {
     }
 
     buttonsHandler(e) {
+        const buttonImgX = this.canvas.width / 2;
+        const buttonImgY = 0;
+
+        let buttonImgLeft = new Image();
+        buttonImgLeft.src = '../../../img/game/left.png';
+
+        let buttonImgUp = new Image();
+        buttonImgUp.src = '../../../img/game/up.png';
+
+        let buttonImgRight = new Image();
+        buttonImgRight.src = '../../../img/game/right.png';
+
+        let buttonImgDown = new Image();
+        buttonImgDown.src = '../../../img/game/down.png';
+
         switch (e.keyCode) {
             case 37:  // если нажата клавиша влево
-                // this.buttonsPressed.push('left');
+                this.buttonsPressed.push('left');
+
+                // this.ctx.clearRect(buttonImgX, buttonImgY, buttonImgLeft.width, buttonImgLeft.height);
+
+                // buttonImg.onload = function() {
+                this.ctx.drawImage(buttonImgLeft, 0, 0, buttonImgLeft.width, buttonImgLeft.height);
+                // };
+                // buttonImg.src = '../../../img/game/left.png';
+
+
+                // this.ctx.fillStyle = '#00F';
+                // this.ctx.strokeStyle = '#F00';
+                // this.ctx.font = '30pt Comfortaa-Regular';
+                // this.ctx.fillText('left', this.canvas.width  / 2, this.canvas.height / 2);
+
                 console.log('left');
                 break;
             case 38:   // если нажата клавиша вверх
-                // this.buttonsPressed.push('up');
+                this.buttonsPressed.push('up');
+
+                // this.ctx.clearRect(buttonImgX, buttonImgY, buttonImgUp.width, buttonImgUp.height);
+
+                // buttonImg.onload = function() {
+                this.ctx.drawImage(buttonImgUp, buttonImgX - buttonImgUp.width / 2, buttonImgY);
+                // };
+                // buttonImg.src = '../../../img/game/up.png';
+
                 console.log('up');
                 break;
             case 39:   // если нажата клавиша вправо
-                // this.buttonsPressed.push('right');
+                this.buttonsPressed.push('right');
+
+                // this.ctx.clearRect(buttonImgX, buttonImgY, buttonImgRight.width, buttonImgRight.height);
+
+                // buttonImg.onload = function() {
+                this.ctx.drawImage(buttonImgRight, buttonImgX - buttonImgRight.width / 2, buttonImgY);
+                // };
+                // buttonImg.src = '../../../img/game/right.png';
+
                 console.log('right');
                 break;
             case 40:   // если нажата клавиша вниз
-                // this.buttonsPressed.push('down');
+                this.buttonsPressed.push('down');
+
+                // this.ctx.clearRect(buttonImgX, buttonImgY, buttonImgDown.width, buttonImgDown.height);
+
+                // buttonImg.onload = function() {
+                this.ctx.drawImage(buttonImgDown, buttonImgX - buttonImgDown.width / 2, buttonImgY);
+                // };
+                // buttonImg.src = '../../../img/game/down.png';
+
                 console.log('down');
                 break;
             default:
@@ -96,12 +152,9 @@ export default class GameScene {
         };
         ghostRightImg.src = '../../../img/game/ghost_r.png';
 
-        this.buttonsPressed.forEach(function(item) {
-            console.log('item drown: ' + item);
-            ctx.fillStyle = '#00F';
-            ctx.strokeStyle = '#F00';
-            ctx.font = 'italic 30pt Arial';
-            ctx.fillText(item, 20, 50);
-        });
+        // this.buttonsPressed.forEach(function(item) {
+        //     console.log('item drown: ' + item);
+
+        // });
     }
 }
