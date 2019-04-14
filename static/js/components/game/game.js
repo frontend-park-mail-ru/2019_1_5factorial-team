@@ -137,6 +137,7 @@ export default class Game {
             // сносим символ
             if (this.lastButtonPressed === this.state.ghosts[i].symbols[0]) {
                 this.state.ghosts[i].symbols = this.state.ghosts[i].symbols.slice(1, this.state.ghosts[i].symbols.length + 1);
+                this.lastButtonPressed = '';
             }
 
             // убили
@@ -144,7 +145,7 @@ export default class Game {
                 if (this.state.ghosts[i].speed > 0) {
                     this.ctx.clearRect(0, 0, this.canvas.width / 2 - this.state.player.sprite.width / 2, this.canvas.height);
                 } else if (this.state.ghosts[i].speed < 0) {
-                    this.ctx.clearRect(this.canvas.width / 2 + this.state.player.sprite.width / 2 - 5, 0, this.canvas.width / 2, this.canvas.height);
+                    this.ctx.clearRect(this.canvas.width / 2 + this.state.player.sprite.width / 2 - 6, 0, this.canvas.width / 2, this.canvas.height);
                 }
                 this.state.ghosts.splice(i, 1);
             }
