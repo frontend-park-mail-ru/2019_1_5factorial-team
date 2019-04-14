@@ -24,7 +24,7 @@ export default class Game {
         this.playerImg = document.getElementById('player-sprite');
         this.ghostLeftImg = document.getElementById('ghost-left-sprite');
         this.ghostRightImg = document.getElementById('ghost-right-sprite');
-        // let heartImg = document.getElementById('heart-sprite');
+        this.heartImg = document.getElementById('heart-sprite');
 
         // состояние игры
         this.state = {
@@ -40,15 +40,6 @@ export default class Game {
             gameTime: 0,
             isGameOver: false
         };
-
-        // const leftGhost = {
-        //     x: this.ghostLeftImg.width / 2,
-        //     speed: GHOST_SPEED,
-        //     damage: 1,
-        //     sprite: this.ghostLeftImg,
-        //     symbols: ['L', 'R', 'D']
-        // };
-        // this.state.ghosts.push(leftGhost);
 
         this.lastTime = Date.now();
 
@@ -143,9 +134,9 @@ export default class Game {
             // убили
             if (this.state.ghosts[i].symbols.length === 0) {
                 if (this.state.ghosts[i].speed > 0) {
-                    this.ctx.clearRect(0, 0, this.canvas.width / 2 - this.state.player.sprite.width / 2, this.canvas.height);
+                    this.ctx.clearRect(0, this.canvas.height / 2, this.canvas.width / 2 - this.state.player.sprite.width / 2, this.canvas.height / 2);
                 } else if (this.state.ghosts[i].speed < 0) {
-                    this.ctx.clearRect(this.canvas.width / 2 + this.state.player.sprite.width / 2 - 6, 0, this.canvas.width / 2, this.canvas.height);
+                    this.ctx.clearRect(this.canvas.width / 2 + this.state.player.sprite.width / 2 - 6, this.canvas.height / 2, this.canvas.width / 2, this.canvas.height / 2);
                 }
                 this.state.ghosts.splice(i, 1);
             }
@@ -198,13 +189,14 @@ export default class Game {
         const offsetByY = this.canvas.height / 40;  // смещение по Y - расстояние от нижнего края экрана
 
         // жизни-сердечки, TODO: сделать, чтоб заработало
-        // let livesOffset = 0;
-        //
-        // for (let i = this.state.player.hp / 100; i > 0; i--) {
-        //     this.ctx.drawImage(heartImg, livesOffset, 0, heartImg.width, heartImg.height);
-        //     livesOffset += heartImg.width;
-        //     console.log('lives offset: ' + livesOffset);
-        // }
+        let heartsBetweenOffset = this.heartImg.width / 2;
+        let heartOffset = 0;
+        let heartsUpperOffset = this.canvas.height / 80;
+
+        for (let i = this.state.player.hp / 100; i > 0; i--) {
+            this.ctx.drawImage(this.heartImg, heartsBetweenOffset + heartOffset, heartsUpperOffset, this.heartImg.width, this.heartImg.height);
+            heartOffset += this.heartImg.width;
+        }
 
         // игрок
         const playerX = this.canvas.width / 2;
@@ -221,12 +213,12 @@ export default class Game {
 
         for (let i = 0; i < this.state.ghosts.length; i++) {
             if (this.state.ghosts[i].speed > 0) {
-                this.ctx.clearRect(0, 0, this.canvas.width / 2 - this.state.player.sprite.width / 2, this.canvas.height);
+                this.ctx.clearRect(0, this.canvas.height / 2, this.canvas.width / 2 - this.state.player.sprite.width / 2, this.canvas.height / 2);
                 this.ctx.drawImage(this.state.ghosts[i].sprite, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width * 3 / 2, ghostY - this.state.ghosts[i].sprite.height);
                 symbolsToShow = this.state.ghosts[i].symbols.join(' ');
                 this.ctx.fillText(symbolsToShow, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width - this.ctx.measureText(this.state.ghosts[i].symbols).width / 2, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
             } else if (this.state.ghosts[i].speed < 0) {
-                this.ctx.clearRect(this.canvas.width / 2 + this.state.player.sprite.width / 2 - 5, 0, this.canvas.width / 2, this.canvas.height);
+                this.ctx.clearRect(this.canvas.width / 2 + this.state.player.sprite.width / 2 - 5, this.canvas.height / 2, this.canvas.width / 2, this.canvas.height / 2);
                 this.ctx.drawImage(this.state.ghosts[i].sprite, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width / 2, ghostY - this.state.ghosts[i].sprite.height);
                 symbolsToShow = this.state.ghosts[i].symbols.join(' ');
                 this.ctx.fillText(symbolsToShow, this.state.ghosts[i].x - this.ctx.measureText(this.state.ghosts[i].symbols).width / 2, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
