@@ -22,16 +22,16 @@ export default class Game {
         this.requestID = null;
 
         // достаем спрайты, TODO: придумать, как работать со спрайтами
-        let playerImg = document.getElementById('player-sprite');
+        this.playerImg = document.getElementById('player-sprite');
         this.ghostLeftImg = document.getElementById('ghost-left-sprite');
-        // let ghostRightImg = document.getElementById('ghost-right-sprite');
+        this.ghostRightImg = document.getElementById('ghost-right-sprite');
         // let heartImg = document.getElementById('heart-sprite');
 
         // состояние игры
         this.state = {
             player: {
-                sprite: playerImg,
-                x: (this.canvas.width -  playerImg.width) / 2,
+                sprite: this.playerImg,
+                x: (this.canvas.width -  this.playerImg.width) / 2,
                 hp: 300
             },
             ghosts: [],
@@ -90,33 +90,92 @@ export default class Game {
     update(dt) {
         this.state.gameTime += dt;
 
-        // один призрак - все работает супер-пупер (закомментить и раскомментить код ниже для теста)
-        if (this.state.gameTime === 0) {
-            console.log('game time: ' + this.state.gameTime);
+        // TODO: убрать this.state.ghosts.length === 0, придумать, как сделать больше одного призрака с каждой стороны экрана
+        if (Math.random() < 1 - Math.pow(.993, this.state.gameTime)) {
+            if (this.state.ghosts.length === 0) {  // если призраков нет
+                let generatedDirection = Math.floor(Math.random() * 2) === 0 ? 'left' : 'right';
 
-            this.state.ghosts.push({
-                x: this.ghostLeftImg.width / 2,
-                speed: GHOST_SPEED,
-                damage: GHOST_DAMAGE,
-                sprite: this.ghostLeftImg,
-                symbols: ['L', 'R', 'D']
-            });
+                const maxSymbolsLength = 2, minSymbolsLength = 6;
+                let generatedSymbolsLength = Math.floor(Math.random() * (maxSymbolsLength - minSymbolsLength + 1)) + minSymbolsLength;
+
+                let generatedSymbols = [];
+                for (let i = 0; i < generatedSymbolsLength; i++) {
+                    let generatedSymbolNumber = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
+                    switch (generatedSymbolNumber) {
+                        case 1:
+                            generatedSymbols.push('L');
+                            break;
+                        case 2:
+                            generatedSymbols.push('R');
+                            break;
+                        case 3:
+                            generatedSymbols.push('U');
+                            break;
+                        case 4:
+                            generatedSymbols.push('D');
+                            break;
+                    }
+                }
+
+                if (generatedDirection === 'left') {
+                    this.state.ghosts.push({
+                        x: this.ghostLeftImg.width / 2,
+                        speed: GHOST_SPEED,
+                        damage: GHOST_DAMAGE,
+                        sprite: this.ghostLeftImg,
+                        symbols: generatedSymbols
+                    });
+                } else if (generatedDirection === 'right') {
+                    this.state.ghosts.push({
+                        x: this.canvas.width + this.ghostLeftImg.width / 2,
+                        speed: -GHOST_SPEED,
+                        damage: GHOST_DAMAGE,
+                        sprite: this.ghostRightImg,
+                        symbols: generatedSymbols
+                    });
+                }
+            } else if (this.state.ghosts.length === 1) {
+                const maxSymbolsLength = 2, minSymbolsLength = 6;
+                let generatedSymbolsLength = Math.floor(Math.random() * (maxSymbolsLength - minSymbolsLength + 1)) + minSymbolsLength;
+
+                let generatedSymbols = [];
+                for (let i = 0; i < generatedSymbolsLength; i++) {
+                    let generatedSymbolNumber = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
+                    switch (generatedSymbolNumber) {
+                        case 1:
+                            generatedSymbols.push('L');
+                            break;
+                        case 2:
+                            generatedSymbols.push('R');
+                            break;
+                        case 3:
+                            generatedSymbols.push('U');
+                            break;
+                        case 4:
+                            generatedSymbols.push('D');
+                            break;
+                    }
+                }
+
+                if (this.state.ghosts[0].speed < 0) {  // если есть призрак справа
+                    this.state.ghosts.push({
+                        x: this.ghostLeftImg.width / 2,
+                        speed: GHOST_SPEED,
+                        damage: GHOST_DAMAGE,
+                        sprite: this.ghostLeftImg,
+                        symbols: generatedSymbols
+                    });
+                } else if (this.state.ghosts[0].speed > 0) {  // если есть призрак слева
+                    this.state.ghosts.push({
+                        x: this.canvas.width + this.ghostLeftImg.width / 2,
+                        speed: -GHOST_SPEED,
+                        damage: GHOST_DAMAGE,
+                        sprite: this.ghostRightImg,
+                        symbols: generatedSymbols
+                    });
+                }
+            }
         }
-
-        // раскомментить тут и еще закомментить в render() в цикле эту строку: this.ctx.clearRect(0, 0, this.canvas.width / 2 - playerImg.width / 2, this.canvas.height);
-        // в условии некое уравнение, по которому генерятся призраки - сперла из интернетов
-
-        // if (Math.random() < 1 - Math.pow(.993, this.state.gameTime)) {
-        //     console.log('game time: ' + this.state.gameTime);
-        //
-        //     this.state.ghosts.push({
-        //         x: this.ghostLeftImg.width / 2,
-        //         speed: GHOST_SPEED,
-        //         damage: GHOST_DAMAGE,
-        //         sprite: this.ghostLeftImg,
-        //         symbols: ['L', 'R', 'D']
-        //     });
-        // }
 
         //  убиваем призраков
         for (let i = 0; i < this.state.ghosts.length; i++) {
@@ -127,28 +186,48 @@ export default class Game {
 
             // убили
             if (this.state.ghosts[i].symbols.length === 0) {
+                if (this.state.ghosts[i].speed > 0) {
+                    this.ctx.clearRect(0, 0, this.canvas.width / 2 - this.state.player.sprite.width / 2, this.canvas.height);
+                } else if (this.state.ghosts[i].speed < 0) {
+                    this.ctx.clearRect(this.canvas.width / 2 + this.state.player.sprite.width / 2 - 5, 0, this.canvas.width / 2, this.canvas.height);
+                }
                 this.state.ghosts.splice(i, 1);
-                console.log('ghosts: ' + this.state.ghosts.length);
-                this.ctx.clearRect(0, 0, this.canvas.width / 2 - this.state.player.sprite.width / 2, this.canvas.height);
             }
 
             if (this.state.ghosts.length !== 0) {
-                if (this.state.ghosts[i].x < this.state.player.x) {
-                    this.state.ghosts[i].x += GHOST_SPEED * dt;
-                } else {
-                    if (this.state.player.hp === 300) {
-                        console.log('player hp: 3 / 3');
+                if (this.state.ghosts[i].speed > 0) {
+                    console.log('left border: ' + this.state.player.x );
+                    if (this.state.ghosts[i].x < this.state.player.x) {
+                        this.state.ghosts[i].x += this.state.ghosts[i].speed * dt;
+                    } else {
+                        if (this.state.player.hp === 300) {
+                            console.log('player hp: 3 / 3');
+                        }
+                        if (this.state.player.hp === 200) {
+                            console.log('player hp: 2 / 3');
+                        }
+                        if (this.state.player.hp === 100) {
+                            console.log('player hp: 1 / 3');
+                        }
+                        this.state.player.hp -= this.state.ghosts[i].damage;
                     }
-                    if (this.state.player.hp === 200) {
-                        console.log('player hp: 2 / 3');
+                } else if (this.state.ghosts[i].speed < 0) {
+                    console.log('right border: ' + (+this.state.player.x + +this.playerImg.width));
+                    if (this.state.ghosts[i].x > this.state.player.x + this.playerImg.width) {
+                        this.state.ghosts[i].x += this.state.ghosts[i].speed * dt;
+                    } else {
+                        if (this.state.player.hp === 300) {
+                            console.log('player hp: 3 / 3');
+                        }
+                        if (this.state.player.hp === 200) {
+                            console.log('player hp: 2 / 3');
+                        }
+                        if (this.state.player.hp === 100) {
+                            console.log('player hp: 1 / 3');
+                        }
+                        this.state.player.hp -= this.state.ghosts[i].damage;
                     }
-                    if (this.state.player.hp === 100) {
-                        console.log('player hp: 1 / 3');
-                    }
-                    this.state.player.hp -= this.state.ghosts[i].damage;
                 }
-            } else {
-                break;
             }
 
             if (this.state.player.hp === 0) {
@@ -180,15 +259,22 @@ export default class Game {
         const ghostY = this.canvas.height - offsetByY;
         const symbolsOffset = 30;  // расстояние между призраком и символами над его головой
 
+        this.ctx.font = '20pt Comfortaa-Regular';
+        this.ctx.fillStyle = 'white';
         let symbolsToShow = '';
 
         for (let i = 0; i < this.state.ghosts.length; i++) {
-            this.ctx.clearRect(0, 0, this.canvas.width / 2 - playerImg.width / 2, this.canvas.height);  // закомментить тут
-            this.ctx.drawImage(this.state.ghosts[i].sprite, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width * 3 / 2, ghostY - this.state.ghosts[i].sprite.height);
-            this.ctx.font = '20pt Comfortaa-Regular';
-            this.ctx.fillStyle = 'white';
-            symbolsToShow = this.state.ghosts[i].symbols.join();
-            this.ctx.fillText(symbolsToShow, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width - this.ctx.measureText(this.state.ghosts[i].symbols).width / 2, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
+            if (this.state.ghosts[i].speed > 0) {
+                this.ctx.clearRect(0, 0, this.canvas.width / 2 - playerImg.width / 2, this.canvas.height);
+                this.ctx.drawImage(this.state.ghosts[i].sprite, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width * 3 / 2, ghostY - this.state.ghosts[i].sprite.height);
+                symbolsToShow = this.state.ghosts[i].symbols.join(' ');
+                this.ctx.fillText(symbolsToShow, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width - this.ctx.measureText(this.state.ghosts[i].symbols).width / 2, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
+            } else if (this.state.ghosts[i].speed < 0) {
+                this.ctx.clearRect(this.canvas.width / 2 + playerImg.width / 2 - 5, 0, this.canvas.width / 2, this.canvas.height);
+                this.ctx.drawImage(this.state.ghosts[i].sprite, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width / 2, ghostY - this.state.ghosts[i].sprite.height);
+                symbolsToShow = this.state.ghosts[i].symbols.join(' ');
+                this.ctx.fillText(symbolsToShow, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width / 2 + this.ctx.measureText(this.state.ghosts[i].symbols).width, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
+            }
         }
     }
 
