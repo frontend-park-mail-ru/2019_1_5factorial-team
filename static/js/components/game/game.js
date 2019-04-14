@@ -1,7 +1,6 @@
 const GHOST_SPEED = 100;
 const GHOST_DAMAGE = 1;
 
-
 export default class Game {
     constructor() {
         this.canvas = document.getElementsByClassName('temp_class_canvas')[0];
@@ -95,29 +94,29 @@ export default class Game {
             if (this.state.ghosts.length === 0) {  // если призраков нет
                 let generatedDirection = Math.floor(Math.random() * 2) === 0 ? 'left' : 'right';
 
-                const maxSymbolsLength = 2, minSymbolsLength = 6;
-                let generatedSymbolsLength = Math.floor(Math.random() * (maxSymbolsLength - minSymbolsLength + 1)) + minSymbolsLength;
-
-                let generatedSymbols = [];
-                for (let i = 0; i < generatedSymbolsLength; i++) {
-                    let generatedSymbolNumber = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
-                    switch (generatedSymbolNumber) {
-                        case 1:
-                            generatedSymbols.push('L');
-                            break;
-                        case 2:
-                            generatedSymbols.push('R');
-                            break;
-                        case 3:
-                            generatedSymbols.push('U');
-                            break;
-                        case 4:
-                            generatedSymbols.push('D');
-                            break;
-                    }
-                }
-
                 if (generatedDirection === 'left') {
+                    const maxSymbolsLength = 2, minSymbolsLength = 6;
+                    let generatedSymbolsLength = Math.floor(Math.random() * (maxSymbolsLength - minSymbolsLength + 1)) + minSymbolsLength;
+
+                    let generatedSymbols = [];
+                    for (let i = 0; i < generatedSymbolsLength; i++) {
+                        let generatedSymbolNumber = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
+                        switch (generatedSymbolNumber) {
+                            case 1:
+                                generatedSymbols.push('L');
+                                break;
+                            case 2:
+                                generatedSymbols.push('R');
+                                break;
+                            case 3:
+                                generatedSymbols.push('U');
+                                break;
+                            case 4:
+                                generatedSymbols.push('D');
+                                break;
+                        }
+                    }
+
                     this.state.ghosts.push({
                         x: this.ghostLeftImg.width / 2,
                         speed: GHOST_SPEED,
@@ -126,6 +125,28 @@ export default class Game {
                         symbols: generatedSymbols
                     });
                 } else if (generatedDirection === 'right') {
+                    const maxSymbolsLength = 2, minSymbolsLength = 6;
+                    let generatedSymbolsLength = Math.floor(Math.random() * (maxSymbolsLength - minSymbolsLength + 1)) + minSymbolsLength;
+
+                    let generatedSymbols = [];
+                    for (let i = 0; i < generatedSymbolsLength; i++) {
+                        let generatedSymbolNumber = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
+                        switch (generatedSymbolNumber) {
+                            case 1:
+                                generatedSymbols.push('L');
+                                break;
+                            case 2:
+                                generatedSymbols.push('R');
+                                break;
+                            case 3:
+                                generatedSymbols.push('U');
+                                break;
+                            case 4:
+                                generatedSymbols.push('D');
+                                break;
+                        }
+                    }
+
                     this.state.ghosts.push({
                         x: this.canvas.width + this.ghostLeftImg.width / 2,
                         speed: -GHOST_SPEED,
@@ -193,10 +214,11 @@ export default class Game {
                 }
                 this.state.ghosts.splice(i, 1);
             }
+        }
 
+        for (let i = 0; i < this.state.ghosts.length; i++) {
             if (this.state.ghosts.length !== 0) {
                 if (this.state.ghosts[i].speed > 0) {
-                    console.log('left border: ' + this.state.player.x );
                     if (this.state.ghosts[i].x < this.state.player.x) {
                         this.state.ghosts[i].x += this.state.ghosts[i].speed * dt;
                     } else {
@@ -212,8 +234,7 @@ export default class Game {
                         this.state.player.hp -= this.state.ghosts[i].damage;
                     }
                 } else if (this.state.ghosts[i].speed < 0) {
-                    console.log('right border: ' + (+this.state.player.x + +this.playerImg.width));
-                    if (this.state.ghosts[i].x > this.state.player.x + this.playerImg.width) {
+                    if (this.state.ghosts[i].x > this.state.player.x + this.state.player.sprite.width) {
                         this.state.ghosts[i].x += this.state.ghosts[i].speed * dt;
                     } else {
                         if (this.state.player.hp === 300) {
@@ -250,10 +271,9 @@ export default class Game {
         // }
 
         // игрок
-        const playerImg = this.state.player.sprite;
         const playerX = this.canvas.width / 2;
         const playerY = this.canvas.height - offsetByY;
-        this.ctx.drawImage(playerImg, playerX - playerImg.width / 2, playerY - playerImg.height);
+        this.ctx.drawImage(this.state.player.sprite, playerX - this.state.player.sprite.width / 2, playerY - this.state.player.sprite.height);
 
         // призраки
         const ghostY = this.canvas.height - offsetByY;
@@ -265,15 +285,15 @@ export default class Game {
 
         for (let i = 0; i < this.state.ghosts.length; i++) {
             if (this.state.ghosts[i].speed > 0) {
-                this.ctx.clearRect(0, 0, this.canvas.width / 2 - playerImg.width / 2, this.canvas.height);
+                this.ctx.clearRect(0, 0, this.canvas.width / 2 - this.state.player.sprite.width / 2, this.canvas.height);
                 this.ctx.drawImage(this.state.ghosts[i].sprite, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width * 3 / 2, ghostY - this.state.ghosts[i].sprite.height);
                 symbolsToShow = this.state.ghosts[i].symbols.join(' ');
                 this.ctx.fillText(symbolsToShow, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width - this.ctx.measureText(this.state.ghosts[i].symbols).width / 2, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
             } else if (this.state.ghosts[i].speed < 0) {
-                this.ctx.clearRect(this.canvas.width / 2 + playerImg.width / 2 - 5, 0, this.canvas.width / 2, this.canvas.height);
+                this.ctx.clearRect(this.canvas.width / 2 + this.state.player.sprite.width / 2 - 5, 0, this.canvas.width / 2, this.canvas.height);
                 this.ctx.drawImage(this.state.ghosts[i].sprite, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width / 2, ghostY - this.state.ghosts[i].sprite.height);
                 symbolsToShow = this.state.ghosts[i].symbols.join(' ');
-                this.ctx.fillText(symbolsToShow, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width / 2 + this.ctx.measureText(this.state.ghosts[i].symbols).width, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
+                this.ctx.fillText(symbolsToShow, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width + this.ctx.measureText(this.state.ghosts[i].symbols).width, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
             }
         }
     }
