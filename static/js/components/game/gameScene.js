@@ -20,7 +20,7 @@ export default class GameScene {
         this.state = {
             hero: {
                 x: (this.canvas.width -  heroImg.width) / 2,
-                hp: 3
+                hp: 300
             },
             sprite: heroImg,
             ghosts: [],
@@ -58,6 +58,7 @@ export default class GameScene {
             cancelAnimationFrame(this.requestID);
         }
         window.removeEventListener('resize', this.bindedResizer);
+        window.removeEventListener('keydown', this.bindedButtonsHandler);
     }
 
     gameLoop() {
@@ -66,6 +67,14 @@ export default class GameScene {
 
         this.update(dt);
         this.renderScene();
+
+        if (this.state.hero.hp === 0) {
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            this.state.isGameOver = true;
+            this.destroy();
+            console.log('game over');
+            return;
+        }
 
         this.lastTime = now;
         this.requestID = requestAnimationFrame(this.gameLoop.bind(this));
@@ -82,6 +91,17 @@ export default class GameScene {
 
             if (this.state.ghosts[i].x + GHOST_SPEED * dt < this.state.hero.x) {
                 this.state.ghosts[i].x += GHOST_SPEED * dt;
+            } else {
+                if (this.state.hero.hp === 300) {
+                    console.log('hero hp: 3 / 3, ');
+                }
+                if (this.state.hero.hp === 200) {
+                    console.log('hero hp: 2 / 3, ');
+                }
+                if (this.state.hero.hp === 100) {
+                    console.log('hero hp: 1 / 3, ');
+                }
+                this.state.hero.hp--;
             }
         }
     }
@@ -91,6 +111,21 @@ export default class GameScene {
 
         // смещение по Y - расстояние от нижнего края экрана
         const offsetByY = this.canvas.height / 40;
+
+        // hero lives
+        let heartImg = new Image();
+        heartImg.src = '../../../img/game/heart.png';
+
+        let livesOffset = 0;
+
+        console.log('current hero hp: ' + this.state.hero.hp);
+        console.log('current hero hp / 100: ' + this.state.hero.hp / 100);
+
+        for (let i = this.state.hero.hp / 100; i > 0; i--) {
+            ctx.drawImage(heartImg, livesOffset, 0, heartImg.width, heartImg.height);
+            livesOffset += heartImg.width;
+            console.log('lives offset: ' + livesOffset);
+        }
 
         // hero
         let heroImg = document.getElementById('hero-sprite');

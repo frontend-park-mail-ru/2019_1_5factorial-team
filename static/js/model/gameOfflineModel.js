@@ -7,7 +7,6 @@ export default class gameOfflineModel {
         this.localEventBus = eventBus;
 
         this.localEventBus.getEvent('startGame', this.onStart.bind(this));
-        this.localEventBus.getEvent('newState', this.onNewState.bind(this));
         this.localEventBus.getEvent('gameOver', this.onGameOver.bind(this));
     }
 
@@ -15,11 +14,11 @@ export default class gameOfflineModel {
         this.scene = new GameScene();
     }
 
-    onNewState() {
-
-    }
-
     onGameOver() {
-        this.scene.destroy();
+    //     if (this.scene.state.isGameOver === true) {
+    //         console.log('game over');
+    //         this.scene.destroy();
+    //     }
+    //     // TODO: переброс в меню
     }
 }
