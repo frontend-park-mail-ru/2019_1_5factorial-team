@@ -31,7 +31,7 @@
                     <div class="form__warning js-warning-password hide"></div>
 
                     <div class="form-btn-block">
-                        <a class="btn btn_contained form__btn form__btn_back" href="/">Back</a>
+                        <a class="btn btn_inlined form__btn form__btn_back" href="/">Back</a>
                         <button class="btn btn_contained form__btn js-submit" type="submit">Sign Up</button>
                     </div>
                 </form>

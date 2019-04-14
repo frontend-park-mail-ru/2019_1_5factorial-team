@@ -22,6 +22,7 @@
                     <input class="form__input js-login-or-email" type="text" name="login-or-email" placeholder=" " id="login-or-email" autofocus="true" autocomplete="on"/>
                     <label class="form__label" for="password">Password</label>
                     <input class="form__input js-password" type="password" name="password-input" placeholder=" " id="password" autocomplete="current-password"/>
+                    <span class="form__signins-header">or Sing Up using</span>
                     <div class="form__singins">
                         <a class="btn btn_singin js-google-login" href="https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.email&amp;include_granted_scopes=true&amp;state=state_parameter_passthrough_value&amp;redirect_uri=http://127.0.0.1:4000/login?service=google&amp;response_type=token&amp;client_id=427261845905-5m1ajvpo6ho2e73eaut7lfff4s6e2s9o.apps.googleusercontent.com">
                             <svg xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" viewBox="0 0 48 48" xmlns:xlink="http://www.w3.org/1999/xlink" class="injected-svg button__icon__large">

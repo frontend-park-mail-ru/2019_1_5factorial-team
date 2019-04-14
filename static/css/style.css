@@ -435,10 +435,14 @@ body {
         width: 100%;
     }
 
+    .form__signins-header {
+        margin-top: 2vh;
+    }
+
     .form__singins {
         display: flex;
         flex-direction: row;
-        margin-top: 4vh;
+        margin-top: 2vh;
     }
 
     .form-btn-block {
