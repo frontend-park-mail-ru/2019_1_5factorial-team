@@ -13,4 +13,17 @@ export default class userBlock {
             return false;
         }
     }
+
+    gameButtons(data = {}) {
+        const userButtons = document.getElementsByClassName('js-check-user')[0];
+        if (data !== null) {
+            userButtons.innerHTML = `<a class="btn users__btn login-btn">${data.userName}</a>
+            <a class="btn users__btn signup-btn" href="/">Back to menu</a>`;
+            return true;
+        } else {
+            userButtons.innerHTML = `<a class="btn users__btn signup-btn" href="/menu">Back to menu
+            </a>`;
+            return false;
+        }
+    }
 }
