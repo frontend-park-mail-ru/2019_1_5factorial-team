@@ -103,7 +103,7 @@ export default class Game {
             });
         }
 
-        // раскомментить тут и еще в render() в цикле эту строку: this.ctx.clearRect(0, 0, this.canvas.width / 2 - playerImg.width / 2, this.canvas.height);
+        // раскомментить тут и еще закомментить в render() в цикле эту строку: this.ctx.clearRect(0, 0, this.canvas.width / 2 - playerImg.width / 2, this.canvas.height);
         // в условии некое уравнение, по которому генерятся призраки - сперла из интернетов
 
         // if (Math.random() < 1 - Math.pow(.993, this.state.gameTime)) {
