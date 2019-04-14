@@ -1,5 +1,7 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
     <div class="container">
-        <canvas class="temp_class_canvas" id="canvas"></canvas>
+        <canvas class="temp_class_canvas" id="canvas">
+            <img id="hero-sprite" src="../../../img/game/hero.png"/>
+        </canvas>
     </div>
 </fest:template>
