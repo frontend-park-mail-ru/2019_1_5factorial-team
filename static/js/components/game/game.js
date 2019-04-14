@@ -228,7 +228,7 @@ export default class Game {
                 this.ctx.clearRect(this.canvas.width / 2 + this.state.player.sprite.width / 2 - 5, 0, this.canvas.width / 2, this.canvas.height);
                 this.ctx.drawImage(this.state.ghosts[i].sprite, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width / 2, ghostY - this.state.ghosts[i].sprite.height);
                 symbolsToShow = this.state.ghosts[i].symbols.join(' ');
-                this.ctx.fillText(symbolsToShow, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width + this.ctx.measureText(this.state.ghosts[i].symbols).width, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
+                this.ctx.fillText(symbolsToShow, this.state.ghosts[i].x - this.ctx.measureText(this.state.ghosts[i].symbols).width / 2, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
             }
         }
     }
@@ -278,7 +278,7 @@ export default class Game {
     }
 
     generateDirection() {
-        return Math.floor(Math.random() * 2) === 0 ? 'left' : 'right'
+        return Math.floor(Math.random() * 2) === 0 ? 'left' : 'right';
     }
 
     generateSymbolsSequence() {
