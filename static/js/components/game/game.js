@@ -1,4 +1,6 @@
 const GHOST_SPEED = 100;
+const GHOST_DAMAGE = 1;
+
 
 export default class Game {
     constructor() {
@@ -19,9 +21,9 @@ export default class Game {
 
         this.requestID = null;
 
-        // достаем спрайты
+        // достаем спрайты, TODO: придумать, как работать со спрайтами
         let playerImg = document.getElementById('player-sprite');
-        let ghostLeftImg = document.getElementById('ghost-left-sprite');
+        this.ghostLeftImg = document.getElementById('ghost-left-sprite');
         // let ghostRightImg = document.getElementById('ghost-right-sprite');
         // let heartImg = document.getElementById('heart-sprite');
 
@@ -40,14 +42,14 @@ export default class Game {
             isGameOver: false
         };
 
-        const leftGhost = {
-            x: ghostLeftImg.width / 2,
-            speed: GHOST_SPEED,
-            damage: 1,
-            sprite: ghostLeftImg,
-            symbols: ['L', 'R', 'D']
-        };
-        this.state.ghosts.push(leftGhost);
+        // const leftGhost = {
+        //     x: this.ghostLeftImg.width / 2,
+        //     speed: GHOST_SPEED,
+        //     damage: 1,
+        //     sprite: this.ghostLeftImg,
+        //     symbols: ['L', 'R', 'D']
+        // };
+        // this.state.ghosts.push(leftGhost);
 
         this.lastTime = Date.now();
 
@@ -74,9 +76,8 @@ export default class Game {
         this.update(dt);
         this.render();
 
-        if (this.state.player.hp === 0) {
+        if (this.state.isGameOver === true) {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            this.state.isGameOver = true;
             this.destroy();
             console.log('game over');
             return;
@@ -89,30 +90,70 @@ export default class Game {
     update(dt) {
         this.state.gameTime += dt;
 
+        // один призрак - все работает супер-пупер (закомментить и раскомментить код ниже для теста)
+        if (this.state.gameTime === 0) {
+            console.log('game time: ' + this.state.gameTime);
+
+            this.state.ghosts.push({
+                x: this.ghostLeftImg.width / 2,
+                speed: GHOST_SPEED,
+                damage: GHOST_DAMAGE,
+                sprite: this.ghostLeftImg,
+                symbols: ['L', 'R', 'D']
+            });
+        }
+
+        // раскомментить тут и еще в render() в цикле эту строку: this.ctx.clearRect(0, 0, this.canvas.width / 2 - playerImg.width / 2, this.canvas.height);
+        // в условии некое уравнение, по которому генерятся призраки - сперла из интернетов
+
+        // if (Math.random() < 1 - Math.pow(.993, this.state.gameTime)) {
+        //     console.log('game time: ' + this.state.gameTime);
+        //
+        //     this.state.ghosts.push({
+        //         x: this.ghostLeftImg.width / 2,
+        //         speed: GHOST_SPEED,
+        //         damage: GHOST_DAMAGE,
+        //         sprite: this.ghostLeftImg,
+        //         symbols: ['L', 'R', 'D']
+        //     });
+        // }
+
+        //  убиваем призраков
         for (let i = 0; i < this.state.ghosts.length; i++) {
-            if (this.lastButtonPressed  === this.state.ghosts[i].symbols[0]) {
+            // сносим символ
+            if (this.lastButtonPressed === this.state.ghosts[i].symbols[0]) {
                 this.state.ghosts[i].symbols = this.state.ghosts[i].symbols.slice(1, this.state.ghosts[i].symbols.length + 1);
             }
 
+            // убили
             if (this.state.ghosts[i].symbols.length === 0) {
                 this.state.ghosts.splice(i, 1);
+                console.log('ghosts: ' + this.state.ghosts.length);
                 this.ctx.clearRect(0, 0, this.canvas.width / 2 - this.state.player.sprite.width / 2, this.canvas.height);
-                return;
             }
 
-            if (this.state.ghosts[i].x + GHOST_SPEED * dt < this.state.player.x) {
-                this.state.ghosts[i].x += GHOST_SPEED * dt;
+            if (this.state.ghosts.length !== 0) {
+                if (this.state.ghosts[i].x < this.state.player.x) {
+                    this.state.ghosts[i].x += GHOST_SPEED * dt;
+                } else {
+                    if (this.state.player.hp === 300) {
+                        console.log('player hp: 3 / 3');
+                    }
+                    if (this.state.player.hp === 200) {
+                        console.log('player hp: 2 / 3');
+                    }
+                    if (this.state.player.hp === 100) {
+                        console.log('player hp: 1 / 3');
+                    }
+                    this.state.player.hp -= this.state.ghosts[i].damage;
+                }
             } else {
-                if (this.state.player.hp === 300) {
-                    console.log('player hp: 3 / 3');
-                }
-                if (this.state.player.hp === 200) {
-                    console.log('player hp: 2 / 3');
-                }
-                if (this.state.player.hp === 100) {
-                    console.log('player hp: 1 / 3');
-                }
-                this.state.player.hp--;
+                break;
+            }
+
+            if (this.state.player.hp === 0) {
+                this.state.isGameOver = true;
+                return;
             }
         }
     }
@@ -142,7 +183,7 @@ export default class Game {
         let symbolsToShow = '';
 
         for (let i = 0; i < this.state.ghosts.length; i++) {
-            this.ctx.clearRect(0, 0, this.canvas.width / 2 - playerImg.width / 2, this.canvas.height);
+            this.ctx.clearRect(0, 0, this.canvas.width / 2 - playerImg.width / 2, this.canvas.height);  // закомментить тут
             this.ctx.drawImage(this.state.ghosts[i].sprite, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width * 3 / 2, ghostY - this.state.ghosts[i].sprite.height);
             this.ctx.font = '20pt Comfortaa-Regular';
             this.ctx.fillStyle = 'white';
