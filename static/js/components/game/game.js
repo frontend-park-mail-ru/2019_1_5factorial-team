@@ -92,99 +92,33 @@ export default class Game {
         // TODO: убрать this.state.ghosts.length === 0, придумать, как сделать больше одного призрака с каждой стороны экрана
         if (Math.random() < 1 - Math.pow(.993, this.state.gameTime)) {
             if (this.state.ghosts.length === 0) {  // если призраков нет
-                let generatedDirection = Math.floor(Math.random() * 2) === 0 ? 'left' : 'right';
+                let generatedDirection = this.generateDirection();
 
                 if (generatedDirection === 'left') {
-                    const maxSymbolsLength = 2, minSymbolsLength = 6;
-                    let generatedSymbolsLength = Math.floor(Math.random() * (maxSymbolsLength - minSymbolsLength + 1)) + minSymbolsLength;
-
-                    let generatedSymbols = [];
-                    for (let i = 0; i < generatedSymbolsLength; i++) {
-                        let generatedSymbolNumber = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
-                        switch (generatedSymbolNumber) {
-                            case 1:
-                                generatedSymbols.push('L');
-                                break;
-                            case 2:
-                                generatedSymbols.push('R');
-                                break;
-                            case 3:
-                                generatedSymbols.push('U');
-                                break;
-                            case 4:
-                                generatedSymbols.push('D');
-                                break;
-                        }
-                    }
-
                     this.state.ghosts.push({
                         x: this.ghostLeftImg.width / 2,
                         speed: GHOST_SPEED,
                         damage: GHOST_DAMAGE,
                         sprite: this.ghostLeftImg,
-                        symbols: generatedSymbols
+                        symbols: this.generateSymbolsSequence()
                     });
                 } else if (generatedDirection === 'right') {
-                    const maxSymbolsLength = 2, minSymbolsLength = 6;
-                    let generatedSymbolsLength = Math.floor(Math.random() * (maxSymbolsLength - minSymbolsLength + 1)) + minSymbolsLength;
-
-                    let generatedSymbols = [];
-                    for (let i = 0; i < generatedSymbolsLength; i++) {
-                        let generatedSymbolNumber = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
-                        switch (generatedSymbolNumber) {
-                            case 1:
-                                generatedSymbols.push('L');
-                                break;
-                            case 2:
-                                generatedSymbols.push('R');
-                                break;
-                            case 3:
-                                generatedSymbols.push('U');
-                                break;
-                            case 4:
-                                generatedSymbols.push('D');
-                                break;
-                        }
-                    }
-
                     this.state.ghosts.push({
                         x: this.canvas.width + this.ghostLeftImg.width / 2,
                         speed: -GHOST_SPEED,
                         damage: GHOST_DAMAGE,
                         sprite: this.ghostRightImg,
-                        symbols: generatedSymbols
+                        symbols: this.generateSymbolsSequence()
                     });
                 }
             } else if (this.state.ghosts.length === 1) {
-                const maxSymbolsLength = 2, minSymbolsLength = 6;
-                let generatedSymbolsLength = Math.floor(Math.random() * (maxSymbolsLength - minSymbolsLength + 1)) + minSymbolsLength;
-
-                let generatedSymbols = [];
-                for (let i = 0; i < generatedSymbolsLength; i++) {
-                    let generatedSymbolNumber = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
-                    switch (generatedSymbolNumber) {
-                        case 1:
-                            generatedSymbols.push('L');
-                            break;
-                        case 2:
-                            generatedSymbols.push('R');
-                            break;
-                        case 3:
-                            generatedSymbols.push('U');
-                            break;
-                        case 4:
-                            generatedSymbols.push('D');
-                            break;
-                    }
-                }
-
                 if (this.state.ghosts[0].speed < 0) {  // если есть призрак справа
                     this.state.ghosts.push({
                         x: this.ghostLeftImg.width / 2,
                         speed: GHOST_SPEED,
                         damage: GHOST_DAMAGE,
                         sprite: this.ghostLeftImg,
-                        symbols: generatedSymbols
+                        symbols: this.generateSymbolsSequence()
                     });
                 } else if (this.state.ghosts[0].speed > 0) {  // если есть призрак слева
                     this.state.ghosts.push({
@@ -192,7 +126,7 @@ export default class Game {
                         speed: -GHOST_SPEED,
                         damage: GHOST_DAMAGE,
                         sprite: this.ghostRightImg,
-                        symbols: generatedSymbols
+                        symbols: this.generateSymbolsSequence()
                     });
                 }
             }
@@ -216,6 +150,7 @@ export default class Game {
             }
         }
 
+        // двигаем призраков и дамажим героя
         for (let i = 0; i < this.state.ghosts.length; i++) {
             if (this.state.ghosts.length !== 0) {
                 if (this.state.ghosts[i].speed > 0) {
@@ -340,5 +275,34 @@ export default class Game {
                 console.log('unknown');
                 break;
         }
+    }
+
+    generateDirection() {
+        return Math.floor(Math.random() * 2) === 0 ? 'left' : 'right'
+    }
+
+    generateSymbolsSequence() {
+        const maxSymbolsLength = 2, minSymbolsLength = 6;
+        let generatedSymbolsLength = Math.floor(Math.random() * (maxSymbolsLength - minSymbolsLength + 1)) + minSymbolsLength;
+
+        let generatedSymbols = [];
+        for (let i = 0; i < generatedSymbolsLength; i++) {
+            let generatedSymbolNumber = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
+            switch (generatedSymbolNumber) {
+                case 1:
+                    generatedSymbols.push('L');
+                    break;
+                case 2:
+                    generatedSymbols.push('R');
+                    break;
+                case 3:
+                    generatedSymbols.push('U');
+                    break;
+                case 4:
+                    generatedSymbols.push('D');
+                    break;
+            }
+        }
+        return generatedSymbols;
     }
 }
