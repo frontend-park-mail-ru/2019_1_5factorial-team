@@ -188,11 +188,12 @@ export default class Game {
     render() {
         const offsetByY = this.canvas.height / 40;  // смещение по Y - расстояние от нижнего края экрана
 
-        // жизни-сердечки, TODO: сделать, чтоб заработало
         let heartsBetweenOffset = this.heartImg.width / 2;
         let heartOffset = 0;
         let heartsUpperOffset = this.canvas.height / 80;
 
+        this.ctx.clearRect(0, 0, this.heartImg.width * 4,this.heartImg.height + heartsUpperOffset);
+        console.log('hp: ' + this.state.player.hp);
         for (let i = this.state.player.hp / 100; i > 0; i--) {
             this.ctx.drawImage(this.heartImg, heartsBetweenOffset + heartOffset, heartsUpperOffset, this.heartImg.width, this.heartImg.height);
             heartOffset += this.heartImg.width;
