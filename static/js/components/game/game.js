@@ -1,45 +1,51 @@
 const GHOST_SPEED = 100;
 
-export default class GameScene {
+export default class Game {
     constructor() {
         this.canvas = document.getElementsByClassName('temp_class_canvas')[0];
         this.ctx = this.canvas.getContext('2d');
 
+        // последняя нажатая клавиша
         this.lastButtonPressed = '';
 
+        // слушаем нажатия клавиш с клавиатуры
         this.bindedButtonsHandler = this.buttonsHandler.bind(this);
         window.addEventListener('keydown', this.bindedButtonsHandler);
 
+        // слушаем изменение размеров экрана
         this.bindedResizer = this.resizer.bind(this); // TODO(): переехать на шину событий, хезе как
         window.addEventListener('resize', this.bindedResizer);
         this.resizer();
 
         this.requestID = null;
 
-        let heroImg = document.getElementById('hero-sprite');
+        // достаем спрайты
+        let playerImg = document.getElementById('player-sprite');
+        let ghostLeftImg = document.getElementById('ghost-left-sprite');
+        // let ghostRightImg = document.getElementById('ghost-right-sprite');
+        // let heartImg = document.getElementById('heart-sprite');
+
+        // состояние игры
         this.state = {
-            hero: {
-                x: (this.canvas.width -  heroImg.width) / 2,
+            player: {
+                sprite: playerImg,
+                x: (this.canvas.width -  playerImg.width) / 2,
                 hp: 300
             },
-            sprite: heroImg,
             ghosts: [],
+
+            // TODO: на бэке этих полей нет - решить, нужны ли
             score: 0,
             gameTime: 0,
             isGameOver: false
         };
 
-        let ghostLeftImg = new Image();
-        ghostLeftImg.src = '../../../img/game/ghost_l.png';
-
-        // let ghostRightImg = new Image();
-        // ghostRightImg.src = '../../../img/game/ghost_r.png';
-
         const leftGhost = {
             x: ghostLeftImg.width / 2,
-            hp: 3,
+            speed: GHOST_SPEED,
+            damage: 1,
             sprite: ghostLeftImg,
-            symbols: 'LRD'
+            symbols: ['L', 'R', 'D']
         };
         this.state.ghosts.push(leftGhost);
 
@@ -66,9 +72,9 @@ export default class GameScene {
         let dt = (now - this.lastTime) / 1000.0;
 
         this.update(dt);
-        this.renderScene();
+        this.render();
 
-        if (this.state.hero.hp === 0) {
+        if (this.state.player.hp === 0) {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
             this.state.isGameOver = true;
             this.destroy();
@@ -85,85 +91,72 @@ export default class GameScene {
 
         for (let i = 0; i < this.state.ghosts.length; i++) {
             if (this.lastButtonPressed  === this.state.ghosts[i].symbols[0]) {
-                this.state.ghosts[i].hp--;
-                this.state.ghosts[i].symbols = this.state.ghosts[i].symbols.substr(1, this.state.ghosts[i].symbols.length + 1);
+                this.state.ghosts[i].symbols = this.state.ghosts[i].symbols.slice(1, this.state.ghosts[i].symbols.length + 1);
             }
 
-            if (this.state.ghosts[i].x + GHOST_SPEED * dt < this.state.hero.x) {
+            if (this.state.ghosts[i].symbols.length === 0) {
+                this.state.ghosts.splice(i, 1);
+                this.ctx.clearRect(0, 0, this.canvas.width / 2 - this.state.player.sprite.width / 2, this.canvas.height);
+                return;
+            }
+
+            if (this.state.ghosts[i].x + GHOST_SPEED * dt < this.state.player.x) {
                 this.state.ghosts[i].x += GHOST_SPEED * dt;
             } else {
-                if (this.state.hero.hp === 300) {
-                    console.log('hero hp: 3 / 3, ');
+                if (this.state.player.hp === 300) {
+                    console.log('player hp: 3 / 3');
                 }
-                if (this.state.hero.hp === 200) {
-                    console.log('hero hp: 2 / 3, ');
+                if (this.state.player.hp === 200) {
+                    console.log('player hp: 2 / 3');
                 }
-                if (this.state.hero.hp === 100) {
-                    console.log('hero hp: 1 / 3, ');
+                if (this.state.player.hp === 100) {
+                    console.log('player hp: 1 / 3');
                 }
-                this.state.hero.hp--;
+                this.state.player.hp--;
             }
         }
     }
 
-    renderScene() {
-        const ctx = this.ctx;
+    render() {
+        const offsetByY = this.canvas.height / 40;  // смещение по Y - расстояние от нижнего края экрана
 
-        // смещение по Y - расстояние от нижнего края экрана
-        const offsetByY = this.canvas.height / 40;
+        // жизни-сердечки, TODO: сделать, чтоб заработало
+        // let livesOffset = 0;
+        //
+        // for (let i = this.state.player.hp / 100; i > 0; i--) {
+        //     this.ctx.drawImage(heartImg, livesOffset, 0, heartImg.width, heartImg.height);
+        //     livesOffset += heartImg.width;
+        //     console.log('lives offset: ' + livesOffset);
+        // }
 
-        // hero lives
-        let heartImg = new Image();
-        heartImg.src = '../../../img/game/heart.png';
+        // игрок
+        const playerImg = this.state.player.sprite;
+        const playerX = this.canvas.width / 2;
+        const playerY = this.canvas.height - offsetByY;
+        this.ctx.drawImage(playerImg, playerX - playerImg.width / 2, playerY - playerImg.height);
 
-        let livesOffset = 0;
-
-        console.log('current hero hp: ' + this.state.hero.hp);
-        console.log('current hero hp / 100: ' + this.state.hero.hp / 100);
-
-        for (let i = this.state.hero.hp / 100; i > 0; i--) {
-            ctx.drawImage(heartImg, livesOffset, 0, heartImg.width, heartImg.height);
-            livesOffset += heartImg.width;
-            console.log('lives offset: ' + livesOffset);
-        }
-
-        // hero
-        let heroImg = document.getElementById('hero-sprite');
-
-        const heroX = this.canvas.width / 2;
-        const heroY = this.canvas.height - offsetByY;
-
-        ctx.drawImage(heroImg, heroX - heroImg.width / 2, heroY - heroImg.height);
-
-        // ghosts
+        // призраки
         const ghostY = this.canvas.height - offsetByY;
+        const symbolsOffset = 30;  // расстояние между призраком и символами над его головой
 
-        const symbolsOffset = 30;
+        let symbolsToShow = '';
 
         for (let i = 0; i < this.state.ghosts.length; i++) {
-            if (this.state.ghosts[i].hp === 0) {
-                this.state.ghosts.pop();
-                ctx.clearRect(0, 0, this.canvas.width / 2 - heroImg.width / 2, this.canvas.height);
-                return;
-            }
-
-            ctx.clearRect(0, 0, this.canvas.width / 2 - heroImg.width / 2, this.canvas.height);
-            ctx.drawImage(this.state.ghosts[i].sprite, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width * 3 / 2, ghostY - this.state.ghosts[i].sprite.height);
+            this.ctx.clearRect(0, 0, this.canvas.width / 2 - playerImg.width / 2, this.canvas.height);
+            this.ctx.drawImage(this.state.ghosts[i].sprite, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width * 3 / 2, ghostY - this.state.ghosts[i].sprite.height);
             this.ctx.font = '20pt Comfortaa-Regular';
             this.ctx.fillStyle = 'white';
-            ctx.fillText(this.state.ghosts[i].symbols, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width - this.ctx.measureText(this.state.ghosts[i].symbols).width / 2, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
+            symbolsToShow = this.state.ghosts[i].symbols.join();
+            this.ctx.fillText(symbolsToShow, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width - this.ctx.measureText(this.state.ghosts[i].symbols).width / 2, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
         }
     }
 
     buttonsHandler(e) {
+        //  вывод направления, полученного из нажатой клавиши - left, right, down, up
         const dirNameX = this.canvas.width / 2;
         const dirNameY = this.canvas.height / 4;
 
-        /*
-         * TODO: настроить загрузку шрифта
-         * пока что при первом нажатии вывод надписи проходит в дефолтном шрифте :(
-        */
-
+        // TODO: настроить загрузку шрифта
         this.ctx.font = '30pt Comfortaa-Regular';
         this.ctx.fillStyle = 'white';
 
@@ -178,30 +171,22 @@ export default class GameScene {
         switch (e.keyCode) {
             case 37:  // если нажата клавиша влево
                 this.lastButtonPressed = 'L';
-
                 this.ctx.fillText('left', dirNameX - left.width / 2, dirNameY, 200, 100);
-
                 console.log('left');
                 break;
             case 38:   // если нажата клавиша вверх
                 this.lastButtonPressed = 'U';
-
                 this.ctx.fillText('up', dirNameX - up.width / 2, dirNameY, 200, 100);
-
                 console.log('up');
                 break;
             case 39:   // если нажата клавиша вправо
                 this.lastButtonPressed = 'R';
-
                 this.ctx.fillText('right', dirNameX - right.width / 2, dirNameY, 200, 100);
-
                 console.log('right');
                 break;
             case 40:   // если нажата клавиша вниз
                 this.lastButtonPressed = 'D';
-
                 this.ctx.fillText('down', dirNameX - down.width / 2, dirNameY, 200, 100);
-
                 console.log('down');
                 break;
             default:

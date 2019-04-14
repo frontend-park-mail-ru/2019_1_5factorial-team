@@ -1,4 +1,4 @@
-import GameScene from '../components/game/gameScene';
+import Game from '../components/game/game.js';
 
 export default class gameOfflineModel {
     constructor(eventBus) {
@@ -11,7 +11,7 @@ export default class gameOfflineModel {
     }
 
     onStart() {
-        this.scene = new GameScene();
+        this.scene = new Game();
     }
 
     onGameOver() {
