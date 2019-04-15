@@ -28,7 +28,7 @@ export default class gameOfflineModel {
     }
 
     onStart() {
-        this.scene = new Game();
+        this.scene = new Game(this.localEventBus);
     }
 
     stopGame() {

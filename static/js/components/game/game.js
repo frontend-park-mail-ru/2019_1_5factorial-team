@@ -10,7 +10,9 @@ export default class Game {
      * this.bindedResizer - обработчик изменения размеров экрана для корректного ререндера
      * this.state - состояние игры
      */
-    constructor() {
+    constructor(eventBus) {
+        this.localEventBus = eventBus;
+
         this.MW = new ModalWindow();
         this.canvas = document.getElementsByClassName('temp_class_canvas')[0];
         this.ctx = this.canvas.getContext('2d');
@@ -185,6 +187,7 @@ export default class Game {
 
             if (this.state.player.hp === 0) {
                 this.state.isGameOver = true;
+                this.localEventBus.callEvent('gameOver');
                 return;
             }
         }
