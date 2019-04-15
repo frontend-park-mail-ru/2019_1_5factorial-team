@@ -1,5 +1,6 @@
 import Game from '../components/game/game.js';
 import api from '../libs/api.js';
+import { ANAUTH_RESPONSE } from '../components/constants.js';
 
 export default class gameOfflineModel {
     constructor(eventBus) {
@@ -13,16 +14,18 @@ export default class gameOfflineModel {
     }
 
     getUser() {
-        return api.loadUser()
+        return api.sessionCheck()
             .then(res => {
-                if (res.error) {
-                    this.localEventBus.callEvent('onGetUserDataForGameResponse', {});
+                if (res.status === ANAUTH_RESPONSE) {
+                    this.localEventBus.callEvent('onGetUserDataForGameResponse', {status: 'unAuthUser'});
                 } else {
-                    // TODO(): подбить некоторые данные для статистики - победы/поражения
-                    const responseOnUser = {
-                        nickname: res.nickname,
-                    };
-                    this.localEventBus.callEvent('onGetUserDataForGameResponse', {user: responseOnUser});
+                    api.loadUser()
+                        .then(res => {
+                            const responseOnUser = {
+                                nickname: res.nickname,
+                            };
+                            this.localEventBus.callEvent('onGetUserDataForGameResponse', {status: 'authUser', user: responseOnUser});
+                        });
                 }
             });
     }
@@ -32,6 +35,7 @@ export default class gameOfflineModel {
     }
 
     stopGame() {
+        this.isChecked = false;
         this.scene.destroy();
     }
 

@@ -74,11 +74,6 @@ export default class Game {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
             this.destroy();
             this.MW.createModal('Game single end');
-            // const blur = document.getElementsByClassName('blur')[0];
-            // blur.addEventListener('click', (event) => {
-            //     event.preventDefault();
-            //     console.log('test');
-            // });
             return;
         }
 

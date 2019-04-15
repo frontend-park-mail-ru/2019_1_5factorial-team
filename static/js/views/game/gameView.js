@@ -29,10 +29,5 @@ export default class gameView extends View {
                 this.localEventBus.callEvent('stopGameManualy');
             });
         }
-
-        // const menuButton = document.getElementsByClassName('js-back-to-menu')[0];
-        // menuButton.addEventListener('click', (event) => {
-        // this.localEventBus.callEvent('stopGameManualy');
-        // });
     }
 }
