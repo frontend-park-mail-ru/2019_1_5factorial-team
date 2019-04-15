@@ -345,6 +345,10 @@ body {
     margin-left: auto;
     margin-right: 0;
 }
+    .users_absolute {
+        position: absolute;
+        right: 1vw;
+    }
     .users__btn {
         color: var(--main-clr);
         margin: 0 1vw;
@@ -689,8 +693,25 @@ body {
     align-items: center;
 }
 
+
 .columned {
     flex-direction: column;
     white-space: nowrap;
     align-items: center;
+
+.modal-window {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.temp_class_canvas {
+    z-index: 0;
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    background-image: url('../img/1.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }

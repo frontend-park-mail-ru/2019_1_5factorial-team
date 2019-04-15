@@ -15,7 +15,7 @@ export default class viewMenu extends View {
         this.isAuth = isAuthorized;
         const checkHeader = new userBlock();
         const MW = new ModalWindow();
-        const singleButton = document.getElementsByClassName('js-single')[0];
+        // const singleButton = document.getElementsByClassName('js-single')[0];
         const multiButton = document.getElementsByClassName('js-multi')[0];
 
         if (checkHeader.changeButtons(isAuthorized)) {
@@ -26,10 +26,10 @@ export default class viewMenu extends View {
             });
         }
 
-        singleButton.addEventListener('click', (event) => {
-            event.preventDefault();
-            MW.createModal('Game training');
-        });
+        // singleButton.addEventListener('click', (event) => {
+        //     event.preventDefault();
+        //     MW.createModal('Game training');
+        // });
 
         multiButton.addEventListener('click', (event) => {
             if (this.isAuth) {

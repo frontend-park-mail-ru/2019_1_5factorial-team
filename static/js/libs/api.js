@@ -4,7 +4,6 @@ export default class api {
 
     /**
      * Загрузка пользователя
-     * @param {*} user
      */
     static loadUser() {
         return network.doGet({ url:'/api/user' }).then(res => res.json());
@@ -50,7 +49,7 @@ export default class api {
      * */
     static loginOauth({ token, service } = {}) {
         return network.doPost({
-            url: `/api/login_${service}`,
+            url: `/api/session/oauth/${service}`,
             body: {
                 'token': token
             }

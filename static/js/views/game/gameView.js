@@ -1,22 +1,36 @@
+import template from './gameView.tmpl.xml';
 import View from '../../libs/views.js';
+import userBlock from '../../components/userBlock.js';
 
 export default class gameView extends View {
-    constructor({eventBus, numOfPlayers = 1} = {}) {
-        super(null, eventBus);
-        this.localEventBus.getEvent('gameOver', this.gameOver.bind(this));
-        this.numOfPlayers = numOfPlayers; //заглушка, надо перевести в нормальный вид
+    constructor({eventBus = {}} = {}) {
+        super(template, eventBus);
+        this.render(document.getElementsByClassName('body-cnt')[0]);
+        this.localEventBus.getEvent('onGetUserDataForGameResponse', this.getUserResponse.bind(this));
     }
 
-    //TODO(): class City - игровое поле, на котором происходит рендер всего, что движется и прочее
-    render(root, data) {
-        this.data = data; //заглушка, рендерить будем с никами и прочим
-        this.root = root;
-        // this.city = new City();
-        // this.city.render();
+    getUserResponse(data = {}) {
+        if (data) {
+            this.render(null, data);
+        }
     }
 
-    //TODO(): Notificate players in game (Modal or not)
-    gameOver({winner, looser}) {
-        console.log(looser, 'lost! Gratz to', winner);        
+    render(root, data = {}) {
+        super.render(root, data);
+        
+        if (Object.keys(data).length === 0) {
+            this.localEventBus.callEvent('getUserDataForGame');
+        } else {
+            super.render(root, data);
+
+            const block = new userBlock();
+            block.gameButtons(data);
+            this.localEventBus.callEvent('startGame');  
+
+            const menuButton = document.getElementsByClassName('js-back-to-menu')[0];
+            menuButton.addEventListener('click', () => {
+                this.localEventBus.callEvent('stopGameManualy');
+            });
+        }
     }
 }
