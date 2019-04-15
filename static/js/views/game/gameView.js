@@ -7,11 +7,9 @@ export default class gameView extends View {
         super(template, eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('onGetUserDataForGameResponse', this.getUserResponse.bind(this));
-
     }
 
     getUserResponse(data = {}) {
-        console.log('onResponse', data);
         if (data) {
             this.render(null, data);
         }
@@ -19,16 +17,19 @@ export default class gameView extends View {
 
     // TODO(): Norrmal nickname getter
     render(root, data = {}) {
-        this.localEventBus.callEvent('getUserDataForGame');
+        super.render(root, data);
         // this.data = data; // загглушка ахахах
         // console.log('data is ', data);
         // const dataTemp = {
         //     userName: 'Test'
         // };
-        super.render(root, data);
-        console.log('data to render', data);
-        const block = new userBlock();
-        block.gameButtons(data);
-        this.localEventBus.callEvent('startGame');  
+        if (Object.keys(data).length === 0) {
+            this.localEventBus.callEvent('getUserDataForGame');
+        } else {
+            super.render(root, data);
+            const block = new userBlock();
+            block.gameButtons(data);
+            this.localEventBus.callEvent('startGame');  
+        }
     }
 }

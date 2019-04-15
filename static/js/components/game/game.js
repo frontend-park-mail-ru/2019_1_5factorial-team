@@ -194,7 +194,7 @@ export default class Game {
         let heartsUpperOffset = this.canvas.height / 80;
 
         this.ctx.clearRect(0, 0, this.heartImg.width * 4,this.heartImg.height + heartsUpperOffset);
-        console.log('hp: ' + this.state.player.hp);
+        // console.log('hp: ' + this.state.player.hp);
         for (let i = this.state.player.hp / 100; i > 0; i--) {
             this.ctx.drawImage(this.heartImg, heartsBetweenOffset + heartOffset, heartsUpperOffset, this.heartImg.width, this.heartImg.height);
             heartOffset += this.heartImg.width;
