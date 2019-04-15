@@ -17,29 +17,25 @@
     <section class="container__block container__block_center">
         <div class="content">
             <h1 class="content__header">about</h1>
-            <div class="content-block content-block_about">
-                <div class="content-block-unit content-block-unit_about">
+            <div class="about">
+                <div class="unit unit_about inline">
                     <h2 class="text-title content-block-unit__title">🛠 Our repo you can find</h2>
-                    <a class="btn content-block-unit_about__btn" href="https://github.com/frontend-park-mail-ru/2019_1_5factorial-team" target="_blank">here</a>
+                    <a class="btn about__btn" href="https://github.com/frontend-park-mail-ru/2019_1_5factorial-team" target="_blank">here</a>
                 </div>
-                <div class="content-block-unit content-block-unit_about">
-                    <h2 class="text-title content-block-unit__title">👻 Our team</h2>
-                    <a class="btn content-block-unit_about__btn" href="https://github.com/Smet1" target="_blank">Kirill Smetankin</a>
-                    <a class="btn content-block-unit_about__btn" href="https://github.com/4taa" target="_blank">Pavel Pupchin</a>
-                    <a class="btn content-block-unit_about__btn" href="https://github.com/crueltycute" target="_blank">Nadezhda Merkulova</a>
-                    <a class="btn content-block-unit_about__btn" href="https://github.com/MrOcumare" target="_blank">Ilya Murashko</a>
+                <div class="unit unit_about columned">
+                    <h2 class="text-title unit__title">👻 Our team</h2>
+                    <a class="btn about__btn" href="https://github.com/Smet1" target="_blank">Kirill Smetankin</a>
+                    <a class="btn about__btn" href="https://github.com/4taa" target="_blank">Pavel Pupchin</a>
+                    <a class="btn about__btn" href="https://github.com/crueltycute" target="_blank">Nadezhda Merkulova</a>
+                    <a class="btn about__btn" href="https://github.com/MrOcumare" target="_blank">Ilya Murashko</a>
                 </div>
-                <div class="content-block-unit content-block-unit_about">
-                    <h2 class="text-title content-block-unit__title">🐰 Our Mentor</h2>
-                    <a class="btn content-block-unit_about__btn" href="https://github.com/Thewhiterabbit123" target="_blank">Nadezhda Parpibaeva</a>
-                </div>
-                <div class="content-block-unit content-block-unit_about">
-                    <h2 class="text-title content-block-unit__title">♟ Our Mates</h2>
-                    <a class="btn content-block-unit_about__btn" href="http://kekmate.tech" target="_blank">kekmate.tech</a>
+                <div class="unit unit_about columned">
+                    <h2 class="text-title unit__title">🐰 Our Mentor</h2>
+                    <a class="btn about__btn" href="https://github.com/Thewhiterabbit123" target="_blank">Nadezhda Parpibaeva</a>
                 </div>
             </div>
         </div>
-        <a class="btn btn_contained btn_back-menu" href="/">↩ Back</a>
+        <a class="btn btn_contained btn_back-menu" href="/">Back</a>
     </section>
         <section class="container__block container__block_side right-elems">
             <div class="users js-check-auth">

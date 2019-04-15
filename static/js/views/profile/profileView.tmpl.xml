@@ -18,55 +18,48 @@
     <section class="container__block container__block_center">
         <div class="content">
             <h1 class="content__header">profile</h1>
-            <div class="content-block content-block_avatar">
+            <div class="avatar">
                 <img class="avatar-img js-upload-avatar" src="{params.user.avatar}"/>
                 <form class="form js-upload-photo">
                     <div class="change-btn-photo">
                         <label>
                             <input class="btn photo-btn js-change-image" type="file" title="avatar" accept=""/>
-                            <div class="btn btn_contained profile__btn js-change-image js-submit-avatar">Change Avatar</div>
+                            <div class="btn btn_contained profile__btn js-change-image js-submit-avatar">Change</div>
                         </label>
                     </div>
                 </form>
             </div>
-            <hr class="hr"/>
-            <div class="content-block">
-                <div class="content-block-unit content-block-unit_profile content-block-unit_profile_line js-login-subblock">
-                    <h2 class="text-title content-block-unit__title content-block-unit__title_row">Login:</h2>
-                    <div class="content-block-unit_profile__row js-login-row">
+            <div class="profile">
+                <div class="unit unit_profile inlined js-login-subblock">
+                    <h2 class="text-title unit__title unit__title_row">Login:</h2>
+                    <div class="profile__row js-login-row">
                         <fest:value>params.user.login</fest:value>
                     </div>
                 </div>
-                <div class="content-block-unit content-block-unit_profile content-block-unit_profile_line js-email-subblock">
-                    <h2 class="text-title content-block-unit__title content-block-unit__title_row">Email:</h2>
-                    <div class="content-block-unit_profile__row js-email-row">
+                <div class="unit unit_profile inlined js-email-subblock">
+                    <h2 class="text-title unit__title unit__title_row">Email:</h2>
+                    <div class="profile__row js-email-row">
                         <fest:value>params.user.email</fest:value>
                     </div>
                 </div>
-                <div class="content-block-unit content-block-unit_profile content-block-unit_profile_line js-score-subblock">
-                    <h2 class="text-title content-block-unit__title content-block-unit__title_row">Score:</h2>
-                        <div class="profile-score js-score-row">
+                <div class="unit unit_profile inlined js-score-subblock">
+                    <h2 class="text-title unit__title unit__title_row">Score:</h2>
+                        <div class="profile__score js-score-row">
                             <fest:value>params.user.score</fest:value>
                         </div>
                 </div>
-                <hr class="hr"/>
-                <div class="content-block-unit content-block-unit_profile">
-                    <form class="form js-change-password js-new">
-                        <button class="btn btn_contained form__btn form__btn_change-password js-call-submit" type="submit">Change password</button>
-                        <hr class="hr"/>
+                <div class="unit unit_profile columned">
+                    <form class="form form_change-password js-change-password js-new">
+                        <span class="text-change-password">To change password click</span>
+                        <button class="btn btn_change-password js-call-submit" type="submit">here</button>
                     </form>
                 </div>
             </div>
-            <div class="content-block content-block_actions">
-            </div>
-
-            <a class="btn btn_contained btn_back-menu" href="/">↩ Back</a>
+            <a class="btn btn_contained btn_back-menu" href="/">Back</a>
         </div>
     </section>
-
     <section class="modal-window hide">
     </section>
-
     <section class="container__block container__block_side">
         <div class="users">
             <a class="btn users__btn js-signout" href="/">Sign Out</a>

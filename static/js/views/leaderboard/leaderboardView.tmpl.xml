@@ -20,7 +20,7 @@
                 <h1 class="content__header">leaders</h1>
                 <div class="leaders-table">
                     <div class="lead-users">
-                        <h2 class="text-title leaders-table__column-header">👤 User</h2>
+                        <h2 class="text-title leaders-table__header">👤 User</h2>
                         <ul class="leaders-table__column">
                             <fest:for iterate="params.users" index="i" value="userData">
                                 <li>
@@ -30,7 +30,7 @@
                         </ul>
                     </div>
                     <div class="lead-scores">
-                        <h2 class="text-title leaders-table__column-header">🏆 Score</h2>
+                        <h2 class="text-title leaders-table__header">🏆 Score</h2>
                         <ul class="leaders-table__column">
                             <fest:for iterate="params.users" index="i" value="userData">
                                 <li>
@@ -43,7 +43,7 @@
                 <div class="paginator js-paginator-buttons">
                 </div>
             </div>
-            <a class="btn btn_contained btn_back-menu js-back-to-menu" href="/">↩ back</a>
+            <a class="btn btn_contained btn_back-menu js-back-to-menu" href="/">Back</a>
         </section>
 
         <section class="container__block container__block_side right-elems">
