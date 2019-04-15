@@ -17,7 +17,7 @@ export default class userBlock {
     gameButtons(data = {}) {
         const userButtons = document.getElementsByClassName('js-check-user')[0];
         if (data !== null) {
-            userButtons.innerHTML = `<a class="btn users__btn login-btn">${data.userName}</a>
+            userButtons.innerHTML = `<a class="btn users__btn login-btn">${data.nickname}</a>
             <a class="btn users__btn signup-btn" href="/">Back to menu</a>`;
             return true;
         } else {

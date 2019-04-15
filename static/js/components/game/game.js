@@ -2,31 +2,32 @@ const GHOST_SPEED = 100;
 const GHOST_DAMAGE = 1;
 
 export default class Game {
+    /**
+     * this.lastButtonPressed - последняя нажатая клавиша
+     * this.bindedButtonsHandler - обработчик нажатия на клавиши
+     * this.bindedResizer - обработчик изменения размеров экрана для корректного ререндера
+     * this.state - состояние игры
+     */
     constructor() {
         this.canvas = document.getElementsByClassName('temp_class_canvas')[0];
         this.ctx = this.canvas.getContext('2d');
 
-        // последняя нажатая клавиша
         this.lastButtonPressed = '';
 
-        // слушаем нажатия клавиш с клавиатуры
         this.bindedButtonsHandler = this.buttonsHandler.bind(this);
         window.addEventListener('keydown', this.bindedButtonsHandler);
 
-        // слушаем изменение размеров экрана
-        this.bindedResizer = this.resizer.bind(this); // TODO(): переехать на шину событий, хезе как
+        this.bindedResizer = this.resizer.bind(this);
         window.addEventListener('resize', this.bindedResizer);
         this.resizer();
 
         this.requestID = null;
 
-        // достаем спрайты, TODO: придумать, как работать со спрайтами
         this.playerImg = document.getElementById('player-sprite');
         this.ghostLeftImg = document.getElementById('ghost-left-sprite');
         this.ghostRightImg = document.getElementById('ghost-right-sprite');
         this.heartImg = document.getElementById('heart-sprite');
 
-        // состояние игры
         this.state = {
             player: {
                 sprite: this.playerImg,

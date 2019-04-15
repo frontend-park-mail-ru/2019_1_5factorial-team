@@ -74,6 +74,8 @@ export const EVENT_LIST_SIGNUP = [
 ];
 
 export const EVENT_LIST_GAME = [
+    'getUserDataForGame',
+    'onGetUserDataForGameResponse',
     'gameOver',
     'startGame',
 ];

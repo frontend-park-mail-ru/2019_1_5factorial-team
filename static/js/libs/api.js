@@ -4,7 +4,6 @@ export default class api {
 
     /**
      * Загрузка пользователя
-     * @param {*} user
      */
     static loadUser() {
         return network.doGet({ url:'/api/user' }).then(res => res.json());
