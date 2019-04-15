@@ -9,7 +9,7 @@
 !.vscode/extensions.json
 
 static/dist/bundle.js
-static/dist/
+# static/dist/
 # static/dist/sw.js
 
 static/js/views/menu/menuView.tmpl.js
