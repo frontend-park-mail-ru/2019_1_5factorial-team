@@ -1,14 +1,9 @@
 import menuModel from '../model/menuModel.js';
 import menuView from '../views/menu/menuView.js';
 import EventBus from '../libs/eventBus.js';
+import { EVENT_LIST_MENU } from '../components/constants.js';
 
-const eventList = [
-    'checkAuthorizationResponse',
-    'checkAuthorization',
-    'signoutResponse',
-    'signOut',
-    'closeView'
-];
+const eventList = EVENT_LIST_MENU;
 
 export default class menuController {
     constructor() {

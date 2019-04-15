@@ -1,13 +1,11 @@
 import View from '../../libs/views.js';
-
-const AVATAR_BROKEN_LINK = 'http://78.155.207.69:5051../../../img/default.jpg';
-const AVATAR_BASE_LINK = '../../../img/default.jpg';
-const NETWORK_ADRESS = 'http://78.155.207.69:5051';
-
+import ModalWindow from '../../components/modalWindow.js';
+import { NETWORK_ADRESS, AVATAR_DEFAULT, DEFAULT_AVATAR } from '../../components/constants.js';
+import template from './profileView.tmpl.xml';
 
 export default class profileView extends View {
     constructor({ eventBus = {} }) {
-        super('profile/profileView.tmpl', eventBus);
+        super(template, eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('checkAuthResponse', this.onCheckAuthorizationResponse.bind(this));
         this.localEventBus.getEvent('loadUserResponse', this.onLoadUserResponse.bind(this));
@@ -18,30 +16,36 @@ export default class profileView extends View {
         this.localEventBus.getEvent('submitPasswordSuccess', this.onSubmitPasswordSuccess.bind(this));
     }
 
-    render(root, data = {}) {
+    render(root) {
         if (root !== undefined) {
             this.prevRoot = root;
         }
-        this.data = data; //заглушка для линтера
         this.localEventBus.callEvent('checkAuth');
     }
 
     onSubmitPasswordSuccess(data) {
-        this.data = data;
+        if (data.newPassword) {
+            const MW = new ModalWindow();
+            MW.createModal('Profile change password success');
+        }
     }
 
     onChangePasswodResponse(data) {
-        this.data = data;
+        //TODO(): добавить обработку ошибки в верстке
+        console.log(data.error);
     }
 
-    onChangeAvatarResponse() {
-
+    onChangeAvatarResponse(data) {
+        if (data.error !== undefined) {
+            console.log(data.error);
+            return;
+        }
+        this.localAvatar.src = AVATAR_DEFAULT;
+        this.localEventBus.callEvent('loadUser', data);
     }
 
     onChangeAvatarSuccess(data) {
-        if (!data.avatar) {
-            return;
-        }
+        console.log(data.avatar);
         this.localAvatar.src = data.avatar;
         this.localEventBus.callEvent('loadUser', data);
     }
@@ -51,7 +55,6 @@ export default class profileView extends View {
             this.localEventBus.callEvent('checkAuthError');
             return;
         }
-
         this.localEventBus.callEvent('loadUser', data);
     }
 
@@ -60,14 +63,15 @@ export default class profileView extends View {
             this.localEventBus.callEvent('checkAuthError');
             return;
         }
-        if (data.user.avatar === AVATAR_BROKEN_LINK || data.user.avatar === AVATAR_BASE_LINK) {
-            data.user.avatar = AVATAR_BASE_LINK;
+        // TODO(): перехать просто на пустую строку вида ''
+        if (data.user.avatar === DEFAULT_AVATAR || data.user.avatar === AVATAR_DEFAULT) {
+            data.user.avatar = AVATAR_DEFAULT;
         } else {
             data.user.avatar = NETWORK_ADRESS + data.user.avatar;
         }
         super.render(this.prevRoot, data);
-        const imgTemp = document.getElementsByClassName('avatar-img')[0];
-        imgTemp.src = data.user.avatar;
+        const imgToSet = document.getElementsByClassName('avatar-img')[0];
+        imgToSet.src = data.user.avatar;
 
         this.initElements();
     }
@@ -78,16 +82,14 @@ export default class profileView extends View {
 
         this.formInput =  document.getElementsByClassName('js-change-password')[0];
 
-        this.passwordSubmit = this.formInput.getElementsByClassName('js-button-submit')[0];
-        this.imputPasswordOld = this.formInput.getElementsByClassName('js-password-old')[0];
-        this.imputPasswordNew = this.formInput.getElementsByClassName('js-password-new')[0];
-
+        this.callSubmit = this.formInput.getElementsByClassName('js-call-submit')[0];
         this.initElementsEvents();
     }
 
     initElementsEvents() {
         const signoutButton = document.getElementsByClassName('js-signout')[0];
         const buttonUp = this.localAvatarUploader;
+        const MW = new ModalWindow();
         buttonUp.addEventListener('change', () => {
             this.localEventBus.callEvent('changeAvatar', { avatar: this.localAvatarUploader.files[0] });
         });
@@ -96,11 +98,20 @@ export default class profileView extends View {
             this.localEventBus.callEvent('signOut');
         });
 
-        this.passwordSubmit.addEventListener('click', (event) => {
+        this.callSubmit.addEventListener('click', (event) => {
             event.preventDefault();
-            this.localEventBus.callEvent('submitPassword', { 
-                newPassword: this.imputPasswordNew.value, 
-                oldPassword: this.imputPasswordOld.value 
+
+            MW.createModal('Profile change password');
+            this.inputPasswordOld = document.getElementsByClassName('js-password-old')[0];
+            this.inputPasswordNew = document.getElementsByClassName('js-password-new')[0];
+            this.submitPassword = document.getElementsByClassName('js-button-submit')[0];
+
+            this.submitPassword.addEventListener('click', (event) => {
+                event.preventDefault();
+                this.localEventBus.callEvent('submitPassword', {
+                    newPassword: this.inputPasswordNew.value,
+                    oldPassword: this.inputPasswordOld.value
+                });
             });
         });
     }

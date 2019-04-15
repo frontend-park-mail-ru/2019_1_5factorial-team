@@ -1,9 +1,10 @@
 import View from '../../libs/views.js';
 import userBlock from '../../components/userBlock.js';
+import template from './aboutView.tmpl.xml';
 
 export default class aboutView extends View {
     constructor({ eventBus = {} } = {}) {
-        super('about/aboutView.tmpl', eventBus);
+        super(template, eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('checkAuthorizationResponse', this.onCheckAuthResponse.bind(this));
     }

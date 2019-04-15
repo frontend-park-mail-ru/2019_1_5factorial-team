@@ -1,12 +1,12 @@
 import api from '../libs/api.js';
 import Validator from '../libs/validation.js';
-
-const OK_RESPONSE = 200;
+import { OK_RESPONSE, OK_VALIDATE_EMAIL, OK_VALIDATE_LOGIN, OK_VALIDATE_PASSWORD } from '../components/constants.js';
 
 export default class loginModel {
     constructor(eventBus) {
         this.localEventBus = eventBus;
         this.localEventBus.getEvent('login', this.onLogin.bind(this));
+        this.oauthLogin();
     }
 
     /**
@@ -18,9 +18,9 @@ export default class loginModel {
         const password = data.pass;
         const validateLoginOrEmail = Validator.validateLoginOrEmail(loginOrEmailData);
 
-        if (!validateLoginOrEmail) {
+        if (validateLoginOrEmail !== OK_VALIDATE_EMAIL && validateLoginOrEmail !== OK_VALIDATE_LOGIN) {
             const response = {
-                inputField: 'loginOrEmail',
+                inputField: 'js-login-or-email',
                 error: validateLoginOrEmail
             };
             this.localEventBus.callEvent('loginResponse', response);
@@ -29,16 +29,14 @@ export default class loginModel {
 
         const validatePassword = Validator.validatePassword(password);
 
-        if (!validatePassword) {
+        if (validatePassword !== OK_VALIDATE_PASSWORD) {
             const response = {
-                inputField: 'inputPassword',
+                inputField: 'js-password',
                 error: validatePassword
             };
             this.localEventBus.callEvent('loginResponse', response);
             return;
         }
-
-        this.localEventBus.callEvent('loadWaiting');
 
         api.login({
             loginOrEmail: loginOrEmailData,
@@ -51,4 +49,27 @@ export default class loginModel {
             }
         });
     }
+
+    /**
+     * Авторизация через сторонние сервисы
+     */
+    oauthLogin() {
+        const params = new URLSearchParams(window.location.hash.slice(1));
+        const token = params.get('access_token');
+        const qparams = new URLSearchParams(window.location.search);
+        const service = qparams.get('service') || 'vk';
+        if (token) {
+            api.loginOauth({
+                token,
+                service
+            }).then(res => {
+                if (res.status === OK_RESPONSE) {
+                    res.json().then(data => this.localEventBus.callEvent('loginSuccess', data));
+                } else {
+                    res.json().then(data => this.localEventBus.callEvent('loginResponse', data));
+                }
+            });
+        }
+    }
+
 }

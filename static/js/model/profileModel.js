@@ -2,16 +2,11 @@ import Validation from '../libs/validation.js';
 import Network from '../libs/network.js';
 import api from '../libs/api.js';
 import {User} from '../libs/users.js';
-
-const OK_RESPONSE = 200;
-const NETWORK_ADRESS = 'http://78.155.207.69:5051';
-const AVATAR_ERROR_RESPONSE = '';
+import { OK_RESPONSE, NETWORK_ADRESS, DEFAULT_AVATAR, OK_VALIDATE_PASSWORD, OK_VALIDATE_AVATAR, AVATAR_DEFAULT } from '../components/constants.js';
 
 export default class profileModel {
     constructor(eventBus) {
         this.localEventBus = eventBus;
-
-        this.localEventBus.getEvent('changePassword', this.onChangePassword.bind(this));
         this.localEventBus.getEvent('changeAvatar', this.onChangeAvatar.bind(this));
 
         this.localEventBus.getEvent('submitPassword', this.onSubmitPassword.bind(this));
@@ -24,32 +19,39 @@ export default class profileModel {
      * Проверяем смену аватара
      */
     onChangeAvatar(data) {
-        const newAvatar = data.avatar;
-        api.uploadAvatar(newAvatar).then(res => res.json().then(res => {
-            if (res === AVATAR_ERROR_RESPONSE) {
-                console.log(res);
-                return;
-            } else {
-                const avatarName = res.avatar_link;
+        const validateNewAvatar = Validation.validateImage(data.avatar);
+        if (validateNewAvatar !== OK_VALIDATE_AVATAR) {
+            this.localEventBus.callEvent('changeAvatarResponse', {error: validateNewAvatar});
+            return;
+        }
 
-                api.updateUser({
-                    avatar_input: avatarName,
-                    old_password: undefined,
-                    new_password: undefined
-                }).then(res => {
-                    if (res.ok) {
-                        const avatarLink = NETWORK_ADRESS + avatarName;
-                        this.localEventBus.callEvent('changeAvatarSuccess', {avatar: avatarLink});
-                    } else {
-                        res.json().then(dataResponse => {
-                            if (dataResponse.field === 'avatar') {
-                                this.localEventBus.callEvent('changeAvatarResponse', {error: dataResponse.error});
-                            }
-                        });
-                    }
-                });
+        api.uploadAvatar(data.avatar).then(res => {
+            if (res.status !== OK_RESPONSE) {
+                this.localEventBus.callEvent('changeAvatarResponse', {error: res.error});
+                return;
             }
-        }));
+            res.json().then(res => {
+                if (res === DEFAULT_AVATAR || res === AVATAR_DEFAULT) {
+                    this.localEventBus.callEvent('changeAvatarResponse', {avatar: AVATAR_DEFAULT});
+                    return;
+                } else {
+                    api.updateUser({
+                        avatar_input: res.avatar_link,
+                        old_password: undefined,
+                        new_password: undefined
+                    }).then(res => {
+                        if (res.status === OK_RESPONSE) {
+                            const avatarLink = NETWORK_ADRESS + res.avatar_link;
+                            this.localEventBus.callEvent('changeAvatarSuccess', {avatar: avatarLink});
+                        } else {
+                            res.json().then(res => {
+                                this.localEventBus.callEvent('changeAvatarResponse', {error: res.error});
+                            });
+                        }
+                    });
+                }
+            });
+        });
     }
 
     /**
@@ -69,18 +71,17 @@ export default class profileModel {
         const passOld = data.oldPassword;
         const passNew = data.newPassword;
         const errPassOld = Validation.validatePassword(passOld);
-        if (!errPassOld) {
+        if (errPassOld !== OK_VALIDATE_PASSWORD) {
             this.localEventBus.callEvent('changePasswordResponse', {error: errPassOld});
             return;
         }
         const errPassNew = Validation.validatePassword(passNew);
-        if (!errPassNew) {
+        if (errPassNew !== OK_VALIDATE_PASSWORD) {
             this.localEventBus.callEvent('changePasswordResponse', {error: errPassNew});
             return;
         }
 
         api.updateUser({
-            guid: this._currentUserGUID,
             avatar: this.avatar,
             old_password: passOld,
             new_password: passNew
@@ -88,29 +89,11 @@ export default class profileModel {
             if (res.ok) {
                 this.localEventBus.callEvent('submitPasswordSuccess', {newPassword: passNew});
             } else {
-                res.json().then(dataResponse => {
-                    if (dataResponse.field === 'password') {
-                        this.localEventBus.callEvent('changePasswordResponse', {error: dataResponse.error});
-                    }
+                res.json().then(res => {
+                    this.localEventBus.callEvent('changePasswordResponse', {error: res.error});
                 });
             }
         });
-    }
-
-    /**
-     * Вызываем смену пароля пользователя
-     * @param {*} data
-     */
-    onChangePassword(data) {
-        const pass = data.pass;
-        const errPass = Validation.validatePassword(pass);
-        if (errPass) {
-            this.localEventBus.callEvent('changePasswordResponse', {error: errPass});
-            return;
-        }
-
-        // TODO: update page on success change avatar
-        this.localEventBus.callEvent('changePasswordResponse', {});
     }
 
     /**
@@ -119,16 +102,15 @@ export default class profileModel {
      */
     onLoadUser() {
         api.loadUser()
-            .then(user => {
-                if (user.error) {
+            .then(res => {
+                if (res.error) {
                     this.localEventBus.callEvent('loadUserResponse', {});
                 } else {
                     const toSetUser = {
-                        avatar: user.avatar_link,
-                        score: user.score || 0,
-                        login: user.nickname || 'Nouserlogin',
-                        email: user.email,
-                        guid: user.guid,
+                        avatar: res.avatar_link,
+                        score: res.score,
+                        login: res.nickname,
+                        email: res.email,
                     };
                     User.setUser({ toSetUser });
 
@@ -144,10 +126,10 @@ export default class profileModel {
         Network.doGet({url: '/api/session'})
             .then(response => {
                 if (response.status !== OK_RESPONSE) {
-                    response.json().then(data => this.localEventBus.callEvent('checkAuthResponse', {
+                    this.localEventBus.callEvent('checkAuthResponse', {
                         isAuth: false,
-                        error: data.error
-                    }));
+                        error: response.error
+                    });
                 } else {
                     response.json().then(() => {
                         this.localEventBus.callEvent('checkAuthResponse', {

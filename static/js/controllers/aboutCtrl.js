@@ -1,13 +1,9 @@
 import aboutView from '../views/about/aboutView.js';
 import aboutModel from '../model/aboutModel.js';
 import EventBus from '../libs/eventBus.js';
+import { EVENT_LIST_ABOUT } from '../components/constants.js';
 
-const eventList = [
-    'checkAuthorizationResponse',
-    'checkAuthorization',
-    'signOut',
-    'closeView'
-];
+const eventList = EVENT_LIST_ABOUT;
 
 export default class aboutController {
     constructor() {
