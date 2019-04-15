@@ -17,13 +17,16 @@ export default class gameView extends View {
 
     render(root, data = {}) {
         super.render(root, data);
+        
         if (Object.keys(data).length === 0) {
             this.localEventBus.callEvent('getUserDataForGame');
         } else {
             super.render(root, data);
+
             const block = new userBlock();
             block.gameButtons(data);
             this.localEventBus.callEvent('startGame');  
+
             const menuButton = document.getElementsByClassName('js-back-to-menu')[0];
             menuButton.addEventListener('click', () => {
                 this.localEventBus.callEvent('stopGameManualy');

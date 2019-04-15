@@ -49,7 +49,7 @@ export default class api {
      * */
     static loginOauth({ token, service } = {}) {
         return network.doPost({
-            url: `/api/login_${service}`,
+            url: `/api/session/oauth/${service}`,
             body: {
                 'token': token
             }

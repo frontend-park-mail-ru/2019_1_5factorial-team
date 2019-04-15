@@ -59,6 +59,7 @@ export default class Game {
         if (this.requestID) {
             cancelAnimationFrame(this.requestID);
         }
+        console.log('final score is', this.state.score);
         window.removeEventListener('resize', this.bindedResizer);
         window.removeEventListener('keydown', this.bindedButtonsHandler);
     }
@@ -73,7 +74,10 @@ export default class Game {
         if (this.state.isGameOver === true) {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
             this.destroy();
+            let finalScore = this.state.score;
             this.MW.createModal('Game single end');
+            const scoreElement = document.getElementsByClassName('js-set-final-score')[0];
+            scoreElement.innerText = `Your score is : ${finalScore}`;
             return;
         }
 
@@ -133,6 +137,7 @@ export default class Game {
             if (this.lastButtonPressed === this.state.ghosts[i].symbols[0]) {
                 this.state.ghosts[i].symbols = this.state.ghosts[i].symbols.slice(1, this.state.ghosts[i].symbols.length + 1);
                 this.lastButtonPressed = '';
+                this.state.score += 10;
             }
 
             // убили
@@ -143,6 +148,7 @@ export default class Game {
                     this.ctx.clearRect(this.canvas.width / 2 + this.state.player.sprite.width / 2 - 6, this.canvas.height / 2, this.canvas.width / 2, this.canvas.height / 2);
                 }
                 this.state.ghosts.splice(i, 1);
+                this.state.score += 100;
             }
         }
 
