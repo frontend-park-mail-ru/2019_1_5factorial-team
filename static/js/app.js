@@ -4,6 +4,7 @@ import loginController from './controllers/loginCtrl.js';
 import signUpController from './controllers/signUpCtrl.js';
 import leaderboardController from './controllers/leaderboardCtrl.js';
 import profileController from './controllers/profileCtrl.js';
+import gameController from './controllers/gameCtrl.js';
 
 import Router from './libs/router.js';
 
@@ -17,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const main = document.getElementsByClassName('main-container')[0];
     const router = new Router(page);
 
+    const gameCtrl = new gameController();
     const menuCntl = new menuController();
     const aboutCtrl = new aboutController();
     const loginCtrl = new loginController(router);
@@ -29,11 +31,13 @@ document.addEventListener('DOMContentLoaded', () => {
     router.add('/profile', main, profileCtrl.profileView);
     router.add('/signup', main, signUpCtrl.signUpView);
     router.add('/leaders', main, leaderboardCtrl.leaderboardView);
+    router.add('/single', main, gameCtrl.gameView);
+    // router.add('/multi', main, gameCtrl.gameView);  --------->  resolve numOfPlayers
     router.add('/', main, menuCntl.menuView);
 
     router.start();
 });
 
 function createPage(page) {
-    page.innerHTML = '<main class="main-container"></main>';
+    page.innerHTML = '<main class="main-container"></canvas></main>';
 }
