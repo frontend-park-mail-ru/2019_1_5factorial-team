@@ -13,6 +13,7 @@ export default class ModalWindow {
         this.noCase = document.getElementsByClassName('js-skip-training')[0];
         this.closeMW = document.getElementsByClassName('js-close-mw')[0];
         this.blur = document.getElementsByClassName('blur')[0];
+        this.gameOverBackMenu = document.getElementsByClassName('js-back-to-menu-modal')[0];
 
         if (this.noCase !== undefined) {
             this.noCase.addEventListener('click', (event) => {
@@ -31,6 +32,12 @@ export default class ModalWindow {
         if (this.closeMW !== undefined) {
             this.closeMW.addEventListener('click', (event) => {
                 event.preventDefault();
+                this.removeModal();
+            });
+        }
+
+        if (this.gameOverBackMenu !== undefined) {
+            this.gameOverBackMenu.addEventListener('click', () => {
                 this.removeModal();
             });
         }

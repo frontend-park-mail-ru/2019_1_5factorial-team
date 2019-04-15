@@ -8,10 +8,9 @@ const eventList = EVENT_LIST_GAME;
 export default class gameController {
     constructor() {
         const eventBus = new EventBus(eventList);
-
         this.gameView = new gameView({ eventBus });
-
         // TODO: сделать онлайн модель и выбор нужной модели
         this.gameModel = new gameOfflineModel(eventBus);
+
     }
 }

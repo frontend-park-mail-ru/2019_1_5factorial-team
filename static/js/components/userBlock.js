@@ -18,10 +18,10 @@ export default class userBlock {
         const userButtons = document.getElementsByClassName('js-check-user')[0];
         if (data !== null) {
             userButtons.innerHTML = `<a class="btn users__btn login-btn">${data.user.nickname}</a>
-            <a class="btn users__btn signup-btn" href="/">Back to menu</a>`;
+            <a class="btn users__btn signup-btn js-back-to-menu" href="/">Back to menu</a>`;
             return true;
         } else {
-            userButtons.innerHTML = `<a class="btn users__btn signup-btn" href="/menu">Back to menu
+            userButtons.innerHTML = `<a class="btn users__btn signup-btn js-back-to-menu" href="/">Back to menu
             </a>`;
             return false;
         }

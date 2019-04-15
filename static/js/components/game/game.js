@@ -1,3 +1,5 @@
+import ModalWindow from '../modalWindow.js';
+
 const GHOST_SPEED = 100;
 const GHOST_DAMAGE = 1;
 
@@ -9,6 +11,7 @@ export default class Game {
      * this.state - состояние игры
      */
     constructor() {
+        this.MW = new ModalWindow();
         this.canvas = document.getElementsByClassName('temp_class_canvas')[0];
         this.ctx = this.canvas.getContext('2d');
 
@@ -71,6 +74,7 @@ export default class Game {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
             this.destroy();
             console.log('game over');
+            this.MW.createModal('Game single end');
             return;
         }
 

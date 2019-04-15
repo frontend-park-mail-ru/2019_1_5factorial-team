@@ -15,14 +15,8 @@ export default class gameView extends View {
         }
     }
 
-    // TODO(): Norrmal nickname getter
     render(root, data = {}) {
         super.render(root, data);
-        // this.data = data; // загглушка ахахах
-        // console.log('data is ', data);
-        // const dataTemp = {
-        //     userName: 'Test'
-        // };
         if (Object.keys(data).length === 0) {
             this.localEventBus.callEvent('getUserDataForGame');
         } else {
@@ -30,6 +24,15 @@ export default class gameView extends View {
             const block = new userBlock();
             block.gameButtons(data);
             this.localEventBus.callEvent('startGame');  
+            const menuButton = document.getElementsByClassName('js-back-to-menu')[0];
+            menuButton.addEventListener('click', () => {
+                this.localEventBus.callEvent('stopGameManualy');
+            });
         }
+
+        // const menuButton = document.getElementsByClassName('js-back-to-menu')[0];
+        // menuButton.addEventListener('click', (event) => {
+        // this.localEventBus.callEvent('stopGameManualy');
+        // });
     }
 }

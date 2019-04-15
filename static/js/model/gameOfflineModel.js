@@ -4,12 +4,12 @@ import api from '../libs/api.js';
 export default class gameOfflineModel {
     constructor(eventBus) {
         this.scene = null;
-
         this.localEventBus = eventBus;
 
         this.localEventBus.getEvent('startGame', this.onStart.bind(this));
         this.localEventBus.getEvent('gameOver', this.onGameOver.bind(this));
         this.localEventBus.getEvent('getUserDataForGame', this.getUser.bind(this));
+        this.localEventBus.getEvent('stopGameManualy', this.stopGame.bind(this));
     }
 
     getUser() {
@@ -22,14 +22,6 @@ export default class gameOfflineModel {
                     const responseOnUser = {
                         nickname: res.nickname,
                     };
-                    // const toSetUser = {
-                    //     avatar: res.avatar_link,
-                    //     score: res.score,
-                    //     login: res.nickname,
-                    //     email: res.email,
-                    // };
-                    // User.setUser({ toSetUser });
-
                     this.localEventBus.callEvent('onGetUserDataForGameResponse', {user: responseOnUser});
                 }
             });
@@ -39,11 +31,14 @@ export default class gameOfflineModel {
         this.scene = new Game();
     }
 
+    stopGame() {
+        this.scene.destroy();
+    }
+
     onGameOver() {
-    //     if (this.scene.state.isGameOver === true) {
-    //         console.log('game over');
-    //         this.scene.destroy();
-    //     }
-    //     // TODO: переброс в меню
+        if (this.scene.state.isGameOver === true) {
+            console.log('game over');
+            this.scene.destroy();
+        }
     }
 }
