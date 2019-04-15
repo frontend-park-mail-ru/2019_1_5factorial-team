@@ -1,7 +1,5 @@
 import ModalWindow from '../modalWindow.js';
-
-const GHOST_SPEED = 100;
-const GHOST_DAMAGE = 1;
+import { DEFAULT_GHOST_SPEED, DEFAULT_GHOST_DAMAGE } from '../constants.js';
 
 export default class Game {
     /**
@@ -75,8 +73,12 @@ export default class Game {
         if (this.state.isGameOver === true) {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
             this.destroy();
-            console.log('game over');
             this.MW.createModal('Game single end');
+            // const blur = document.getElementsByClassName('blur')[0];
+            // blur.addEventListener('click', (event) => {
+            //     event.preventDefault();
+            //     console.log('test');
+            // });
             return;
         }
 
@@ -95,16 +97,16 @@ export default class Game {
                 if (generatedDirection === 'left') {
                     this.state.ghosts.push({
                         x: this.ghostLeftImg.width / 2,
-                        speed: GHOST_SPEED,
-                        damage: GHOST_DAMAGE,
+                        speed: DEFAULT_GHOST_SPEED,
+                        damage: DEFAULT_GHOST_DAMAGE,
                         sprite: this.ghostLeftImg,
                         symbols: this.generateSymbolsSequence()
                     });
                 } else if (generatedDirection === 'right') {
                     this.state.ghosts.push({
                         x: this.canvas.width + this.ghostLeftImg.width / 2,
-                        speed: -GHOST_SPEED,
-                        damage: GHOST_DAMAGE,
+                        speed: -DEFAULT_GHOST_SPEED,
+                        damage: DEFAULT_GHOST_DAMAGE,
                         sprite: this.ghostRightImg,
                         symbols: this.generateSymbolsSequence()
                     });
@@ -113,16 +115,16 @@ export default class Game {
                 if (this.state.ghosts[0].speed < 0) {  // если есть призрак справа
                     this.state.ghosts.push({
                         x: this.ghostLeftImg.width / 2,
-                        speed: GHOST_SPEED,
-                        damage: GHOST_DAMAGE,
+                        speed: DEFAULT_GHOST_SPEED,
+                        damage: DEFAULT_GHOST_DAMAGE,
                         sprite: this.ghostLeftImg,
                         symbols: this.generateSymbolsSequence()
                     });
                 } else if (this.state.ghosts[0].speed > 0) {  // если есть призрак слева
                     this.state.ghosts.push({
                         x: this.canvas.width + this.ghostLeftImg.width / 2,
-                        speed: -GHOST_SPEED,
-                        damage: GHOST_DAMAGE,
+                        speed: -DEFAULT_GHOST_SPEED,
+                        damage: DEFAULT_GHOST_DAMAGE,
                         sprite: this.ghostRightImg,
                         symbols: this.generateSymbolsSequence()
                     });
@@ -156,30 +158,12 @@ export default class Game {
                     if (this.state.ghosts[i].x < this.state.player.x) {
                         this.state.ghosts[i].x += this.state.ghosts[i].speed * dt;
                     } else {
-                        if (this.state.player.hp === 300) {
-                            console.log('player hp: 3 / 3');
-                        }
-                        if (this.state.player.hp === 200) {
-                            console.log('player hp: 2 / 3');
-                        }
-                        if (this.state.player.hp === 100) {
-                            console.log('player hp: 1 / 3');
-                        }
                         this.state.player.hp -= this.state.ghosts[i].damage;
                     }
                 } else if (this.state.ghosts[i].speed < 0) {
                     if (this.state.ghosts[i].x > this.state.player.x + this.state.player.sprite.width) {
                         this.state.ghosts[i].x += this.state.ghosts[i].speed * dt;
                     } else {
-                        if (this.state.player.hp === 300) {
-                            console.log('player hp: 3 / 3');
-                        }
-                        if (this.state.player.hp === 200) {
-                            console.log('player hp: 2 / 3');
-                        }
-                        if (this.state.player.hp === 100) {
-                            console.log('player hp: 1 / 3');
-                        }
                         this.state.player.hp -= this.state.ghosts[i].damage;
                     }
                 }
@@ -201,7 +185,6 @@ export default class Game {
         let heartsUpperOffset = this.canvas.height / 80;
 
         this.ctx.clearRect(0, 0, this.heartImg.width * 4,this.heartImg.height + heartsUpperOffset);
-        // console.log('hp: ' + this.state.player.hp);
         for (let i = this.state.player.hp / 100; i > 0; i--) {
             this.ctx.drawImage(this.heartImg, heartsBetweenOffset + heartOffset, heartsUpperOffset, this.heartImg.width, this.heartImg.height);
             heartOffset += this.heartImg.width;
@@ -256,22 +239,18 @@ export default class Game {
             case 37:  // если нажата клавиша влево
                 this.lastButtonPressed = 'L';
                 this.ctx.fillText('left', dirNameX - left.width / 2, dirNameY, 200, 100);
-                console.log('left');
                 break;
             case 38:   // если нажата клавиша вверх
                 this.lastButtonPressed = 'U';
                 this.ctx.fillText('up', dirNameX - up.width / 2, dirNameY, 200, 100);
-                console.log('up');
                 break;
             case 39:   // если нажата клавиша вправо
                 this.lastButtonPressed = 'R';
                 this.ctx.fillText('right', dirNameX - right.width / 2, dirNameY, 200, 100);
-                console.log('right');
                 break;
             case 40:   // если нажата клавиша вниз
                 this.lastButtonPressed = 'D';
                 this.ctx.fillText('down', dirNameX - down.width / 2, dirNameY, 200, 100);
-                console.log('down');
                 break;
             default:
                 console.log('unknown');

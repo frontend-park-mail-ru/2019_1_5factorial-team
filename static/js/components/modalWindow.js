@@ -4,6 +4,11 @@ export default class ModalWindow {
 
     createModal(element) {
         const modalElement = document.getElementsByClassName('modal-window')[0];
+        this.isGame = false;
+        if (element === 'Game single end') {
+            this.isGame = true;
+        }
+
         modalElement.classList.remove('hide');
         modalElement.innerHTML = '<div class="blur"></div><div class="modal"><div class="content content_modal"></div></div>';
         const divToAppend = document.getElementsByClassName('content_modal')[0];
@@ -22,7 +27,7 @@ export default class ModalWindow {
             });
         }
 
-        if (this.blur !== undefined) {
+        if (this.blur !== undefined && !this.isGame) {
             this.blur.addEventListener('click', (event) => {
                 event.preventDefault();
                 this.removeModal();
@@ -48,5 +53,6 @@ export default class ModalWindow {
         const toDeleteModal = document.getElementsByClassName('content content_modal')[0];
         modalElement.classList.add('hide');
         toDeleteModal.remove();
+        this.isGame = false;
     }
 }

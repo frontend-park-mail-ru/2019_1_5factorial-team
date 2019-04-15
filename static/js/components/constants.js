@@ -89,6 +89,9 @@ export const MIN_LENGTH = 4;
 export const DEFAULT_AVATAR = '';
 export const AVATAR_DEFAULT = '../../../img/default.jpg';
 
+export const DEFAULT_GHOST_SPEED = 100;
+export const DEFAULT_GHOST_DAMAGE = 1;
+
 export const ANAUTH_RESPONSE = 401;
 export const OK_RESPONSE = 200;
 

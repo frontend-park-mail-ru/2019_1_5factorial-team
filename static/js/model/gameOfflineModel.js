@@ -37,7 +37,6 @@ export default class gameOfflineModel {
 
     onGameOver() {
         if (this.scene.state.isGameOver === true) {
-            console.log('game over');
             this.scene.destroy();
         }
     }
