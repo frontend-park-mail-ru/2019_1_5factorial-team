@@ -46,6 +46,7 @@
 
 /* BASIC */
 body {
+    background: #111111;
     background-image: url('../img/2.png');
     background-position: center;
     background-repeat: no-repeat;
@@ -657,8 +658,11 @@ body {
 }
 
 .avatar-img {
+    background: transparent no-repeat;
     border-radius: 1em 1em 0 0;
     height: 10em;
+    background-size: cover;
+    background-position: center;
     width: 10em;
 }
 
