@@ -115,7 +115,7 @@ body {
     .btn_change-password {
         padding: 0;
         border-bottom: 0.1em dotted;
-        margin: 0.15em 0 0 0.25em;
+        margin: 0 0 0.15em 0.25em;
         font-size: 2.75vh;
     }
     .btn_change-password:hover {
