@@ -1,5 +1,5 @@
 import ModalWindow from '../modalWindow.js';
-import { DEFAULT_GHOST_SPEED, DEFAULT_GHOST_DAMAGE } from '../constants.js';
+import { DEFAULT_GHOST_SPEED, DEFAULT_GHOST_DAMAGE, PLAYER_INITIAL_HP } from '../constants.js';
 
 export default class Game {
     /**
@@ -35,7 +35,7 @@ export default class Game {
             player: {
                 sprite: this.playerImg,
                 x: (this.canvas.width -  this.playerImg.width) / 2,
-                hp: 300
+                hp: PLAYER_INITIAL_HP
             },
             ghosts: [],
 
