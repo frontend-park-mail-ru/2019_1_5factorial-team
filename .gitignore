@@ -10,7 +10,7 @@
 
 static/dist/bundle.js
 static/dist/
-static/dist/sw.js
+# static/dist/sw.js
 
 static/js/views/menu/menuView.tmpl.js
 
