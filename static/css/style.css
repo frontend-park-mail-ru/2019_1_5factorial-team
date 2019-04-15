@@ -698,6 +698,7 @@ body {
     flex-direction: column;
     white-space: nowrap;
     align-items: center;
+}
 
 .modal-window {
     position: absolute;
