@@ -41,21 +41,6 @@ export default class gameOfflineModel {
     onGameOver() {
         if (this.scene.state.isGameOver) {
             this.scene.destroy();
-            this.updateUserScore(this.scene.state.score);
         }
     }
-
-    // updateUserScore(score) {
-    //     api.updateUser({
-            
-    //     }).then(res => {
-    //         if (res.ok) {
-    //             this.localEventBus.callEvent('submitPasswordSuccess', {newPassword: passNew});
-    //         } else {
-    //             res.json().then(res => {
-    //                 this.localEventBus.callEvent('changePasswordResponse', {error: res.error});
-    //             });
-    //         }
-    //     });
-    // }
 }
