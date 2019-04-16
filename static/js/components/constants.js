@@ -73,12 +73,16 @@ export const EVENT_LIST_SIGNUP = [
     'loadWaiting'
 ];
 
-export const EVENT_LIST_GAME = [
+export const EVENT_LIST_GAME_SINGLE = [
     'getUserDataForGame',
     'onGetUserDataForGameResponse',
     'gameOver',
     'stopGameManualy',
     'startGame',
+];
+
+export const EVENT_LIST_GAME_MULTI = [
+    
 ];
 
 export const NETWORK_ADRESS = 'http://78.155.207.69:5051';
