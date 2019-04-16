@@ -114,14 +114,14 @@ export const INCORRECT_AVATAR_FORMAT = 'Avatar must be jpeg or png format!';
 export const MAP_OF_MODALS = new Map ([
     ['Game multi end', ''],
     ['Game multi leave', ''],
-    ['Game training', '<h2 class="text-title modal-window__header">Do you want to start training?</h2><div class="modal-window-btns"><button class="btn btn_inlined modal-window__btn js-skip-training">No</button><button class="btn btn_contained modal-window__btn js-start-training">Yes</button></div>'],
-    ['Game single end', '<h2 class="text-title modal-window__header">Game Over! You Lost!</h2><p class="js-set-final-score"></p><a class="btn users__btn signup-btn js-back-to-menu-modal" href="/">Back to menu</a>'],
+    ['Game training', '<h1 class="text-title modal-window__header">Do you want to start training?</h1><div class="modal-window-btns"><button class="btn btn_inlined modal-window__btn js-skip-training">No</button><button class="btn btn_contained modal-window__btn js-start-training">Yes</button></div>'],
+    ['Game single end', '<h1 class="text-title modal-window__header">Game Over! You Lost!</h1><p class="js-set-final-score"></p><a class="btn users__btn signup-btn js-back-to-menu-modal" href="/">Back to menu</a>'],
     ['Game single pause', ''],
     ['Game single leave', ''],
-    ['Menu multi waiting for player', '<h2 class="text-title modal-window__header">Please, wait. We are looking for your opponent...</h2><button class="btn btn_contained modal-window__btn js-close-mw">Cancel</button>'],
-    ['Menu multi error login', '<h2 class="text-title modal-window__header">To play multiplayer you need to be logged in!</h2><button class="btn btn_contained modal-window__btn js-close-mw">Close</button>'],
-    ['Profile change password', '<h2 class="text-title modal-window__header">Change password</h2><div class="modal-window__input-rows"><label class="form__label"><input class="form__input form__input_profile js-password-old" type="password" id="old-password" placeholder="Enter old password" autocomplete="current-password"/></label><label class="form__label"><input class="form__input form__input_profile js-password-new" type="password" id="new-password" placeholder="Enter new password" autocomplete="new-password"/></label></div><button class="btn btn_contained modal-window__btn form__btn form__btn_change-password js-button-submit" type="submit">Change</button>'],
-    ['Profile change password success', '<h1>Password changed</h1><button class="btn btn_contained js-close-mw">Close</button>'],
+    ['Menu multi waiting for player', '<h1 class="text-title modal-window__header">Please, wait. We are looking for your opponent...</h1><button class="btn btn_contained modal-window__btn js-close-mw">Cancel</button>'],
+    ['Menu multi error login', '<h1 class="text-title modal-window__header">To play multiplayer you need to be logged in!</h1><button class="btn btn_contained modal-window__btn js-close-mw">Close</button>'],
+    ['Profile change password', '<h1 class="text-title modal-window__header">Change password</h1><div class="modal-window__input-rows"><label class="form__label"><input class="form__input form__input_profile js-password-old" type="password" id="old-password" placeholder="Enter old password" autocomplete="current-password"/></label><label class="form__label"><input class="form__input form__input_profile js-password-new" type="password" id="new-password" placeholder="Enter new password" autocomplete="new-password"/></label></div><button class="btn btn_contained modal-window__btn form__btn form__btn_change-password js-button-submit" type="submit">Change</button>'],
+    ['Profile change password success', '<h1 class="text-title modal-window__header">Password successfully changed!</h1><button class="btn btn_contained modal-window__btn js-close-mw">Close</button>'],
     ['Shop error login', ''],
 ]);
 

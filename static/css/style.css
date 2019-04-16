@@ -627,6 +627,7 @@ body {
 }
     .name__text {
         display: inline-flex;
+        text-align: center;
         text-decoration: none;
     }
     .name__text:hover {
