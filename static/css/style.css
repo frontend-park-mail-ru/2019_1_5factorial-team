@@ -723,3 +723,12 @@ body {
 .active-pagination {
     background: var(--blue-clr);
 }
+
+#gcanvas {
+    width: 100%;
+    height: 100%;
+    background-color: #e0e0e0;
+    position: absolute;
+    z-index: 100;
+    opacity: .9;
+}
