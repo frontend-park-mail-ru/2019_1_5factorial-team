@@ -28,7 +28,6 @@ export default class signUpView extends View {
             emailWarning.classList.remove('hide');
             elementEmail.classList.remove('valid');
             elementEmail.classList.add('invalid');
-            console.log('email warning got: ' + data.arrReturn[0]);
             emailWarning.innerHTML = data.arrReturn[0];
         } else {
             elementEmail.classList.remove('invalid');
@@ -41,7 +40,6 @@ export default class signUpView extends View {
             loginWarning.classList.remove('hide');
             elementLogin.classList.remove('valid');
             elementLogin.classList.add('invalid');
-            console.log('login warning got: ' + data.arrReturn[1]);
             loginWarning.innerHTML = data.arrReturn[1];
         } else {
             elementLogin.classList.remove('invalid');
@@ -54,7 +52,6 @@ export default class signUpView extends View {
             passwordWarning.classList.remove('hide');
             elementPassword.classList.remove('valid');
             elementPassword.classList.add('invalid');
-            console.log('pass warning got: ' + data.arrReturn[2]);
             passwordWarning.innerHTML = data.arrReturn[2];
         } else {
             elementPassword.classList.remove('invalid');
