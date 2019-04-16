@@ -99,7 +99,7 @@ export const NUM_OF_POSITIONS = 5;
 
 export const EMAIL_EXPRESSION = new RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+[^<>()\.,;:\s@\"]{2,})$/);
 export const LOGIN_EXPRESSION = new RegExp(/^[a-zA-Z][a-zA-Z0-9-_\.]{3,20}$/);
-export const PASSWORD_EXPRESSION = new RegExp(/^[a-zA-Z][a-zA-Z0-9-_\.]{3,}$/);
+export const PASSWORD_EXPRESSION = new RegExp(/[^а-яёА-ЯЁ]{4,}$/);
 
 export const EMPTY_LOGIN = 'Login field is empty';
 export const EMPTY_EMAIL = 'Email field is empty';
@@ -107,7 +107,7 @@ export const EMPTY_PASSWORD = 'Password field is empty';
 
 export const INCORRECT_EMAIL = 'Email should contain "@" and latin letters, numbers, special symbols';
 export const INCORRECT_LOGIN = 'Login should have 4-20 symbols and contain latin letters and numbers';
-export const INCORRECT_PASSWORD = 'Password should be at least 4 symbols long and contain latin letters, numbers, special symbols';
+export const INCORRECT_PASSWORD = 'Password should has at least 4 symbols and not contain russian letters';
 
 export const OK_VALIDATE_LOGIN = 'Ok login';
 export const OK_VALIDATE_EMAIL = 'Ok email';

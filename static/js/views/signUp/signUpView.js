@@ -1,8 +1,6 @@
 import View from '../../libs/views.js';
-import { INCORRECT_EMAIL, TOO_SHORT_LOGIN, TOO_SHORT_PASSWORD, INCORRECT_LOGIN, INCORRECT_PASSWORD } from '../../components/constants.js';
 import template from './signUpView.tmpl.xml';
 
-import {EMPTY_EMAIL, EMPTY_LOGIN, EMPTY_PASSWORD} from '../../components/constants';
 import {OK_VALIDATE_EMAIL, OK_VALIDATE_LOGIN, OK_VALIDATE_PASSWORD} from '../../components/constants';
 
 export default class signUpView extends View {
