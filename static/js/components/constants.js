@@ -84,8 +84,6 @@ export const EVENT_LIST_GAME = [
 export const NETWORK_ADRESS = 'http://78.155.207.69:5051';
 // export const NETWORK_ADRESS = 'http://localhost:5051';
 
-export const EMAIL_EXPRESSION = new RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+[^<>()\.,;:\s@\"]{2,})$/);
-export const MIN_LENGTH = 4;
 export const DEFAULT_AVATAR = '';
 export const AVATAR_DEFAULT = '../../../img/default.jpg';
 
@@ -99,15 +97,26 @@ export const OK_RESPONSE = 200;
 export const COUNT_OF_PAGES = 5;
 export const NUM_OF_POSITIONS = 5;
 
+export const EMAIL_EXPRESSION = new RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+[^<>()\.,;:\s@\"]{2,})$/);
+export const LOGIN_EXPRESSION = new RegExp(/^[a-zA-Z][a-zA-Z0-9-_\.]{3,20}$/);
+export const PASSWORD_EXPRESSION = new RegExp(/^[a-zA-Z][a-zA-Z0-9-_\.]{3,}$/);
+
+export const EMPTY_LOGIN = 'Login field is empty';
+export const EMPTY_EMAIL = 'Email field is empty';
+export const EMPTY_PASSWORD = 'Password field is empty';
+
+export const INCORRECT_EMAIL = 'Email should contain "@" and latin letters, numbers, special symbols';
+export const INCORRECT_LOGIN = 'Login should have 4-20 symbols and contain latin letters and numbers';
+export const INCORRECT_PASSWORD = 'Password should be at least 4 symbols long and contain latin letters, numbers, special symbols';
+
 export const OK_VALIDATE_LOGIN = 'Ok login';
 export const OK_VALIDATE_EMAIL = 'Ok email';
 export const OK_VALIDATE_PASSWORD = 'Ok password';
 export const OK_VALIDATE_AVATAR = 'Ok avatar';
+
 export const JPEG_AVATAR_FORMAT = 'image/jpeg';
 export const PNG_AVATAR_FORMAT = 'image/png';
-export const INCORRECT_EMAIL = 'Email is incorrect!';
-export const TOO_SHORT_LOGIN = 'Login needs to be at least 4 symbols!';
-export const TOO_SHORT_PASSWORD = 'Password needs to be at least 4 symbols!';
+
 export const INCORRECT_LOGIN_OR_EMAIL = 'Incorrect login or email!';
 export const INCORRECT_AVATAR_FORMAT = 'Avatar must be jpeg or png format!';
 

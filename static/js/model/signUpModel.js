@@ -21,15 +21,27 @@ export default class signUpModel {
         if (validateEmail !== OK_VALIDATE_EMAIL) {
             arrReturn[0] = validateEmail;
             check++;
+        } else {
+            arrReturn[0] = OK_VALIDATE_EMAIL;
+            check++;
         }
+
         if (validateLogin !== OK_VALIDATE_LOGIN) {
             arrReturn[1] = validateLogin;
             check++;
+        } else {
+            arrReturn[1] = OK_VALIDATE_LOGIN;
+            check++;
         }
+
         if (validatePassword !== OK_VALIDATE_PASSWORD) {
             arrReturn[2] = validatePassword;
             check++;
+        } else {
+            arrReturn[2] = OK_VALIDATE_PASSWORD;
+            check++;
         }
+
         if (check > 0) {
             this.localEventBus.callEvent('signupResponse', {arrReturn});
             return;

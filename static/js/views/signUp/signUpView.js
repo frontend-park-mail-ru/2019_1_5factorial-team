@@ -1,6 +1,9 @@
 import View from '../../libs/views.js';
-import { INCORRECT_EMAIL, TOO_SHORT_LOGIN, TOO_SHORT_PASSWORD } from '../../components/constants.js';
+import { INCORRECT_EMAIL, TOO_SHORT_LOGIN, TOO_SHORT_PASSWORD, INCORRECT_LOGIN, INCORRECT_PASSWORD } from '../../components/constants.js';
 import template from './signUpView.tmpl.xml';
+
+import {EMPTY_EMAIL, EMPTY_LOGIN, EMPTY_PASSWORD} from '../../components/constants';
+import {OK_VALIDATE_EMAIL, OK_VALIDATE_LOGIN, OK_VALIDATE_PASSWORD} from '../../components/constants';
 
 export default class signUpView extends View {
     constructor({ eventBus = {} }) {
@@ -21,14 +24,44 @@ export default class signUpView extends View {
         const elementEmail = document.getElementsByClassName('js-email')[0];
         const elementLogin = document.getElementsByClassName('js-login')[0];
         const elementPassword = document.getElementsByClassName('js-password')[0];
-        if (data.arrReturn[0] === INCORRECT_EMAIL) {
+
+        const emailWarning = document.getElementsByClassName('js-warning-email')[0];
+        if (data.arrReturn[0] !== OK_VALIDATE_EMAIL) {
+            emailWarning.classList.remove('hide');
+            elementEmail.classList.remove('valid');
             elementEmail.classList.add('invalid');
+            console.log('email warning got: ' + data.arrReturn[0]);
+            emailWarning.innerHTML = data.arrReturn[0];
+        } else {
+            elementEmail.classList.remove('invalid');
+            elementEmail.classList.add('valid');
+            emailWarning.classList.add('hide');
         }
-        if (data.arrReturn[1] === TOO_SHORT_LOGIN) {
+
+        const loginWarning = document.getElementsByClassName('js-warning-login')[0];
+        if (data.arrReturn[1] !== OK_VALIDATE_LOGIN) {
+            loginWarning.classList.remove('hide');
+            elementLogin.classList.remove('valid');
             elementLogin.classList.add('invalid');
+            console.log('login warning got: ' + data.arrReturn[1]);
+            loginWarning.innerHTML = data.arrReturn[1];
+        } else {
+            elementLogin.classList.remove('invalid');
+            elementLogin.classList.add('valid');
+            loginWarning.classList.add('hide');
         }
-        if (data.arrReturn[2] === TOO_SHORT_PASSWORD) {
+
+        const passwordWarning = document.getElementsByClassName('js-warning-password')[0];
+        if (data.arrReturn[2] !== OK_VALIDATE_PASSWORD) {
+            passwordWarning.classList.remove('hide');
+            elementPassword.classList.remove('valid');
             elementPassword.classList.add('invalid');
+            console.log('pass warning got: ' + data.arrReturn[2]);
+            passwordWarning.innerHTML = data.arrReturn[2];
+        } else {
+            elementPassword.classList.remove('invalid');
+            elementPassword.classList.add('valid');
+            passwordWarning.classList.add('hide');
         }
     }
 

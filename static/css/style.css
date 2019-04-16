@@ -454,18 +454,9 @@ body {
         font-size: 2vh;
         margin: 1vh 0;
     }
-    /*.b {*/
-        /*background: transparent;*/
-        /*border: 0.075em solid var(--blue-clr);*/
-        /*border-radius: 0.25em;*/
-    /*}*/
-    /*.form__btn_back:hover {*/
-        /*border: 0.075em solid var(--blue-clr);*/
-        /*text-shadow: none;*/
-    /*}*/
-    /*!*.form__btn_back:focus {*!*/
-        /*!*outline: none;*!*/
-    /*!*}*!*/
+    .form__warning {
+        color: var(--invalid-red-clr);
+    }
 
 /* LEADERBOARD */
 .leaders-table {
