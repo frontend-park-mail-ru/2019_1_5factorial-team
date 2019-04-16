@@ -41,8 +41,8 @@ export default class profileView extends View {
             return;
         }
         this.localAvatar.style.background = `transparent url(${AVATAR_DEFAULT}) no-repeat`;
-        this.localAvatar.style.backgroundSize = `cover`;
-        this.localAvatar.style.backgroundPosition = `center`;
+        this.localAvatar.style.backgroundSize = 'cover';
+        this.localAvatar.style.backgroundPosition = 'center';
         this.localEventBus.callEvent('loadUser', data);
     }
 
@@ -74,8 +74,8 @@ export default class profileView extends View {
         super.render(this.prevRoot, data);
         const imgToSet = document.getElementsByClassName('avatar-img')[0];
         imgToSet.style.background = `transparent url(${data.user.avatar}) no-repeat`;
-        imgToSet.style.backgroundSize = `cover`;
-        imgToSet.style.backgroundPosition = `center`;
+        imgToSet.style.backgroundSize = 'cover';
+        imgToSet.style.backgroundPosition = 'center';
 
         this.initElements();
     }
