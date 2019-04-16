@@ -40,12 +40,14 @@ export default class profileView extends View {
             console.log(data.error);
             return;
         }
-        this.localAvatar.src = AVATAR_DEFAULT;
+        this.localAvatar.style.background = `transparent url(${AVATAR_DEFAULT}) no-repeat`;
+        this.localAvatar.style.backgroundSize = `cover`;
+        this.localAvatar.style.backgroundPosition = `center`;
         this.localEventBus.callEvent('loadUser', data);
     }
 
     onChangeAvatarSuccess(data) {
-        console.log(data.avatar);
+        console.log(data);
         this.localAvatar.src = data.avatar;
         this.localEventBus.callEvent('loadUser', data);
     }
@@ -71,7 +73,9 @@ export default class profileView extends View {
         }
         super.render(this.prevRoot, data);
         const imgToSet = document.getElementsByClassName('avatar-img')[0];
-        imgToSet.src = data.user.avatar;
+        imgToSet.style.background = `transparent url(${data.user.avatar}) no-repeat`;
+        imgToSet.style.backgroundSize = `cover`;
+        imgToSet.style.backgroundPosition = `center`;
 
         this.initElements();
     }
