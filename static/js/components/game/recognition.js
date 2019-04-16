@@ -1,6 +1,7 @@
-import Jager from '../../libs/jager';
+import Jager from '../../libs/jager.js';
 
 export default class Recognizer {
+
     constructor() {
         this.jager = new Jager();
 
@@ -16,18 +17,22 @@ export default class Recognizer {
         this.mouseIsDown = false;
         this.path = [];
 
-        window.addEventListener("orientationchange", this.onResize);
-        window.addEventListener("resize", this.onResize);
-        document.addEventListener("visibilitychange", () => { if (!document.hidden) {this.onResize();}}, false);
+        window.addEventListener('orientationchange', this.onResize.bind(this));
+        window.addEventListener('resize', this.onResize.bind(this));
+        document.addEventListener('visibilitychange', () => { 
+            if (!document.hidden) {
+                this.onResize();
+            }
+        }, false);
 
-        this.gcanvas.addEventListener('mousedown',  this.gestureStart);
-        this.gcanvas.addEventListener('mousemove',  this.gestureMove);
-        this.gcanvas.addEventListener('mouseup',    this.gestureEnd);
-        this.gcanvas.addEventListener('mouseout',   this.gestureEnd);
+        this.gcanvas.addEventListener('mousedown',  this.gestureStart.bind(this));
+        this.gcanvas.addEventListener('mousemove',  this.gestureMove.bind(this));
+        this.gcanvas.addEventListener('mouseup',    this.gestureEnd.bind(this));
+        this.gcanvas.addEventListener('mouseout',   this.gestureEnd.bind(this));
 
-        this.gcanvas.addEventListener('touchstart', this.gestureStart);
-        this.gcanvas.addEventListener('touchmove',  this.gestureMove);
-        this.gcanvas.addEventListener('touchend',   this.gestureEnd);
+        this.gcanvas.addEventListener('touchstart', this.gestureStart.bind(this));
+        this.gcanvas.addEventListener('touchmove',  this.gestureMove.bind(this));
+        this.gcanvas.addEventListener('touchend',   this.gestureEnd.bind(this));
 
         this.onResize();
         this.tick();
@@ -61,7 +66,7 @@ export default class Recognizer {
 
             gesture = this.jager.recognise(this.path, 5000, true);
             console.log(this.gestureNames[gesture]);
-            //gctx.clearRect(0, 0, gcanvas.scrollWidth, gcanvas.scrollHeight);
+            gctx.clearRect(0, 0, gcanvas.scrollWidth, gcanvas.scrollHeight);
 
             return false;
         }

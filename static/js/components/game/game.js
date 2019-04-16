@@ -1,5 +1,5 @@
 import ModalWindow from '../modalWindow.js';
-import Recognizer from './recognition';
+import Recognizer from './recognition.js';
 
 import { DEFAULT_GHOST_SPEED, DEFAULT_GHOST_DAMAGE, PLAYER_INITIAL_HP } from '../constants.js';
 
@@ -48,6 +48,7 @@ export default class Game {
         };
 
         this.recognizer = new Recognizer();
+        console.log(this.recognizer);
 
         this.lastTime = Date.now();
 

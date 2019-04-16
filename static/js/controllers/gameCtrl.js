@@ -1,5 +1,5 @@
 import gameView from '../views/game/gameView.js';
-import gameOfflineModel from '../model/gameOfflineModel';
+import gameOfflineModel from '../model/gameOfflineModel.js';
 import EventBus from '../libs/eventBus.js';
 import { EVENT_LIST_GAME } from '../components/constants.js';
 
