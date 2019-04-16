@@ -131,12 +131,12 @@ export default class Game {
             }
         }
 
+
         //  убиваем призраков
         for (let i = 0; i < this.state.ghosts.length; i++) {
             // сносим символ
-            if (this.lastButtonPressed === this.state.ghosts[i].symbols[0]) {
+            if (this.state.ghosts[i].symbols[0] === this.lastButtonPressed) {
                 this.state.ghosts[i].symbols = this.state.ghosts[i].symbols.slice(1, this.state.ghosts[i].symbols.length + 1);
-                this.lastButtonPressed = '';
                 this.state.score += 10;
             }
 
@@ -151,6 +151,7 @@ export default class Game {
                 this.state.score += 100;
             }
         }
+        this.lastButtonPressed = '';
 
         // двигаем призраков и дамажим героя
         for (let i = 0; i < this.state.ghosts.length; i++) {
@@ -239,19 +240,19 @@ export default class Game {
 
         switch (e.keyCode) {
             case 37:  // если нажата клавиша влево
-                this.lastButtonPressed = 'L';
+                this.lastButtonPressed = '←';
                 this.ctx.fillText('left', dirNameX - left.width / 2, dirNameY, 200, 100);
                 break;
             case 38:   // если нажата клавиша вверх
-                this.lastButtonPressed = 'U';
+                this.lastButtonPressed = '↑';
                 this.ctx.fillText('up', dirNameX - up.width / 2, dirNameY, 200, 100);
                 break;
             case 39:   // если нажата клавиша вправо
-                this.lastButtonPressed = 'R';
+                this.lastButtonPressed = '→';
                 this.ctx.fillText('right', dirNameX - right.width / 2, dirNameY, 200, 100);
                 break;
             case 40:   // если нажата клавиша вниз
-                this.lastButtonPressed = 'D';
+                this.lastButtonPressed = '↓';
                 this.ctx.fillText('down', dirNameX - down.width / 2, dirNameY, 200, 100);
                 break;
             default:
@@ -273,16 +274,16 @@ export default class Game {
             let generatedSymbolNumber = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
             switch (generatedSymbolNumber) {
                 case 1:
-                    generatedSymbols.push('L');
+                    generatedSymbols.push('←');
                     break;
                 case 2:
-                    generatedSymbols.push('R');
+                    generatedSymbols.push('→');
                     break;
                 case 3:
-                    generatedSymbols.push('U');
+                    generatedSymbols.push('↑');
                     break;
                 case 4:
-                    generatedSymbols.push('D');
+                    generatedSymbols.push('↓');
                     break;
             }
         }
