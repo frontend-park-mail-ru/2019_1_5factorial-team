@@ -1,4 +1,5 @@
-import gameView from '../views/game/gameView.js';
+import gameViewSingle from '../views/game/gameViewSingle.js';
+import gameViewMulti from '../views/game/gameViewMulti.js';
 import gameOfflineModel from '../model/gameOfflineModel.js';
 import gameOnlineMulti from '../model/gameOnlineMulti.js';
 import EventBus from '../libs/eventBus.js';
@@ -11,11 +12,13 @@ export default class gameController {
     constructor() {
         const eventBusSingle = new EventBus(eventListSingle);
         const eventBusMulti = new EventBus(eventListMulti);
-        
-        this.gameViewSingle = new gameView({ eventBusSingle });
-        this.gameViewMulti = new gameView({ eventBusMulti }); // сделать вьюшку для мультика
+        console.log(eventBusSingle);
 
+        this.gameViewSingle = new gameViewSingle(eventBusSingle);
         this.gameModelSingle = new gameOfflineModel(eventBusSingle);
+
+        this.gameViewMulti = new gameViewMulti(eventBusMulti); // сделать вьюшку для мультика
         this.gameModelMulti = new gameOnlineMulti(eventBusMulti);
+
     }
 }

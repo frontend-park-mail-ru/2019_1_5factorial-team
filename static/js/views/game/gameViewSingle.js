@@ -2,8 +2,9 @@ import template from './gameView.tmpl.xml';
 import View from '../../libs/views.js';
 import userBlock from '../../components/userBlock.js';
 
-export default class gameView extends View {
-    constructor({eventBus = {}} = {}) {
+export default class gameViewSingle extends View {
+    constructor(eventBus) {
+        console.log(eventBus);
         super(template, eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('onGetUserDataForGameResponse', this.getUserResponse.bind(this));
@@ -19,6 +20,7 @@ export default class gameView extends View {
         super.render(root, data);
         
         if (Object.keys(data).length === 0) {
+            console.log(this.localEventBus);
             this.localEventBus.callEvent('getUserDataForGame');
         } else {
             super.render(root, data);
