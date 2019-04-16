@@ -25,6 +25,7 @@ export default class paginator {
             this.localLinks[i].addEventListener('click', this.onLinkClick.bind(this));
             this.localLinks[i].textContent = i + 1;
         }
+        this.localLinks[0].classList.add('active-pagination');
     }
 
     /**
@@ -33,7 +34,7 @@ export default class paginator {
      */
     render(root) {
         root.innerHTML = '';
-        this.localLinks.forEach(val => root.appendChild(val));
+        this.localLinks.forEach(element => root.appendChild(element));
     }
 
     // TODO(4taa): поправить ифы + намазать JSDoc
@@ -44,6 +45,9 @@ export default class paginator {
     onLinkClick(event) {
         event.preventDefault();
         const linkStr = event.target.textContent;
+        const element = event.target;
+        this.localLinks.forEach(element => element.classList.remove('active-pagination'));
+        element.classList.add('active-pagination');
 
         if (typeof +linkStr === 'number') {
             const linkNum = +linkStr;

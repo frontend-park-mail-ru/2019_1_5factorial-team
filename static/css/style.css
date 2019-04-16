@@ -720,3 +720,7 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+.active-pagination {
+    background: var(--blue-clr);
+}
