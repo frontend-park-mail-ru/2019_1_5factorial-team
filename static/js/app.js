@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     router.add('/profile', main, profileCtrl.profileView);
     router.add('/signup', main, signUpCtrl.signUpView);
     router.add('/leaders', main, leaderboardCtrl.leaderboardView);
-    router.add('/single', main, gameCtrl.gameView);
+    router.add('/single', main, gameCtrl.gameViewSingle);
     // router.add('/multi', main, gameCtrl.gameView);  --------->  resolve numOfPlayers
     router.add('/', main, menuCntl.menuView);
 
