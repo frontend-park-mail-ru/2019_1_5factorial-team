@@ -713,6 +713,13 @@ body {
     background-size: cover;
 }
 
+/*.canvas_recognizer {*/
+    /*z-index: 1;*/
+    /*display: flex;*/
+    /*width: 100%;*/
+    /*height: 100vh;*/
+/*}*/
+
 .active-pagination {
     background: var(--blue-clr);
 }
