@@ -48,7 +48,6 @@ export default class Game {
         };
 
         this.recognizer = new Recognizer();
-        console.log(this.recognizer);
 
         this.lastTime = Date.now();
 
@@ -64,6 +63,9 @@ export default class Game {
         if (this.requestID) {
             cancelAnimationFrame(this.requestID);
         }
+        console.log('called');
+        this.recognizer.destroyRecognizer();
+        
         console.log('final score is', this.state.score);
         window.removeEventListener('resize', this.bindedResizer);
         window.removeEventListener('keydown', this.bindedButtonsHandler);
@@ -92,6 +94,7 @@ export default class Game {
 
     update(dt) {
         this.state.gameTime += dt;
+        this.recognizer.tick();
 
         // TODO: убрать this.state.ghosts.length === 0, придумать, как сделать больше одного призрака с каждой стороны экрана
         if (Math.random() < 1 - Math.pow(.993, this.state.gameTime)) {

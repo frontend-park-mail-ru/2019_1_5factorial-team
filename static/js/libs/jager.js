@@ -99,7 +99,6 @@ export default class Jager {
         ctx.lineCap     = "round";
         ctx.lineJoin    = "round";
         ctx.lineWidth   = 10;
-        console.log('draqing');
         ctx.beginPath();
         ctx.moveTo(path[0].x, path[0].y);
         for (i = 1; i < path.length; i++){

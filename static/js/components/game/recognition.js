@@ -13,6 +13,7 @@ export default class Recognizer {
 
         this.gcanvas = document.getElementById('gcanvas');
         this.gctx = this.gcanvas.getContext('2d');
+        this.gctx.fillStyle = '#FF0000';
 
         this.mouseIsDown = false;
         this.path = [];
@@ -38,13 +39,35 @@ export default class Recognizer {
         this.tick();
     }
 
+    destroyRecognizer() {
+        if (this.tick) {
+            cancelAnimationFrame(this.tick.bind(this));
+        }
+        // this.jager = null;
+        this.gcanvas.removeEventListener('mousedown',  this.gestureStart.bind(this));
+        this.gcanvas.removeEventListener('mousemove',  this.gestureMove.bind(this));
+        this.gcanvas.removeEventListener('mouseup',    this.gestureEnd.bind(this));
+        this.gcanvas.removeEventListener('mouseout',   this.gestureEnd.bind(this));
+
+        this.gcanvas.removeEventListener('touchstart', this.gestureStart.bind(this));
+        this.gcanvas.removeEventListener('touchmove',  this.gestureMove.bind(this));
+        this.gcanvas.removeEventListener('touchend',   this.gestureEnd.bind(this));
+        window.removeEventListener('orientationchange', this.onResize.bind(this));
+        window.removeEventListener('resize', this.onResize.bind(this));
+        document.removeEventListener('visibilitychange', () => { 
+            if (!document.hidden) {
+                this.onResize();
+            }
+        }, false);
+        this.gcanvas.remove();
+    }
+
     onResize() {
         this.gcanvas.width  = this.gcanvas.scrollWidth;
         this.gcanvas.height = this.gcanvas.scrollHeight;
     }
 
     gestureStart(evt) {
-        console.log('enter start');
         this.mouseIsDown = true;
         this.path = [this.jager.point(evt)];
         evt.preventDefault();
@@ -53,7 +76,6 @@ export default class Recognizer {
 
     gestureMove(evt) {
         if (this.mouseIsDown) {
-            console.log('enter move');
             this.path.push(this.jager.point(evt));
             evt.preventDefault();
             return false;
@@ -64,7 +86,6 @@ export default class Recognizer {
     gestureEnd(evt) {
         var gesture;
         if (this.mouseIsDown) {
-            console.log('enter end');
             this.mouseIsDown = false;
 
             gesture = this.jager.recognise(this.path, 5000, true);
@@ -77,12 +98,11 @@ export default class Recognizer {
     }
 
     tick() {
-        console.log('ticking');
         if (this.mouseIsDown) {
             this.gctx.clearRect(0, 0, this.gcanvas.scrollWidth, this.gcanvas.scrollHeight);
             this.jager.drawPatch(this.path, this.gctx, this.jager.recognise(this.path));
         }
 
-        requestAnimationFrame(this.tick);
+        requestAnimationFrame(this.tick.bind(this));
     }
 }
