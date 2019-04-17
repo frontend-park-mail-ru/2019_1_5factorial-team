@@ -25,6 +25,7 @@ export default class Recognizer {
                 this.onResize();
             }
         }, false);
+        this.loop = null;
 
         this.gcanvas.addEventListener('mousedown',  this.gestureStart.bind(this));
         this.gcanvas.addEventListener('mousemove',  this.gestureMove.bind(this));
@@ -40,10 +41,12 @@ export default class Recognizer {
     }
 
     destroyRecognizer() {
-        if (this.tick) {
+        console.log('before', this.tick);
+        if (this.tick.bind(this)) {
             cancelAnimationFrame(this.tick.bind(this));
         }
-        // this.jager = null;
+        console.log('after', this.tick.bind(this));
+        this.jager = null;
         this.gcanvas.removeEventListener('mousedown',  this.gestureStart.bind(this));
         this.gcanvas.removeEventListener('mousemove',  this.gestureMove.bind(this));
         this.gcanvas.removeEventListener('mouseup',    this.gestureEnd.bind(this));
