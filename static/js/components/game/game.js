@@ -266,6 +266,11 @@ export default class Game {
         this.ctx.drawImage(this.state.firstPlayer.sprite, playerX - this.state.firstPlayer.sprite.width / 2, playerY - this.state.firstPlayer.sprite.height);
 
         // Блок второго игрока
+        this.ctx.clearRect(this.heartImg.width + 10, this.heartImg.height + 10, this.heartImg.width * 4, this.heartImg.height + heartsUpperOffset);
+        for (let i = this.state.secondPlayer.hp / 100; i > 0; i--) {
+            this.ctx.drawImage(this.heartImg, heartsBetweenOffset + heartOffset, heartsUpperOffset + 50, this.heartImg.width, this.heartImg.height);
+            heartOffset += this.heartImg.width;
+        }
         playerX = this.canvas.width / 2 + 100;
 
         this.ctx.clearRect(playerX - this.state.secondPlayer.sprite.width / 2, 
