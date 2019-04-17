@@ -32,6 +32,11 @@ export default class Recognizer {
         this.gcanvas.addEventListener('mouseup',    this.gestureEnd.bind(this));
         this.gcanvas.addEventListener('mouseout',   this.gestureEnd.bind(this));
 
+        this.gcanvas.addEventListener('ontouchstart', this.gestureStart.bind(this));
+        this.gcanvas.addEventListener('ontouchmove', this.gestureMove.bind(this));
+        this.gcanvas.addEventListener('ontouchcancel', this.gestureEnd.bind(this));
+        this.gcanvas.addEventListener('ontouchend', this.gestureEnd.bind(this));
+
         this.gcanvas.addEventListener('touchstart', this.gestureStart.bind(this));
         this.gcanvas.addEventListener('touchmove',  this.gestureMove.bind(this));
         this.gcanvas.addEventListener('touchend',   this.gestureEnd.bind(this));
