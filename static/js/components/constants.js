@@ -79,12 +79,18 @@ export const EVENT_LIST_GAME_SINGLE = [
     'gameOver',
     'stopGameManualy',
     'startGame',
+    'gameOverRender',
 ];
 
 export const EVENT_LIST_GAME_MULTI = [
     'stopGameManualy',
     'startGame',
-    'gameOver'
+    'gameOver',
+    'gameOverFirstLost',
+    'gameOverSecondLost',
+    'gameMultiEnd',
+    'firstLost',
+    'secondLost',
 ];
 
 export const NETWORK_ADRESS = 'http://78.155.207.69:5051';
@@ -118,7 +124,7 @@ export const INCORRECT_LOGIN_OR_EMAIL = 'Incorrect login or email!';
 export const INCORRECT_AVATAR_FORMAT = 'Avatar must be jpeg or png format!';
 
 export const MAP_OF_MODALS = new Map ([
-    ['Game multi end', ''],
+    ['Game multi end', '<h2 class="text-title modal-window__header"></h2><p class="js-set-final-score"></p><a class="btn users__btn signup-btn js-back-to-menu-modal" href="/">Back to menu</a>'],
     ['Game multi leave', ''],
     ['Game training', '<h2 class="text-title modal-window__header">Do you want to start training?</h2><div class="modal-window-btns"><button class="btn btn_inlined modal-window__btn js-skip-training">No</button><button class="btn btn_contained modal-window__btn js-start-training">Yes</button></div>'],
     ['Game single end', '<h2 class="text-title modal-window__header">Game Over! You Lost!</h2><p class="js-set-final-score"></p><a class="btn users__btn signup-btn js-back-to-menu-modal" href="/">Back to menu</a>'],

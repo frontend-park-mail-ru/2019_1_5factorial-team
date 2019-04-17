@@ -1,4 +1,3 @@
-import ModalWindow from '../modalWindow.js';
 import { DEFAULT_GHOST_SPEED, DEFAULT_GHOST_DAMAGE, PLAYER_INITIAL_HP } from '../constants.js';
 
 export default class Game {
@@ -63,9 +62,6 @@ export default class Game {
             console.log(this.state.player);
         }
 
-
-        this.MW = new ModalWindow();
-
         this.lastButtonPressed = '';
 
         this.bindedButtonsHandler = this.buttonsHandler.bind(this);
@@ -110,10 +106,6 @@ export default class Game {
         if (this.state.isGameOver === true) {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
             this.destroy();
-            let finalScore = this.state.score;
-            this.MW.createModal('Game single end');
-            const scoreElement = document.getElementsByClassName('js-set-final-score')[0];
-            scoreElement.innerText = `Your score is : ${finalScore}`;
             return;
         }
 

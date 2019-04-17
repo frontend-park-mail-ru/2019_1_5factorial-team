@@ -5,7 +5,7 @@ export default class ModalWindow {
     createModal(element) {
         const modalElement = document.getElementsByClassName('modal-window')[0];
         this.isGame = false;
-        if (element === 'Game single end') {
+        if (element === 'Game single end' || element === 'Game multi end') {
             this.isGame = true;
         }
 
