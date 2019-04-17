@@ -8,12 +8,63 @@ export default class Game {
      * this.bindedResizer - обработчик изменения размеров экрана для корректного ререндера
      * this.state - состояние игры
      */
-    constructor(eventBus) {
+    constructor(eventBus, players = {}) {
         this.localEventBus = eventBus;
 
-        this.MW = new ModalWindow();
         this.canvas = document.getElementsByClassName('temp_class_canvas')[0];
         this.ctx = this.canvas.getContext('2d');
+
+        this.playerImg = document.getElementById('player-sprite');
+        this.ghostLeftImg = document.getElementById('ghost-left-sprite');
+        this.ghostRightImg = document.getElementById('ghost-right-sprite');
+        this.heartImg = document.getElementById('heart-sprite');
+
+        console.log('input in constructor', Object.keys(players));
+
+        if (Object.keys(players)) {
+            this.state = {
+                firstPlayer: {
+                    //TODO() : разбить методы для двух игроков
+                    sprite: this.playerImg,
+                    x: (this.canvas.width -  this.playerImg.width) / 2 - 100,
+                    hp: PLAYER_INITIAL_HP,
+                    test: players.firstPlayer.test,
+                },
+                secondPlayer: {
+                    sprite: this.playerImg,
+                    x: (this.canvas.width -  this.playerImg.width) / 2 + 100,
+                    hp: PLAYER_INITIAL_HP,
+                    test: players.secondPlayer.test
+                },
+                ghosts: [],
+    
+                // TODO: на бэке этих полей нет - решить, нужны ли
+                score: 0,
+                gameTime: 0,
+                isGameOver: false
+            };
+            this.isSingle = false;
+            console.log('testing constructor', this.state.firstPlayer.test, this.state.secondPlayer.test);
+        } else {
+            this.state = {
+                player: {
+                    sprite: this.playerImg,
+                    x: (this.canvas.width -  this.playerImg.width) / 2,
+                    hp: PLAYER_INITIAL_HP
+                },
+                ghosts: [],
+    
+                // TODO: на бэке этих полей нет - решить, нужны ли
+                score: 0,
+                gameTime: 0,
+                isGameOver: false
+            };
+            this.isSingle = true;
+            console.log(this.state.player);
+        }
+
+
+        this.MW = new ModalWindow();
 
         this.lastButtonPressed = '';
 
@@ -25,25 +76,6 @@ export default class Game {
         this.resizer();
 
         this.requestID = null;
-
-        this.playerImg = document.getElementById('player-sprite');
-        this.ghostLeftImg = document.getElementById('ghost-left-sprite');
-        this.ghostRightImg = document.getElementById('ghost-right-sprite');
-        this.heartImg = document.getElementById('heart-sprite');
-
-        this.state = {
-            player: {
-                sprite: this.playerImg,
-                x: (this.canvas.width -  this.playerImg.width) / 2,
-                hp: PLAYER_INITIAL_HP
-            },
-            ghosts: [],
-
-            // TODO: на бэке этих полей нет - решить, нужны ли
-            score: 0,
-            gameTime: 0,
-            isGameOver: false
-        };
 
         this.lastTime = Date.now();
 
@@ -69,7 +101,11 @@ export default class Game {
         let dt = (now - this.lastTime) / 1000.0;
 
         this.update(dt);
-        this.render();
+        if (this.isSingle) {
+            this.renderSingle();
+        } else {
+            this.renderMulti();
+        }
 
         if (this.state.isGameOver === true) {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -153,33 +189,116 @@ export default class Game {
         }
         this.lastButtonPressed = '';
 
-        // двигаем призраков и дамажим героя
-        for (let i = 0; i < this.state.ghosts.length; i++) {
-            if (this.state.ghosts.length !== 0) {
-                if (this.state.ghosts[i].speed > 0) {
-                    if (this.state.ghosts[i].x < this.state.player.x) {
-                        this.state.ghosts[i].x += this.state.ghosts[i].speed * dt;
-                    } else {
-                        this.state.player.hp -= this.state.ghosts[i].damage;
-                    }
-                } else if (this.state.ghosts[i].speed < 0) {
-                    if (this.state.ghosts[i].x > this.state.player.x + this.state.player.sprite.width) {
-                        this.state.ghosts[i].x += this.state.ghosts[i].speed * dt;
-                    } else {
-                        this.state.player.hp -= this.state.ghosts[i].damage;
+        if (this.isSingle) {
+            // двигаем призраков и дамажим героя
+            for (let i = 0; i < this.state.ghosts.length; i++) {
+                if (this.state.ghosts.length !== 0) {
+                    if (this.state.ghosts[i].speed > 0) {
+                        if (this.state.ghosts[i].x < this.state.player.x) {
+                            this.state.ghosts[i].x += this.state.ghosts[i].speed * dt;
+                        } else {
+                            this.state.player.hp -= this.state.ghosts[i].damage;
+                        }
+                    } else if (this.state.ghosts[i].speed < 0) {
+                        if (this.state.ghosts[i].x > this.state.player.x + this.state.player.sprite.width) {
+                            this.state.ghosts[i].x += this.state.ghosts[i].speed * dt;
+                        } else {
+                            this.state.player.hp -= this.state.ghosts[i].damage;
+                        }
                     }
                 }
-            }
 
-            if (this.state.player.hp === 0) {
-                this.state.isGameOver = true;
-                this.localEventBus.callEvent('gameOver');
-                return;
+                if (this.state.player.hp === 0) {
+                    this.state.isGameOver = true;
+                    this.localEventBus.callEvent('gameOver');
+                    return;
+                }
+            }
+        } else {
+            for (let i = 0; i < this.state.ghosts.length; i++) {
+                if (this.state.ghosts.length !== 0) {
+                    if (this.state.ghosts[i].speed > 0) {
+                        if (this.state.ghosts[i].x < this.state.firstPlayer.x) {
+                            this.state.ghosts[i].x += this.state.ghosts[i].speed * dt;
+                        } else {
+                            this.state.firstPlayer.hp -= this.state.ghosts[i].damage;
+                        }
+                    } else if (this.state.ghosts[i].speed < 0) {
+                        if (this.state.ghosts[i].x > this.state.secondPlayer.x + this.state.secondPlayer.sprite.width) {
+                            this.state.ghosts[i].x += this.state.ghosts[i].speed * dt;
+                        } else {
+                            this.state.secondPlayer.hp -= this.state.ghosts[i].damage;
+                        }
+                    }
+                }
+
+                if (this.state.firstPlayer.hp === 0 || this.state.secondPlayer.hp === 0) {
+                    this.state.isGameOver = true;
+                    this.localEventBus.callEvent('gameOver');
+                    return;
+                }
             }
         }
     }
 
-    render() {
+    renderMulti() {
+        const offsetByY = this.canvas.height / 40;  // смещение по Y - расстояние от нижнего края экрана
+
+        let heartsBetweenOffset = this.heartImg.width / 2;
+        let heartOffset = 0;
+        let heartsUpperOffset = this.canvas.height / 80;  
+
+        // Блок первого игрока
+        this.ctx.clearRect(0, 0, this.heartImg.width * 4,this.heartImg.height + heartsUpperOffset);
+        for (let i = this.state.firstPlayer.hp / 100; i > 0; i--) {
+            this.ctx.drawImage(this.heartImg, heartsBetweenOffset + heartOffset, heartsUpperOffset, this.heartImg.width, this.heartImg.height);
+            heartOffset += this.heartImg.width;
+        }
+
+        let playerX = this.canvas.width / 2 - 100;
+        const playerY = this.canvas.height - offsetByY;
+
+        this.ctx.clearRect(playerX - this.state.firstPlayer.sprite.width / 2, 
+            playerY - this.state.firstPlayer.sprite.height, 
+            this.state.firstPlayer.sprite.width, 
+            this.state.firstPlayer.sprite.height);
+
+        this.ctx.drawImage(this.state.firstPlayer.sprite, playerX - this.state.firstPlayer.sprite.width / 2, playerY - this.state.firstPlayer.sprite.height);
+
+        // Блок второго игрока
+        playerX = this.canvas.width / 2 + 100;
+
+        this.ctx.clearRect(playerX - this.state.secondPlayer.sprite.width / 2, 
+            playerY - this.state.secondPlayer.sprite.height, 
+            this.state.secondPlayer.sprite.width, 
+            this.state.secondPlayer.sprite.height);
+            
+        this.ctx.drawImage(this.state.secondPlayer.sprite, playerX - this.state.secondPlayer.sprite.width / 2, playerY - this.state.secondPlayer.sprite.height);
+
+        // Призраки
+        const ghostY = this.canvas.height - offsetByY;
+        const symbolsOffset = 30;  // расстояние между призраком и символами над его головой
+
+        this.ctx.font = '20pt Comfortaa-Regular';
+        this.ctx.fillStyle = 'white';
+        let symbolsToShow = '';
+
+        for (let i = 0; i < this.state.ghosts.length; i++) {
+            if (this.state.ghosts[i].speed > 0) {
+                this.ctx.clearRect(0, this.canvas.height / 2, this.canvas.width / 2 - this.state.firstPlayer.sprite.width / 2, this.canvas.height / 2);
+                this.ctx.drawImage(this.state.ghosts[i].sprite, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width, ghostY - this.state.ghosts[i].sprite.height);
+                symbolsToShow = this.state.ghosts[i].symbols.join(' ');
+                this.ctx.fillText(symbolsToShow, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width / 2 - this.ctx.measureText(this.state.ghosts[i].symbols).width / 2, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
+            } else if (this.state.ghosts[i].speed < 0) {
+                this.ctx.clearRect(this.canvas.width / 2 + this.state.secondPlayer.sprite.width / 2, this.canvas.height / 2, this.canvas.width / 2, this.canvas.height / 2);
+                this.ctx.drawImage(this.state.ghosts[i].sprite, this.state.ghosts[i].x, ghostY - this.state.ghosts[i].sprite.height);
+                symbolsToShow = this.state.ghosts[i].symbols.join(' ');
+                this.ctx.fillText(symbolsToShow, this.state.ghosts[i].x + this.state.ghosts[i].sprite.width / 2 - this.ctx.measureText(this.state.ghosts[i].symbols).width / 2, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
+            }
+        }
+    }
+
+    renderSingle() {
         const offsetByY = this.canvas.height / 40;  // смещение по Y - расстояние от нижнего края экрана
 
         let heartsBetweenOffset = this.heartImg.width / 2;

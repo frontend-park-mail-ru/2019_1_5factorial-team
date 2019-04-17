@@ -82,7 +82,9 @@ export const EVENT_LIST_GAME_SINGLE = [
 ];
 
 export const EVENT_LIST_GAME_MULTI = [
-    
+    'stopGameManualy',
+    'startGame',
+    'gameOver'
 ];
 
 export const NETWORK_ADRESS = 'http://78.155.207.69:5051';

@@ -26,4 +26,11 @@ export default class userBlock {
             return false;
         }
     }
+
+    gameButtonsMulti(data = {}) {
+        console.log('called');
+        const userButtons = document.getElementsByClassName('js-check-user')[0];
+        userButtons.innerHTML = `<a class="btn users__btn login-btn">${data.user.first.nickname}</a><a class="btn users__btn login-btn">${data.user.second.nickname}</a><a class="btn users__btn signup-btn js-back-to-menu" href="/">Back to menu</a>`;
+        return true;
+    }
 }
