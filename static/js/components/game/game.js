@@ -179,9 +179,13 @@ export default class Game {
             // убили
             if (this.state.ghosts[i].symbols.length === 0) {
                 if (this.state.ghosts[i].speed > 0) {
-                    this.ctx.clearRect(0, this.canvas.height / 2, this.canvas.width / 2 - this.state.player.sprite.width / 2, this.canvas.height / 2);
+                    this.ctx.clearRect(0, this.canvas.height / 2, 
+                        this.canvas.width / 2 - this.state.player.sprite.width / 2, 
+                        this.canvas.height / 2);
                 } else if (this.state.ghosts[i].speed < 0) {
-                    this.ctx.clearRect(this.canvas.width / 2 + this.state.player.sprite.width / 2 - 6, this.canvas.height / 2, this.canvas.width / 2, this.canvas.height / 2);
+                    this.ctx.clearRect(this.canvas.width / 2 + this.state.player.sprite.width / 2 - 6, 
+                        this.canvas.height / 2, this.canvas.width / 2, 
+                        this.canvas.height / 2);
                 }
                 this.state.ghosts.splice(i, 1);
                 this.state.score += 100;
@@ -251,7 +255,8 @@ export default class Game {
         // Блок первого игрока
         this.ctx.clearRect(0, 0, this.heartImg.width * 4,this.heartImg.height + heartsUpperOffset);
         for (let i = this.state.firstPlayer.hp / 100; i > 0; i--) {
-            this.ctx.drawImage(this.heartImg, heartsBetweenOffset + heartOffset, heartsUpperOffset, this.heartImg.width, this.heartImg.height);
+            this.ctx.drawImage(this.heartImg, heartsBetweenOffset + heartOffset, 
+                heartsUpperOffset, this.heartImg.width, this.heartImg.height);
             heartOffset += this.heartImg.width;
         }
 
@@ -263,12 +268,15 @@ export default class Game {
             this.state.firstPlayer.sprite.width, 
             this.state.firstPlayer.sprite.height);
 
-        this.ctx.drawImage(this.state.firstPlayer.sprite, playerX - this.state.firstPlayer.sprite.width / 2, playerY - this.state.firstPlayer.sprite.height);
+        this.ctx.drawImage(this.state.firstPlayer.sprite, playerX - this.state.firstPlayer.sprite.width / 2, 
+            playerY - this.state.firstPlayer.sprite.height);
 
         // Блок второго игрока
-        this.ctx.clearRect(this.heartImg.width + 10, this.heartImg.height + 10, this.heartImg.width * 4, this.heartImg.height + heartsUpperOffset);
+        this.ctx.clearRect(this.heartImg.width + 10, this.heartImg.height + 10, 
+            this.heartImg.width * 4, this.heartImg.height + heartsUpperOffset);
         for (let i = this.state.secondPlayer.hp / 100; i > 0; i--) {
-            this.ctx.drawImage(this.heartImg, heartsBetweenOffset + heartOffset, heartsUpperOffset + 50, this.heartImg.width, this.heartImg.height);
+            this.ctx.drawImage(this.heartImg, heartsBetweenOffset + heartOffset, 
+                heartsUpperOffset + 50, this.heartImg.width, this.heartImg.height);
             heartOffset += this.heartImg.width;
         }
         playerX = this.canvas.width / 2 + 100;
@@ -278,7 +286,8 @@ export default class Game {
             this.state.secondPlayer.sprite.width, 
             this.state.secondPlayer.sprite.height);
             
-        this.ctx.drawImage(this.state.secondPlayer.sprite, playerX - this.state.secondPlayer.sprite.width / 2, playerY - this.state.secondPlayer.sprite.height);
+        this.ctx.drawImage(this.state.secondPlayer.sprite, playerX - this.state.secondPlayer.sprite.width / 2, 
+            playerY - this.state.secondPlayer.sprite.height);
 
         // Призраки
         const ghostY = this.canvas.height - offsetByY;
@@ -290,15 +299,20 @@ export default class Game {
 
         for (let i = 0; i < this.state.ghosts.length; i++) {
             if (this.state.ghosts[i].speed > 0) {
-                this.ctx.clearRect(0, this.canvas.height / 2, this.canvas.width / 2 - this.state.firstPlayer.sprite.width / 2, this.canvas.height / 2);
-                this.ctx.drawImage(this.state.ghosts[i].sprite, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width, ghostY - this.state.ghosts[i].sprite.height);
+                this.ctx.clearRect(0, this.canvas.height / 2, this.canvas.width / 2 - this.state.firstPlayer.sprite.width / 2, 
+                    this.canvas.height / 2);
+                this.ctx.drawImage(this.state.ghosts[i].sprite, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width, 
+                    ghostY - this.state.ghosts[i].sprite.height);
                 symbolsToShow = this.state.ghosts[i].symbols.join(' ');
-                this.ctx.fillText(symbolsToShow, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width / 2 - this.ctx.measureText(this.state.ghosts[i].symbols).width / 2, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
+                this.ctx.fillText(symbolsToShow, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width / 2 - this.ctx
+                    .measureText(this.state.ghosts[i].symbols).width / 2, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
             } else if (this.state.ghosts[i].speed < 0) {
-                this.ctx.clearRect(this.canvas.width / 2 + this.state.secondPlayer.sprite.width / 2, this.canvas.height / 2, this.canvas.width / 2, this.canvas.height / 2);
+                this.ctx.clearRect(this.canvas.width / 2 + this.state.secondPlayer.sprite.width / 2, 
+                    this.canvas.height / 2, this.canvas.width / 2, this.canvas.height / 2);
                 this.ctx.drawImage(this.state.ghosts[i].sprite, this.state.ghosts[i].x, ghostY - this.state.ghosts[i].sprite.height);
                 symbolsToShow = this.state.ghosts[i].symbols.join(' ');
-                this.ctx.fillText(symbolsToShow, this.state.ghosts[i].x + this.state.ghosts[i].sprite.width / 2 - this.ctx.measureText(this.state.ghosts[i].symbols).width / 2, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
+                this.ctx.fillText(symbolsToShow, this.state.ghosts[i].x + this.state.ghosts[i].sprite.width / 2 - this.ctx
+                    .measureText(this.state.ghosts[i].symbols).width / 2, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
             }
         }
     }
@@ -312,15 +326,18 @@ export default class Game {
 
         this.ctx.clearRect(0, 0, this.heartImg.width * 4,this.heartImg.height + heartsUpperOffset);
         for (let i = this.state.player.hp / 100; i > 0; i--) {
-            this.ctx.drawImage(this.heartImg, heartsBetweenOffset + heartOffset, heartsUpperOffset, this.heartImg.width, this.heartImg.height);
+            this.ctx.drawImage(this.heartImg, heartsBetweenOffset + heartOffset, 
+                heartsUpperOffset, this.heartImg.width, this.heartImg.height);
             heartOffset += this.heartImg.width;
         }
 
         // игрок
         const playerX = this.canvas.width / 2;
         const playerY = this.canvas.height - offsetByY;
-        this.ctx.clearRect(playerX - this.state.player.sprite.width / 2, playerY - this.state.player.sprite.height, this.state.player.sprite.width,this.state.player.sprite.height);
-        this.ctx.drawImage(this.state.player.sprite, playerX - this.state.player.sprite.width / 2, playerY - this.state.player.sprite.height);
+        this.ctx.clearRect(playerX - this.state.player.sprite.width / 2, playerY - this.state.player.sprite.height, 
+            this.state.player.sprite.width,this.state.player.sprite.height);
+        this.ctx.drawImage(this.state.player.sprite, playerX - this.state.player.sprite.width / 2, 
+            playerY - this.state.player.sprite.height);
 
         // призраки
         const ghostY = this.canvas.height - offsetByY;
@@ -332,8 +349,10 @@ export default class Game {
 
         for (let i = 0; i < this.state.ghosts.length; i++) {
             if (this.state.ghosts[i].speed > 0) {
-                this.ctx.clearRect(0, this.canvas.height / 2, this.canvas.width / 2 - this.state.player.sprite.width / 2, this.canvas.height / 2);
-                this.ctx.drawImage(this.state.ghosts[i].sprite, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width, ghostY - this.state.ghosts[i].sprite.height);
+                this.ctx.clearRect(0, this.canvas.height / 2, 
+                    this.canvas.width / 2 - this.state.player.sprite.width / 2, this.canvas.height / 2);
+                this.ctx.drawImage(this.state.ghosts[i].sprite, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width, 
+                    ghostY - this.state.ghosts[i].sprite.height);
                 symbolsToShow = this.state.ghosts[i].symbols.join(' ');
                 this.ctx.fillText(symbolsToShow, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width / 2 - this.ctx.measureText(this.state.ghosts[i].symbols).width / 2, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
             } else if (this.state.ghosts[i].speed < 0) {

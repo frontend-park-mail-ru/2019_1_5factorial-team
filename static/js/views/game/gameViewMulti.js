@@ -21,8 +21,6 @@ export default class gameViewMulti extends View {
     render(root, data = {}) {
         super.render(root, data);
 
-
-        //TODO () : fix double render
         const userStates = new userBlock();
         userStates.gameButtonsMulti(this.state);
         const menuButton = document.getElementsByClassName('js-back-to-menu')[0];
