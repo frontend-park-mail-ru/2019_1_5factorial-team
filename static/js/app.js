@@ -8,6 +8,8 @@ import gameController from './controllers/gameCtrl.js';
 
 import Router from './libs/router.js';
 
+// Just a simple backup on github
+
 document.addEventListener('DOMContentLoaded', () => {
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js');
