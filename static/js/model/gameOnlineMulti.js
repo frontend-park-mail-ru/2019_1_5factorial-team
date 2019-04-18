@@ -1,8 +1,16 @@
 import Game from '../components/game/game.js';
 import ModalWindow from '../components/modalWindow.js';
+import Ws from '../libs/websocket.js';
+
+/**
+ * STATE - состояние игры
+ * MOVE - отправляем символ
+ * END - игра закончилась
+ */
 
 export default class gameOnlineMulti {
     constructor(eventBus) {
+        const ws = new Ws();
         this.localEventBus = eventBus;
         this.scene = null;
         this.players = {
@@ -43,5 +51,6 @@ export default class gameOnlineMulti {
 
     onStart() {
         this.scene = new Game(this.localEventBus, this.players);
+        ws.send()
     }
 }
