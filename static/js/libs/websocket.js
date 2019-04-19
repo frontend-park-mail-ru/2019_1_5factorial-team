@@ -10,7 +10,6 @@ define('Ws', function (require) {
 
 			// const address = `${window.location.protocol.replace('http', 'ws')}//78.155.207.69:5051/api/game/ws`;
 			const address = 'ws://78.155.207.69:5051/api/game/ws';
-			debugger;
 			this.ws = new WebSocket(address);
 
 			this.ws.onopen = () => {
