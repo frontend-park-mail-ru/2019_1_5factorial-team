@@ -19,8 +19,8 @@ export default class Game {
 
         this.lastButtonPressed = '';
 
-        this.bindedButtonsHandler = this.buttonsHandler.bind(this);
-        window.addEventListener('keydown', this.bindedButtonsHandler);
+        // this.bindedButtonsHandler = this.buttonsHandler.bind(this);
+        // window.addEventListener('keydown', this.bindedButtonsHandler);
 
         this.bindedResizer = this.resizer.bind(this);
         window.addEventListener('resize', this.bindedResizer);
@@ -94,6 +94,7 @@ export default class Game {
 
     update(dt) {
         this.state.gameTime += dt;
+        // this.recognizer.tick();
 
         // TODO: убрать this.state.ghosts.length === 0, придумать, как сделать больше одного призрака с каждой стороны экрана
         if (Math.random() < 1 - Math.pow(.993, this.state.gameTime)) {
@@ -137,6 +138,7 @@ export default class Game {
                 }
             }
         }
+
 
         //  убиваем призраков
         for (let i = 0; i < this.state.ghosts.length; i++) {
@@ -186,12 +188,6 @@ export default class Game {
     }
 
     render() {
-        // символы
-        if (this.recognizer.mouseIsDown) {
-            this.recognizer.gctx.clearRect(0, 0, this.recognizer.gcanvas.width, this.recognizer.gcanvas.height);
-            this.recognizer.jager.drawPatch(this.recognizer.path, this.recognizer.gctx, this.recognizer.jager.recognise(this.recognizer.path));
-        }
-
         const offsetByY = this.canvas.height / 40;  // смещение по Y - расстояние от нижнего края экрана
 
         let heartsBetweenOffset = this.heartImg.width / 2;
@@ -202,6 +198,13 @@ export default class Game {
         for (let i = this.state.player.hp / 100; i > 0; i--) {
             this.ctx.drawImage(this.heartImg, heartsBetweenOffset + heartOffset, heartsUpperOffset, this.heartImg.width, this.heartImg.height);
             heartOffset += this.heartImg.width;
+        }
+
+        // символы
+        if (this.recognizer.mouseIsDown) {
+            console.log('symbol drawn');
+            // this.recognizer.gctx.clearRect(0, 0, this.recognizer.gcanvas.width, this.recognizer.gcanvas.height);
+            this.recognizer.jager.drawPatch(this.recognizer.path, this.recognizer.gctx, this.recognizer.jager.recognise(this.recognizer.path));
         }
 
         // игрок
@@ -233,45 +236,45 @@ export default class Game {
         }
     }
 
-    buttonsHandler(e) {
-        //  вывод направления, полученного из нажатой клавиши - left, right, down, up
-        const dirNameX = this.canvas.width / 2;
-        const dirNameY = this.canvas.height / 4;
-
-        // TODO: настроить загрузку шрифта
-        this.ctx.font = '30pt Comfortaa-Regular';
-        this.ctx.fillStyle = 'white';
-
-        let left = this.ctx.measureText('left');
-        let up = this.ctx.measureText('up');
-        let right = this.ctx.measureText('right');
-        let down = this.ctx.measureText('down');
-
-        // очистка по ширине самого длинного прямоугольника - с надписью 'down'
-        this.ctx.clearRect(dirNameX - down.width / 2, dirNameY - 50, 200, 100);
-
-        switch (e.keyCode) {
-            case 37:  // если нажата клавиша влево
-                this.lastButtonPressed = '←';
-                this.ctx.fillText('left', dirNameX - left.width / 2, dirNameY, 200, 100);
-                break;
-            case 38:   // если нажата клавиша вверх
-                this.lastButtonPressed = '↑';
-                this.ctx.fillText('up', dirNameX - up.width / 2, dirNameY, 200, 100);
-                break;
-            case 39:   // если нажата клавиша вправо
-                this.lastButtonPressed = '→';
-                this.ctx.fillText('right', dirNameX - right.width / 2, dirNameY, 200, 100);
-                break;
-            case 40:   // если нажата клавиша вниз
-                this.lastButtonPressed = '↓';
-                this.ctx.fillText('down', dirNameX - down.width / 2, dirNameY, 200, 100);
-                break;
-            default:
-                console.log('unknown');
-                break;
-        }
-    }
+    // buttonsHandler(e) {
+    //     //  вывод направления, полученного из нажатой клавиши - left, right, down, up
+    //     const dirNameX = this.canvas.width / 2;
+    //     const dirNameY = this.canvas.height / 4;
+    //
+    //     // TODO: настроить загрузку шрифта
+    //     this.ctx.font = '30pt Comfortaa-Regular';
+    //     this.ctx.fillStyle = 'white';
+    //
+    //     let left = this.ctx.measureText('left');
+    //     let up = this.ctx.measureText('up');
+    //     let right = this.ctx.measureText('right');
+    //     let down = this.ctx.measureText('down');
+    //
+    //     // очистка по ширине самого длинного прямоугольника - с надписью 'down'
+    //     this.ctx.clearRect(dirNameX - down.width / 2, dirNameY - 50, 200, 100);
+    //
+    //     switch (e.keyCode) {
+    //         case 37:  // если нажата клавиша влево
+    //             this.lastButtonPressed = '←';
+    //             this.ctx.fillText('left', dirNameX - left.width / 2, dirNameY, 200, 100);
+    //             break;
+    //         case 38:   // если нажата клавиша вверх
+    //             this.lastButtonPressed = '↑';
+    //             this.ctx.fillText('up', dirNameX - up.width / 2, dirNameY, 200, 100);
+    //             break;
+    //         case 39:   // если нажата клавиша вправо
+    //             this.lastButtonPressed = '→';
+    //             this.ctx.fillText('right', dirNameX - right.width / 2, dirNameY, 200, 100);
+    //             break;
+    //         case 40:   // если нажата клавиша вниз
+    //             this.lastButtonPressed = '↓';
+    //             this.ctx.fillText('down', dirNameX - down.width / 2, dirNameY, 200, 100);
+    //             break;
+    //         default:
+    //             console.log('unknown');
+    //             break;
+    //     }
+    // }
 
     generateDirection() {
         return Math.floor(Math.random() * 2) === 0 ? 'left' : 'right';

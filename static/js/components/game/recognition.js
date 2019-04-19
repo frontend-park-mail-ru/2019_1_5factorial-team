@@ -1,6 +1,7 @@
 import Jager from '../../libs/jager.js';
 
 export default class Recognizer {
+
     constructor() {
         this.jager = new Jager();
 
@@ -12,6 +13,7 @@ export default class Recognizer {
 
         this.gcanvas = document.getElementsByClassName('canvas_recognizer')[0];
         this.gctx = this.gcanvas.getContext('2d');
+        this.gctx.fillStyle = '#FF0000';
 
         this.mouseIsDown = false;
         this.path = [];
@@ -22,12 +24,23 @@ export default class Recognizer {
         this.gcanvas.addEventListener('mouseout',   this.gestureEnd.bind(this));
 
         this.gcanvas.addEventListener('touchstart', this.gestureStart.bind(this));
-        this.gcanvas.addEventListener('touchmove',  this.gestureMove.bind(this));
+        this.gcanvas.addEventListener('touchmove', this.gestureMove.bind(this));
         this.gcanvas.addEventListener('touchcancel', this.gestureEnd.bind(this));
+        this.gcanvas.addEventListener('touchend', this.gestureEnd.bind(this));
+
+        this.gcanvas.addEventListener('touchstart', this.gestureStart.bind(this));
+        this.gcanvas.addEventListener('touchmove',  this.gestureMove.bind(this));
         this.gcanvas.addEventListener('touchend',   this.gestureEnd.bind(this));
+
+        // this.tick();
     }
 
     destroyRecognizer() {
+        // console.log('before', this.tick);
+        // if (this.tick.bind(this)) {
+        //     cancelAnimationFrame(this.tick.bind(this));
+        // }
+        // console.log('after', this.tick.bind(this));
         this.jager = null;
         this.gcanvas.removeEventListener('mousedown',  this.gestureStart.bind(this));
         this.gcanvas.removeEventListener('mousemove',  this.gestureMove.bind(this));
@@ -70,4 +83,13 @@ export default class Recognizer {
         }
         return true;
     }
+
+    // tick() {
+    //     if (this.mouseIsDown) {
+    //         this.gctx.clearRect(0, 0, this.gcanvas.scrollWidth, this.gcanvas.scrollHeight);
+    //         this.jager.drawPatch(this.path, this.gctx, this.jager.recognise(this.path));
+    //     }
+    //
+    //     requestAnimationFrame(this.tick.bind(this));
+    // }
 }
