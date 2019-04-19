@@ -24,7 +24,6 @@ export default class Ws {
 	}
 
 	closeConn() {
-		debugger;
 		this.webs.close();
 	}
 

@@ -21,7 +21,6 @@ export default class gameOnlineMulti {
             },
         };
         this.MW = new ModalWindow();
-        this.ws = new Ws();
 
         this.localEventBus.getEvent('startGame', this.onStart.bind(this));
         this.localEventBus.getEvent('gameOver', this.onGameOver.bind(this));
@@ -59,6 +58,7 @@ export default class gameOnlineMulti {
     }
 
     onStart() {
+        this.ws = new Ws();
         this.localEventBus.callEvent('startWs');
         let answerWs = this.ws.handleMessage();
         console.log('test', this);
