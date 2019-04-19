@@ -1,10 +1,16 @@
 const PORT = 4000;
 
+const https = require('https');
 const path = require('path');
 const express = require('express');
 const body = require('body-parser');
 const fs = require('fs');
 const morgan = require('morgan');
+
+const options = {
+    key: fs.readFileSync("/srv/www/keys/my-site-key.pem"),
+    cert: fs.readFileSync("/srv/www/keys/chain.pem")
+};
 
 const app = express();
 app.use(morgan('dev'));
@@ -36,6 +42,6 @@ app.get('*', (req, res) => {
     });
 });
 
-app.listen(process.env.PORT || PORT, () => {
+https.createServer(options, app).listen(process.env.PORT || PORT, () => {
     console.log(`Server listening port ${process.env.PORT || PORT}`);
 });
