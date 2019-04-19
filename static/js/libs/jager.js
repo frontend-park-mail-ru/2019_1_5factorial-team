@@ -101,7 +101,9 @@ export default class Jager {
         ctx.lineWidth   = 10;
         ctx.beginPath();
         ctx.moveTo(path[0].x, path[0].y);
+        console.log('(0): ' + path[0].x + ', ' + path[0].y);
         for (i = 1; i < path.length; i++){
+          console.log('(' + i + '): ' + path[0].x + ', ' + path[0].y);
           ctx.lineTo(path[i].x, path[i].y);
         }
         ctx.stroke();

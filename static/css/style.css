@@ -715,12 +715,10 @@ body {
 
 .canvas_recognizer {
     display: flex;
-    width: 100%;
-    height: 100vh;
-    background-color: #e0e0e0;
+    background-color: white;
     position: absolute;
     z-index: 1;
-    opacity: .1;
+    /*opacity: .1;*/
 }
 
 .active-pagination {
@@ -729,6 +727,5 @@ body {
 
 #canvas {
     width: 100%;
-    height: 100%;
-
+    height: 100vh;
 }
