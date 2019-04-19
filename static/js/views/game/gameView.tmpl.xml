@@ -2,6 +2,7 @@
     <div class="container">
         <canvas class="temp_class_canvas" id="canvas">
             <img id="player-sprite" src="../../../img/game/hero.png"/>
+            <img id="player-sprite_second" src="../../../img/game/hero_inversed.png"/>
             <img id="ghost-left-sprite" src="../../../img/game/ghost_l.png"/>
             <img id="ghost-right-sprite" src="../../../img/game/ghost_r.png"/>
             <img id="heart-sprite" src="../../../img/game/heart.png"/>

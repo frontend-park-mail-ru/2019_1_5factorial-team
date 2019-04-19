@@ -14,6 +14,8 @@ export default class Game {
         this.ctx = this.canvas.getContext('2d');
 
         this.playerImg = document.getElementById('player-sprite');
+        this.secondPlayerImg = document.getElementById('player-sprite_second');
+
         this.ghostLeftImg = document.getElementById('ghost-left-sprite');
         this.ghostRightImg = document.getElementById('ghost-right-sprite');
         this.heartImg = document.getElementById('heart-sprite');
@@ -30,7 +32,7 @@ export default class Game {
                     test: players.firstPlayer.test,
                 },
                 secondPlayer: {
-                    sprite: this.playerImg,
+                    sprite: this.secondPlayerImg,
                     x: (this.canvas.width -  this.playerImg.width) / 2 + 100,
                     hp: PLAYER_INITIAL_HP,
                     test: players.secondPlayer.test
@@ -159,7 +161,6 @@ export default class Game {
             }
         }
 
-
         //  убиваем призраков
         for (let i = 0; i < this.state.ghosts.length; i++) {
             // сносим символ
@@ -172,10 +173,10 @@ export default class Game {
             if (this.state.ghosts[i].symbols.length === 0) {
                 if (this.state.ghosts[i].speed > 0) {
                     this.ctx.clearRect(0, this.canvas.height / 2, 
-                        this.canvas.width / 2 - this.state.player.sprite.width / 2, 
+                        this.canvas.width / 2 - this.playerImg.width / 2,
                         this.canvas.height / 2);
                 } else if (this.state.ghosts[i].speed < 0) {
-                    this.ctx.clearRect(this.canvas.width / 2 + this.state.player.sprite.width / 2 - 6, 
+                    this.ctx.clearRect(this.canvas.width / 2 + this.playerImg.width / 2 - 6,
                         this.canvas.height / 2, this.canvas.width / 2, 
                         this.canvas.height / 2);
                 }
@@ -241,45 +242,58 @@ export default class Game {
         const offsetByY = this.canvas.height / 40;  // смещение по Y - расстояние от нижнего края экрана
 
         let heartsBetweenOffset = this.heartImg.width / 2;
-        let heartOffset = 0;
-        let heartsUpperOffset = this.canvas.height / 80;  
+        let leftHeartOffset = 0;
+        let rightHeartOffset = 0;
+        let heartsUpperOffset = this.canvas.height / 10;
 
-        // Блок первого игрока
-        this.ctx.clearRect(0, 0, this.heartImg.width * 4,this.heartImg.height + heartsUpperOffset);
-        for (let i = this.state.firstPlayer.hp / 100; i > 0; i--) {
-            this.ctx.drawImage(this.heartImg, heartsBetweenOffset + heartOffset, 
-                heartsUpperOffset, this.heartImg.width, this.heartImg.height);
-            heartOffset += this.heartImg.width;
-        }
-
-        let playerX = this.canvas.width / 2 - 100;
+        // координата Y оси X
         const playerY = this.canvas.height - offsetByY;
 
-        this.ctx.clearRect(playerX - this.state.firstPlayer.sprite.width / 2, 
-            playerY - this.state.firstPlayer.sprite.height, 
+        const offsetBetweenPlayers = this.canvas.width / 80;
+
+        // Блок первого игрока
+
+        // вывод сердец здоровья
+        this.ctx.clearRect(0, 0, this.heartImg.width * 4,this.heartImg.height + heartsUpperOffset);
+        for (let i = this.state.firstPlayer.hp / 100; i > 0; i--) {
+            this.ctx.drawImage(this.heartImg, heartsBetweenOffset + leftHeartOffset,
+                heartsUpperOffset, this.heartImg.width, this.heartImg.height);
+            leftHeartOffset += this.heartImg.width;
+        }
+
+        // позиция игрока
+        let leftPlayerX = this.canvas.width / 2 - this.state.firstPlayer.sprite.width - offsetBetweenPlayers / 2;
+        this.state.firstPlayer.x = leftPlayerX;
+
+        this.ctx.clearRect(leftPlayerX, playerY - this.state.firstPlayer.sprite.height,
             this.state.firstPlayer.sprite.width, 
             this.state.firstPlayer.sprite.height);
 
-        this.ctx.drawImage(this.state.firstPlayer.sprite, playerX - this.state.firstPlayer.sprite.width / 2, 
+        this.ctx.drawImage(this.state.firstPlayer.sprite, leftPlayerX,
             playerY - this.state.firstPlayer.sprite.height);
 
         // Блок второго игрока
-        this.ctx.clearRect(this.heartImg.width + 10, this.heartImg.height + 10, 
-            this.heartImg.width * 4, this.heartImg.height + heartsUpperOffset);
-        for (let i = this.state.secondPlayer.hp / 100; i > 0; i--) {
-            this.ctx.drawImage(this.heartImg, heartsBetweenOffset + heartOffset, 
-                heartsUpperOffset + 50, this.heartImg.width, this.heartImg.height);
-            heartOffset += this.heartImg.width;
-        }
-        playerX = this.canvas.width / 2 + 100;
 
-        this.ctx.clearRect(playerX - this.state.secondPlayer.sprite.width / 2, 
-            playerY - this.state.secondPlayer.sprite.height, 
+        // вывод сердец здоровья
+        this.ctx.clearRect( this.canvas.width - this.heartImg.width * 3 - heartsBetweenOffset, 0,
+            this.heartImg.width * 3 + heartsBetweenOffset,this.heartImg.height + heartsUpperOffset);
+        for (let i = this.state.secondPlayer.hp / 100; i > 0; i--) {
+            this.ctx.drawImage(this.heartImg, this.canvas.width - this.heartImg.width * 3 - heartsBetweenOffset + rightHeartOffset,
+                heartsUpperOffset, this.heartImg.width, this.heartImg.height);
+            rightHeartOffset += this.heartImg.width;
+        }
+
+        // позиция игрока
+        let rightPlayerX = leftPlayerX + this.state.firstPlayer.sprite.width + offsetBetweenPlayers * 3 / 2;
+        this.state.secondPlayer.x = rightPlayerX;
+
+        this.ctx.clearRect(rightPlayerX, playerY - this.state.secondPlayer.sprite.height,
             this.state.secondPlayer.sprite.width, 
             this.state.secondPlayer.sprite.height);
             
-        this.ctx.drawImage(this.state.secondPlayer.sprite, playerX - this.state.secondPlayer.sprite.width / 2, 
+        this.ctx.drawImage(this.state.secondPlayer.sprite, rightPlayerX,
             playerY - this.state.secondPlayer.sprite.height);
+
 
         // Призраки
         const ghostY = this.canvas.height - offsetByY;
@@ -291,7 +305,8 @@ export default class Game {
 
         for (let i = 0; i < this.state.ghosts.length; i++) {
             if (this.state.ghosts[i].speed > 0) {
-                this.ctx.clearRect(0, this.canvas.height / 2, this.canvas.width / 2 - this.state.firstPlayer.sprite.width / 2, 
+                this.ctx.clearRect(0, this.canvas.height / 2,
+                    this.state.firstPlayer.x,
                     this.canvas.height / 2);
                 this.ctx.drawImage(this.state.ghosts[i].sprite, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width, 
                     ghostY - this.state.ghosts[i].sprite.height);
@@ -299,7 +314,7 @@ export default class Game {
                 this.ctx.fillText(symbolsToShow, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width / 2 - this.ctx
                     .measureText(this.state.ghosts[i].symbols).width / 2, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
             } else if (this.state.ghosts[i].speed < 0) {
-                this.ctx.clearRect(this.canvas.width / 2 + this.state.secondPlayer.sprite.width / 2, 
+                this.ctx.clearRect(this.state.secondPlayer.x + this.state.secondPlayer.sprite.width,
                     this.canvas.height / 2, this.canvas.width / 2, this.canvas.height / 2);
                 this.ctx.drawImage(this.state.ghosts[i].sprite, this.state.ghosts[i].x, ghostY - this.state.ghosts[i].sprite.height);
                 symbolsToShow = this.state.ghosts[i].symbols.join(' ');
