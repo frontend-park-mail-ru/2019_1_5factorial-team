@@ -4,6 +4,8 @@ export default class Recognizer {
     constructor() {
         this.jager = new Jager();
 
+        this.lastDrawing = 0;
+
         this.gestureNames = [
             'none', 'click', 'horizontal', 'vertical',
             '^', 'v', '>', '<',
@@ -64,6 +66,7 @@ export default class Recognizer {
 
             gesture = this.jager.recognise(this.path, 5000, true);
             console.log(this.gestureNames[gesture]);
+            this.lastDrawing = gesture;
             this.gctx.clearRect(0, 0, this.gcanvas.width, this.gcanvas.height);
 
             return false;

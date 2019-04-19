@@ -3,6 +3,8 @@ import Recognizer from './recognition.js';
 
 import { DEFAULT_GHOST_SPEED, DEFAULT_GHOST_DAMAGE, PLAYER_INITIAL_HP } from '../constants.js';
 
+const symbolImgWidth = 60;
+
 export default class Game {
     /**
      * this.lastButtonPressed - последняя нажатая клавиша
@@ -18,6 +20,7 @@ export default class Game {
         this.ctx = this.canvas.getContext('2d');
 
         this.lastButtonPressed = '';
+        this.lastDrawing = 0;
 
         this.bindedButtonsHandler = this.buttonsHandler.bind(this);
         window.addEventListener('keydown', this.bindedButtonsHandler);
@@ -34,6 +37,10 @@ export default class Game {
         this.ghostLeftImg = document.getElementById('ghost-left-sprite');
         this.ghostRightImg = document.getElementById('ghost-right-sprite');
         this.heartImg = document.getElementById('heart-sprite');
+
+        this.symbolLR = document.getElementById('symbol_LR');
+        this.symbolTD = document.getElementById('symbol_TD');
+        this.symbolDTD = document.getElementById('symbol_DTD');
 
         this.state = {
             player: {
@@ -109,7 +116,7 @@ export default class Game {
                         speed: DEFAULT_GHOST_SPEED,
                         damage: DEFAULT_GHOST_DAMAGE,
                         sprite: this.ghostLeftImg,
-                        symbols: this.generateSymbolsSequence()
+                        symbols: this.generateDrawingsSequence()
                     });
                 } else if (generatedDirection === 'right') {
                     this.state.ghosts.push({
@@ -117,7 +124,7 @@ export default class Game {
                         speed: -DEFAULT_GHOST_SPEED,
                         damage: DEFAULT_GHOST_DAMAGE,
                         sprite: this.ghostRightImg,
-                        symbols: this.generateSymbolsSequence()
+                        symbols: this.generateDrawingsSequence()
                     });
                 }
             } else if (this.state.ghosts.length === 1) {
@@ -127,7 +134,7 @@ export default class Game {
                         speed: DEFAULT_GHOST_SPEED,
                         damage: DEFAULT_GHOST_DAMAGE,
                         sprite: this.ghostLeftImg,
-                        symbols: this.generateSymbolsSequence()
+                        symbols: this.generateDrawingsSequence()
                     });
                 } else if (this.state.ghosts[0].speed > 0) {  // если есть призрак слева
                     this.state.ghosts.push({
@@ -135,7 +142,7 @@ export default class Game {
                         speed: -DEFAULT_GHOST_SPEED,
                         damage: DEFAULT_GHOST_DAMAGE,
                         sprite: this.ghostRightImg,
-                        symbols: this.generateSymbolsSequence()
+                        symbols: this.generateDrawingsSequence()
                     });
                 }
             }
@@ -145,7 +152,7 @@ export default class Game {
         //  убиваем призраков
         for (let i = 0; i < this.state.ghosts.length; i++) {
             // сносим символ
-            if (this.state.ghosts[i].symbols[0] === this.lastButtonPressed) {
+            if (this.state.ghosts[i].symbols[0] === this.lastDrawing) {
                 this.state.ghosts[i].symbols = this.state.ghosts[i].symbols.slice(1, this.state.ghosts[i].symbols.length + 1);
                 this.state.score += 10;
             }
@@ -161,7 +168,7 @@ export default class Game {
                 this.state.score += 100;
             }
         }
-        this.lastButtonPressed = '';
+        this.lastDrawing = 0;
 
         // двигаем призраков и дамажим героя
         for (let i = 0; i < this.state.ghosts.length; i++) {
@@ -210,23 +217,89 @@ export default class Game {
 
         // призраки
         const ghostY = this.canvas.height - offsetByY;
-        const symbolsOffset = 30;  // расстояние между призраком и символами над его головой
+        const symbolsOffset = 5;  // расстояние между призраком и символами над его головой
 
         this.ctx.font = '20pt Comfortaa-Regular';
         this.ctx.fillStyle = 'white';
-        let symbolsToShow = '';
+        // let symbolsToShow = '';
 
         for (let i = 0; i < this.state.ghosts.length; i++) {
             if (this.state.ghosts[i].speed > 0) {
-                this.ctx.clearRect(0, this.canvas.height / 2, this.canvas.width / 2 - this.state.player.sprite.width / 2, this.canvas.height / 2);
-                this.ctx.drawImage(this.state.ghosts[i].sprite, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width, ghostY - this.state.ghosts[i].sprite.height);
-                symbolsToShow = this.state.ghosts[i].symbols.join(' ');
-                this.ctx.fillText(symbolsToShow, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width / 2 - this.ctx.measureText(this.state.ghosts[i].symbols).width / 2, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
+                this.ctx.clearRect(0,
+                    this.canvas.height - this.state.ghosts[i].sprite.height - offsetByY,
+                    this.canvas.width / 2 - this.state.player.sprite.width / 2,
+                    this.state.ghosts[i].sprite.height);
+
+                this.ctx.drawImage(this.state.ghosts[i].sprite,
+                    this.state.ghosts[i].x - this.state.ghosts[i].sprite.width,
+                    ghostY - this.state.ghosts[i].sprite.height);
+
+                this.ctx.clearRect(0,
+                    this.canvas.height - this.state.ghosts[i].sprite.height - offsetByY - symbolImgWidth - symbolsOffset,
+                    this.canvas.width / 2,
+                    symbolImgWidth);
+                for (let j = 0; j < this.state.ghosts[i].symbols.length; j++) {
+                    switch (this.state.ghosts[i].symbols[j]) {
+                        case 2:  // LR
+                            this.ctx.drawImage(this.symbolLR,
+                                this.state.ghosts[i].x - this.state.ghosts[i].sprite.width + symbolImgWidth * j + (this.state.ghosts[i].sprite.width / 2 - this.state.ghosts[i].symbols.length * symbolImgWidth / 2),
+                                ghostY - this.state.ghosts[i].sprite.height - symbolImgWidth);
+                            break;
+                        case 3:  // TD
+                            this.ctx.drawImage(this.symbolTD,
+                                this.state.ghosts[i].x - this.state.ghosts[i].sprite.width + symbolImgWidth * j + (this.state.ghosts[i].sprite.width / 2 - this.state.ghosts[i].symbols.length * symbolImgWidth / 2),
+                                ghostY - this.state.ghosts[i].sprite.height - symbolImgWidth);
+                            break;
+                        case 4:  // DTD
+                            this.ctx.drawImage(this.symbolDTD,
+                                this.state.ghosts[i].x - this.state.ghosts[i].sprite.width + symbolImgWidth * j + (this.state.ghosts[i].sprite.width / 2 - this.state.ghosts[i].symbols.length * symbolImgWidth / 2),
+                                ghostY - this.state.ghosts[i].sprite.height - symbolImgWidth);
+                            break;
+                    }
+                }
+
+                // symbolsToShow = this.state.ghosts[i].symbols.join(' ');
+                // this.ctx.fillText(symbolsToShow,
+                //     this.state.ghosts[i].x - this.state.ghosts[i].sprite.width / 2 - this.ctx.measureText(this.state.ghosts[i].symbols).width / 2,
+                //     ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
             } else if (this.state.ghosts[i].speed < 0) {
-                this.ctx.clearRect(this.canvas.width / 2 + this.state.player.sprite.width / 2, this.canvas.height / 2, this.canvas.width / 2, this.canvas.height / 2);
-                this.ctx.drawImage(this.state.ghosts[i].sprite, this.state.ghosts[i].x, ghostY - this.state.ghosts[i].sprite.height);
-                symbolsToShow = this.state.ghosts[i].symbols.join(' ');
-                this.ctx.fillText(symbolsToShow, this.state.ghosts[i].x + this.state.ghosts[i].sprite.width / 2 - this.ctx.measureText(this.state.ghosts[i].symbols).width / 2, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
+                this.ctx.clearRect(this.canvas.width / 2 + this.state.player.sprite.width / 2,
+                    this.canvas.height - this.state.ghosts[i].sprite.height - offsetByY,
+                    this.canvas.width / 2,
+                    this.state.ghosts[i].sprite.height);
+
+                this.ctx.drawImage(this.state.ghosts[i].sprite,
+                    this.state.ghosts[i].x,
+                    ghostY - this.state.ghosts[i].sprite.height);
+
+                this.ctx.clearRect(this.canvas.width / 2,
+                    this.canvas.height - this.state.ghosts[i].sprite.height - offsetByY - symbolImgWidth - symbolsOffset,
+                    this.canvas.width / 2,
+                    symbolImgWidth);
+                for (let j = 0; j < this.state.ghosts[i].symbols.length; j++) {
+                    switch (this.state.ghosts[i].symbols[j]) {
+                        case 2:  // LR
+                            this.ctx.drawImage(this.symbolLR,
+                                this.state.ghosts[i].x + symbolImgWidth * j + (this.state.ghosts[i].sprite.width / 2 - this.state.ghosts[i].symbols.length * symbolImgWidth / 2),
+                                ghostY - this.state.ghosts[i].sprite.height - symbolImgWidth - symbolsOffset);
+                            break;
+                        case 3:  // TD
+                            this.ctx.drawImage(this.symbolTD,
+                                this.state.ghosts[i].x + symbolImgWidth * j + (this.state.ghosts[i].sprite.width / 2 - this.state.ghosts[i].symbols.length * symbolImgWidth / 2),
+                                ghostY - this.state.ghosts[i].sprite.height - symbolImgWidth - symbolsOffset);
+                            break;
+                        case 4:  // DTD
+                            this.ctx.drawImage(this.symbolDTD,
+                                this.state.ghosts[i].x + symbolImgWidth * j + (this.state.ghosts[i].sprite.width / 2 - this.state.ghosts[i].symbols.length * symbolImgWidth / 2),
+                                ghostY - this.state.ghosts[i].sprite.height - symbolImgWidth - symbolsOffset);
+                            break;
+                    }
+                }
+
+                // symbolsToShow = this.state.ghosts[i].symbols.join(' ');
+                // this.ctx.fillText(symbolsToShow,
+                //     this.state.ghosts[i].x + this.state.ghosts[i].sprite.width / 2 - this.ctx.measureText(this.state.ghosts[i].symbols).width / 2,
+                //     ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
             }
         }
 
@@ -234,74 +307,101 @@ export default class Game {
             this.recognizer.gctx.clearRect(0, 0, this.recognizer.gcanvas.scrollWidth, this.recognizer.gcanvas.scrollHeight);
             this.recognizer.jager.drawPatch(this.recognizer.path, this.recognizer.gctx, this.recognizer.jager.recognise(this.recognizer.path));
         }
-    }
 
-    buttonsHandler(e) {
-        //  вывод направления, полученного из нажатой клавиши - left, right, down, up
-        const dirNameX = this.canvas.width / 2;
-        const dirNameY = this.canvas.height / 4;
-
-        // TODO: настроить загрузку шрифта
-        this.ctx.font = '30pt Comfortaa-Regular';
-        this.ctx.fillStyle = 'white';
-
-        let left = this.ctx.measureText('left');
-        let up = this.ctx.measureText('up');
-        let right = this.ctx.measureText('right');
-        let down = this.ctx.measureText('down');
-
-        // очистка по ширине самого длинного прямоугольника - с надписью 'down'
-        this.ctx.clearRect(dirNameX - down.width / 2, dirNameY - 50, 200, 100);
-
-        switch (e.keyCode) {
-            case 37:  // если нажата клавиша влево
-                this.lastButtonPressed = '←';
-                this.ctx.fillText('left', dirNameX - left.width / 2, dirNameY, 200, 100);
-                break;
-            case 38:   // если нажата клавиша вверх
-                this.lastButtonPressed = '↑';
-                this.ctx.fillText('up', dirNameX - up.width / 2, dirNameY, 200, 100);
-                break;
-            case 39:   // если нажата клавиша вправо
-                this.lastButtonPressed = '→';
-                this.ctx.fillText('right', dirNameX - right.width / 2, dirNameY, 200, 100);
-                break;
-            case 40:   // если нажата клавиша вниз
-                this.lastButtonPressed = '↓';
-                this.ctx.fillText('down', dirNameX - down.width / 2, dirNameY, 200, 100);
-                break;
-            default:
-                console.log('unknown');
-                break;
+        if (this.recognizer.lastDrawing !== null) {
+            this.lastDrawing = this.recognizer.lastDrawing;
+            this.recognizer.lastDrawing = null;
         }
     }
+
+    // buttonsHandler(e) {
+    //     //  вывод направления, полученного из нажатой клавиши - left, right, down, up
+    //     const dirNameX = this.canvas.width / 2;
+    //     const dirNameY = this.canvas.height / 4;
+    //
+    //     // TODO: настроить загрузку шрифта
+    //     this.ctx.font = '30pt Comfortaa-Regular';
+    //     this.ctx.fillStyle = 'white';
+    //
+    //     let left = this.ctx.measureText('left');
+    //     let up = this.ctx.measureText('up');
+    //     let right = this.ctx.measureText('right');
+    //     let down = this.ctx.measureText('down');
+    //
+    //     // очистка по ширине самого длинного прямоугольника - с надписью 'down'
+    //     this.ctx.clearRect(dirNameX - down.width / 2, dirNameY - 50, 200, 100);
+    //
+    //     switch (e.keyCode) {
+    //         case 37:  // если нажата клавиша влево
+    //             this.lastButtonPressed = '←';
+    //             this.ctx.fillText('left', dirNameX - left.width / 2, dirNameY, 200, 100);
+    //             break;
+    //         case 38:   // если нажата клавиша вверх
+    //             this.lastButtonPressed = '↑';
+    //             this.ctx.fillText('up', dirNameX - up.width / 2, dirNameY, 200, 100);
+    //             break;
+    //         case 39:   // если нажата клавиша вправо
+    //             this.lastButtonPressed = '→';
+    //             this.ctx.fillText('right', dirNameX - right.width / 2, dirNameY, 200, 100);
+    //             break;
+    //         case 40:   // если нажата клавиша вниз
+    //             this.lastButtonPressed = '↓';
+    //             this.ctx.fillText('down', dirNameX - down.width / 2, dirNameY, 200, 100);
+    //             break;
+    //         default:
+    //             console.log('unknown');
+    //             break;
+    //     }
+    // }
 
     generateDirection() {
         return Math.floor(Math.random() * 2) === 0 ? 'left' : 'right';
     }
 
-    generateSymbolsSequence() {
+    // generateSymbolsSequence() {
+    //     const maxSymbolsLength = 2, minSymbolsLength = 6;
+    //     let generatedSymbolsLength = Math.floor(Math.random() * (maxSymbolsLength - minSymbolsLength + 1)) + minSymbolsLength;
+    //
+    //     let generatedSymbols = [];
+    //     for (let i = 0; i < generatedSymbolsLength; i++) {
+    //         let generatedSymbolNumber = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
+    //         switch (generatedSymbolNumber) {
+    //             case 1:
+    //                 generatedSymbols.push('←');
+    //                 break;
+    //             case 2:
+    //                 generatedSymbols.push('→');
+    //                 break;
+    //             case 3:
+    //                 generatedSymbols.push('↑');
+    //                 break;
+    //             case 4:
+    //                 generatedSymbols.push('↓');
+    //                 break;
+    //         }
+    //     }
+    //     return generatedSymbols;
+    // }
+
+    generateDrawingsSequence() {
         const maxSymbolsLength = 2, minSymbolsLength = 6;
         let generatedSymbolsLength = Math.floor(Math.random() * (maxSymbolsLength - minSymbolsLength + 1)) + minSymbolsLength;
 
-        let generatedSymbols = [];
+        let generatedDrawings = [];
         for (let i = 0; i < generatedSymbolsLength; i++) {
             let generatedSymbolNumber = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
             switch (generatedSymbolNumber) {
-                case 1:
-                    generatedSymbols.push('←');
-                    break;
                 case 2:
-                    generatedSymbols.push('→');
+                    generatedDrawings.push(2);  // LR
                     break;
                 case 3:
-                    generatedSymbols.push('↑');
+                    generatedDrawings.push(3);  // TD
                     break;
                 case 4:
-                    generatedSymbols.push('↓');
+                    generatedDrawings.push(4);  // DTD
                     break;
             }
         }
-        return generatedSymbols;
+        return generatedDrawings;
     }
 }
