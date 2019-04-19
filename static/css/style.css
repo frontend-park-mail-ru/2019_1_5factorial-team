@@ -716,3 +716,12 @@ body {
 .active-pagination {
     background: var(--blue-clr);
 }
+
+.info {
+    background-image: url('../img/svg/info.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 0.7em 0.7em;
+    width: 0.7em;
+    height: 0.7em;
+}
