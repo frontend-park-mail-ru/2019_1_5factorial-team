@@ -6,9 +6,9 @@ import { DEFAULT_GHOST_SPEED, DEFAULT_GHOST_DAMAGE, PLAYER_INITIAL_HP } from '..
 const symbolImgWidth = 60;
 
 export default class Game {
-    /**
-     * this.lastButtonPressed - последняя нажатая клавиша
-     * this.bindedButtonsHandler - обработчик нажатия на клавиши
+    /*
+     * this.lastDrawing - последний считанный нарисованный символ
+     * this.recognizer - распознаватель нарисованных символов
      * this.bindedResizer - обработчик изменения размеров экрана для корректного ререндера
      * this.state - состояние игры
      */
@@ -19,11 +19,7 @@ export default class Game {
         this.canvas = document.getElementsByClassName('temp_class_canvas')[0];
         this.ctx = this.canvas.getContext('2d');
 
-        this.lastButtonPressed = '';
         this.lastDrawing = 0;
-
-        this.bindedButtonsHandler = this.buttonsHandler.bind(this);
-        window.addEventListener('keydown', this.bindedButtonsHandler);
 
         this.recognizer = new Recognizer();
 
@@ -78,7 +74,6 @@ export default class Game {
         
         console.log('final score is', this.state.score);
         window.removeEventListener('resize', this.bindedResizer);
-        window.removeEventListener('keydown', this.bindedButtonsHandler);
     }
 
     gameLoop() {
@@ -147,7 +142,6 @@ export default class Game {
                 }
             }
         }
-
 
         //  убиваем призраков
         for (let i = 0; i < this.state.ghosts.length; i++) {
@@ -219,50 +213,42 @@ export default class Game {
         const ghostY = this.canvas.height - offsetByY;
         const symbolsOffset = 5;  // расстояние между призраком и символами над его головой
 
-        this.ctx.font = '20pt Comfortaa-Regular';
-        this.ctx.fillStyle = 'white';
-        // let symbolsToShow = '';
-
         for (let i = 0; i < this.state.ghosts.length; i++) {
             if (this.state.ghosts[i].speed > 0) {
+                // очистка + рендер призрака
                 this.ctx.clearRect(0,
                     this.canvas.height - this.state.ghosts[i].sprite.height - offsetByY,
                     this.canvas.width / 2 - this.state.player.sprite.width / 2,
                     this.state.ghosts[i].sprite.height);
-
                 this.ctx.drawImage(this.state.ghosts[i].sprite,
                     this.state.ghosts[i].x - this.state.ghosts[i].sprite.width,
                     ghostY - this.state.ghosts[i].sprite.height);
 
+                // очистка + рендер символов над призраком
                 this.ctx.clearRect(0,
                     this.canvas.height - this.state.ghosts[i].sprite.height - offsetByY - symbolImgWidth - symbolsOffset,
                     this.canvas.width / 2,
                     symbolImgWidth);
                 for (let j = 0; j < this.state.ghosts[i].symbols.length; j++) {
                     switch (this.state.ghosts[i].symbols[j]) {
-                        case 2:  // LR
+                        case 2:  // LR - горизонтальный символ left-right
                             this.ctx.drawImage(this.symbolLR,
                                 this.state.ghosts[i].x - this.state.ghosts[i].sprite.width + symbolImgWidth * j + (this.state.ghosts[i].sprite.width / 2 - this.state.ghosts[i].symbols.length * symbolImgWidth / 2),
                                 ghostY - this.state.ghosts[i].sprite.height - symbolImgWidth);
                             break;
-                        case 3:  // TD
+                        case 3:  // TD - вертикальный символ - top-down
                             this.ctx.drawImage(this.symbolTD,
                                 this.state.ghosts[i].x - this.state.ghosts[i].sprite.width + symbolImgWidth * j + (this.state.ghosts[i].sprite.width / 2 - this.state.ghosts[i].symbols.length * symbolImgWidth / 2),
                                 ghostY - this.state.ghosts[i].sprite.height - symbolImgWidth);
                             break;
-                        case 4:  // DTD
+                        case 4:  // DTD - стрелка - down-top-down
                             this.ctx.drawImage(this.symbolDTD,
                                 this.state.ghosts[i].x - this.state.ghosts[i].sprite.width + symbolImgWidth * j + (this.state.ghosts[i].sprite.width / 2 - this.state.ghosts[i].symbols.length * symbolImgWidth / 2),
                                 ghostY - this.state.ghosts[i].sprite.height - symbolImgWidth);
                             break;
                     }
                 }
-
-                // symbolsToShow = this.state.ghosts[i].symbols.join(' ');
-                // this.ctx.fillText(symbolsToShow,
-                //     this.state.ghosts[i].x - this.state.ghosts[i].sprite.width / 2 - this.ctx.measureText(this.state.ghosts[i].symbols).width / 2,
-                //     ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
-            } else if (this.state.ghosts[i].speed < 0) {
+            } else if (this.state.ghosts[i].speed < 0) {  // все то же самое, что и для призрака слева
                 this.ctx.clearRect(this.canvas.width / 2 + this.state.player.sprite.width / 2,
                     this.canvas.height - this.state.ghosts[i].sprite.height - offsetByY,
                     this.canvas.width / 2,
@@ -295,93 +281,23 @@ export default class Game {
                             break;
                     }
                 }
-
-                // symbolsToShow = this.state.ghosts[i].symbols.join(' ');
-                // this.ctx.fillText(symbolsToShow,
-                //     this.state.ghosts[i].x + this.state.ghosts[i].sprite.width / 2 - this.ctx.measureText(this.state.ghosts[i].symbols).width / 2,
-                //     ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
             }
         }
 
-        if (this.recognizer.mouseIsDown) {
+        if (this.recognizer.mouseIsDown) {  // отрисовываем символы на втором канвасе
             this.recognizer.gctx.clearRect(0, 0, this.recognizer.gcanvas.scrollWidth, this.recognizer.gcanvas.scrollHeight);
             this.recognizer.jager.drawPatch(this.recognizer.path, this.recognizer.gctx, this.recognizer.jager.recognise(this.recognizer.path));
         }
 
         if (this.recognizer.lastDrawing !== null) {
             this.lastDrawing = this.recognizer.lastDrawing;
-            this.recognizer.lastDrawing = null;
+            this.recognizer.lastDrawing = null; // чтобы не сносить сразу все одинаковые символы, идущие подряд
         }
     }
-
-    // buttonsHandler(e) {
-    //     //  вывод направления, полученного из нажатой клавиши - left, right, down, up
-    //     const dirNameX = this.canvas.width / 2;
-    //     const dirNameY = this.canvas.height / 4;
-    //
-    //     // TODO: настроить загрузку шрифта
-    //     this.ctx.font = '30pt Comfortaa-Regular';
-    //     this.ctx.fillStyle = 'white';
-    //
-    //     let left = this.ctx.measureText('left');
-    //     let up = this.ctx.measureText('up');
-    //     let right = this.ctx.measureText('right');
-    //     let down = this.ctx.measureText('down');
-    //
-    //     // очистка по ширине самого длинного прямоугольника - с надписью 'down'
-    //     this.ctx.clearRect(dirNameX - down.width / 2, dirNameY - 50, 200, 100);
-    //
-    //     switch (e.keyCode) {
-    //         case 37:  // если нажата клавиша влево
-    //             this.lastButtonPressed = '←';
-    //             this.ctx.fillText('left', dirNameX - left.width / 2, dirNameY, 200, 100);
-    //             break;
-    //         case 38:   // если нажата клавиша вверх
-    //             this.lastButtonPressed = '↑';
-    //             this.ctx.fillText('up', dirNameX - up.width / 2, dirNameY, 200, 100);
-    //             break;
-    //         case 39:   // если нажата клавиша вправо
-    //             this.lastButtonPressed = '→';
-    //             this.ctx.fillText('right', dirNameX - right.width / 2, dirNameY, 200, 100);
-    //             break;
-    //         case 40:   // если нажата клавиша вниз
-    //             this.lastButtonPressed = '↓';
-    //             this.ctx.fillText('down', dirNameX - down.width / 2, dirNameY, 200, 100);
-    //             break;
-    //         default:
-    //             console.log('unknown');
-    //             break;
-    //     }
-    // }
 
     generateDirection() {
         return Math.floor(Math.random() * 2) === 0 ? 'left' : 'right';
     }
-
-    // generateSymbolsSequence() {
-    //     const maxSymbolsLength = 2, minSymbolsLength = 6;
-    //     let generatedSymbolsLength = Math.floor(Math.random() * (maxSymbolsLength - minSymbolsLength + 1)) + minSymbolsLength;
-    //
-    //     let generatedSymbols = [];
-    //     for (let i = 0; i < generatedSymbolsLength; i++) {
-    //         let generatedSymbolNumber = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
-    //         switch (generatedSymbolNumber) {
-    //             case 1:
-    //                 generatedSymbols.push('←');
-    //                 break;
-    //             case 2:
-    //                 generatedSymbols.push('→');
-    //                 break;
-    //             case 3:
-    //                 generatedSymbols.push('↑');
-    //                 break;
-    //             case 4:
-    //                 generatedSymbols.push('↓');
-    //                 break;
-    //         }
-    //     }
-    //     return generatedSymbols;
-    // }
 
     generateDrawingsSequence() {
         const maxSymbolsLength = 2, minSymbolsLength = 6;
