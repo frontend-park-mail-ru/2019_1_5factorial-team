@@ -91,6 +91,8 @@ export const EVENT_LIST_GAME_MULTI = [
     'gameMultiEnd',
     'firstLost',
     'secondLost',
+    'startWs',
+    'stopToBack'
 ];
 
 export const NETWORK_ADRESS = 'http://78.155.207.69:5051';

@@ -21,6 +21,7 @@ export default class gameOnlineMulti {
             },
         };
         this.MW = new ModalWindow();
+        this.ws = new Ws();
 
         this.localEventBus.getEvent('startGame', this.onStart.bind(this));
         this.localEventBus.getEvent('gameOver', this.onGameOver.bind(this));
@@ -42,16 +43,27 @@ export default class gameOnlineMulti {
             console.log('second won', this.scene.state.secondPlayer);
             this.winnerText.textContent = `Game over! ${this.scene.state.secondPlayer} won!`;
         }
-        // this.ws.close();
-        // console.log('this.scene second', this.scene);
+        this.ws.closeConn();
     }  
 
     stopGame() {
-
+        // let answerWs = this.ws.handleMessage();
+        this.ws.closeConn();
+        if (answerWs !== undefined) {
+            if (answerWs.type === 'END') {
+                console.log('STOPPED ON FRONT');
+            } else {
+                this.ws.closeConn();
+            }
+        }
     }
 
     onStart() {
-        this.scene = new Game(this.localEventBus, this.players);
-        this.ws = new Ws();
+        this.localEventBus.callEvent('startWs');
+        let answerWs = this.ws.handleMessage();
+        console.log('test', this);
+        if (answerWs !== undefined) {
+            this.scene = new Game(this.localEventBus, answerWs.payload);
+        }
     }
 }
