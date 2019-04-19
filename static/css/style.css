@@ -349,7 +349,6 @@ body {
     .users_absolute {
         position: absolute;
         right: 1vw;
-        z-index: 2;
     }
     .users__btn {
         color: var(--main-clr);
@@ -583,7 +582,6 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
-    font-size: 3vh;
 }
 
 .modal-window__btn {
@@ -594,7 +592,6 @@ body {
 .modal-window__header {
     font-size: 4vh;
     text-align: center;
-    white-space: nowrap;
 }
 
 .modal-window__input-rows {
@@ -707,28 +704,31 @@ body {
 
 .temp_class_canvas {
     z-index: 0;
+    display: flex;
+    width: 100%;
+    height: 100vh;
     background-image: url('../img/1.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 }
 
-.canvas_recognizer {
-    display: flex;
-    width: 100%;
-    height: 100vh;
-    background-color: #e0e0e0;
-    position: absolute;
-    z-index: 1;
-    opacity: .1;
-}
+/*.canvas_recognizer {*/
+    /*z-index: 1;*/
+    /*display: flex;*/
+    /*width: 100%;*/
+    /*height: 100vh;*/
+/*}*/
 
 .active-pagination {
     background: var(--blue-clr);
 }
 
-#canvas {
+#gcanvas {
     width: 100%;
     height: 100%;
-
+    background-color: #e0e0e0;
+    position: absolute;
+    z-index: 100;
+    opacity: .1;
 }
