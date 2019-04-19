@@ -332,6 +332,7 @@ body {
         fill: var(--main-clr);
         font-size: 6vh;
         margin: 0 10% 0 0;
+        width: 0.7em;
     }
     .settings__btn:hover {
         filter: drop-shadow(0 0 1vh var(--light-blue-clr));
@@ -719,6 +720,15 @@ body {
 
 .info {
     background-image: url('../img/svg/info.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 0.7em 0.7em;
+    width: 0.7em;
+    height: 0.7em;
+}
+
+.volume {
+    background-image: url('../img/svg/volume_up.svg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: 0.7em 0.7em;
