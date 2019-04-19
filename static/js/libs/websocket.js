@@ -6,22 +6,30 @@ define('Ws', function (require) {
 			if (Ws.__instance) {
 				return Ws.__instance;
 			}
+			console.log('nside', this);
 
-			const address = `${window.location.protocol.replace('http', 'ws')}//${Ws.host}/ws`;
+			// const address = `${window.location.protocol.replace('http', 'ws')}//78.155.207.69:5051/api/game/ws`;
+			const address = 'ws://78.155.207.69:5051/api/game/ws';
+			debugger;
 			this.ws = new WebSocket(address);
-			this.ws.onopen = (event) => {
+
+			this.ws.onopen = () => {
 				console.log(`WebSocket on address ${address} opened`);
 				console.dir(this.ws);
-
-				this.ws.onmessage = this.handleMessage.bind(this);
 
 				this.ws.onclose = () => {
 					console.log(`WebSocket closed`);
 				};
+
+				this.ws.onmessage = this.handleMessage.bind(this);
 			};
 
 			Ws.__instance = this;
 		}
+
+		// close() {
+		// 	this.ws.close();
+		// }
 
 		handleMessage(event) {
 			const messageText = event.data;
@@ -34,12 +42,13 @@ define('Ws', function (require) {
 			}
 		}
 
-		send(type, payload) {
-			this.ws.send(JSON.stringify({type, payload}));
+		send(type, pressed) {
+			console.log('ws.send', JSON.stringify({type, pressed}))
+			this.ws.send(JSON.stringify({type, pressed}));
 		}
 	}
 
-	Ws.host = window.location.host;
+	// Ws.host = window.location.host;
 
 	return Ws;
 });

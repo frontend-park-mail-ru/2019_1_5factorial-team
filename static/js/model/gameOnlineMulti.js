@@ -10,7 +10,6 @@ import Ws from '../libs/websocket.js';
 
 export default class gameOnlineMulti {
     constructor(eventBus) {
-        const ws = new Ws();
         this.localEventBus = eventBus;
         this.scene = null;
         this.players = {
@@ -28,6 +27,7 @@ export default class gameOnlineMulti {
         this.localEventBus.getEvent('stopGameManualy', this.stopGame.bind(this));
     } 
     onGameOver() {
+        this.ws.send('MOVE', 'up');
         console.log('this.scene first', this.scene);
         if (this.scene.state.isGameOver) {
             this.scene.destroy();
@@ -42,6 +42,7 @@ export default class gameOnlineMulti {
             console.log('second won', this.scene.state.secondPlayer);
             this.winnerText.textContent = `Game over! ${this.scene.state.secondPlayer} won!`;
         }
+        // this.ws.close();
         // console.log('this.scene second', this.scene);
     }  
 
@@ -51,6 +52,6 @@ export default class gameOnlineMulti {
 
     onStart() {
         this.scene = new Game(this.localEventBus, this.players);
-        ws.send()
+        this.ws = new Ws();
     }
 }
