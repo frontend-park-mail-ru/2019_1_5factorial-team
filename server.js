@@ -8,8 +8,12 @@ const fs = require('fs');
 const morgan = require('morgan');
 
 const options = {
-    key: fs.readFileSync('/etc/letsencrypt/live/5factorial.tech/fullchain.pem'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/5factorial.tech/privkey.pem')
+    hostname: 'encrypted.google.com',
+    port: 443,
+    path: '/',
+    method: 'GET',
+    key: fs.readFileSync('/etc/letsencrypt/live/5factorial.tech-0001/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/5factorial.tech-0001/fullchain.pem')
 };
 
 const app = express();
@@ -42,6 +46,6 @@ app.get('*', (req, res) => {
     });
 });
 
-https.createServer(options, app).listen(process.env.PORT || PORT, () => {
-    console.log(`Server listening port ${process.env.PORT || PORT}`);
-});
+https.createServer(options, app).listen(PORT);
+
+console.log('runnig');
