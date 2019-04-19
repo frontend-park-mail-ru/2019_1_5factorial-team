@@ -22,6 +22,8 @@ export default class Game {
         this.bindedButtonsHandler = this.buttonsHandler.bind(this);
         window.addEventListener('keydown', this.bindedButtonsHandler);
 
+        this.recognizer = new Recognizer();
+
         this.bindedResizer = this.resizer.bind(this);
         window.addEventListener('resize', this.bindedResizer);
         this.resizer();
@@ -47,8 +49,6 @@ export default class Game {
             isGameOver: false
         };
 
-        this.recognizer = new Recognizer();
-
         this.lastTime = Date.now();
 
         this.gameLoop();
@@ -57,6 +57,9 @@ export default class Game {
     resizer() {
         this.canvas.height = window.innerHeight;
         this.canvas.width = window.innerWidth;
+
+        this.recognizer.gcanvas.height = window.innerHeight;
+        this.recognizer.gcanvas.width = window.innerWidth;
     }
 
     destroy() {
@@ -94,7 +97,6 @@ export default class Game {
 
     update(dt) {
         this.state.gameTime += dt;
-        this.recognizer.tick();
 
         // TODO: убрать this.state.ghosts.length === 0, придумать, как сделать больше одного призрака с каждой стороны экрана
         if (Math.random() < 1 - Math.pow(.993, this.state.gameTime)) {
@@ -226,6 +228,11 @@ export default class Game {
                 symbolsToShow = this.state.ghosts[i].symbols.join(' ');
                 this.ctx.fillText(symbolsToShow, this.state.ghosts[i].x + this.state.ghosts[i].sprite.width / 2 - this.ctx.measureText(this.state.ghosts[i].symbols).width / 2, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
             }
+        }
+
+        if (this.recognizer.mouseIsDown) {
+            this.recognizer.gctx.clearRect(0, 0, this.recognizer.gcanvas.scrollWidth, this.recognizer.gcanvas.scrollHeight);
+            this.recognizer.jager.drawPatch(this.recognizer.path, this.recognizer.gctx, this.recognizer.jager.recognise(this.recognizer.path));
         }
     }
 

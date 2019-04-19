@@ -1,7 +1,6 @@
 import Jager from '../../libs/jager.js';
 
 export default class Recognizer {
-
     constructor() {
         this.jager = new Jager();
 
@@ -13,19 +12,9 @@ export default class Recognizer {
 
         this.gcanvas = document.getElementById('gcanvas');
         this.gctx = this.gcanvas.getContext('2d');
-        this.gctx.fillStyle = '#FF0000';
 
         this.mouseIsDown = false;
         this.path = [];
-
-        window.addEventListener('orientationchange', this.onResize.bind(this));
-        window.addEventListener('resize', this.onResize.bind(this));
-        document.addEventListener('visibilitychange', () => { 
-            if (!document.hidden) {
-                this.onResize();
-            }
-        }, false);
-        this.loop = null;
 
         this.gcanvas.addEventListener('mousedown',  this.gestureStart.bind(this));
         this.gcanvas.addEventListener('mousemove',  this.gestureMove.bind(this));
@@ -36,21 +25,9 @@ export default class Recognizer {
         this.gcanvas.addEventListener('touchmove', this.gestureMove.bind(this));
         this.gcanvas.addEventListener('touchcancel', this.gestureEnd.bind(this));
         this.gcanvas.addEventListener('touchend', this.gestureEnd.bind(this));
-
-        this.gcanvas.addEventListener('touchstart', this.gestureStart.bind(this));
-        this.gcanvas.addEventListener('touchmove',  this.gestureMove.bind(this));
-        this.gcanvas.addEventListener('touchend',   this.gestureEnd.bind(this));
-
-        this.onResize();
-        this.tick();
     }
 
     destroyRecognizer() {
-        console.log('before', this.tick);
-        if (this.tick.bind(this)) {
-            cancelAnimationFrame(this.tick.bind(this));
-        }
-        console.log('after', this.tick.bind(this));
         this.jager = null;
         this.gcanvas.removeEventListener('mousedown',  this.gestureStart.bind(this));
         this.gcanvas.removeEventListener('mousemove',  this.gestureMove.bind(this));
@@ -60,19 +37,8 @@ export default class Recognizer {
         this.gcanvas.removeEventListener('touchstart', this.gestureStart.bind(this));
         this.gcanvas.removeEventListener('touchmove',  this.gestureMove.bind(this));
         this.gcanvas.removeEventListener('touchend',   this.gestureEnd.bind(this));
-        window.removeEventListener('orientationchange', this.onResize.bind(this));
-        window.removeEventListener('resize', this.onResize.bind(this));
-        document.removeEventListener('visibilitychange', () => { 
-            if (!document.hidden) {
-                this.onResize();
-            }
-        }, false);
-        this.gcanvas.remove();
-    }
 
-    onResize() {
-        this.gcanvas.width  = this.gcanvas.scrollWidth;
-        this.gcanvas.height = this.gcanvas.scrollHeight;
+        this.gcanvas.remove();
     }
 
     gestureStart(evt) {
@@ -98,19 +64,10 @@ export default class Recognizer {
 
             gesture = this.jager.recognise(this.path, 5000, true);
             console.log(this.gestureNames[gesture]);
-            this.gctx.clearRect(0, 0, this.gcanvas.scrollWidth, this.gcanvas.scrollHeight);
+            this.gctx.clearRect(0, 0, this.gcanvas.width, this.gcanvas.height);
 
             return false;
         }
         return true;
-    }
-
-    tick() {
-        if (this.mouseIsDown) {
-            this.gctx.clearRect(0, 0, this.gcanvas.scrollWidth, this.gcanvas.scrollHeight);
-            this.jager.drawPatch(this.path, this.gctx, this.jager.recognise(this.path));
-        }
-
-        requestAnimationFrame(this.tick.bind(this));
     }
 }
