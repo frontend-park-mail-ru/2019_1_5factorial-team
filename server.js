@@ -8,8 +8,8 @@ const fs = require('fs');
 const morgan = require('morgan');
 
 const options = {
-    key: fs.readFileSync("/srv/www/keys/my-site-key.pem"),
-    cert: fs.readFileSync("/srv/www/keys/chain.pem")
+    key: fs.readFileSync('/etc/letsencrypt/live/5factorial.tech/fullchain.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/5factorial.tech/privkey.pem')
 };
 
 const app = express();
