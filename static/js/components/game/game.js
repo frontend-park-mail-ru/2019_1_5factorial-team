@@ -8,7 +8,7 @@ export default class Game {
      * this.bindedResizer - обработчик изменения размеров экрана для корректного ререндера
      * this.state - состояние игры
      */
-    constructor(eventBus, players = {}) {
+    constructor(eventBus, players) {
         this.localEventBus = eventBus;
 
         this.canvas = document.getElementsByClassName('temp_class_canvas')[0];
@@ -20,24 +20,26 @@ export default class Game {
         this.ghostLeftImg = document.getElementById('ghost-left-sprite');
         this.ghostRightImg = document.getElementById('ghost-right-sprite');
         this.heartImg = document.getElementById('heart-sprite');
+        this.isSingle = false;
 
-        console.log('input in constructor', Object.keys(players));
-        console.log('pl', players);
+        // console.log('input in constructor', Object.keys(players));
+        // console.log('pl', players);
+        if (players && Object.keys(players)) {
+            this.state = {
+                player: {
+                    sprite: this.playerImg,
+                    x: (this.canvas.width -  this.playerImg.width) / 2,
+                    hp: PLAYER_INITIAL_HP
+                },
+                ghosts: [],
 
-        this.state = {
-            player: {
-                sprite: this.playerImg,
-                x: (this.canvas.width -  this.playerImg.width) / 2,
-                hp: PLAYER_INITIAL_HP
-            },
-            ghosts: [],
-
-            // TODO: на бэке этих полей нет - решить, нужны ли
-            score: 0,
-            gameTime: 0,
-            isGameOver: false
-        };
-        this.isSingle = true;
+                // TODO: на бэке этих полей нет - решить, нужны ли
+                score: 0,
+                gameTime: 0,
+                isGameOver: false
+            };
+            this.isSingle = true;
+        }
 
         if (!this.isSingle) {
             this.ws = new Ws(this.localEventBus);
@@ -344,46 +346,6 @@ export default class Game {
             symbolsToShow = this.state.ghosts[i].symbols.join(' ');
             this.ctx.fillText(symbolsToShow, this.state.ghosts[i].x + this.state.ghosts[i].sprite.width / 2 - this.ctx.measureText(this.state.ghosts[i].symbols).width / 2, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
         }
-    }
-}
-
-buttonsHandler(e) {
-    //  вывод направления, полученного из нажатой клавиши - left, right, down, up
-    const dirNameX = this.canvas.width / 2;
-    const dirNameY = this.canvas.height / 4;
-
-    // TODO: настроить загрузку шрифта
-    this.ctx.font = '30pt Comfortaa-Regular';
-    this.ctx.fillStyle = 'white';
-
-    let left = this.ctx.measureText('left');
-    let up = this.ctx.measureText('up');
-    let right = this.ctx.measureText('right');
-    let down = this.ctx.measureText('down');
-
-    // очистка по ширине самого длинного прямоугольника - с надписью 'down'
-    this.ctx.clearRect(dirNameX - down.width / 2, dirNameY - 50, 200, 100);
-
-    switch (e.keyCode) {
-        case 37:  // если нажата клавиша влево
-            this.lastButtonPressed = '←';
-            this.ctx.fillText('left', dirNameX - left.width / 2, dirNameY, 200, 100);
-            break;
-        case 38:   // если нажата клавиша вверх
-            this.lastButtonPressed = '↑';
-            this.ctx.fillText('up', dirNameX - up.width / 2, dirNameY, 200, 100);
-            break;
-        case 39:   // если нажата клавиша вправо
-            this.lastButtonPressed = '→';
-            this.ctx.fillText('right', dirNameX - right.width / 2, dirNameY, 200, 100);
-            break;
-        case 40:   // если нажата клавиша вниз
-            this.lastButtonPressed = '↓';
-            this.ctx.fillText('down', dirNameX - down.width / 2, dirNameY, 200, 100);
-            break;
-        default:
-            console.log('unknown');
-            break;
     }
 }
 

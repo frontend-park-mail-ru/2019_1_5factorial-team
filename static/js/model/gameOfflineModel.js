@@ -6,6 +6,9 @@ export default class gameOfflineModel {
     constructor(eventBus) {
         this.scene = null;
         this.localEventBus = eventBus;
+        this.player = {
+            test: 1,
+        };
 
         this.localEventBus.getEvent('startGame', this.onStart.bind(this));
         this.localEventBus.getEvent('gameOver', this.onGameOver.bind(this));
@@ -31,7 +34,7 @@ export default class gameOfflineModel {
     }
 
     onStart() {
-        this.scene = new Game(this.localEventBus);
+        this.scene = new Game(this.localEventBus, this.player);
     }
 
     stopGame() {
