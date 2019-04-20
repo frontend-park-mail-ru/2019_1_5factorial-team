@@ -31,6 +31,7 @@ export default class Ws {
 			return;
 		}
 		const messageText = event.data;
+		console.log(messageText);
 
 		if (messageText.type === 'STATE') {
 			this.localEventBus.callEvent('updateState', message.payload);
