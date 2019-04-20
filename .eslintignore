@@ -5,7 +5,7 @@ package-lock.json
 static/dist/
 static/js/model/
 static/js/libs/
-
+static/js/
 static/js/views/menu/menuView.tmpl.js
 static/js/views/login/loginView.tmpl.js
 static/js/views/about/aboutView.tmpl.js 

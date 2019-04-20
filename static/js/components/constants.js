@@ -80,6 +80,9 @@ export const EVENT_LIST_GAME_SINGLE = [
     'stopGameManualy',
     'startGame',
     'gameOverRender',
+    'updateState',
+    'callingGameWS',
+    'sendButton'
 ];
 
 export const EVENT_LIST_GAME_MULTI = [

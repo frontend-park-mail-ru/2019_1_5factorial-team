@@ -10,8 +10,6 @@ export default class Game {
      */
     constructor(eventBus, players = {}) {
         this.localEventBus = eventBus;
-        
-        this.ws = new Ws(this.localEventBus);
 
         this.canvas = document.getElementsByClassName('temp_class_canvas')[0];
         this.ctx = this.canvas.getContext('2d');
@@ -24,48 +22,25 @@ export default class Game {
         this.heartImg = document.getElementById('heart-sprite');
 
         console.log('input in constructor', Object.keys(players));
-        console.log(players);
+        console.log('pl', players);
 
-        if (Object.keys(players)) {
-            this.state = {
-                firstPlayer: {
-                    //TODO() : разбить методы для двух игроков
-                    sprite: this.playerImg,
-                    x: (this.canvas.width -  this.playerImg.width) / 2 - 100,
-                    hp: PLAYER_INITIAL_HP,
-                    // test: players.firstPlayer.test,
-                },
-                secondPlayer: {
-                    sprite: this.secondPlayerImg,
-                    x: (this.canvas.width -  this.playerImg.width) / 2 + 100,
-                    hp: PLAYER_INITIAL_HP,
-                    // test: players.secondPlayer.test
-                },
-                ghosts: [],
-    
-                // TODO: на бэке этих полей нет - решить, нужны ли
-                score: 0,
-                gameTime: 0,
-                isGameOver: false
-            };
-            this.isSingle = false;
-            // console.log('testing constructor', this.state.firstPlayer.test, thi.state.secondPlayer.test);
-        } else {
-            this.state = {
-                player: {
-                    sprite: this.playerImg,
-                    x: (this.canvas.width -  this.playerImg.width) / 2,
-                    hp: PLAYER_INITIAL_HP
-                },
-                ghosts: [],
-    
-                // TODO: на бэке этих полей нет - решить, нужны ли
-                score: 0,
-                gameTime: 0,
-                isGameOver: false
-            };
-            this.isSingle = true;
-            console.log(this.state.player);
+        this.state = {
+            player: {
+                sprite: this.playerImg,
+                x: (this.canvas.width -  this.playerImg.width) / 2,
+                hp: PLAYER_INITIAL_HP
+            },
+            ghosts: [],
+
+            // TODO: на бэке этих полей нет - решить, нужны ли
+            score: 0,
+            gameTime: 0,
+            isGameOver: false
+        };
+        this.isSingle = true;
+
+        if (!this.isSingle) {
+            this.ws = new Ws(this.localEventBus);
         }
 
         this.lastButtonPressed = '';
@@ -83,6 +58,10 @@ export default class Game {
         this.lastTime = Date.now();
 
         this.localEventBus.getEvent('callingGameWS', this.gameLoop.bind(this));
+
+        if (this.isSingle) {
+            this.gameLoop();
+        }
     }
 
     setState(inputState) {
@@ -106,6 +85,7 @@ export default class Game {
             gameTime: 0,
             isGameOver: false
         };
+        this.isSingle = false;
         this.localEventBus.callEvent('callingGameWS');
     }
 
@@ -127,8 +107,9 @@ export default class Game {
         let now = Date.now();
         let dt = (now - this.lastTime) / 1000.0;
 
-        this.update(dt);
+        // this.update(dt);
         if (this.isSingle) {
+            this.updateSingle(dt);
             this.renderSingle();
         } else {
             this.renderMulti();
@@ -144,130 +125,99 @@ export default class Game {
         this.requestID = requestAnimationFrame(this.gameLoop.bind(this));
     }
 
-    update(dt) {
-        this.state.gameTime += dt;
+    updateSingle(dt)  {
+    this.state.gameTime += dt;
 
-        if (this.isSingle) {
-            //TODO: убрать this.state.ghosts.length === 0, придумать, как сделать больше одного призрака с каждой стороны экрана
-            if (Math.random() < 1 - Math.pow(.993, this.state.gameTime)) {
-                if (this.state.ghosts.length === 0) {  // если призраков нет
-                    let generatedDirection = this.generateDirection();
+    // TODO: убрать this.state.ghosts.length === 0, придумать, как сделать больше одного призрака с каждой стороны экрана
+    if (Math.random() < 1 - Math.pow(.993, this.state.gameTime)) {
+        if (this.state.ghosts.length === 0) {  // если призраков нет
+            let generatedDirection = this.generateDirection();
 
-                    if (generatedDirection === 'left') {
-                        this.state.ghosts.push({
-                            x: this.ghostLeftImg.width / 2,
-                            speed: DEFAULT_GHOST_SPEED,
-                            damage: DEFAULT_GHOST_DAMAGE,
-                            sprite: this.ghostLeftImg,
-                            symbols: this.generateSymbolsSequence()
-                        });
-                    } else if (generatedDirection === 'right') {
-                        this.state.ghosts.push({
-                            x: this.canvas.width + this.ghostLeftImg.width / 2,
-                            speed: -DEFAULT_GHOST_SPEED,
-                            damage: DEFAULT_GHOST_DAMAGE,
-                            sprite: this.ghostRightImg,
-                            symbols: this.generateSymbolsSequence()
-                        });
-                    }
-                } else if (this.state.ghosts.length === 1) {
-                    if (this.state.ghosts[0].speed < 0) {  // если есть призрак справа
-                        this.state.ghosts.push({
-                            x: this.ghostLeftImg.width / 2,
-                            speed: DEFAULT_GHOST_SPEED,
-                            damage: DEFAULT_GHOST_DAMAGE,
-                            sprite: this.ghostLeftImg,
-                            symbols: this.generateSymbolsSequence()
-                        });
-                    } else if (this.state.ghosts[0].speed > 0) {  // если есть призрак слева
-                        this.state.ghosts.push({
-                            x: this.canvas.width + this.ghostLeftImg.width / 2,
-                            speed: -DEFAULT_GHOST_SPEED,
-                            damage: DEFAULT_GHOST_DAMAGE,
-                            sprite: this.ghostRightImg,
-                            symbols: this.generateSymbolsSequence()
-                        });
-                    }
-                }
+            if (generatedDirection === 'left') {
+                this.state.ghosts.push({
+                    x: this.ghostLeftImg.width / 2,
+                    speed: DEFAULT_GHOST_SPEED,
+                    damage: DEFAULT_GHOST_DAMAGE,
+                    sprite: this.ghostLeftImg,
+                    symbols: this.generateSymbolsSequence()
+                });
+            } else if (generatedDirection === 'right') {
+                this.state.ghosts.push({
+                    x: this.canvas.width + this.ghostLeftImg.width / 2,
+                    speed: -DEFAULT_GHOST_SPEED,
+                    damage: DEFAULT_GHOST_DAMAGE,
+                    sprite: this.ghostRightImg,
+                    symbols: this.generateSymbolsSequence()
+                });
             }
-
-            // убиваем призраков
-            for (let i = 0; i < this.state.ghosts.length; i++) {
-                // сносим символ
-                if (this.state.ghosts[i].symbols[0] === this.lastButtonPressed) {
-                    this.state.ghosts[i].symbols = this.state.ghosts[i].symbols.slice(1, this.state.ghosts[i].symbols.length + 1);
-                    this.state.score += 10;
-                }
-
-                // убили
-                if (this.state.ghosts[i].symbols.length === 0) {
-                    if (this.state.ghosts[i].speed > 0) {
-                        this.ctx.clearRect(0, this.canvas.height / 2, 
-                            this.canvas.width / 2 - this.playerImg.width / 2,
-                            this.canvas.height / 2);
-                    } else if (this.state.ghosts[i].speed < 0) {
-                        this.ctx.clearRect(this.canvas.width / 2 + this.playerImg.width / 2 - 6,
-                            this.canvas.height / 2, this.canvas.width / 2, 
-                            this.canvas.height / 2);
-                    }   
-                    this.state.ghosts.splice(i, 1);
-                    this.state.score += 100;
-                }
-            }
-            this.lastButtonPressed = '';
-        }
-
-        if (this.isSingle) {
-            // двигаем призраков и дамажим героя
-            for (let i = 0; i < this.state.ghosts.length; i++) {
-                if (this.state.ghosts.length !== 0) {
-                    if (this.state.ghosts[i].speed > 0) {
-                        if (this.state.ghosts[i].x < this.state.player.x) {
-                            this.state.ghosts[i].x += this.state.ghosts[i].speed * dt;
-                        } else {
-                            this.state.player.hp -= this.state.ghosts[i].damage;
-                        }
-                    } else if (this.state.ghosts[i].speed < 0) {
-                        if (this.state.ghosts[i].x > this.state.player.x + this.state.player.sprite.width) {
-                            this.state.ghosts[i].x += this.state.ghosts[i].speed * dt;
-                        } else {
-                            this.state.player.hp -= this.state.ghosts[i].damage;
-                        }
-                    }
-                }
-
-                if (this.state.player.hp === 0) {
-                    this.state.isGameOver = true;
-                    this.localEventBus.callEvent('gameOver');
-                    return;
-                }
-            }
-        } else {
-            for (let i = 0; i < this.state.ghosts.length; i++) {
-                if (this.state.ghosts.length !== 0) {
-                    if (this.state.ghosts[i].speed > 0) {
-                        if (this.state.ghosts[i].x < this.state.firstPlayer.x) {
-                            this.state.ghosts[i].x += this.state.ghosts[i].speed * dt;
-                        } else {
-                            this.state.firstPlayer.hp -= this.state.ghosts[i].damage;
-                        }
-                    } else if (this.state.ghosts[i].speed < 0) {
-                        if (this.state.ghosts[i].x > this.state.secondPlayer.x + this.state.secondPlayer.sprite.width) {
-                            this.state.ghosts[i].x += this.state.ghosts[i].speed * dt;
-                        } else {
-                            this.state.secondPlayer.hp -= this.state.ghosts[i].damage;
-                        }
-                    }
-                }
-
-                if (this.state.firstPlayer.hp === 0 || this.state.secondPlayer.hp === 0) {
-                    this.state.isGameOver = true;
-                    this.localEventBus.callEvent('gameOver');
-                    return;
-                }
+        } else if (this.state.ghosts.length === 1) {
+            if (this.state.ghosts[0].speed < 0) {  // если есть призрак справа
+                this.state.ghosts.push({
+                    x: this.ghostLeftImg.width / 2,
+                    speed: DEFAULT_GHOST_SPEED,
+                    damage: DEFAULT_GHOST_DAMAGE,
+                    sprite: this.ghostLeftImg,
+                    symbols: this.generateSymbolsSequence()
+                });
+            } else if (this.state.ghosts[0].speed > 0) {  // если есть призрак слева
+                this.state.ghosts.push({
+                    x: this.canvas.width + this.ghostLeftImg.width / 2,
+                    speed: -DEFAULT_GHOST_SPEED,
+                    damage: DEFAULT_GHOST_DAMAGE,
+                    sprite: this.ghostRightImg,
+                    symbols: this.generateSymbolsSequence()
+                });
             }
         }
     }
+
+
+    //  убиваем призраков
+    for (let i = 0; i < this.state.ghosts.length; i++) {
+        // сносим символ
+        if (this.state.ghosts[i].symbols[0] === this.lastButtonPressed) {
+            this.state.ghosts[i].symbols = this.state.ghosts[i].symbols.slice(1, this.state.ghosts[i].symbols.length + 1);
+            this.state.score += 10;
+        }
+
+        // убили
+        if (this.state.ghosts[i].symbols.length === 0) {
+            if (this.state.ghosts[i].speed > 0) {
+                this.ctx.clearRect(0, this.canvas.height / 2, this.canvas.width / 2 - this.state.player.sprite.width / 2, this.canvas.height / 2);
+            } else if (this.state.ghosts[i].speed < 0) {
+                this.ctx.clearRect(this.canvas.width / 2 + this.state.player.sprite.width / 2 - 6, this.canvas.height / 2, this.canvas.width / 2, this.canvas.height / 2);
+            }
+            this.state.ghosts.splice(i, 1);
+            this.state.score += 100;
+        }
+    }
+    this.lastButtonPressed = '';
+
+    // двигаем призраков и дамажим героя
+    for (let i = 0; i < this.state.ghosts.length; i++) {
+        if (this.state.ghosts.length !== 0) {
+            if (this.state.ghosts[i].speed > 0) {
+                if (this.state.ghosts[i].x < this.state.player.x) {
+                    this.state.ghosts[i].x += this.state.ghosts[i].speed * dt;
+                } else {
+                    this.state.player.hp -= this.state.ghosts[i].damage;
+                }
+            } else if (this.state.ghosts[i].speed < 0) {
+                if (this.state.ghosts[i].x > this.state.player.x + this.state.player.sprite.width) {
+                    this.state.ghosts[i].x += this.state.ghosts[i].speed * dt;
+                } else {
+                    this.state.player.hp -= this.state.ghosts[i].damage;
+                }
+            }
+        }
+
+        if (this.state.player.hp === 0) {
+            this.state.isGameOver = true;
+            this.localEventBus.callEvent('gameOver');
+            return;
+        }
+    }
+}
 
     renderMulti() {
         const offsetByY = this.canvas.height / 40;  // смещение по Y - расстояние от нижнего края экрана
@@ -358,49 +308,84 @@ export default class Game {
     renderSingle() {
         const offsetByY = this.canvas.height / 40;  // смещение по Y - расстояние от нижнего края экрана
 
-        let heartsBetweenOffset = this.heartImg.width / 2;
-        let heartOffset = 0;
-        let heartsUpperOffset = this.canvas.height / 80;
+    let heartsBetweenOffset = this.heartImg.width / 2;
+    let heartOffset = 0;
+    let heartsUpperOffset = this.canvas.height / 80;
 
-        this.ctx.clearRect(0, 0, this.heartImg.width * 4,this.heartImg.height + heartsUpperOffset);
-        for (let i = this.state.player.hp / 100; i > 0; i--) {
-            this.ctx.drawImage(this.heartImg, heartsBetweenOffset + heartOffset, 
-                heartsUpperOffset, this.heartImg.width, this.heartImg.height);
-            heartOffset += this.heartImg.width;
-        }
+    this.ctx.clearRect(0, 0, this.heartImg.width * 4,this.heartImg.height + heartsUpperOffset);
+    for (let i = this.state.player.hp / 100; i > 0; i--) {
+        this.ctx.drawImage(this.heartImg, heartsBetweenOffset + heartOffset, heartsUpperOffset, this.heartImg.width, this.heartImg.height);
+        heartOffset += this.heartImg.width;
+    }
 
-        // игрок
-        const playerX = this.canvas.width / 2;
-        const playerY = this.canvas.height - offsetByY;
-        this.ctx.clearRect(playerX - this.state.player.sprite.width / 2, playerY - this.state.player.sprite.height, 
-            this.state.player.sprite.width,this.state.player.sprite.height);
-        this.ctx.drawImage(this.state.player.sprite, playerX - this.state.player.sprite.width / 2, 
-            playerY - this.state.player.sprite.height);
+    // игрок
+    const playerX = this.canvas.width / 2;
+    const playerY = this.canvas.height - offsetByY;
+    this.ctx.clearRect(playerX - this.state.player.sprite.width / 2, playerY - this.state.player.sprite.height, this.state.player.sprite.width,this.state.player.sprite.height);
+    this.ctx.drawImage(this.state.player.sprite, playerX - this.state.player.sprite.width / 2, playerY - this.state.player.sprite.height);
 
-        // призраки
-        const ghostY = this.canvas.height - offsetByY;
-        const symbolsOffset = 30;  // расстояние между призраком и символами над его головой
+    // призраки
+    const ghostY = this.canvas.height - offsetByY;
+    const symbolsOffset = 30;  // расстояние между призраком и символами над его головой
 
-        this.ctx.font = '20pt Comfortaa-Regular';
-        this.ctx.fillStyle = 'white';
-        let symbolsToShow = '';
+    this.ctx.font = '20pt Comfortaa-Regular';
+    this.ctx.fillStyle = 'white';
+    let symbolsToShow = '';
 
-        for (let i = 0; i < this.state.ghosts.length; i++) {
-            if (this.state.ghosts[i].speed > 0) {
-                this.ctx.clearRect(0, this.canvas.height / 2, 
-                    this.canvas.width / 2 - this.state.player.sprite.width / 2, this.canvas.height / 2);
-                this.ctx.drawImage(this.state.ghosts[i].sprite, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width, 
-                    ghostY - this.state.ghosts[i].sprite.height);
-                symbolsToShow = this.state.ghosts[i].symbols.join(' ');
-                this.ctx.fillText(symbolsToShow, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width / 2 - this.ctx.measureText(this.state.ghosts[i].symbols).width / 2, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
-            } else if (this.state.ghosts[i].speed < 0) {
-                this.ctx.clearRect(this.canvas.width / 2 + this.state.player.sprite.width / 2, this.canvas.height / 2, this.canvas.width / 2, this.canvas.height / 2);
-                this.ctx.drawImage(this.state.ghosts[i].sprite, this.state.ghosts[i].x, ghostY - this.state.ghosts[i].sprite.height);
-                symbolsToShow = this.state.ghosts[i].symbols.join(' ');
-                this.ctx.fillText(symbolsToShow, this.state.ghosts[i].x + this.state.ghosts[i].sprite.width / 2 - this.ctx.measureText(this.state.ghosts[i].symbols).width / 2, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
-            }
+    for (let i = 0; i < this.state.ghosts.length; i++) {
+        if (this.state.ghosts[i].speed > 0) {
+            this.ctx.clearRect(0, this.canvas.height / 2, this.canvas.width / 2 - this.state.player.sprite.width / 2, this.canvas.height / 2);
+            this.ctx.drawImage(this.state.ghosts[i].sprite, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width, ghostY - this.state.ghosts[i].sprite.height);
+            symbolsToShow = this.state.ghosts[i].symbols.join(' ');
+            this.ctx.fillText(symbolsToShow, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width / 2 - this.ctx.measureText(this.state.ghosts[i].symbols).width / 2, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
+        } else if (this.state.ghosts[i].speed < 0) {
+            this.ctx.clearRect(this.canvas.width / 2 + this.state.player.sprite.width / 2, this.canvas.height / 2, this.canvas.width / 2, this.canvas.height / 2);
+            this.ctx.drawImage(this.state.ghosts[i].sprite, this.state.ghosts[i].x, ghostY - this.state.ghosts[i].sprite.height);
+            symbolsToShow = this.state.ghosts[i].symbols.join(' ');
+            this.ctx.fillText(symbolsToShow, this.state.ghosts[i].x + this.state.ghosts[i].sprite.width / 2 - this.ctx.measureText(this.state.ghosts[i].symbols).width / 2, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
         }
     }
+}
+
+buttonsHandler(e) {
+    //  вывод направления, полученного из нажатой клавиши - left, right, down, up
+    const dirNameX = this.canvas.width / 2;
+    const dirNameY = this.canvas.height / 4;
+
+    // TODO: настроить загрузку шрифта
+    this.ctx.font = '30pt Comfortaa-Regular';
+    this.ctx.fillStyle = 'white';
+
+    let left = this.ctx.measureText('left');
+    let up = this.ctx.measureText('up');
+    let right = this.ctx.measureText('right');
+    let down = this.ctx.measureText('down');
+
+    // очистка по ширине самого длинного прямоугольника - с надписью 'down'
+    this.ctx.clearRect(dirNameX - down.width / 2, dirNameY - 50, 200, 100);
+
+    switch (e.keyCode) {
+        case 37:  // если нажата клавиша влево
+            this.lastButtonPressed = '←';
+            this.ctx.fillText('left', dirNameX - left.width / 2, dirNameY, 200, 100);
+            break;
+        case 38:   // если нажата клавиша вверх
+            this.lastButtonPressed = '↑';
+            this.ctx.fillText('up', dirNameX - up.width / 2, dirNameY, 200, 100);
+            break;
+        case 39:   // если нажата клавиша вправо
+            this.lastButtonPressed = '→';
+            this.ctx.fillText('right', dirNameX - right.width / 2, dirNameY, 200, 100);
+            break;
+        case 40:   // если нажата клавиша вниз
+            this.lastButtonPressed = '↓';
+            this.ctx.fillText('down', dirNameX - down.width / 2, dirNameY, 200, 100);
+            break;
+        default:
+            console.log('unknown');
+            break;
+    }
+}
 
     buttonsHandler(e) {
         //  вывод направления, полученного из нажатой клавиши - left, right, down, up
