@@ -31,18 +31,19 @@ export default class Ws {
 			return;
 		}
 		const messageText = event.data;
-		console.log(messageText);
+		const message = JSON.parse(messageText);
+		console.log(message);
 
-		if (messageText.type === 'STATE') {
+		if (message.type === 'STATE') {
 			this.localEventBus.callEvent('updateState', message.payload);
 		}
 
-		if (messageText.type === 'END') {
+		if (message.type === 'END') {
 			this.localEventBus.callEvent('gameOverWS', )
 		}
 
 		try {
-			const message = JSON.parse(messageText);
+			// const message = JSON.parse(messageText);
 			return {type: message.type, payload: message.payload};
 		} catch (err) {
 			console.error('smth went wront in handleMessage: ', err);
