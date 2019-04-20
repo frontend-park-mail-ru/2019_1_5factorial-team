@@ -92,7 +92,10 @@ export const EVENT_LIST_GAME_MULTI = [
     'firstLost',
     'secondLost',
     'startWs',
-    'stopToBack'
+    'stopToBack',
+    'updateState',
+    'callingGameWS',
+    'sendButton'
 ];
 
 export const NETWORK_ADRESS = 'http://78.155.207.69:5051';

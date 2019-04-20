@@ -1,17 +1,16 @@
 export default class Ws {
-	constructor() {
+	constructor(eventBus) {
+		this.localEventBus = eventBus;
+		this.localEventBus.getEvent('sendButton', this.send.bind(this));
 		if (Ws.__instance) {
 			return Ws.__instance;
 		}
-		console.log('nside', this);
 
-		// const address = `${window.location.protocol.replace('http', 'ws')}//78.155.207.69:5051/api/game/ws`;
 		const address = 'ws://78.155.207.69:5051/api/game/ws';
 		this.webs = new WebSocket(address);
 
 		this.webs.onopen = () => {
 			console.log(`WebSocket on address ${address} opened`);
-			console.dir(this.webs);
 
 			this.webs.onclose = () => {
 				console.log(`WebSocket closed`);
@@ -31,13 +30,18 @@ export default class Ws {
 		if (event === undefined) {
 			return;
 		}
-		console.log(event);
 		const messageText = event.data;
+
+		if (messageText.type === 'STATE') {
+			this.localEventBus.callEvent('updateState', message.payload);
+		}
+
+		if (messageText.type === 'END') {
+			this.localEventBus.callEvent('gameOverWS', )
+		}
 
 		try {
 			const message = JSON.parse(messageText);
-			console.log(message);
-			// bus.emit(message.type, message.payload);
 			return {type: message.type, payload: message.payload};
 		} catch (err) {
 			console.error('smth went wront in handleMessage: ', err);
@@ -45,7 +49,6 @@ export default class Ws {
 	}
 
 	send(type, pressed) {
-		console.log('ws.send', JSON.stringify({type, pressed}))
 		this.webs.send(JSON.stringify({type, pressed}));
 	}
 }
