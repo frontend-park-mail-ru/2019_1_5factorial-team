@@ -3,8 +3,10 @@ import View from '../../libs/views.js';
 import userBlock from '../../components/userBlock.js';
 
 export default class gameView extends View {
-    constructor({eventBus = {}} = {}) {
+    constructor(eventBus) {
         super(template, eventBus);
+        this.localEventBus = eventBus;
+        console.log(this.localEventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('onGetUserDataForGameResponse', this.getUserResponse.bind(this));
     }

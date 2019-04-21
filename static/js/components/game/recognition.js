@@ -23,10 +23,10 @@ export default class Recognizer {
         this.gcanvas.addEventListener('mouseup',    this.gestureEnd.bind(this));
         this.gcanvas.addEventListener('mouseout',   this.gestureEnd.bind(this));
 
-        this.gcanvas.addEventListener('touchstart', this.gestureStart.bind(this));
-        this.gcanvas.addEventListener('touchmove', this.gestureMove.bind(this));
+        this.gcanvas.addEventListener('touchstart',  this.gestureStart.bind(this));
+        this.gcanvas.addEventListener('touchmove',   this.gestureMove.bind(this));
         this.gcanvas.addEventListener('touchcancel', this.gestureEnd.bind(this));
-        this.gcanvas.addEventListener('touchend', this.gestureEnd.bind(this));
+        this.gcanvas.addEventListener('touchend',    this.gestureEnd.bind(this));
     }
 
     destroyRecognizer() {
@@ -39,6 +39,9 @@ export default class Recognizer {
         this.gcanvas.removeEventListener('touchstart', this.gestureStart.bind(this));
         this.gcanvas.removeEventListener('touchmove',  this.gestureMove.bind(this));
         this.gcanvas.removeEventListener('touchend',   this.gestureEnd.bind(this));
+
+        const evt = document.createEvent("MouseEvents");
+        evt.initMouseEvent('mouseup', true, true, window, 0, 0, 0, 80, 20, false, false, false, false, 0, null);
 
         this.gcanvas.remove();
     }

@@ -15,7 +15,11 @@ export default class signUpView extends View {
 
         this.form = document.getElementsByClassName('js-signup-form')[0];
         this.passwordInput = this.form.elements['password'];
-        this.form.addEventListener('submit', this.onSubmit.bind(this));
+        const submit = document.getElementsByClassName('js-submit')[0];
+        submit.addEventListener('submit', (event) => {
+            event.preventDefault();
+            this.onSubmit.bind(this);
+        });
     }
 
     onSignupResponse(data) {

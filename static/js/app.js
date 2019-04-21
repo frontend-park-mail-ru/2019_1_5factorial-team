@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     router.add('/signup', main, signUpCtrl.signUpView);
     router.add('/leaders', main, leaderboardCtrl.leaderboardView);
     router.add('/single', main, gameCtrl.gameViewSingle);
-    // router.add('/multi', main, gameCtrl.gameView);  --------->  resolve numOfPlayers
+    router.add('/multi', main, gameCtrl.gameViewMulti);
     router.add('/', main, menuCntl.menuView);
 
     router.start();

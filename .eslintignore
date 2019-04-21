@@ -5,7 +5,7 @@ package-lock.json
 static/dist/
 static/js/components/game/recognition.js
 static/js/libs/jager.js
-
+static/js/
 static/js/views/menu/menuView.tmpl.js
 static/js/views/login/loginView.tmpl.js
 static/js/views/about/aboutView.tmpl.js 
