@@ -40,9 +40,6 @@ export default class Recognizer {
         this.gcanvas.removeEventListener('touchmove',  this.gestureMove.bind(this));
         this.gcanvas.removeEventListener('touchend',   this.gestureEnd.bind(this));
 
-        const evt = document.createEvent("MouseEvents");
-        evt.initMouseEvent('mouseup', true, true, window, 0, 0, 0, 80, 20, false, false, false, false, 0, null);
-
         this.gcanvas.remove();
     }
 
@@ -62,7 +59,7 @@ export default class Recognizer {
         return true;
     }
 
-    gestureEnd(evt) {
+    gestureEnd() {
         var gesture;
         if (this.mouseIsDown) {
             this.mouseIsDown = false;

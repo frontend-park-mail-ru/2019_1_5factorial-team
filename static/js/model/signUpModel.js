@@ -16,14 +16,14 @@ export default class signUpModel {
         const validateEmail = Validator.validateEmail(data.email);
         const validateLogin = Validator.validateLogin(data.login);
         const validatePassword = Validator.validatePassword(data.pass);
-        let arrReturn = [];
+        let arrReturn = new Array();
+        arrReturn.length = 3;
         let check = 0;
         if (validateEmail !== OK_VALIDATE_EMAIL) {
             arrReturn[0] = validateEmail;
             check++;
         } else {
             arrReturn[0] = OK_VALIDATE_EMAIL;
-            check++;
         }
 
         if (validateLogin !== OK_VALIDATE_LOGIN) {
@@ -31,7 +31,6 @@ export default class signUpModel {
             check++;
         } else {
             arrReturn[1] = OK_VALIDATE_LOGIN;
-            check++;
         }
 
         if (validatePassword !== OK_VALIDATE_PASSWORD) {
@@ -39,13 +38,13 @@ export default class signUpModel {
             check++;
         } else {
             arrReturn[2] = OK_VALIDATE_PASSWORD;
-            check++;
         }
 
         if (check > 0) {
             this.localEventBus.callEvent('signupResponse', {arrReturn});
             return;
         }
+        
         api.signUp({
             email: data.email,
             login: data.login,

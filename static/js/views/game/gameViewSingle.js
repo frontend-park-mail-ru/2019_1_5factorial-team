@@ -7,6 +7,9 @@ export default class gameView extends View {
         super(template, eventBus);
         this.localEventBus = eventBus;
         console.log(this.localEventBus);
+
+        this.isChecked = false;
+
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('onGetUserDataForGameResponse', this.getUserResponse.bind(this));
     }
@@ -20,7 +23,8 @@ export default class gameView extends View {
     render(root, data = {}) {
         super.render(root, data);
         
-        if (Object.keys(data).length === 0) {
+        if (!this.isChecked && Object.keys(data).length === 0) {
+            this.isChecked = true;
             this.localEventBus.callEvent('getUserDataForGame');
         } else {
             super.render(root, data);

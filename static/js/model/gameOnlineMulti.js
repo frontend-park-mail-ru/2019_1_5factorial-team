@@ -35,10 +35,10 @@ export default class gameOnlineMulti {
     }  
 
     stopGame() {
-
+        this.scene.destroy();
     }
 
     onStart() {
-            this.scene = new Game(this.localEventBus, true);
+        this.scene = new Game(this.localEventBus, true);
     }
 }

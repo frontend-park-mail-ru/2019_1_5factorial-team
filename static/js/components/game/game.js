@@ -86,7 +86,7 @@ export default class Game {
             ghosts: state.Objects.items,
             gameTime: 0,
             isGameOver: false
-        }
+        };
 
         this.gameLoop();
     }
