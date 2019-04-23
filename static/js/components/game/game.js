@@ -3,6 +3,9 @@ import Recognizer from './recognition.js';
 import Ws from '../../libs/websocket.js';
 
 import { DEFAULT_GHOST_SPEED, DEFAULT_GHOST_DAMAGE, PLAYER_INITIAL_HP } from '../constants.js';
+import { SCORE_FOR_SYMBOL, SCORE_FOR_GHOST } from '../constants.js';
+
+SCORE_FOR_SYMBOL
 
 const symbolImgWidth = 60;
 
@@ -12,15 +15,24 @@ export default class Game {
      * this.recognizer - распознаватель нарисованных символов
      * this.bindedResizer - обработчик изменения размеров экрана для корректного ререндера
      * this.state - состояние игры
-     * @param {boolean} flag - true - мультиплеер
+     * @param {boolean} isMulti - true - мультиплеер
      */
-    constructor(eventBus, flag = false) {
-        this.flag = flag;
+    constructor(eventBus, isMulti = false) {
+        this.isMulti = isMulti;
         this.localEventBus = eventBus;
 
         this.MW = new ModalWindow();
         this.canvas = document.getElementsByClassName('temp_class_canvas')[0];
         this.ctx = this.canvas.getContext('2d');
+
+        // координата Y оси X
+        const offsetByY = this.canvas.height / 40;
+        this.axisY = this.canvas.clientHeight - offsetByY;
+        // координаты блока с сердечками
+        this.heartsBlockY = this.canvas.height / 4;
+
+        // расстояние между головой призрака и символами
+        this.symbolsOffset = this.canvas.height / 12;  // расстояние между призраком и символами над его головой
 
         this.lastDrawing = 0;
 
@@ -45,11 +57,11 @@ export default class Game {
 
         this.lastTime = Date.now();
 
-        if (!this.flag) {
+        if (!this.isMulti) {  // если синглплеер
             this.state = {
                 player: {
                     sprite: this.playerImg,
-                    x: (this.canvas.width -  this.playerImg.width) / 2,
+                    x: this.canvas.width / 2 - this.playerImg.width / 2,
                     hp: PLAYER_INITIAL_HP
                 },
                 ghosts: [],
@@ -114,11 +126,10 @@ export default class Game {
         let now = Date.now();
         let dt = (now - this.lastTime) / 1000.0;
 
-        if (!this.flag) {
+        if (!this.isMulti) {
             this.updateSingle(dt);
             this.renderSingle();
         } else {
-            // this.updateMulti(dt);
             this.renderMulti();
         }   
 
@@ -139,45 +150,21 @@ export default class Game {
     updateSingle(dt) {
         this.state.gameTime += dt;
 
+        // Почему это тут? Вот почему: в конструкторе стейта
+        // картинка не успевает прогрузиться, ширина равна 0 и не получается вычислить Х игрока
+        // Пока хз, что делать с этим
+        this.state.player.x = this.canvas.width / 2 - this.playerImg.width / 2;
+
         // TODO: убрать this.state.ghosts.length === 0, придумать, как сделать больше одного призрака с каждой стороны экрана
         if (Math.random() < 1 - Math.pow(.993, this.state.gameTime)) {
             if (this.state.ghosts.length === 0) {  // если призраков нет
                 let generatedDirection = this.generateDirection();
-
-                if (generatedDirection === 'left') {
-                    this.state.ghosts.push({
-                        x: this.ghostLeftImg.width / 2,
-                        speed: DEFAULT_GHOST_SPEED,
-                        damage: DEFAULT_GHOST_DAMAGE,
-                        sprite: this.ghostLeftImg,
-                        symbols: this.generateDrawingsSequence()
-                    });
-                } else if (generatedDirection === 'right') {
-                    this.state.ghosts.push({
-                        x: this.canvas.width + this.ghostLeftImg.width / 2,
-                        speed: -DEFAULT_GHOST_SPEED,
-                        damage: DEFAULT_GHOST_DAMAGE,
-                        sprite: this.ghostRightImg,
-                        symbols: this.generateDrawingsSequence()
-                    });
-                }
+                this.state.ghosts.push(this.createGhost(generatedDirection));
             } else if (this.state.ghosts.length === 1) {
                 if (this.state.ghosts[0].speed < 0) {  // если есть призрак справа
-                    this.state.ghosts.push({
-                        x: this.ghostLeftImg.width / 2,
-                        speed: DEFAULT_GHOST_SPEED,
-                        damage: DEFAULT_GHOST_DAMAGE,
-                        sprite: this.ghostLeftImg,
-                        symbols: this.generateDrawingsSequence()
-                    });
+                    this.state.ghosts.push(this.createGhost('left'));
                 } else if (this.state.ghosts[0].speed > 0) {  // если есть призрак слева
-                    this.state.ghosts.push({
-                        x: this.canvas.width + this.ghostLeftImg.width / 2,
-                        speed: -DEFAULT_GHOST_SPEED,
-                        damage: DEFAULT_GHOST_DAMAGE,
-                        sprite: this.ghostRightImg,
-                        symbols: this.generateDrawingsSequence()
-                    });
+                    this.state.ghosts.push(this.createGhost('right'));
                 }
             }
         }
@@ -187,36 +174,42 @@ export default class Game {
             // сносим символ
             if (this.state.ghosts[i].symbols[0] === this.lastDrawing) {
                 this.state.ghosts[i].symbols = this.state.ghosts[i].symbols.slice(1, this.state.ghosts[i].symbols.length + 1);
-                this.state.score += 10;
+                this.state.score += SCORE_FOR_SYMBOL;
             }
 
             // убили
             if (this.state.ghosts[i].symbols.length === 0) {
                 if (this.state.ghosts[i].speed > 0) {
-                    this.ctx.clearRect(0, this.canvas.height / 2, this.canvas.width / 2 - this.state.player.sprite.width / 2, this.canvas.height / 2);
+                    this.ctx.clearRect(0, this.axisY - this.state.ghosts[i].sprite.height - symbolImgWidth - this.symbolsOffset,
+                        this.state.player.x, this.state.ghosts[i].sprite.height + symbolImgWidth + this.symbolsOffset);
                 } else if (this.state.ghosts[i].speed < 0) {
-                    this.ctx.clearRect(this.canvas.width / 2 + this.state.player.sprite.width / 2 - 6, this.canvas.height / 2, this.canvas.width / 2, this.canvas.height / 2);
+                    this.ctx.clearRect(this.state.player.x + this.state.player.sprite.width,
+                        this.axisY - this.state.ghosts[i].sprite.height  - symbolImgWidth - this.symbolsOffset,
+                        this.canvas.width / 2, this.state.ghosts[i].sprite.height + symbolImgWidth + this.symbolsOffset);
                 }
                 this.state.ghosts.splice(i, 1);
-                this.state.score += 100;
+                this.state.score += SCORE_FOR_GHOST;
             }
         }
+
         this.lastDrawing = 0;
 
         // двигаем призраков и дамажим героя
         for (let i = 0; i < this.state.ghosts.length; i++) {
             if (this.state.ghosts.length !== 0) {
                 if (this.state.ghosts[i].speed > 0) {
-                    if (this.state.ghosts[i].x < this.state.player.x) {
-                        this.state.ghosts[i].x += this.state.ghosts[i].speed * dt;
+                    if (this.state.ghosts[i].x + this.state.ghosts[i].sprite.width < this.state.player.x) {
+                        this.moveGhost(this.state.ghosts[i], dt);
                     } else {
                         this.state.player.hp -= this.state.ghosts[i].damage;
+                        this.state.ghosts.splice(i, 1);
                     }
                 } else if (this.state.ghosts[i].speed < 0) {
                     if (this.state.ghosts[i].x > this.state.player.x + this.state.player.sprite.width) {
-                        this.state.ghosts[i].x += this.state.ghosts[i].speed * dt;
+                        this.moveGhost(this.state.ghosts[i], dt);
                     } else {
                         this.state.player.hp -= this.state.ghosts[i].damage;
+                        this.state.ghosts.splice(i, 1);
                     }
                 }
             }
@@ -230,93 +223,85 @@ export default class Game {
     }
 
     renderSingle() {
-        const offsetByY = this.canvas.height / 40;  // смещение по Y - расстояние от нижнего края экрана
+        let heartsBetweenOffset = this.heartImg.width / 4;
 
-        let heartsBetweenOffset = this.heartImg.width / 2;
-        let heartOffset = 0;
-        let heartsUpperOffset = this.canvas.height / 80;
-
-        this.ctx.clearRect(0, 0, this.heartImg.width * 4,this.heartImg.height + heartsUpperOffset);
-        for (let i = this.state.player.hp / 100; i > 0; i--) {
-            this.ctx.drawImage(this.heartImg, heartsBetweenOffset + heartOffset, heartsUpperOffset, this.heartImg.width, this.heartImg.height);
-            heartOffset += this.heartImg.width;
+        let heartOffset = this.heartImg.width;
+        this.ctx.clearRect(0, this.heartsBlockY,
+            (this.heartImg.width + heartsBetweenOffset) * PLAYER_INITIAL_HP + heartOffset, this.heartImg.height);
+        for (let i = this.state.player.hp; i > 0; i--) {
+            this.ctx.drawImage(this.heartImg, (heartOffset + heartsBetweenOffset) * i, this.heartsBlockY,
+                this.heartImg.width, this.heartImg.height);
         }
 
         // игрок
-        const playerX = this.canvas.width / 2;
-        const playerY = this.canvas.height - offsetByY;
-        this.ctx.clearRect(playerX - this.state.player.sprite.width / 2, playerY - this.state.player.sprite.height, this.state.player.sprite.width,this.state.player.sprite.height);
-        this.ctx.drawImage(this.state.player.sprite, playerX - this.state.player.sprite.width / 2, playerY - this.state.player.sprite.height);
+        this.ctx.clearRect(this.state.player.x, this.axisY - this.state.player.sprite.height,
+            this.state.player.sprite.width, this.state.player.sprite.height);
+        this.ctx.drawImage(this.state.player.sprite, this.state.player.x, 
+            this.axisY - this.state.player.sprite.height);
 
         // призраки
-        const ghostY = this.canvas.height - offsetByY;
-        const symbolsOffset = 5;  // расстояние между призраком и символами над его головой
 
         for (let i = 0; i < this.state.ghosts.length; i++) {
+            let leftSymbolOffset = (this.state.ghosts[i].sprite.width / 2 - this.state.ghosts[i].symbols.length * symbolImgWidth / 2);
+
             if (this.state.ghosts[i].speed > 0) {
                 // очистка + рендер призрака
-                this.ctx.clearRect(0,
-                    this.canvas.height - this.state.ghosts[i].sprite.height - offsetByY,
-                    this.canvas.width / 2 - this.state.player.sprite.width / 2,
-                    this.state.ghosts[i].sprite.height);
+                this.ctx.clearRect(0, this.axisY - this.state.ghosts[i].sprite.height,
+                    this.state.player.x, this.state.ghosts[i].sprite.height);
                 this.ctx.drawImage(this.state.ghosts[i].sprite,
-                    this.state.ghosts[i].x - this.state.ghosts[i].sprite.width,
-                    ghostY - this.state.ghosts[i].sprite.height);
+                    this.state.ghosts[i].x,this.axisY - this.state.ghosts[i].sprite.height);
 
                 // очистка + рендер символов над призраком
                 this.ctx.clearRect(0,
-                    this.canvas.height - this.state.ghosts[i].sprite.height - offsetByY - symbolImgWidth - symbolsOffset,
-                    this.canvas.width / 2,
-                    symbolImgWidth);
+                    this.axisY - this.state.ghosts[i].sprite.height - symbolImgWidth - this.symbolsOffset,
+                    this.canvas.width / 2, symbolImgWidth);
+
                 for (let j = 0; j < this.state.ghosts[i].symbols.length; j++) {
                     switch (this.state.ghosts[i].symbols[j]) {
                         case 2:  // LR - горизонтальный символ left-right
                             this.ctx.drawImage(this.symbolLR,
-                                this.state.ghosts[i].x - this.state.ghosts[i].sprite.width + symbolImgWidth * j + (this.state.ghosts[i].sprite.width / 2 - this.state.ghosts[i].symbols.length * symbolImgWidth / 2),
-                                ghostY - this.state.ghosts[i].sprite.height - symbolImgWidth);
+                                this.state.ghosts[i].x + symbolImgWidth * j + leftSymbolOffset,
+                                this.axisY - this.state.ghosts[i].sprite.height - symbolImgWidth);
                             break;
                         case 3:  // TD - вертикальный символ - top-down
                             this.ctx.drawImage(this.symbolTD,
-                                this.state.ghosts[i].x - this.state.ghosts[i].sprite.width + symbolImgWidth * j + (this.state.ghosts[i].sprite.width / 2 - this.state.ghosts[i].symbols.length * symbolImgWidth / 2),
-                                ghostY - this.state.ghosts[i].sprite.height - symbolImgWidth);
+                                this.state.ghosts[i].x + symbolImgWidth * j + leftSymbolOffset,
+                                this.axisY - this.state.ghosts[i].sprite.height - symbolImgWidth);
                             break;
                         case 4:  // DTD - стрелка - down-top-down
                             this.ctx.drawImage(this.symbolDTD,
-                                this.state.ghosts[i].x - this.state.ghosts[i].sprite.width + symbolImgWidth * j + (this.state.ghosts[i].sprite.width / 2 - this.state.ghosts[i].symbols.length * symbolImgWidth / 2),
-                                ghostY - this.state.ghosts[i].sprite.height - symbolImgWidth);
+                                this.state.ghosts[i].x + symbolImgWidth * j + leftSymbolOffset,
+                                this.axisY - this.state.ghosts[i].sprite.height - symbolImgWidth);
                             break;
                     }
                 }
             } else if (this.state.ghosts[i].speed < 0) {  // все то же самое, что и для призрака слева
-                this.ctx.clearRect(this.canvas.width / 2 + this.state.player.sprite.width / 2,
-                    this.canvas.height - this.state.ghosts[i].sprite.height - offsetByY,
-                    this.canvas.width / 2,
-                    this.state.ghosts[i].sprite.height);
+                this.ctx.clearRect(this.state.player.x + this.state.player.sprite.width, 
+                    this.axisY - this.state.ghosts[i].sprite.height,
+                    this.canvas.width / 2, this.state.ghosts[i].sprite.height);
 
                 this.ctx.drawImage(this.state.ghosts[i].sprite,
-                    this.state.ghosts[i].x,
-                    ghostY - this.state.ghosts[i].sprite.height);
+                    this.state.ghosts[i].x, this.axisY - this.state.ghosts[i].sprite.height);
 
-                this.ctx.clearRect(this.canvas.width / 2,
-                    this.canvas.height - this.state.ghosts[i].sprite.height - offsetByY - symbolImgWidth - symbolsOffset,
-                    this.canvas.width / 2,
-                    symbolImgWidth);
+                this.ctx.clearRect(this.state.player.x + this.state.player.sprite.width / 2,
+                    this.axisY - this.state.ghosts[i].sprite.height - symbolImgWidth - this.symbolsOffset,
+                    this.canvas.width / 2, symbolImgWidth);
                 for (let j = 0; j < this.state.ghosts[i].symbols.length; j++) {
                     switch (this.state.ghosts[i].symbols[j]) {
                         case 2:  // LR
                             this.ctx.drawImage(this.symbolLR,
-                                this.state.ghosts[i].x + symbolImgWidth * j + (this.state.ghosts[i].sprite.width / 2 - this.state.ghosts[i].symbols.length * symbolImgWidth / 2),
-                                ghostY - this.state.ghosts[i].sprite.height - symbolImgWidth - symbolsOffset);
+                                this.state.ghosts[i].x + symbolImgWidth * j + leftSymbolOffset,
+                                this.axisY - this.state.ghosts[i].sprite.height - symbolImgWidth - this.symbolsOffset);
                             break;
                         case 3:  // TD
                             this.ctx.drawImage(this.symbolTD,
-                                this.state.ghosts[i].x + symbolImgWidth * j + (this.state.ghosts[i].sprite.width / 2 - this.state.ghosts[i].symbols.length * symbolImgWidth / 2),
-                                ghostY - this.state.ghosts[i].sprite.height - symbolImgWidth - symbolsOffset);
+                                this.state.ghosts[i].x + symbolImgWidth * j + leftSymbolOffset,
+                                this.axisY - this.state.ghosts[i].sprite.height - symbolImgWidth - this.symbolsOffset);
                             break;
                         case 4:  // DTD
                             this.ctx.drawImage(this.symbolDTD,
-                                this.state.ghosts[i].x + symbolImgWidth * j + (this.state.ghosts[i].sprite.width / 2 - this.state.ghosts[i].symbols.length * symbolImgWidth / 2),
-                                ghostY - this.state.ghosts[i].sprite.height - symbolImgWidth - symbolsOffset);
+                                this.state.ghosts[i].x + symbolImgWidth * j + leftSymbolOffset,
+                                this.axisY - this.state.ghosts[i].sprite.height - symbolImgWidth - this.symbolsOffset);
                             break;
                     }
                 }
@@ -448,5 +433,29 @@ export default class Game {
             }
         }
         return generatedDrawings;
+    }
+
+    createGhost(direction) {
+        if (direction === 'left') {
+            return {
+                x: -this.ghostLeftImg.width,
+                speed: DEFAULT_GHOST_SPEED,
+                damage: DEFAULT_GHOST_DAMAGE,
+                sprite: this.ghostLeftImg,
+                symbols: this.generateDrawingsSequence()
+            };
+        } else if (direction === 'right') {
+            return {
+                x: this.canvas.width + this.ghostRightImg.width,
+                speed: -DEFAULT_GHOST_SPEED,
+                damage: DEFAULT_GHOST_DAMAGE,
+                sprite: this.ghostRightImg,
+                symbols: this.generateDrawingsSequence()
+            };
+        }
+    }
+
+    moveGhost(ghost, dt) {
+        ghost.x += ghost.speed * dt;
     }
 }

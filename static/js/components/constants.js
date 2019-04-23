@@ -107,9 +107,15 @@ export const NETWORK_ADRESS = 'http://78.155.207.69:5051';
 export const DEFAULT_AVATAR = '';
 export const AVATAR_DEFAULT = '../../../img/default.jpg';
 
-export const DEFAULT_GHOST_SPEED = 100;
+
+// game constants
+export const DEFAULT_GHOST_SPEED = 80;
 export const DEFAULT_GHOST_DAMAGE = 1;
-export const PLAYER_INITIAL_HP = 300;
+
+export const PLAYER_INITIAL_HP = 5;
+export const SCORE_FOR_SYMBOL = 10;
+export const SCORE_FOR_GHOST = 60;
+
 
 export const ANAUTH_RESPONSE = 401;
 export const OK_RESPONSE = 200;

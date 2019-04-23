@@ -18,6 +18,5 @@ export default class gameController {
 
         this.gameViewMulti = new gameViewMulti(eventBusMulti); // сделать вьюшку для мультика
         this.gameModelMulti = new gameOnlineMulti(eventBusMulti);
-
     }
 }
