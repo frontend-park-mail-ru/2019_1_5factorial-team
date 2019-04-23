@@ -8,6 +8,7 @@ export default class signUpView extends View {
         super(template, eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('signupResponse', this.onSignupResponse.bind(this));
+        this.localEventBus.getEvent('errorOnSignUp', this.onSignupError.bind(this));
     }
 
     render(root, data = {}) {
@@ -18,12 +19,16 @@ export default class signUpView extends View {
         this.form.addEventListener('submit', this.onSubmit.bind(this));
     }
 
+    onSignupError(error) {
+        console.log(error);
+    }
+
     onSignupResponse(data) {
         const elementEmail = document.getElementsByClassName('js-email')[0];
         const elementLogin = document.getElementsByClassName('js-login')[0];
         const elementPassword = document.getElementsByClassName('js-password')[0];
-
         const emailWarning = document.getElementsByClassName('js-warning-email')[0];
+
         if (data.arrReturn[0] !== OK_VALIDATE_EMAIL) {
             emailWarning.classList.remove('hide');
             elementEmail.classList.remove('valid');

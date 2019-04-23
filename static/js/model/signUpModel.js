@@ -56,7 +56,7 @@ export default class signUpModel {
             } else {
                 resp
                     .json()
-                    .then(data => this.localEventBus.callEvent('signupResponse', data));
+                    .then(data => this.localEventBus.callEvent('errorOnSignUp', data));
             }
         }).catch(err => {
             console.error(err.message);

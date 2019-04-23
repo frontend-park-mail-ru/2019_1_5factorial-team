@@ -70,7 +70,8 @@ export const EVENT_LIST_SIGNUP = [
     'changePasswordResponse',
     'changePasswordRepeat',
     'changePasswordRepeatResponse',
-    'loadWaiting'
+    'loadWaiting',
+    'errorOnSignUp'
 ];
 
 export const EVENT_LIST_GAME = [
