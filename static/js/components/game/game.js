@@ -5,8 +5,6 @@ import Ws from '../../libs/websocket.js';
 import { DEFAULT_GHOST_SPEED, DEFAULT_GHOST_DAMAGE, PLAYER_INITIAL_HP } from '../constants.js';
 import { SCORE_FOR_SYMBOL, SCORE_FOR_GHOST } from '../constants.js';
 
-SCORE_FOR_SYMBOL
-
 const symbolImgWidth = 60;
 
 export default class Game {
@@ -172,13 +170,13 @@ export default class Game {
         //  убиваем призраков
         for (let i = 0; i < this.state.ghosts.length; i++) {
             // сносим символ
-            if (this.state.ghosts[i].symbols[0] === this.lastDrawing) {
-                this.state.ghosts[i].symbols = this.state.ghosts[i].symbols.slice(1, this.state.ghosts[i].symbols.length + 1);
+            if (this.state.ghosts[i].symbolsQueue[0] === this.lastDrawing) {
+                this.state.ghosts[i].symbolsQueue.shift();
                 this.state.score += SCORE_FOR_SYMBOL;
             }
 
             // убили
-            if (this.state.ghosts[i].symbols.length === 0) {
+            if (this.state.ghosts[i].symbolsQueue.length === 0) {
                 if (this.state.ghosts[i].speed > 0) {
                     this.ctx.clearRect(0, this.axisY - this.state.ghosts[i].sprite.height - symbolImgWidth - this.symbolsOffset,
                         this.state.player.x, this.state.ghosts[i].sprite.height + symbolImgWidth + this.symbolsOffset);
@@ -242,7 +240,7 @@ export default class Game {
         // призраки
 
         for (let i = 0; i < this.state.ghosts.length; i++) {
-            let leftSymbolOffset = (this.state.ghosts[i].sprite.width / 2 - this.state.ghosts[i].symbols.length * symbolImgWidth / 2);
+            let leftSymbolOffset = (this.state.ghosts[i].sprite.width / 2 - this.state.ghosts[i].symbolsQueue.length * symbolImgWidth / 2);
 
             if (this.state.ghosts[i].speed > 0) {
                 // очистка + рендер призрака
@@ -256,8 +254,8 @@ export default class Game {
                     this.axisY - this.state.ghosts[i].sprite.height - symbolImgWidth - this.symbolsOffset,
                     this.canvas.width / 2, symbolImgWidth);
 
-                for (let j = 0; j < this.state.ghosts[i].symbols.length; j++) {
-                    switch (this.state.ghosts[i].symbols[j]) {
+                for (let j = 0; j < this.state.ghosts[i].symbolsQueue.length; j++) {
+                    switch (this.state.ghosts[i].symbolsQueue[j]) {
                         case 2:  // LR - горизонтальный символ left-right
                             this.ctx.drawImage(this.symbolLR,
                                 this.state.ghosts[i].x + symbolImgWidth * j + leftSymbolOffset,
@@ -286,8 +284,8 @@ export default class Game {
                 this.ctx.clearRect(this.state.player.x + this.state.player.sprite.width / 2,
                     this.axisY - this.state.ghosts[i].sprite.height - symbolImgWidth - this.symbolsOffset,
                     this.canvas.width / 2, symbolImgWidth);
-                for (let j = 0; j < this.state.ghosts[i].symbols.length; j++) {
-                    switch (this.state.ghosts[i].symbols[j]) {
+                for (let j = 0; j < this.state.ghosts[i].symbolsQueue.length; j++) {
+                    switch (this.state.ghosts[i].symbolsQueue[j]) {
                         case 2:  // LR
                             this.ctx.drawImage(this.symbolLR,
                                 this.state.ghosts[i].x + symbolImgWidth * j + leftSymbolOffset,
@@ -394,17 +392,17 @@ export default class Game {
                     this.canvas.height / 2);
                 this.ctx.drawImage(this.state.ghosts[i].sprite, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width, 
                     ghostY - this.state.ghosts[i].sprite.height);
-                symbolsToShow = this.state.ghosts[i].symbols.join(' ');
+                symbolsToShow = this.state.ghosts[i].symbolsQueue.join(' ');
                 this.ctx.fillText(symbolsToShow, this.state.ghosts[i].x - this.state.ghosts[i].sprite.width / 2 - this.ctx
-                    .measureText(this.state.ghosts[i].symbols).width / 2, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
+                    .measureText(this.state.ghosts[i].symbolsQueue).width / 2, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
             } else if (this.state.ghosts[i].speed < 0) {
                 this.state.ghosts[i].sprite = this.ghostLeftImg;
                 this.ctx.clearRect(this.state.Players[1].x + this.state.Players[1].sprite.width,
                     this.canvas.height / 2, this.canvas.width / 2, this.canvas.height / 2);
                 this.ctx.drawImage(this.state.ghosts[i].sprite, this.state.ghosts[i].x, ghostY - this.state.ghosts[i].sprite.height);
-                symbolsToShow = this.state.ghosts[i].symbols.join(' ');
+                symbolsToShow = this.state.ghosts[i].symbolsQueue.join(' ');
                 this.ctx.fillText(symbolsToShow, this.state.ghosts[i].x + this.state.ghosts[i].sprite.width / 2 - this.ctx
-                    .measureText(this.state.ghosts[i].symbols).width / 2, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
+                    .measureText(this.state.ghosts[i].symbolsQueue).width / 2, ghostY - this.state.ghosts[i].sprite.height - symbolsOffset);
             }
         }
     }
@@ -442,7 +440,7 @@ export default class Game {
                 speed: DEFAULT_GHOST_SPEED,
                 damage: DEFAULT_GHOST_DAMAGE,
                 sprite: this.ghostLeftImg,
-                symbols: this.generateDrawingsSequence()
+                symbolsQueue: this.generateDrawingsSequence()
             };
         } else if (direction === 'right') {
             return {
@@ -450,7 +448,7 @@ export default class Game {
                 speed: -DEFAULT_GHOST_SPEED,
                 damage: DEFAULT_GHOST_DAMAGE,
                 sprite: this.ghostRightImg,
-                symbols: this.generateDrawingsSequence()
+                symbolsQueue: this.generateDrawingsSequence()
             };
         }
     }
