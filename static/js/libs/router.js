@@ -3,6 +3,8 @@ export default class Router {
         this.root = root;
         this.routes = new Map();
 
+        this.isGame = false;
+
         this.currentRoute = null;
         this.isCurrentNotFound = false;
 

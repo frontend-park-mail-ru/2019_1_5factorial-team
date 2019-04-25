@@ -18,6 +18,7 @@ export default class View {
         this.closedView = false;
         if (root === undefined || root === null) {
             root = this.prevRoot;
+            console.log(this.prevRoot);
         } else {
             this.prevRoot = root;
         }
