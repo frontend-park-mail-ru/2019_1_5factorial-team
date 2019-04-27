@@ -2,7 +2,10 @@ export default class Ws {
     constructor(eventBus = {}, inputAddress) {
         // debugger;
         this.localEventBus = eventBus;
-        this.localEventBus.getEvent('sendButton', this.send.bind(this));
+        if (this.localEventBus !== null) {
+            this.localEventBus.getEvent('sendButton', this.send.bind(this));
+        }
+
         if (Ws.__instance) {
             return Ws.__instance;
         }
@@ -55,7 +58,12 @@ export default class Ws {
         }
     }
 
-    send(type, pressed) {
-        this.webs.send(JSON.stringify({type, pressed}));
+    send(type, payload) {
+        if (type === 'NEW') {
+            console.log(JSON.stringify({type, text: payload}));
+            this.webs.send(JSON.stringify({type, text: payload}));
+        }
+        console.log(JSON.stringify({type, payload}));
+        this.webs.send(JSON.stringify({type, payload}));
     }
 }
