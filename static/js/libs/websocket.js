@@ -51,6 +51,10 @@ export default class Ws {
             this.localEventBus.callEvent('gameOverWS');
         }
 
+        if (message.type === 'EXIST') {
+            console.log('updating chat');
+        }
+
         try {
             return {type: message.type, payload: message.payload};
         } catch (err) {
