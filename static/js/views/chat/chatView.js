@@ -22,5 +22,6 @@ export default class aboutView extends View {
                 this.localEventBus.callEvent('signOut');
             });
         }
+        document.getElementsByClassName('js-chat')[0].remove();
     }
 }
