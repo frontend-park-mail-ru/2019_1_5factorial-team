@@ -1,5 +1,5 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
-    <div class="container">
+    <div class="container" id="grid">
         <section class="container__block container__block_shorten">
             <div class="settings">
                 <a class="settings__btn">

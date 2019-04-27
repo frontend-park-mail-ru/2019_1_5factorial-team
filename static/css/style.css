@@ -53,16 +53,21 @@ body {
     background-size: cover;
 }
 
+#grid {
+    display: inline-grid;
+    grid-template-columns: 1fr 2fr 8fr;
+
+    grid-template-areas:
+        "left center right"
+}
+
 .container {
     color: var(--main-clr);
-    display: flex;
-    flex-direction: row;
     font-family: var(--content-font);
     user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     -webkit-user-select: none;
-    width: 100%;
 }
 
 .invalid {
@@ -77,8 +82,7 @@ body {
 }
 
 .text-title {
-    display: flex;
-    flex-direction: column;
+    white-space: nowrap;
     margin: 1vh 0;
     text-shadow: var(--small-shdw);
 }
@@ -89,7 +93,6 @@ body {
     border: none;
     color: var(--main-clr);
     cursor: pointer;
-    display: flex;
     text-decoration: none;
     white-space: nowrap;
 }
@@ -135,7 +138,6 @@ body {
         margin: 1vh 1vw;
         padding: 1vh 1vw;
     }
-
     .btn_inlined:hover {
         border: 0.075em solid var(--blue-clr);
         box-shadow: var(--small-shdw);
@@ -163,50 +165,39 @@ body {
     }
 
 /* MAIN CONTAINERS */
-.container {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-}
     .container__block {
-        display: flex;
-        flex-direction: column;
         margin: 1vh 1vw;
     }
-        .container__block_side {
-            width: 100%;
-        }
-
         .container__block_shorten {
-            width: auto;
+            grid-area: left;
+        }
+        .container__block_side {
+            grid-area: right;
+            display: grid;
+            grid-template-rows: 1fr 24fr;
+            grid-template-columns: 4fr 1fr 1fr;
+            grid-column-gap: 1vw;
         }
         .container__block_center {
-            align-items: center;
+            grid-area: center;
             background: var(--bg-black-clr);
             box-shadow: 0 0 3vw var(--light-blue-clr);
             height: 100vh;
-            justify-content: center;
             margin: 0;
             text-align: center;
-        }
-
-        .menu {
-            margin-right: 4vw;
+            align-items: center;
+            align-content: center;
         }
 
 /* CONTENT BLOCKS */
 .content {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
     margin: 0;
     padding: 4vh 4vw;
 }
     .menu {
         align-items: center;
-        display: flex;
-        flex-direction: column;
-        margin: 32vh 0 0 0;
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
         padding: 4vh 4vw;
     }
         .menu__btn {
@@ -223,10 +214,8 @@ body {
 
     .content__header {
         cursor: default;
-        display: flex;
         font-family: var(--title-font);
         font-size: 10vh;
-        justify-content: center;
         margin-bottom: 4vh;
         text-align: center;
         text-shadow: var(--common-shdw);
@@ -241,11 +230,6 @@ body {
         display: flex;
         flex-direction: row;
     }
-
-    /*.content__block {*/
-        /*display: flex;*/
-        /*flex-direction: column;*/
-    /*}*/
 
         .profile {
             display: flex;
@@ -319,19 +303,15 @@ body {
 
 /* SETTINGS BLOCK */
 .settings {
-    align-items: center;
-    display: flex;
-    height: 6vh;
-    justify-content: space-between;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 0.5vw;
     margin: 0 1vw;
-    width: 6vw;
     z-index: 0;
 }
     .settings__btn {
         cursor: pointer;
         fill: var(--main-clr);
         font-size: 6vh;
-        margin: 0 10% 0 0;
     }
     .settings__btn:hover {
         filter: drop-shadow(0 0 1vh var(--light-blue-clr));
@@ -339,12 +319,10 @@ body {
 
 /* USERS BLOCK */
 .users {
-    align-items: center;
-    display: inline-flex;
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row: 1;
     font-size: 3.5vh;
-    height: 6vh;
-    margin-left: auto;
-    margin-right: 0;
 }
     .users_absolute {
         position: absolute;
@@ -352,7 +330,6 @@ body {
     }
     .users__btn {
         color: var(--main-clr);
-        margin: 0 1vw;
         text-align: center;
         white-space: normal;
     }
@@ -610,8 +587,10 @@ body {
 
 /* MAIN GAME TITLE */
 .name {
+    grid-row: 2;
+    grid-column-start: 1;
+    grid-column-end: 4;
     animation: pulse 1s infinite;
-    display: flex;
     font-family: var(--title-font);
     font-size: 22vh;
     margin: 25vh auto 0 auto;
