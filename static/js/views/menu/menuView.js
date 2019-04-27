@@ -2,11 +2,13 @@ import View from '../../libs/views.js';
 import userBlock from '../../components/userBlock.js';
 // import ModalWindow from '../../components/modalWindow.js';
 import template from './menuView.tmpl.xml';
+import chat from '../../components/chat.js';
 
 export default class viewMenu extends View {
     constructor({ eventBus = {} }) {
         super(template, eventBus);
         this.isAuth = false;
+        this.chat = new chat();
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('checkAuthorizationResponse', this.onCheckAuthResponse.bind(this));
     }
@@ -37,6 +39,15 @@ export default class viewMenu extends View {
             signoutButton.addEventListener('click', () => {
                 this.isAuth = false;
                 this.localEventBus.callEvent('signOut');
+            });
+
+            const messageInput = document.getElementsByClassName('js-message-input')[0];
+            messageInput.addEventListener('keydown', (event) => {
+                if (event.keyCode !== 13) {
+                    this.chat.sendMessage('TYPING', messageInput.value);
+                } else {
+                    this.chat.sendMessage('NEW', messageInput.value);
+                }
             });
         }
 
