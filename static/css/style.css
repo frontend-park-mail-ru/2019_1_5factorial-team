@@ -743,6 +743,7 @@ body {
 .chat-window__header {
     font-size: 4vh;
     display: flex;
+    flex-direction: row;
     justify-content: flex-end;
     align-items: center;
     background-color: var(--black-clr);
@@ -758,9 +759,19 @@ body {
 
 .close-btn {
     display: flex;
-    padding: 0.25em;
-    margin: 0.5em;
-    background: url('../img/svg/close.svg') center no-repeat;
+    width: 0.75em;
+    height: 0.75em;
+    margin: 0.25em;
+    background: url('../img/svg/close_big.svg') center no-repeat;
+    cursor: pointer;
+}
+
+.hide-btn {
+    display: flex;
+    width: 0.75em;
+    height: 0.75em;
+    margin: 0.25em;
+    background: url('../img/svg/collapse.svg') center no-repeat;
     cursor: pointer;
 }
 

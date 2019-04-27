@@ -63,24 +63,43 @@ export default class viewMenu extends View {
 
     onShowingChat() {
         let chatButton = document.getElementsByClassName('js-chat-btn')[0];
+        let returnChatButton = document.getElementsByClassName('js-hidden-chat-btn')[0];
+
         chatButton.addEventListener('click',  () => {
-            let chatWindow = document.getElementsByClassName('js-chat-window')[0];
             if (!this.chatIsShown) {
-                chatWindow.classList.remove('hide');
+                document.getElementsByClassName('js-chat-window')[0].classList.remove('hide');
                 chatButton.classList.add('hide');
-                this.chatIsShown = false;
+                this.chatIsShown = true;
+            }
+        });
+
+        returnChatButton.addEventListener('click',  () => {
+            if (!this.chatIsShown) {
+                document.getElementsByClassName('js-chat-window')[0].classList.remove('hide');
+                returnChatButton.classList.add('hide');
+                this.chatIsShown = true;
             }
         });
     }
 
     onHidingChat() {
-        let closeChatButton = document.getElementsByClassName('js-close-chat')[0];
+        const closeChatButton = document.getElementsByClassName('js-close-chat')[0];
+        const hideChatButton = document.getElementsByClassName('js-hide-chat')[0];
+
         closeChatButton.addEventListener('click', () => {
-            let chatWindow = document.getElementsByClassName('js-chat-window')[0];
-            let chatButton = document.getElementsByClassName('js-chat-btn')[0];
-            chatWindow.classList.add('hide');
-            chatButton.classList.remove('hide');
-            this.chatIsShown = false;
+            if (this.chatIsShown) {
+                document.getElementsByClassName('js-chat-window')[0].classList.add('hide');
+                document.getElementsByClassName('js-chat-btn')[0].classList.remove('hide');
+                this.chatIsShown = false;
+            }
+        });
+
+        hideChatButton.addEventListener('click', () => {
+            if (this.chatIsShown) {
+                document.getElementsByClassName('js-chat-window')[0].classList.add('hide');
+                document.getElementsByClassName('js-hidden-chat-btn')[0].classList.remove('hide');
+                this.chatIsShown = false;
+            }
         });
     }
 
