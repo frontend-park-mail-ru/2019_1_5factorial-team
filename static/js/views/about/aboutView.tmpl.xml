@@ -1,5 +1,5 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
-<div class="container">
+<div class="container js-container">
     <section class="container__block container__block_side">
         <div class="settings">
             <a class="settings__btn">
@@ -41,5 +41,6 @@
             <div class="users js-check-auth">
             </div>
         </section>
+        <iframe class="chat-window hide js-iframe" src="http://localhost:4000/iframe" width="350px" height="370px"></iframe>
 </div>
 </fest:template>

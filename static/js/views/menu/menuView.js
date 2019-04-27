@@ -3,6 +3,7 @@ import userBlock from '../../components/userBlock.js';
 // import ModalWindow from '../../components/modalWindow.js';
 import template from './menuView.tmpl.xml';
 import chat from '../../components/chat.js';
+import chatIframe from '../../../iframe/chatIframe.js';
 
 export default class viewMenu extends View {
     constructor({ eventBus = {} }) {
@@ -56,28 +57,19 @@ export default class viewMenu extends View {
 
         chatButton.addEventListener('click',  () => {
             if (!this.chatIsShown) {
-                document.getElementsByClassName('js-chat-window')[0].classList.remove('hide');
+                document.getElementsByClassName('js-iframe')[0].classList.remove('hide');
                 chatButton.classList.add('hide');
-                this.chat = new chat(this.localEventBus);
+                // this.chat = new chat(this.localEventBus);
+                this.chat = new chatIframe(this.localEventBus);
                 this.chatIsShown = true;
             }
-            //<iframe class="chat-window" src="http://localhost:4000/iframe" width="350px" height="370px"></iframe>
         });
 
         returnChatButton.addEventListener('click',  () => {
             if (!this.chatIsShown) {
-                document.getElementsByClassName('js-chat-window')[0].classList.remove('hide');
+                document.getElementsByClassName('js-iframe')[0].classList.remove('hide');
                 returnChatButton.classList.add('hide');
                 this.chatIsShown = true;
-            }
-        });
-
-        const messageInput = document.getElementsByClassName('js-message-input')[0];
-        messageInput.addEventListener('keydown', (event) => {
-            if (event.keyCode !== 13) {
-                this.chat.sendMessage('TYPING', messageInput.value);
-            } else {
-                this.chat.sendMessage('NEW', messageInput.value);
             }
         });
 
@@ -88,13 +80,18 @@ export default class viewMenu extends View {
         });
     }
 
+    printMessage(text) {
+        debugger;
+        this.chat.printMessage(text);
+    }
+
     onHidingChat() {
         const closeChatButton = document.getElementsByClassName('js-close-chat')[0];
         const hideChatButton = document.getElementsByClassName('js-hide-chat')[0];
 
         closeChatButton.addEventListener('click', () => {
             if (this.chatIsShown) {
-                document.getElementsByClassName('js-chat-window')[0].classList.add('hide');
+                document.getElementsByClassName('js-iframe')[0].classList.add('hide');
                 document.getElementsByClassName('js-chat-btn')[0].classList.remove('hide');
                 this.chatIsShown = false;
             }
@@ -102,23 +99,12 @@ export default class viewMenu extends View {
 
         hideChatButton.addEventListener('click', () => {
             if (this.chatIsShown) {
-                document.getElementsByClassName('js-chat-window')[0].classList.add('hide');
+                document.getElementsByClassName('js-iframe')[0].classList.add('hide');
                 document.getElementsByClassName('js-hidden-chat-btn')[0].classList.remove('hide');
                 this.chatIsShown = false;
             }
         });
     }
-
-    printMessage(message) {
-        const text = message.text;
-        let elemToAppend = document.createElement('div');
-        elemToAppend.classList.add('message');
-        elemToAppend.classList.add('js-message');
-        elemToAppend.textContent = text;
-        this.toAppend = document.getElementsByClassName('messages')[0];
-        this.toAppend.append(elemToAppend);
-    }
-
 
     render(root, data = {}) {
         super.render(root, data);

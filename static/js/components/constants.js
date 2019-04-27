@@ -111,9 +111,10 @@ export const EVENT_LIST_CHAT = [
     'checkAuthorization',
     'signOut',
     'closeView',
-    'printMessage',
+    'printMessageChat',
     'sendMessage',
     'sendButton',
+    'typingMessage',
 ];
 
 export const NETWORK_ADRESS = 'http://78.155.207.69:5051';
@@ -177,7 +178,7 @@ export const MAP_OF_MODALS = new Map ([
 ]);
 
 export const MAP_OF_USER_BLOCKS = new Map([
-    ['isAuth block', '<div class="js-chat"><a class="btn users__btn js-chat-btn">Chat</a><a class="btn users__btn js-hidden-chat-btn hide">Return to chat</a><div class="chat-window js-chat-window hide"><div class="chat-window__header"><a class="hide-btn js-hide-chat"></a><a class="close-btn js-close-chat"></a></div><div class="chat-window__body"><div class="correspondence"><div class="messages"></div></div><div class="my-message js-my-message"><label><input class="message__holder js-message-input" type="text" placeholder="Enter your message..." autofocus="true" /></label></div></div></div></div><a class="btn users__btn_action" href="/profile">Profile</a><a class="btn users__btn_action js-signout" href="/">Sign Out</a>'],
+    ['isAuth block', '<div class="js-chat"><a class="btn users__btn js-chat-btn">Chat</a><a class="btn users__btn js-hidden-chat-btn hide">Return to chat</a></div><a class="btn users__btn_action" href="/profile">Profile</a><a class="btn users__btn_action js-signout" href="/">Sign Out</a>'],
     ['unAuth block', '<div class="js-chat"><a class="btn users__btn js-chat-btn">Chat</a><a class="btn users__btn js-hidden-chat-btn hide">Return to chat</a><div class="chat-window js-chat-window hide"><div class="chat-window__header"><a class="hide-btn js-hide-chat"></a><a class="close-btn js-close-chat"></a></div><div class="chat-window__body"><div class="correspondence"><div class="messages"></div></div><div class="my-message js-my-message"><label><input class="message__holder js-message-input" type="text" placeholder="Enter your message..." autofocus="true" /></label></div></div></div></div><a class="btn users__btn login-btn" href="/login">Log In</a><a class="btn users__btn signup-btn" href="/signup">Sign Up</a>'],
     ['inGame unAuth', '<a class="btn users__btn signup-btn js-back-to-menu" href="/">Back to menu</a>'],
 ]);

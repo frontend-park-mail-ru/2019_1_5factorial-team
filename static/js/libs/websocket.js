@@ -57,12 +57,12 @@ export default class Ws {
         }
 
         if (message.type === 'EXIST') {
+            this.localEventBus.callEvent('printMessageChat', message.payload);
             console.log('updating chat');
-            this.localEventBus.callEvent('printMessage', message.payload);
         }
 
         if (message.type === 'NEW') {
-            this.localEventBus.callEvent('printMessage', message.payload);
+            this.localEventBus.callEvent('printMessageChat', message.payload);
         }
 
         try {

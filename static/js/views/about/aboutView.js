@@ -35,6 +35,7 @@ export default class aboutView extends View {
                 chatButton.classList.add('hide');
                 this.chat = new chat(this.localEventBus);
                 this.chatIsShown = true;
+                //<iframe class="chat-window" src="http://localhost:4000/iframe" width="350px" height="370px"></iframe>
             }
         });
 
