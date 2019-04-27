@@ -103,6 +103,13 @@ export const EVENT_LIST_GAME_MULTI = [
     'sendButton'
 ];
 
+export const EVENT_LIST_CHAT = [
+    'checkAuthorizationResponse',
+    'checkAuthorization',
+    'signOut',
+    'closeView'
+];
+
 export const NETWORK_ADRESS = 'http://78.155.207.69:5051';
 export const NETWORK_ADDRESS_CHAT = 'ws://78.155.207.69:5052/api/chat/global/ws';
 // export const NETWORK_ADRESS = 'http://localhost:5051';
