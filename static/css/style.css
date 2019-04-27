@@ -190,10 +190,6 @@ body {
             text-align: center;
         }
 
-        .menu {
-            margin-right: 4vw;
-        }
-
 /* CONTENT BLOCKS */
 .content {
     align-items: center;
@@ -206,7 +202,7 @@ body {
         align-items: center;
         display: flex;
         flex-direction: column;
-        margin: 32vh 0 0 0;
+        margin: 10vh 0 0 0;
         padding: 4vh 4vw;
     }
         .menu__btn {
@@ -786,6 +782,11 @@ body {
     overflow-y: scroll;
 }
 
+.correspondence_paged {
+    display: flex;
+    height: 40vh;
+}
+
 .message {
     display: flex;
     font-size: 2vh;
@@ -805,14 +806,25 @@ body {
 
 .message__holder {
     background-color: rgba(255, 255, 255, 0.1);
+    color: white;
     border: none;
     margin: 0.75em;
     height: 50px;
     width: 250px;
     border-radius: 12px;
     text-align: center;
+    padding: 0 1vw;
+}
+
+.message__holder::placeholder {
+    color: white;
 }
 
 .message__holder:focus {
     outline: none;
+}
+
+.message__holder_paged {
+    font-size: 2vh;
+    white-space: nowrap;
 }

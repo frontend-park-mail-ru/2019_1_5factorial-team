@@ -5,6 +5,8 @@ import signUpController from './controllers/signUpCtrl.js';
 import leaderboardController from './controllers/leaderboardCtrl.js';
 import profileController from './controllers/profileCtrl.js';
 import gameController from './controllers/gameCtrl.js';
+import chatController from './controllers/chatCtrl.js';
+
 
 import Router from './libs/router.js';
 
@@ -25,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const signUpCtrl = new signUpController({router});
     const leaderboardCtrl = new leaderboardController();
     const profileCtrl = new profileController({router});
+    const chatCtrl = new chatController();
 
     router.add('/about', main, aboutCtrl.aboutView);
     router.add('/login', main, loginCtrl.loginView);
@@ -33,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     router.add('/leaders', main, leaderboardCtrl.leaderboardView);
     router.add('/single', main, gameCtrl.gameViewSingle);
     router.add('/multi', main, gameCtrl.gameViewMulti);
+    router.add('/chat', main, chatCtrl.chatView);
     router.add('/', main, menuCntl.menuView);
 
     router.start();

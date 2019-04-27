@@ -107,6 +107,10 @@ export const EVENT_LIST_GAME_MULTI = [
 ];
 
 export const EVENT_LIST_CHAT = [
+    'checkAuthorizationResponse',
+    'checkAuthorization',
+    'signOut',
+    'closeView'
     'printMessage',
     'sendMessage',
 ];
