@@ -2,7 +2,7 @@ import View from '../../libs/views.js';
 import userBlock from '../../components/userBlock.js';
 // import ModalWindow from '../../components/modalWindow.js';
 import template from './menuView.tmpl.xml';
-import chat from '../../components/chat';
+import chat from '../../components/chat.js';
 
 export default class viewMenu extends View {
     constructor({ eventBus = {} }) {
@@ -19,47 +19,35 @@ export default class viewMenu extends View {
     onCheckAuthResponse({isAuthorized = false}) {
         this.isAuth = isAuthorized;
         const checkHeader = new userBlock();
+        let signoutButton;
         // const MW = new ModalWindow();
         // const singleButton = document.getElementsByClassName('js-single')[0];
         // const multiButton = document.getElementsByClassName('js-multi')[0];
 
         if (checkHeader.changeButtons(isAuthorized)) {
-            const chatButton = document.getElementsByClassName('js-chat')[0];
-            const signoutButton = document.getElementsByClassName('js-signout')[0];
-
-            let isOpened = false;
-
-            chatButton.addEventListener('click', () => {
-                // let chatWindow = document.getElementsByClassName('js-chat-hide')[0];
-                if (chatButton.classList.contains('js-chat-hide') && !isOpened) {
-                    chatButton.classList.remove('js-chat-hide');
-                    isOpened = true;
-                } else {
-                    chatButton.classList.add('js-chat-hide');
-                    isOpened = false;
-                }
-            });
-            signoutButton.addEventListener('click', () => {
-                this.isAuth = false;
-                this.localEventBus.callEvent('signOut');
-            });
+            signoutButton = document.getElementsByClassName('js-signout')[0];
         }
 
-        // singleButton.addEventListener('click', (event) => {
-        //     event.preventDefault();
-        //     MW.createModal('Game training');
-        // });
-
-        // multiButton.addEventListener('click', (event) => {
-        //     if (this.isAuth) {
-        //         event.preventDefault();
-        //         MW.createModal('Menu multi waiting for player');
-        //     } else {
-        //         event.preventDefault();
-        //         MW.createModal('Menu multi error login');
-        //     }
-        // });
+        signoutButton.addEventListener('click', () => {
+            this.isAuth = false;
+            this.localEventBus.callEvent('signOut');
+        });
     }
+
+    // singleButton.addEventListener('click', (event) => {
+    //     event.preventDefault();
+    //     MW.createModal('Game training');
+    // });
+
+    // multiButton.addEventListener('click', (event) => {
+    //     if (this.isAuth) {
+    //         event.preventDefault();
+    //         MW.createModal('Menu multi waiting for player');
+    //     } else {
+    //         event.preventDefault();
+    //         MW.createModal('Menu multi error login');
+    //     }
+    // });
 
     onShowingChat() {
         let chatButton = document.getElementsByClassName('js-chat-btn')[0];
@@ -69,6 +57,7 @@ export default class viewMenu extends View {
             if (!this.chatIsShown) {
                 document.getElementsByClassName('js-chat-window')[0].classList.remove('hide');
                 chatButton.classList.add('hide');
+                this.chat = new chat(this.localEventBus);
                 this.chatIsShown = true;
             }
         });
@@ -79,6 +68,21 @@ export default class viewMenu extends View {
                 returnChatButton.classList.add('hide');
                 this.chatIsShown = true;
             }
+        });
+
+        const messageInput = document.getElementsByClassName('js-message-input')[0];
+        messageInput.addEventListener('keydown', (event) => {
+            if (event.keyCode !== 13) {
+                this.chat.sendMessage('TYPING', messageInput.value);
+            } else {
+                this.chat.sendMessage('NEW', messageInput.value);
+            }
+        });
+
+        const closeChatAndWs = document.getElementsByClassName('js-close-chat')[0];
+        closeChatAndWs.addEventListener('click', () => {
+            this.chat.close();
+            delete this.chat;
         });
     }
 

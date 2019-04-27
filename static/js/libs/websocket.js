@@ -2,7 +2,10 @@ export default class Ws {
     constructor(eventBus = {}, inputAddress) {
         // debugger;
         this.localEventBus = eventBus;
-        this.localEventBus.getEvent('sendButton', this.send.bind(this));
+        if (this.localEventBus !== null) {
+            this.localEventBus.getEvent('sendButton', this.send.bind(this));
+        }
+
         if (Ws.__instance) {
             return Ws.__instance;
         }
@@ -30,6 +33,11 @@ export default class Ws {
 
     closeConn() {
         this.webs.close();
+        Ws.__instance = null;
+    }
+
+    openConn(address) {
+        new Ws(null, address);
     }
 
     handleMessage(event) {
@@ -48,6 +56,15 @@ export default class Ws {
             this.localEventBus.callEvent('gameOverWS');
         }
 
+        if (message.type === 'EXIST') {
+            console.log('updating chat');
+            this.localEventBus.callEvent('printMessage', message.payload);
+        }
+
+        if (message.type === 'NEW') {
+            this.localEventBus.callEvent('printMessage', message.payload);
+        }
+
         try {
             return {type: message.type, payload: message.payload};
         } catch (err) {
@@ -55,7 +72,12 @@ export default class Ws {
         }
     }
 
-    send(type, pressed) {
-        this.webs.send(JSON.stringify({type, pressed}));
+    send(type, payload) {
+        if (type === 'NEW') {
+            console.log(JSON.stringify({type, text: payload}));
+            this.webs.send(JSON.stringify({type, text: payload}));
+        }
+        console.log(JSON.stringify({type, payload}));
+        this.webs.send(JSON.stringify({type, payload}));
     }
 }
