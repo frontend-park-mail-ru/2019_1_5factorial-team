@@ -19,7 +19,21 @@ export default class viewMenu extends View {
         // const multiButton = document.getElementsByClassName('js-multi')[0];
 
         if (checkHeader.changeButtons(isAuthorized)) {
+            const chatButton = document.getElementsByClassName('js-chat')[0];
             const signoutButton = document.getElementsByClassName('js-signout')[0];
+
+            let isOpened = false;
+
+            chatButton.addEventListener('click', () => {
+                // let chatWindow = document.getElementsByClassName('js-chat-hide')[0];
+                if (chatButton.classList.contains('js-chat-hide') && !isOpened) {
+                    chatButton.classList.remove('js-chat-hide');
+                    isOpened = true;
+                } else {
+                    chatButton.classList.add('js-chat-hide');
+                    isOpened = false;
+                }
+            });
             signoutButton.addEventListener('click', () => {
                 this.isAuth = false;
                 this.localEventBus.callEvent('signOut');

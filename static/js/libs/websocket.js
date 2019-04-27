@@ -1,13 +1,18 @@
 export default class Ws {
-    constructor(eventBus) {
+    constructor(eventBus = {}, inputAddress) {
         // debugger;
         this.localEventBus = eventBus;
         this.localEventBus.getEvent('sendButton', this.send.bind(this));
         if (Ws.__instance) {
             return Ws.__instance;
         }
+        let address;
 
-        const address = 'ws://78.155.207.69:5051/api/game/ws';
+        if (inputAddress !== null) {
+            address = inputAddress;
+        } else {
+            address = 'ws://78.155.207.69:5051/api/game/ws';
+        }
         this.webs = new WebSocket(address);
 
         this.webs.onopen = () => {

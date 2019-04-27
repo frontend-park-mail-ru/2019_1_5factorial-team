@@ -102,6 +102,7 @@ export const EVENT_LIST_GAME_MULTI = [
 ];
 
 export const NETWORK_ADRESS = 'http://78.155.207.69:5051';
+export const NETWORK_ADDRESS_CHAT = 'ws://78.155.207.69:5052/api/chat/global/ws';
 // export const NETWORK_ADRESS = 'http://localhost:5051';
 
 export const DEFAULT_AVATAR = '';
@@ -161,7 +162,9 @@ export const MAP_OF_MODALS = new Map ([
 ]);
 
 export const MAP_OF_USER_BLOCKS = new Map([
-    ['isAuth block', '<a class="btn users__btn_action" href="/profile">Profile</a><a class="btn users__btn_action js-signout" href="/">Sign Out</a>'],
-    ['unAuth block', '<a class="btn users__btn login-btn" href="/login">Log In</a><a class="btn users__btn signup-btn" href="/signup">Sign Up</a>'],
+    ['isAuth block', '<div class="js-chat">Chat<div class="chat-window"><div class="chat-window__header"><a class="close-btn"></a></div><div class="chat-window__body"><!--iframe here--><div class="correspondence"></div><div class="message"><label><input class="message__holder" type="text" placeholder="Enter your meassage..." autofocus="true" /></label></div></div></div></div><a class="btn users__btn_action" href="/profile">Profile</a><a class="btn users__btn_action js-signout" href="/">Sign Out</a>'],
+    ['unAuth block', '<div class="js-chat">Chat<div class="chat-window"><div class="chat-window__header"><a class="close-btn"></a></div><div class="chat-window__body"><!--iframe here--><div class="correspondence"></div><div class="message"><label><input class="message__holder" type="text" placeholder="Enter your meassage..." autofocus="true" /></label></div></div></div></div><a class="btn users__btn login-btn" href="/login">Log In</a><a class="btn users__btn signup-btn" href="/signup">Sign Up</a>'],
     ['inGame unAuth', '<a class="btn users__btn signup-btn js-back-to-menu" href="/">Back to menu</a>'],
 ]);
+
+// <div class="chat-window js-chat-hide"><div class="chat-window__header"><a class="close-btn"></a></div><div class="chat-window__body"><!--iframe here--><div class="correspondence"></div><div class="message"><label><input class="message__holder" type="text" placeholder="Enter your meassage..." autofocus="true" /></label></div></div></div>
