@@ -110,9 +110,10 @@ export const EVENT_LIST_CHAT = [
     'checkAuthorizationResponse',
     'checkAuthorization',
     'signOut',
-    'closeView'
+    'closeView',
     'printMessage',
     'sendMessage',
+    'sendButton',
 ];
 
 export const NETWORK_ADRESS = 'http://78.155.207.69:5051';

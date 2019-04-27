@@ -14,6 +14,7 @@ export default class viewMenu extends View {
         this.chatIsShown = false;
         this.localEventBus.getEvent('showChat', this.onShowingChat.bind(this));
         this.localEventBus.getEvent('hideChat', this.onHidingChat.bind(this));
+        this.localEventBus.getEvent('printMessage', this.printMessage.bind(this));
     }
 
     onCheckAuthResponse({isAuthorized = false}) {
@@ -60,6 +61,7 @@ export default class viewMenu extends View {
                 this.chat = new chat(this.localEventBus);
                 this.chatIsShown = true;
             }
+            //<iframe class="chat-window" src="http://localhost:4000/iframe" width="350px" height="370px"></iframe>
         });
 
         returnChatButton.addEventListener('click',  () => {
@@ -106,6 +108,17 @@ export default class viewMenu extends View {
             }
         });
     }
+
+    printMessage(message) {
+        const text = message.text;
+        let elemToAppend = document.createElement('div');
+        elemToAppend.classList.add('message');
+        elemToAppend.classList.add('js-message');
+        elemToAppend.textContent = text;
+        this.toAppend = document.getElementsByClassName('messages')[0];
+        this.toAppend.append(elemToAppend);
+    }
+
 
     render(root, data = {}) {
         super.render(root, data);

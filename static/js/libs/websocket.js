@@ -74,10 +74,9 @@ export default class Ws {
 
     send(type, payload) {
         if (type === 'NEW') {
-            console.log(JSON.stringify({type, text: payload}));
-            this.webs.send(JSON.stringify({type, text: payload}));
+            console.log(JSON.stringify({type, payload: {text: payload}}));
+            this.webs.send(JSON.stringify({type, payload: {text: payload}}));
         }
-        console.log(JSON.stringify({type, payload}));
         this.webs.send(JSON.stringify({type, payload}));
     }
 }
