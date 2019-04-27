@@ -782,6 +782,11 @@ body {
     overflow-y: scroll;
 }
 
+.correspondence_paged {
+    display: flex;
+    height: 40vh;
+}
+
 .message {
     display: flex;
     font-size: 2vh;

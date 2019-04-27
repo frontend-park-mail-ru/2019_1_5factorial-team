@@ -16,7 +16,22 @@
         </section>
         <section class="container__block container__block_center">
             <div class="content">
-
+                <h1 class="content__header">chat</h1>
+                <div class="chat js-chat">
+                    <div class="chat__header">
+                    </div>
+                    <div class="chat__body">
+                        <div class="correspondence correspondence_paged">
+                            <div class="messages">
+                            </div>
+                        </div>
+                        <div class="my-message js-my-message">
+                            <label>
+                                <input class="message__holder js-message-input" type="text" placeholder="Enter your message..." autofocus="true" />
+                            </label>
+                        </div>
+                    </div>
+                </div>
             </div>
             <a class="btn btn_contained btn_back-menu" href="/">Back</a>
         </section>
