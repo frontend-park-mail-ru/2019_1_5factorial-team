@@ -27,7 +27,7 @@
                         </div>
                         <div class="my-message js-my-message">
                             <label>
-                                <input class="message__holder js-message-input" type="text" placeholder="Enter your message..." autofocus="true" />
+                                <input class="message__holder message__holder_paged js-message-input" type="text" placeholder="Enter your message..." autofocus="true" />
                             </label>
                         </div>
                     </div>

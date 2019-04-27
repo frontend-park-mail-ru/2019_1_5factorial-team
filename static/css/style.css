@@ -806,14 +806,25 @@ body {
 
 .message__holder {
     background-color: rgba(255, 255, 255, 0.1);
+    color: white;
     border: none;
     margin: 0.75em;
     height: 50px;
     width: 250px;
     border-radius: 12px;
     text-align: center;
+    padding: 0 1vw;
+}
+
+.message__holder::placeholder {
+    color: white;
 }
 
 .message__holder:focus {
     outline: none;
+}
+
+.message__holder_paged {
+    font-size: 2vh;
+    white-space: nowrap;
 }
