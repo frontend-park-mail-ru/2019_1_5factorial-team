@@ -39,6 +39,8 @@ export default class menuModel {
                     isAuthorized: true,
                 });
             }
+            this.localEventBus.callEvent('showChat');
+            this.localEventBus.callEvent('hideChat');
         });
     }
 }
