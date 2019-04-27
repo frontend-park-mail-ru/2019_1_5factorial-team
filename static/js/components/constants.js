@@ -31,7 +31,9 @@ export const EVENT_LIST_MENU = [
     'checkAuthorization',
     'signoutResponse',
     'signOut',
-    'closeView'
+    'closeView',
+    'showChat',
+    'hideChat'
 ];
 
 export const EVENT_LIST_PROFILE = [
@@ -162,9 +164,10 @@ export const MAP_OF_MODALS = new Map ([
 ]);
 
 export const MAP_OF_USER_BLOCKS = new Map([
-    ['isAuth block', '<div class="js-chat">Chat<div class="chat-window"><div class="chat-window__header"><a class="close-btn"></a></div><div class="chat-window__body"><!--iframe here--><div class="correspondence"></div><div class="message"><label><input class="message__holder js-message-input" type="text" placeholder="Enter your meassage..." autofocus="true" /></label></div></div></div></div><a class="btn users__btn_action" href="/profile">Profile</a><a class="btn users__btn_action js-signout" href="/">Sign Out</a>'],
-    ['unAuth block', '<div class="js-chat">Chat<div class="chat-window"><div class="chat-window__header"><a class="close-btn"></a></div><div class="chat-window__body"><!--iframe here--><div class="correspondence"></div><div class="message"><label><input class="message__holder js-message-input" type="text" placeholder="Enter your meassage..." autofocus="true" /></label></div></div></div></div><a class="btn users__btn login-btn" href="/login">Log In</a><a class="btn users__btn signup-btn" href="/signup">Sign Up</a>'],
+    ['isAuth block', '<div class="js-chat"><a class="btn users__btn js-chat-btn">Chat</a><a class="btn users__btn js-hidden-chat-btn hide">Return to chat</a><div class="chat-window js-chat-window hide"><div class="chat-window__header"><a class="hide-btn js-hide-chat"></a><a class="close-btn js-close-chat"></a></div><div class="chat-window__body"><div class="correspondence"></div><div class="my-message js-my-message"><label><input class="message__holder" type="text" placeholder="Enter your meassage..." autofocus="true" /></label></div></div></div></div><a class="btn users__btn_action" href="/profile">Profile</a><a class="btn users__btn_action js-signout" href="/">Sign Out</a>'],
+    ['unAuth block', '<div class="js-chat"><a class="btn users__btn js-chat-btn">Chat</a><a class="btn users__btn js-hidden-chat-btn hide">Return to chat</a><div class="chat-window js-chat-window hide"><div class="chat-window__header"><a class="hide-btn js-hide-chat"></a><a class="close-btn js-close-chat"></a></div><div class="chat-window__body"><div class="correspondence"><div class="message js-message">Hello there</div><div class="message js-message">Hello there 111</div></div><div class="my-message js-my-message"><label><input class="message__holder" type="text" placeholder="Enter your meassage..." autofocus="true" /></label></div></div></div></div><a class="btn users__btn login-btn" href="/login">Log In</a><a class="btn users__btn signup-btn" href="/signup">Sign Up</a>'],
     ['inGame unAuth', '<a class="btn users__btn signup-btn js-back-to-menu" href="/">Back to menu</a>'],
 ]);
 
+// <li><div class="mes"></div></li>
 // <div class="chat-window js-chat-hide"><div class="chat-window__header"><a class="close-btn"></a></div><div class="chat-window__body"><!--iframe here--><div class="correspondence"></div><div class="message"><label><input class="message__holder" type="text" placeholder="Enter your meassage..." autofocus="true" /></label></div></div></div>

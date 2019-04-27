@@ -743,6 +743,7 @@ body {
 .chat-window__header {
     font-size: 4vh;
     display: flex;
+    flex-direction: row;
     justify-content: flex-end;
     align-items: center;
     background-color: var(--black-clr);
@@ -750,6 +751,7 @@ body {
 }
 
 .chat-window__body {
+    padding-top: 10px;
     display: flex;
     background-color: var(--black-clr);
     border-radius: 0 0 12px 12px;
@@ -758,17 +760,40 @@ body {
 
 .close-btn {
     display: flex;
-    padding: 0.25em;
-    margin: 0.5em;
-    background: url('../img/svg/close.svg') center no-repeat;
+    width: 0.75em;
+    height: 0.75em;
+    margin: 0.25em;
+    background: url('../img/svg/close_big.svg') center no-repeat;
+    cursor: pointer;
+}
+
+.hide-btn {
+    display: flex;
+    width: 0.75em;
+    height: 0.75em;
+    margin: 0.25em;
+    background: url('../img/svg/collapse.svg') center no-repeat;
     cursor: pointer;
 }
 
 .correspondence {
     height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
 }
 
 .message {
+    display: flex;
+    font-size: 2vh;
+    padding: 0.5em;
+    margin: 5px 10px;
+    color: var(--black-clr);
+    background-color: white;
+}
+
+.my-message {
     display: flex;
     justify-content: center;
     align-items: center;
