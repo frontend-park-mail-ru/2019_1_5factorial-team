@@ -11,6 +11,6 @@ export default class chat {
     }
 
     close() {
-
+        this.websocket.closeConn();
     }
 }

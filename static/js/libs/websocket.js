@@ -33,6 +33,11 @@ export default class Ws {
 
     closeConn() {
         this.webs.close();
+        Ws.__instance = null;
+    }
+
+    openConn(address) {
+        new Ws(null, address);
     }
 
     handleMessage(event) {

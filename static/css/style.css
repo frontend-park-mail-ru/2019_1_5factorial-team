@@ -748,6 +748,7 @@ body {
     align-items: center;
     background-color: var(--black-clr);
     border-radius: 12px 12px 0 0;
+    flex: 0 0 auto;
 }
 
 .chat-window__body {
@@ -777,11 +778,12 @@ body {
 }
 
 .correspondence {
-    height: 250px;
     display: flex;
-    flex-direction: column;
+    flex: 1 1 auto;
+    height: 250px;
     align-items: flex-start;
-    justify-content: flex-end;
+    flex-direction: column-reverse;
+    overflow-y: scroll;
 }
 
 .message {
@@ -794,6 +796,7 @@ body {
 }
 
 .my-message {
+    flex: 0 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;

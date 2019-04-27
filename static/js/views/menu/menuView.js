@@ -8,7 +8,6 @@ export default class viewMenu extends View {
     constructor({ eventBus = {} }) {
         super(template, eventBus);
         this.isAuth = false;
-        this.chat = new chat();
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('checkAuthorizationResponse', this.onCheckAuthResponse.bind(this));
 
@@ -58,6 +57,7 @@ export default class viewMenu extends View {
             if (!this.chatIsShown) {
                 document.getElementsByClassName('js-chat-window')[0].classList.remove('hide');
                 chatButton.classList.add('hide');
+                this.chat = new chat();
                 this.chatIsShown = true;
             }
         });
@@ -77,6 +77,12 @@ export default class viewMenu extends View {
             } else {
                 this.chat.sendMessage('NEW', messageInput.value);
             }
+        });
+
+        const closeChatAndWs = document.getElementsByClassName('js-close-chat')[0];
+        closeChatAndWs.addEventListener('click', () => {
+            this.chat.close();
+            delete this.chat;
         });
     }
 
