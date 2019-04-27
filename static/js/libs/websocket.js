@@ -58,6 +58,11 @@ export default class Ws {
 
         if (message.type === 'EXIST') {
             console.log('updating chat');
+            this.localEventBus.callEvent('printMessage', message.payload);
+        }
+
+        if (message.type === 'NEW') {
+            this.localEventBus.callEvent('printMessage', message.payload);
         }
 
         try {

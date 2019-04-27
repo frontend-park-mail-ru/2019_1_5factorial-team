@@ -14,6 +14,7 @@ export default class viewMenu extends View {
         this.chatIsShown = false;
         this.localEventBus.getEvent('showChat', this.onShowingChat.bind(this));
         this.localEventBus.getEvent('hideChat', this.onHidingChat.bind(this));
+        this.localEventBus.getEvent('printMessage', this.printMessage.bind(this));
     }
 
     onCheckAuthResponse({isAuthorized = false}) {
@@ -49,6 +50,16 @@ export default class viewMenu extends View {
     //     }
     // });
 
+    printMessage(message) {
+        const text = message.text;
+        let elemToAppend = document.createElement('div');
+        elemToAppend.classList.add('message');
+        elemToAppend.classList.add('js-message');
+        elemToAppend.textContent = text;
+        this.toAppend = document.getElementsByClassName('messages')[0];
+        this.toAppend.append(elemToAppend);
+    }
+
     onShowingChat() {
         let chatButton = document.getElementsByClassName('js-chat-btn')[0];
         let returnChatButton = document.getElementsByClassName('js-hidden-chat-btn')[0];
@@ -57,7 +68,7 @@ export default class viewMenu extends View {
             if (!this.chatIsShown) {
                 document.getElementsByClassName('js-chat-window')[0].classList.remove('hide');
                 chatButton.classList.add('hide');
-                this.chat = new chat();
+                this.chat = new chat(this.localEventBus);
                 this.chatIsShown = true;
             }
         });
