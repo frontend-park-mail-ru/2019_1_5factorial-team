@@ -11,7 +11,7 @@
                 </a>
             </div>
         </section>
-        <section class="container__block container__block_center">
+        <section class="container__block container__block_menu">
             <div class="menu">
                 <a class="btn menu__btn js-single" href="/single">Single</a>
                 <a class="btn menu__btn js-multi" href="/multi">Multi</a>
