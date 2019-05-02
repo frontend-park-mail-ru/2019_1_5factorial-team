@@ -53,7 +53,7 @@
                         </a>
                     </div>
                     <div class="form-btn-block">
-                        <a class="btn btn_inlined form__btn" href="/">Back</a>
+                        <a class="btn btn_outlined form__btn" href="/">Back</a>
                         <button class="btn btn_contained form__btn js-submit" type="submit" name="submit">Log In</button>
                     </div>
                 </form>
