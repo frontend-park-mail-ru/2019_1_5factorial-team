@@ -13,7 +13,7 @@
             <h1 class="content__header">about</h1>
             <div class="about">
                 <div class="unit unit_about inline">
-                    <h2 class="text-title content-block-unit__title">🛠 Our repo you can find</h2>
+                    <h2 class="text-title content-block-unit__title">🛠 Our repo is</h2>
                     <a class="btn about__btn" href="https://github.com/frontend-park-mail-ru/2019_1_5factorial-team" target="_blank">here</a>
                 </div>
                 <div class="unit unit_about columned">

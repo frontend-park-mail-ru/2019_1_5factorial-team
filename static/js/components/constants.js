@@ -135,7 +135,7 @@ export const MAP_OF_MODALS = new Map ([
 ]);
 
 export const MAP_OF_USER_BLOCKS = new Map([
-    ['isAuth block', '<a class="btn users__btn_action" href="/profile">Profile</a><a class="btn users__btn_action js-signout" href="/">Sign Out</a>'],
-    ['unAuth block', '<a class="btn users__btn login-btn" href="/login">Log In</a><a class="btn users__btn signup-btn" href="/signup">Sign Up</a>'],
+    ['isAuth block', '<a class="btn users__btn users__btn_profile" href="/profile"></a><a class="btn users__btn users__btn_logout js-signout" href="/"></a>'],
+    ['unAuth block', '<a class="btn users__btn login-btn" href="/login">login</a><a class="btn users__btn signup-btn" href="/signup">signup</a>'],
     ['inGame unAuth', '<a class="btn users__btn signup-btn js-back-to-menu" href="/">Back to menu</a>'],
 ]);

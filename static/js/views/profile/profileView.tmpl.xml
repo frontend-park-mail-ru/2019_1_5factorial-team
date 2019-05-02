@@ -44,8 +44,8 @@
                 </div>
                 <div class="unit unit_profile columned">
                     <form class="form form_change-password js-change-password js-new">
-                        <span class="text-change-password">To change password click</span>
-                        <button class="btn btn_change-password js-call-submit" type="submit">here</button>
+                        <span class="text-change-password">You can</span>
+                        <button class="btn btn_change-password js-call-submit" type="submit">change password</button>
                     </form>
                 </div>
             </div>
@@ -56,7 +56,7 @@
     </section>
     <section class="container__block container__block_right sided-block">
         <div class="users">
-            <a class="btn users__btn js-signout" href="/">Sign Out</a>
+            <a class="btn users__btn users__btn_logout js-signout" href="/"></a>
         </div>
     </section>
 </div>
