@@ -6,7 +6,6 @@ export default class gameView extends View {
     constructor(eventBus) {
         super(template, eventBus);
         this.localEventBus = eventBus;
-        console.log(this.localEventBus);
 
         this.isChecked = false;
 
@@ -22,6 +21,7 @@ export default class gameView extends View {
 
     render(root, data = {}) {
         super.render(root, data);
+        console.log(Object.keys(data).length, this.isChecked);
         
         if (!this.isChecked && Object.keys(data).length === 0) {
             this.isChecked = true;
@@ -31,12 +31,12 @@ export default class gameView extends View {
 
             const block = new userBlock();
             block.gameButtons(data);
-            this.localEventBus.callEvent('startGame');  
-
+            
             const menuButton = document.getElementsByClassName('js-back-to-menu')[0];
             menuButton.addEventListener('click', () => {
                 this.localEventBus.callEvent('stopGameManualy');
             });
+            this.localEventBus.callEvent('startGame');  
         }
     }
 }

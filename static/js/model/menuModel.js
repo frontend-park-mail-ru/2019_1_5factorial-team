@@ -32,10 +32,12 @@ export default class menuModel {
             if (res.status === ANAUTH_RESPONSE) {
                 this.localEventBus.callEvent('checkAuthorizationResponse', {
                     isAuthorized: false,
+                    statusText: res.statusText,
                     error: res.error
                 });
             } else {
                 this.localEventBus.callEvent('checkAuthorizationResponse', {
+                    statusText: res.statusText, 
                     isAuthorized: true,
                 });
             }

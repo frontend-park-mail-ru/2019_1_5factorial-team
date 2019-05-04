@@ -41,9 +41,11 @@ export default class signUpModel {
         }
 
         if (check > 0) {
-            this.localEventBus.callEvent('signupResponse', {arrReturn});
+            this.localEventBus.callEvent('signupResponse', {arrReturn, check});
             return;
         }
+
+        console.log(data);
         
         api.signUp({
             email: data.email,

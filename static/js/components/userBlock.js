@@ -2,9 +2,9 @@
 import { MAP_OF_USER_BLOCKS } from './constants.js';
 
 export default class userBlock {
-    changeButtons(isAuth = false) {
+    changeButtons(statusText) {
         const userButtons = document.getElementsByClassName('js-check-auth')[0];
-        if (isAuth) {
+        if (statusText === 'OK') {
             const toAdd = MAP_OF_USER_BLOCKS.get('isAuth block');
             userButtons.innerHTML = toAdd;
             return true;

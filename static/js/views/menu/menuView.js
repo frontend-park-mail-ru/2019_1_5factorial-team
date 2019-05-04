@@ -11,14 +11,14 @@ export default class viewMenu extends View {
         this.localEventBus.getEvent('checkAuthorizationResponse', this.onCheckAuthResponse.bind(this));
     }
 
-    onCheckAuthResponse({isAuthorized = false}) {
+    onCheckAuthResponse({isAuthorized = false, statusText}) {
         this.isAuth = isAuthorized;
         const checkHeader = new userBlock();
         // const MW = new ModalWindow();
         // const singleButton = document.getElementsByClassName('js-single')[0];
         // const multiButton = document.getElementsByClassName('js-multi')[0];
 
-        if (checkHeader.changeButtons(isAuthorized)) {
+        if (checkHeader.changeButtons(statusText)) {
             const signoutButton = document.getElementsByClassName('js-signout')[0];
             signoutButton.addEventListener('click', () => {
                 this.isAuth = false;
