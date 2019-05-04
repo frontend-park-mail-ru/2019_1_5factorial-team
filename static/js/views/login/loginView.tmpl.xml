@@ -61,8 +61,8 @@
         </section>
         <section class="container__block container__block_right sided-block">
             <div class="users">
-                <a class="btn users__btn" href="/login">Log In</a>
-                <a class="btn users__btn" href="/signup">Sign Up</a>
+                <a class="btn users__btn" href="/login">login</a>
+                <a class="btn users__btn" href="/signup">signup</a>
             </div>
         </section>
     </div>

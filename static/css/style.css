@@ -62,6 +62,8 @@ body {
     -webkit-user-select: none;
     display: inline-grid;
     grid-template-columns: 4fr 2fr 4fr;
+    overflow: hidden;
+    height: 100vh;
 }
 @media screen and (orientation: landscape) {
     .container_menu {
@@ -186,6 +188,7 @@ body {
             justify-content: center;
         }
 
+
     .sided-block {
         display: grid;
         grid-template-rows: 1fr 23fr;
@@ -200,6 +203,7 @@ body {
     align-items: center;
     justify-content: center;
 }
+
     .menu {
         padding: 0 3vw;
         margin-top: 10vh;
@@ -335,22 +339,13 @@ body {
         }
 
 /* USERS BLOCK */
-@media screen and (orientation: landscape) {
-    .users {
-        display: flex;
-        justify-content: flex-end;
-        font-size: 30px;
-    }
+.users {
+    display: flex;
+    font-size: 30px;
+    position: absolute;
+    right: 10px;
 }
-@media screen and (orientation: portrait) {
-    .users {
-        position: absolute;
-        display: flex;
-        justify-content: flex-end;
-        right: 0;
-        font-size: 30px;
-    }
-}
+
     .users_absolute {
         position: absolute;
         right: 1vw;
@@ -466,16 +461,14 @@ body {
 
 /* LEADERBOARD */
 .leaders-table {
-    border: none;
     display: flex;
-    flex-direction: row;
     justify-content: center;
     padding: 0 0 4vh 0;
 }
+.leaders-table__column {
+    font-size: 3vh;
+}
 @media screen and (orientation: landscape) {
-    .leaders-table__column {
-        font-size: 4vh;
-    }
     .leaders-table__header {
         font-size: 4.5vh;
         margin: 2vh 0 3vh 0;
@@ -484,9 +477,6 @@ body {
     }
 }
 @media screen and (orientation: portrait) {
-    .leaders-table__column {
-        font-size: 3vh;
-    }
     .leaders-table__header {
         font-size: 3.5vh;
         margin: 2vh 0 3vh 0;
@@ -495,13 +485,26 @@ body {
     }
 }
 
-
+.leaders-table__column li {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+@media screen and (min-width: 800px) {
+    .leaders-table__column li {
+        width: 7em;
+    }
+}
+@media screen and (max-width: 800px) {
+    .leaders-table__column li {
+        width: 5em;
+    }
+}
     .lead-users {
         align-items: center;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        margin-right: 2vw;
+        margin-right: 20px;
         text-align: center;
     }
     .lead-scores {
@@ -509,7 +512,6 @@ body {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        margin-left: 2vw;
         text-align: center;
     }
 
