@@ -49,7 +49,7 @@
                     </form>
                 </div>
             </div>
-            <a class="btn btn_contained btn_back-menu" href="/">Back</a>
+            <a class="btn btn_outlined btn_back-menu" href="/">Back</a>
         </div>
     </section>
     <section class="modal-window hidden">

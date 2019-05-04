@@ -266,6 +266,10 @@ body {
     .unit {
         display: flex;
     }
+        .unit_back-btn-block {
+            width: 100%;
+            justify-content: flex-start;
+        }
         .unit_about {
             margin: 2vh 1vw 1vh 1vw;
         }

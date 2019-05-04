@@ -28,7 +28,7 @@
                     <a class="btn about__btn" href="https://github.com/Thewhiterabbit123" target="_blank">Nadezhda Parpibaeva</a>
                 </div>
             </div>
-            <a class="btn btn_contained btn_back-menu" href="/">Back</a>
+            <a class="btn btn_outlined btn_back-menu" href="/">Back</a>
         </div>
     </section>
         <section class="container__block container__block_right sided-block right-elems">

@@ -36,7 +36,7 @@
                 </div>
                 <div class="paginator js-paginator-buttons">
                 </div>
-                <a class="btn btn_contained btn_back-menu js-back-to-menu" href="/">Back</a>
+                <a class="btn btn_outlined btn_back-menu js-back-to-menu" href="/">Back</a>
             </div>
         </section>
 
