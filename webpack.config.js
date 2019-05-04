@@ -45,9 +45,19 @@ module.exports = {
             },
             {
                 test: /\.css$/,
+                // exclude: /node_modules/,
                 use: [
-                    {loader: MiniCssExtractPlugin.loader},
-                    {loader: 'css-loader'}
+                    'style-loader',
+                    'css-loader',
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            ident: 'postcss',
+                            plugins: [
+                                require('autoprefixer'),
+                            ]
+                        }
+                    }
                 ]
             },
             {

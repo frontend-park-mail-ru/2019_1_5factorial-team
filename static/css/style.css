@@ -45,6 +45,10 @@
         url('../fonts/Comfortaa-Regular.svg#Comfortaa-Regular') format('svg');
 }
 
+*:focus {
+    outline: none
+}
+
 /* BASIC */
 body {
     background: var(--black-clr) url('../img/2.png') center no-repeat;
@@ -109,7 +113,6 @@ body {
 }
 .btn:focus {
     border-width: 0;
-    outline: none;
     text-shadow: var(--common-shdw);
 }
     .btn_contained {
@@ -134,7 +137,6 @@ body {
     }
     .btn_change-password:focus {
         border-bottom: 0.1em dotted;
-        outline: none;
     }
 
     .btn_outlined {
@@ -163,7 +165,6 @@ body {
     }
     .btn_signin:focus {
         filter: drop-shadow(0 0 1vh var(--light-blue-clr));
-        outline: none;
     }
 
 /* MAIN CONTAINERS */
@@ -282,7 +283,6 @@ body {
             }
             .about__btn:focus {
                 border-bottom: 0.1em dotted;
-                outline: none;
             }
 
         .unit_profile {
@@ -407,7 +407,6 @@ body {
     }
     .form__input:focus {
         box-shadow: var(--small-shdw);
-        outline: none;
     }
 
     ::placeholder {
