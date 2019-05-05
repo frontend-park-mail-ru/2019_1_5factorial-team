@@ -1,14 +1,6 @@
 import View from '../../libs/views.js';
 import template from './signUpView.tmpl.xml';
 
-import '../../../css/style.sass';
-import '../../../css/settings.sass';
-import '../../../css/userblock.sass';
-import '../../../css/containers.sass';
-import '../../../css/contentblocks.sass';
-import '../../../css/buttons.sass';
-import '../../../css/form.sass';
-
 import {OK_VALIDATE_EMAIL, OK_VALIDATE_LOGIN, OK_VALIDATE_PASSWORD} from '../../components/constants';
 
 export default class signUpView extends View {

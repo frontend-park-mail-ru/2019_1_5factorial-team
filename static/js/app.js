@@ -1,5 +1,5 @@
-// import '../css/reset.scss';
-// import '../css/style.sass';
+import '../css/reset.scss';
+import '../css/style.sass';
 
 import menuController from './controllers/menuCtrl.js';
 import aboutController from './controllers/aboutCtrl.js';

@@ -2,13 +2,6 @@ import View from '../../libs/views.js';
 import userBlock from '../../components/userBlock.js';
 import template from './aboutView.tmpl.xml';
 
-import '../../../css/style.sass';
-import '../../../css/settings.sass';
-import '../../../css/userblock.sass';
-import '../../../css/containers.sass';
-import '../../../css/contentblocks.sass';
-import '../../../css/buttons.sass';
-
 export default class aboutView extends View {
     constructor({ eventBus = {} } = {}) {
         super(template, eventBus);

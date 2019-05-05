@@ -2,14 +2,6 @@ import template from './gameView.tmpl.xml';
 import View from '../../libs/views.js';
 import userBlock from '../../components/userBlock.js';
 
-import '../../../css/style.sass';
-import '../../../css/settings.sass';
-import '../../../css/userblock.sass';
-import '../../../css/containers.sass';
-import '../../../css/contentblocks.sass';
-import '../../../css/buttons.sass';
-import '../../../css/game.sass';
-
 export default class gameView extends View {
     constructor({eventBus = {}} = {}) {
         super(template, eventBus);
