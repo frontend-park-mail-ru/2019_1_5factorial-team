@@ -1,12 +1,12 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
-    <div class="container">
+    <div class="container container_game">
         <canvas class="temp_class_canvas" id="canvas">
             <img id="player-sprite" src="../../../img/game/hero.png"/>
             <img id="ghost-left-sprite" src="../../../img/game/ghost_l.png"/>
             <img id="ghost-right-sprite" src="../../../img/game/ghost_r.png"/>
             <img id="heart-sprite" src="../../../img/game/heart.png"/>
         </canvas>
-        <section class="modal-window hide">
+        <section class="modal-window hidden">
         </section>
         <div class="users users_absolute js-check-user">
         </div>

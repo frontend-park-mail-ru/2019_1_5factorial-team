@@ -1,3 +1,6 @@
+import '../css/reset.scss';
+import '../css/style.scss';
+
 import menuController from './controllers/menuCtrl.js';
 import aboutController from './controllers/aboutCtrl.js';
 import loginController from './controllers/loginCtrl.js';

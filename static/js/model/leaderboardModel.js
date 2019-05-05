@@ -1,7 +1,7 @@
 import api from '../libs/api.js';
 import Network from '../libs/network.js';
 import {User} from '../libs/users.js';
-import userBlock from '../components/userBlock.js';
+import userBlock from '../components/userBlock/userBlock.js';
 import { ANAUTH_RESPONSE, OK_RESPONSE, COUNT_OF_PAGES, NUM_OF_POSITIONS } from '../components/constants.js';
 
 export default class leaderboardModel {

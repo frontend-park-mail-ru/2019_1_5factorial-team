@@ -1,7 +1,9 @@
 import View from '../../libs/views.js';
-import userBlock from '../../components/userBlock.js';
-import ModalWindow from '../../components/modalWindow.js';
+import userBlock from '../../components/userBlock/userBlock.js';
+import ModalWindow from '../../components/modalWindow/modalWindow.js';
 import template from './menuView.tmpl.xml';
+
+import './menuGameLogo.scss';
 
 export default class viewMenu extends View {
     constructor({ eventBus = {} }) {

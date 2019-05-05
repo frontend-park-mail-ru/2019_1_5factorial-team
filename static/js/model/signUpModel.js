@@ -23,7 +23,6 @@ export default class signUpModel {
             check++;
         } else {
             arrReturn[0] = OK_VALIDATE_EMAIL;
-            check++;
         }
 
         if (validateLogin !== OK_VALIDATE_LOGIN) {
@@ -31,7 +30,6 @@ export default class signUpModel {
             check++;
         } else {
             arrReturn[1] = OK_VALIDATE_LOGIN;
-            check++;
         }
 
         if (validatePassword !== OK_VALIDATE_PASSWORD) {
@@ -39,7 +37,6 @@ export default class signUpModel {
             check++;
         } else {
             arrReturn[2] = OK_VALIDATE_PASSWORD;
-            check++;
         }
 
         if (check > 0) {

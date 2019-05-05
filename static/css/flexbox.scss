@@ -1,0 +1,13 @@
+%inline {
+  display: flex;
+  flex-direction: row;
+  white-space: nowrap;
+  align-items: center;
+}
+
+%columned {
+  display: flex;
+  flex-direction: column;
+  white-space: nowrap;
+  align-items: center;
+}

@@ -1,4 +1,7 @@
-import { FIRST_POS } from './constants.js';
+import { FIRST_POS } from '../constants.js';
+
+import './pagination.scss';
+
 const noop = () => null;
 
 export default class paginator {

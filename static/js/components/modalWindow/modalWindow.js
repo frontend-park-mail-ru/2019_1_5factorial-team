@@ -1,4 +1,6 @@
-import { MAP_OF_MODALS } from './constants.js';
+import { MAP_OF_MODALS } from '../constants.js';
+
+import './modalWindow.scss';
 
 export default class ModalWindow {
 
