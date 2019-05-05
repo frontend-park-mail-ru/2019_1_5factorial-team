@@ -3,14 +3,14 @@ import ModalWindow from '../../components/modalWindow.js';
 import { NETWORK_ADRESS, AVATAR_DEFAULT, DEFAULT_AVATAR } from '../../components/constants.js';
 import template from './profileView.tmpl.xml';
 
-import '../../../scss/basic.sass';
-import '../../../scss/settings.sass';
-import '../../../scss/userblock.sass';
-import '../../../scss/containers.sass';
-import '../../../scss/contentblocks.sass';
-import '../../../scss/buttons.sass';
-import '../../../scss/form.sass';
-import '../../../scss/modalwindow.sass';
+import '../../../css/style.sass';
+import '../../../css/settings.sass';
+import '../../../css/userblock.sass';
+import '../../../css/containers.sass';
+import '../../../css/contentblocks.sass';
+import '../../../css/buttons.sass';
+import '../../../css/form.sass';
+import '../../../css/modalwindow.sass';
 
 export default class profileView extends View {
     constructor({ eventBus = {} }) {
