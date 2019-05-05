@@ -8,35 +8,25 @@ export default class gameView extends View {
         this.localEventBus = eventBus;
 
         this.isChecked = false;
+        this.isStart = false;
 
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('onGetUserDataForGameResponse', this.getUserResponse.bind(this));
     }
 
     getUserResponse(data = {}) {
-        if (data) {
-            this.render(null, data);
-        }
+        
+        const block = new userBlock();
+        block.gameButtons(data);
+        const menuButton = document.getElementsByClassName('js-back-to-menu')[0];
+        menuButton.addEventListener('click', () => {
+            this.localEventBus.callEvent('stopGameManualy');
+        });
+        this.localEventBus.callEvent('startGame');  
     }
 
     render(root, data = {}) {
         super.render(root, data);
-        console.log(Object.keys(data).length, this.isChecked);
-        
-        if (!this.isChecked && Object.keys(data).length === 0) {
-            this.isChecked = true;
-            this.localEventBus.callEvent('getUserDataForGame');
-        } else {
-            super.render(root, data);
-
-            const block = new userBlock();
-            block.gameButtons(data);
-            
-            const menuButton = document.getElementsByClassName('js-back-to-menu')[0];
-            menuButton.addEventListener('click', () => {
-                this.localEventBus.callEvent('stopGameManualy');
-            });
-            this.localEventBus.callEvent('startGame');  
-        }
+        this.localEventBus.callEvent('getUserDataForGame');
     }
 }

@@ -28,6 +28,7 @@ export default class signUpView extends View {
         const elementPassword = document.getElementsByClassName('js-password')[0];
 
         const emailWarning = document.getElementsByClassName('js-warning-email')[0];
+        const loginWarning = document.getElementsByClassName('js-warning-login')[0];
         if (check !== 0) {
             if (data.arrReturn[0] !== OK_VALIDATE_EMAIL) {
                 emailWarning.classList.remove('hide');
@@ -64,10 +65,16 @@ export default class signUpView extends View {
                 passwordWarning.classList.add('hide');
             }
         }
+        if (data.error === 'email conflict') {
+            emailWarning.textContent = 'This email is used!';
+        } else if (data.error === 'login conflict') {
+            loginWarning.textContent = 'This login is used!';
+        } else {
+            loginWarning.textContent = 'Server is not OLLO';
+        }
     }
 
     onSubmit() {
-        // event.preventDefault();
         const email = this.form.elements['email'].value;
         const login = this.form.elements['login'].value;
         const pass = this.form.elements['password'].value;

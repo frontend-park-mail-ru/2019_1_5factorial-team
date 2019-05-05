@@ -20,7 +20,7 @@ export default class userBlock {
         if (data.status === 'authUser') {
             userButtons.innerHTML = `<a class="btn users__btn login-btn">${data.user.nickname}</a><a class="btn users__btn signup-btn js-back-to-menu" href="/">Back to menu</a>`;
             return true;
-        } else if (data.status === 'unAuthUser') {
+        } else {
             const toAdd = MAP_OF_USER_BLOCKS.get('inGame unAuth');
             userButtons.innerHTML = toAdd;
             return false;
