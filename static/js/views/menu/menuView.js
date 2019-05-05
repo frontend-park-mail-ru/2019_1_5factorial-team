@@ -3,6 +3,15 @@ import userBlock from '../../components/userBlock.js';
 import ModalWindow from '../../components/modalWindow.js';
 import template from './menuView.tmpl.xml';
 
+import '../../../scss/basic.sass';
+import '../../../scss/settings.sass';
+import '../../../scss/userblock.sass';
+import '../../../scss/containers.sass';
+import '../../../scss/contentblocks.sass';
+import '../../../scss/buttons.sass';
+import '../../../scss/modalwindow.sass';
+import '../../../scss/gamename.sass';
+
 export default class viewMenu extends View {
     constructor({ eventBus = {} }) {
         super(template, eventBus);

@@ -3,6 +3,15 @@ import paginator from '../../components/pagination.js';
 import userBlock from '../../components/userBlock.js';
 import template from './leaderboardView.tmpl.xml';
 
+import '../../../scss/basic.sass';
+import '../../../scss/settings.sass';
+import '../../../scss/userblock.sass';
+import '../../../scss/containers.sass';
+import '../../../scss/contentblocks.sass';
+import '../../../scss/buttons.sass';
+import '../../../scss/paginator.sass';
+import '../../../scss/leaderboard.sass';
+
 export default class leaderboardView extends View {
     constructor({ eventBus = {} }) {
         super(template, eventBus);

@@ -3,6 +3,15 @@ import ModalWindow from '../../components/modalWindow.js';
 import { NETWORK_ADRESS, AVATAR_DEFAULT, DEFAULT_AVATAR } from '../../components/constants.js';
 import template from './profileView.tmpl.xml';
 
+import '../../../scss/basic.sass';
+import '../../../scss/settings.sass';
+import '../../../scss/userblock.sass';
+import '../../../scss/containers.sass';
+import '../../../scss/contentblocks.sass';
+import '../../../scss/buttons.sass';
+import '../../../scss/form.sass';
+import '../../../scss/modalwindow.sass';
+
 export default class profileView extends View {
     constructor({ eventBus = {} }) {
         super(template, eventBus);

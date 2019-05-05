@@ -1,0 +1,38 @@
+@import 'variables', 'flexbox'
+
+.name
+  animation: pulse 1s infinite 
+  font-family: var(--title-font) 
+  font-size: 32vh 
+  margin: 25vh auto 0 auto 
+  text-align: center 
+
+  &name__text  
+    &:hover  
+    text-shadow: var(--common-shdw)
+
+@media screen and (max-width: 800px)  
+  .name
+    display: none 
+
+@media screen and (orientation: portrait)  
+  .name
+    display: none 
+
+@media screen and (min-width: 800px)  
+  .name
+    display: flex
+
+@keyframes pulse  
+  0%  
+    text-shadow: 0 0 0.7em var(--light-blue-clr)
+  20%  
+    text-shadow: 0 0 0.6em var(--light-blue-clr)
+  40%  
+    text-shadow: 0 0 0.5em var(--light-blue-clr)
+  60%  
+    text-shadow: 0 0 0.6em var(--light-blue-clr)
+  80%  
+    text-shadow: 0 0 0.7em var(--light-blue-clr)
+  100%  
+    text-shadow: 0 0 0.6em var(--light-blue-clr)

@@ -1,0 +1,37 @@
+@import 'variables.sass'
+
+.users
+  display: flex
+  font-size: 30px
+  position: absolute
+  right: 10px
+
+  &_absolute
+    position: absolute
+    right: 1vw
+    margin-top: 10px
+
+  &__btn
+    margin: 0 5px
+
+    &:hover
+      filter: drop-shadow(0 0 1vh var(--light-blue-clr))
+
+    &_logout
+      background: url('../img/svg/sign_out.svg') center no-repeat
+      height: 32px
+      width: 32px
+
+    &_profile
+      background: url('../img/svg/user.svg') center no-repeat
+      height: 32px
+      width: 32px
+
+  &__avatar
+    border-radius: 0.6em
+    height: 1.2em
+    margin-right: 1vw
+    width: 1.2em
+
+  &__title
+    margin-right: 1vw

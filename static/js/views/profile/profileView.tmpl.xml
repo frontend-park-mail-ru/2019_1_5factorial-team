@@ -13,9 +13,9 @@
         <div class="content">
             <h1 class="content__header">profile</h1>
             <div class="avatar">
-                <div class="avatar-img js-upload-avatar" src="{params.user.avatar}"/>
+                <div class="avatar__img js-upload-avatar" src="{params.user.avatar}"/>
                 <form class="form js-upload-photo">
-                    <div class="change-btn-photo">
+                    <div class="form__change-photo">
                         <label>
                             <input class="btn photo-btn js-change-image" type="file" title="avatar" accept=""/>
                             <div class="btn btn_contained profile__btn js-change-image js-submit-avatar">Change</div>
@@ -44,7 +44,7 @@
                 </div>
                 <div class="unit unit_profile columned">
                     <form class="form form_change-password js-change-password js-new">
-                        <span class="text-change-password">You can</span>
+                        <span class="text-title text-title_change-password">You can</span>
                         <button class="btn btn_change-password js-call-submit" type="submit">change password</button>
                     </form>
                 </div>

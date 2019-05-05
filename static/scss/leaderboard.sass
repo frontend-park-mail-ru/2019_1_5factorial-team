@@ -1,0 +1,46 @@
+@import 'variables', 'flexbox'
+
+.leaders-table
+  display: flex
+  justify-content: center
+  padding: 0 0 4vh 0
+
+  &__column
+    font-size: 3vh
+
+    &li
+      overflow: hidden
+      text-overflow: ellipsis
+
+    @media screen and (min-width: 800px)
+      &li
+        width: 7em
+
+    @media screen and (max-width: 800px)
+      &li
+        width: 5em
+
+  &__header
+    margin: 2vh 0 3vh 0
+    text-shadow: var(--common-shdw)
+    white-space: nowrap
+
+  @media screen and (orientation: landscape)
+    &__header
+      font-size: 4.5vh
+
+  @media screen and (orientation: portrait)
+    &__header
+      font-size: 3.5vh
+
+// TODO(nmerk): разделить на модификаторы
+.lead-users
+  @extend %columned
+  justify-content: center
+  margin-right: 20px
+  text-align: center
+
+.lead-scores
+  @extend %columned
+  justify-content: center
+  text-align: center
