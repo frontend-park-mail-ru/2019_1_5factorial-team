@@ -35,17 +35,14 @@
       justify-content: center;
     }
   }
-}
+  &_menu {
+    @media screen and (min-width: 1024px) and (orientation: landscape) {
+        grid-template-columns: 1fr 2fr 8fr;
+    }
 
-@media screen and (min-width: 1024px) and (orientation: landscape) {
-  .container_menu {
-    grid-template-columns: 1fr 2fr 8fr;
-  }
-}
-
-@media screen and (max-width: 1024px) and (orientation: portrait) {
-  .container_menu {
-    grid-template-columns: 4fr 2fr 4fr;
+    @media screen and (max-width: 1024px) and (orientation: portrait) {
+        grid-template-columns: 4fr 2fr 4fr;
+    }
   }
 }
 

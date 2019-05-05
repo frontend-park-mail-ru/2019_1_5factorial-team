@@ -7,22 +7,18 @@
   margin: 25vh auto 0 auto;
   text-align: center;
 
+  @media screen and (max-width: 1024px) {
+    display: none;
+  }
+
+  @media screen and (min-width: 1024px) and (orientation: landscape) {
+    display: flex;
+  }
+
   &name__text {
     &:hover {
       text-shadow: var(--common-shdw);
     }
-  }
-}
-
-@media screen and (max-width: 1024px) {
-  .name {
-    display: none;
-  }
-}
-
-@media screen and (min-width: 1024px) and (orientation: landscape) {
-  .name {
-    display: flex;
   }
 }
 
