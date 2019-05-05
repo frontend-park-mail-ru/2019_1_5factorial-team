@@ -3,6 +3,9 @@ import template from './signUpView.tmpl.xml';
 
 import {OK_VALIDATE_EMAIL, OK_VALIDATE_LOGIN, OK_VALIDATE_PASSWORD} from '../../components/constants';
 
+import '../../components/userBlock/userblock.scss';
+import '../../../css/form.scss';
+
 export default class signUpView extends View {
     constructor({ eventBus = {} }) {
         super(template, eventBus);

@@ -1,0 +1,31 @@
+@import '../../../css/variables', '../../../css/flexbox';
+
+.paginator {
+  display: flex;
+  border-radius: 1em;
+  color: var(--main-clr);
+  font-size: 4vh;
+  margin-top: 2vh;
+
+  &__page {
+    @extend %inline;
+    border: 0.075em solid var(--blue-clr);
+    border-radius: 0.5em;
+    cursor: pointer;
+    font-size: 3vh;
+    height: 1.5em;
+    justify-content: center;
+    margin: 0 0.25vw;
+    text-decoration: none;
+    width: 1.5em;
+
+    &:hover {
+      background: var(--blue-clr);
+      box-shadow: var(--common-shdw);
+    }
+  }
+}
+
+.active-pagination {
+  background: var(--blue-clr);
+}

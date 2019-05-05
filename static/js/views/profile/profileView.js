@@ -1,7 +1,10 @@
 import View from '../../libs/views.js';
-import ModalWindow from '../../components/modalWindow.js';
+import ModalWindow from '../../components/modalWindow/modalWindow.js';
 import { NETWORK_ADRESS, AVATAR_DEFAULT, DEFAULT_AVATAR } from '../../components/constants.js';
 import template from './profileView.tmpl.xml';
+
+import '../../components/userBlock/userblock.scss';
+import '../../../css/form.scss';
 
 export default class profileView extends View {
     constructor({ eventBus = {} }) {
@@ -72,7 +75,7 @@ export default class profileView extends View {
             data.user.avatar = NETWORK_ADRESS + data.user.avatar;
         }
         super.render(this.prevRoot, data);
-        const imgToSet = document.getElementsByClassName('avatar-img')[0];
+        const imgToSet = document.getElementsByClassName('avatar__img')[0];
         imgToSet.style.background = `transparent url(${data.user.avatar}) no-repeat`;
         imgToSet.style.backgroundSize = 'cover';
         imgToSet.style.backgroundPosition = 'center';

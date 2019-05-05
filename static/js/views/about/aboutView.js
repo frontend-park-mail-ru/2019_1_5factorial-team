@@ -1,5 +1,5 @@
 import View from '../../libs/views.js';
-import userBlock from '../../components/userBlock.js';
+import userBlock from '../../components/userBlock/userBlock.js';
 import template from './aboutView.tmpl.xml';
 
 export default class aboutView extends View {

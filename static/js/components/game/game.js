@@ -1,4 +1,4 @@
-import ModalWindow from '../modalWindow.js';
+import ModalWindow from '../modalWindow/modalWindow.js';
 import Recognizer from './recognition.js';
 import Ws from '../../libs/websocket.js';
 
@@ -6,6 +6,8 @@ import { DEFAULT_GHOST_SPEED, DEFAULT_GHOST_DAMAGE, PLAYER_INITIAL_HP } from '..
 import { SCORE_FOR_SYMBOL, SCORE_FOR_GHOST } from '../constants.js';
 
 const symbolImgWidth = 60;
+
+import './game.scss';
 
 export default class Game {
     /*

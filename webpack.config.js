@@ -23,42 +23,45 @@ module.exports = {
                 loader: 'babel-loader'
             },
             {
-                test: /\.(gif|png|jpe?g|svg)$/i,
+                test: /\.(woff|woff2|eot|ttf|gif|png|jpe?g|svg)$/,
+                loader: 'url-loader'
+            },
+            {
+                test: /\.(sa|sc|c)ss$/,
                 use: [
-                    'file-loader',
-                    {
-                        loader: 'image-webpack-loader',
+                    { loader: MiniCssExtractPlugin.loader },
+                    'css-loader',
+                    'resolve-url-loader',
+                    { loader: 'sass-loader',
                         options: {
-                            bypassOnDebug: true, // webpack@1.x
-                            disable: true, // webpack@2.x and newer
-                        },
+                            sourceMap: true,
+                            sourceMapContents: false
+                        }
                     },
-                ],
-            },
-            {
-                test: /\.ttf$/,
-                use: [
-                    {
-                        loader: 'file-loader?name=./assets/fonts/webfonts/[name].[ext]'
-                    },
-                ]
-            },
-            {
-                test: /\.css$/,
-                use: [
-                    {loader: MiniCssExtractPlugin.loader},
-                    {loader: 'css-loader'}
+                    { loader: 'postcss-loader',
+                        options: {
+                            plugins: () => [
+                                require('autoprefixer'), ]
+                        }
+                    }
                 ]
             },
             {
                 test: /\.xml$/,
-                loader: 'fest-webpack-loader',
+                use: [
+                    {
+                        loader: 'fest-webpack-loader'
+                    }
+                ]
             },
         ]
     },
     plugins: [
         new ServiceWorkerWebpackPlugin({
-            entry: './static/js/sw.js',
+            entry: path.join(__dirname, 'static/js/sw.js'),
+        }),
+        new MiniCssExtractPlugin({
+            filename: 'style.css',
         }),
     ]
 };

@@ -1,6 +1,9 @@
 import View from '../../libs/views.js';
 import template from './loginView.tmpl.xml';
 
+import '../../components/userBlock/userblock.scss';
+import '../../../css/form.scss';
+
 export default class loginView extends View {
     constructor({ eventBus = {} }) {
         super(template, eventBus);

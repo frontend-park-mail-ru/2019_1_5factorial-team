@@ -1,5 +1,8 @@
 'use strict';
-import { MAP_OF_USER_BLOCKS } from './constants.js';
+
+import { MAP_OF_USER_BLOCKS } from '../constants.js';
+
+import './userblock.scss';
 
 export default class userBlock {
     changeButtons(statusText) {
