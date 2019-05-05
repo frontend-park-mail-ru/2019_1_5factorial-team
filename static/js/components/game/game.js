@@ -7,8 +7,6 @@ import { SCORE_FOR_SYMBOL, SCORE_FOR_GHOST } from '../constants.js';
 
 const symbolImgWidth = 60;
 
-import './game.scss';
-
 export default class Game {
     /*
      * this.lastDrawing - последний считанный нарисованный символ
@@ -68,6 +66,7 @@ export default class Game {
                 gameTime: 0,
                 isGameOver: false
             };
+            console.log('kek2');
             this.gameLoop();
         } else {
             console.log('creating ws');
@@ -144,6 +143,8 @@ export default class Game {
     }
 
     updateSingle(dt) {
+        console.log('kek3');
+
         this.state.gameTime += dt;
 
         // Почему это тут? Вот почему: в конструкторе стейта
@@ -222,6 +223,8 @@ export default class Game {
     }
 
     renderSingle() {
+        console.log('kek4');
+
         let heartsBetweenOffset = this.heartImg.width / 4;
 
         let heartOffset = this.heartImg.width;

@@ -32,6 +32,7 @@ export default class gameOfflineModel {
     }
 
     onStart() {
+        console.log('kek1');
         this.scene = new Game(this.localEventBus);
     }
 

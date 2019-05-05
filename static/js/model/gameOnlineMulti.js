@@ -1,5 +1,5 @@
 import Game from '../components/game/game.js';
-import ModalWindow from '../components/modalWindow.js';
+import ModalWindow from '../components/modalWindow/modalWindow.js';
 
 /**
  * STATE - состояние игры
