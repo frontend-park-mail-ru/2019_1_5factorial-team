@@ -25,27 +25,27 @@ export default class profileModel {
             return;
         }
 
-        api.uploadAvatar(data.avatar).then(res => {
-            if (res.status !== OK_RESPONSE) {
-                this.localEventBus.callEvent('changeAvatarResponse', {error: res.error});
+        api.uploadAvatar(data.avatar).then(response => {
+            if (response.status !== OK_RESPONSE) {
+                this.localEventBus.callEvent('changeAvatarResponse', {error: response.error});
                 return;
             }
-            res.json().then(res => {
-                if (res === DEFAULT_AVATAR || res === AVATAR_DEFAULT) {
+            response.json().then(response => {
+                if (response === DEFAULT_AVATAR || response === AVATAR_DEFAULT) {
                     this.localEventBus.callEvent('changeAvatarResponse', {avatar: AVATAR_DEFAULT});
                     return;
                 } else {
                     api.updateUser({
-                        avatar_input: res.avatar_link,
+                        avatar_input: response.avatar_link,
                         old_password: undefined,
                         new_password: undefined
-                    }).then(res => {
-                        if (res.status === OK_RESPONSE) {
-                            const avatarLink = NETWORK_ADRESS + res.avatar_link;
+                    }).then(response => {
+                        if (response.status === OK_RESPONSE) {
+                            const avatarLink = NETWORK_ADRESS + response.avatar_link;
                             this.localEventBus.callEvent('changeAvatarSuccess', {avatar: avatarLink});
                         } else {
-                            res.json().then(res => {
-                                this.localEventBus.callEvent('changeAvatarResponse', {error: res.error});
+                            response.json().then(response => {
+                                this.localEventBus.callEvent('changeAvatarResponse', {error: response.error});
                             });
                         }
                     });
@@ -85,12 +85,12 @@ export default class profileModel {
             avatar: this.avatar,
             old_password: passOld,
             new_password: passNew
-        }).then(res => {
-            if (res.ok) {
+        }).then(response => {
+            if (response.ok) {
                 this.localEventBus.callEvent('submitPasswordSuccess', {newPassword: passNew});
             } else {
-                res.json().then(res => {
-                    this.localEventBus.callEvent('changePasswordResponse', {error: res.error});
+                response.json().then(response => {
+                    this.localEventBus.callEvent('changePasswordResponse', {error: response.error});
                 });
             }
         });
@@ -102,15 +102,15 @@ export default class profileModel {
      */
     onLoadUser() {
         api.loadUser()
-            .then(res => {
-                if (res.error) {
+            .then(response => {
+                if (response.error) {
                     this.localEventBus.callEvent('loadUserResponse', {});
                 } else {
                     const toSetUser = {
-                        avatar: res.avatar_link,
-                        score: res.score,
-                        login: res.nickname,
-                        email: res.email,
+                        avatar: response.avatar_link,
+                        score: response.score,
+                        login: response.nickname,
+                        email: response.email,
                     };
                     User.setUser({ toSetUser });
 
