@@ -1,6 +1,8 @@
 import View from '../../libs/views.js';
+
 import userBlock from '../../components/userBlock/userBlock.js';
-import ModalWindow from '../../components/modalWindow/modalWindow.js';
+// import ModalWindow from '../../components/modalWindow/modalWindow.js';
+
 import template from './menuView.tmpl.xml';
 
 import './menuGameLogo.scss';
@@ -13,14 +15,14 @@ export default class viewMenu extends View {
         this.localEventBus.getEvent('checkAuthorizationResponse', this.onCheckAuthResponse.bind(this));
     }
 
-    onCheckAuthResponse({isAuthorized = false}) {
+    onCheckAuthResponse({isAuthorized = false, statusText}) {
         this.isAuth = isAuthorized;
         const checkHeader = new userBlock();
-        const MW = new ModalWindow();
+        // const MW = new ModalWindow();
         // const singleButton = document.getElementsByClassName('js-single')[0];
-        const multiButton = document.getElementsByClassName('js-multi')[0];
+        // const multiButton = document.getElementsByClassName('js-multi')[0];
 
-        if (checkHeader.changeButtons(isAuthorized)) {
+        if (checkHeader.changeButtons(statusText)) {
             const signoutButton = document.getElementsByClassName('js-signout')[0];
             signoutButton.addEventListener('click', () => {
                 this.isAuth = false;
@@ -33,15 +35,15 @@ export default class viewMenu extends View {
         //     MW.createModal('Game training');
         // });
 
-        multiButton.addEventListener('click', (event) => {
-            if (this.isAuth) {
-                event.preventDefault();
-                MW.createModal('Menu multi waiting for player');
-            } else {
-                event.preventDefault();
-                MW.createModal('Menu multi error login');
-            }
-        });
+        // multiButton.addEventListener('click', (event) => {
+        //     if (this.isAuth) {
+        //         event.preventDefault();
+        //         MW.createModal('Menu multi waiting for player');
+        //     } else {
+        //         event.preventDefault();
+        //         MW.createModal('Menu multi error login');
+        //     }
+        // });
     }
 
     render(root, data = {}) {
