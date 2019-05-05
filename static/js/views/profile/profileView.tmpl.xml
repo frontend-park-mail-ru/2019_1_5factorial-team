@@ -17,32 +17,32 @@
                 <form class="form js-upload-photo">
                     <div class="form__change-photo">
                         <label>
-                            <input class="btn photo-btn js-change-image" type="file" title="avatar" accept=""/>
+                            <input class="btn btn__photo js-change-image" type="file" title="avatar" accept=""/>
                             <div class="btn btn_contained profile__btn js-change-image js-submit-avatar">Change</div>
                         </label>
                     </div>
                 </form>
             </div>
             <div class="profile">
-                <div class="unit unit_profile inlined js-login-subblock">
+                <div class="unit unit_profile unit_inline js-login-subblock">
                     <h2 class="text-title unit__title unit__title_row">Login:</h2>
                     <div class="profile__row js-login-row">
                         <fest:value>params.user.login</fest:value>
                     </div>
                 </div>
-                <div class="unit unit_profile inlined js-email-subblock">
+                <div class="unit unit_profile unit_inline js-email-subblock">
                     <h2 class="text-title unit__title unit__title_row">Email:</h2>
                     <div class="profile__row js-email-row">
                         <fest:value>params.user.email</fest:value>
                     </div>
                 </div>
-                <div class="unit unit_profile inlined js-score-subblock">
+                <div class="unit unit_profile unit_inline js-score-subblock">
                     <h2 class="text-title unit__title unit__title_row">Score:</h2>
                         <div class="profile__score js-score-row">
                             <fest:value>params.user.score</fest:value>
                         </div>
                 </div>
-                <div class="unit unit_profile columned">
+                <div class="unit unit_profile unit_columned">
                     <form class="form form_change-password js-change-password js-new">
                         <span class="text-title text-title_change-password">You can</span>
                         <button class="btn btn_change-password js-call-submit" type="submit">change password</button>

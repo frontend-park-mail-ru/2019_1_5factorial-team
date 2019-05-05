@@ -1,5 +1,7 @@
-import ModalWindow from '../modalWindow.js';
+import ModalWindow from '../modalWindow/modalWindow.js';
 import { DEFAULT_GHOST_SPEED, DEFAULT_GHOST_DAMAGE, PLAYER_INITIAL_HP } from '../constants.js';
+
+import './game.scss';
 
 export default class Game {
     /**

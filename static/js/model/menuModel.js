@@ -1,7 +1,7 @@
 import Network from '../libs/network.js';
 import api from '../libs/api.js';
 import {User} from '../libs/users.js';
-import userBlock from '../components/userBlock.js';
+import userBlock from '../components/userBlock/userBlock.js';
 import { ANAUTH_RESPONSE } from '../components/constants.js';
 
 export default class menuModel {

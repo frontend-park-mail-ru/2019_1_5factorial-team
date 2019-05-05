@@ -1,6 +1,6 @@
 import template from './gameView.tmpl.xml';
 import View from '../../libs/views.js';
-import userBlock from '../../components/userBlock.js';
+import userBlock from '../../components/userBlock/userBlock.js';
 
 export default class gameView extends View {
     constructor({eventBus = {}} = {}) {

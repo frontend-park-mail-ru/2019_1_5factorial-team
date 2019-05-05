@@ -1,0 +1,55 @@
+@import 'variables', 'flexbox';
+
+.container {
+  color: var(--main-clr);
+  font-family: var(--content-font);
+  width: 100%;
+  user-select: none;
+  display: inline-grid;
+  grid-template-columns: 4fr 2fr 4fr;
+  overflow: hidden;
+  height: 100vh;
+
+  &_game {
+    display: flex;
+  }
+
+  &__block {
+    margin: 10px;
+    height: 100vh;
+
+    &_left {
+      grid-column: 1;
+    }
+
+    &_right {
+      grid-column: 3
+    }
+
+    &_center {
+      @extend %columned;
+      grid-column: 2;
+      background: var(--bg-black-clr);
+      box-shadow: 0 0 3vw var(--light-blue-clr);
+      margin: 0;
+      justify-content: center;
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) and (orientation: landscape) {
+  .container_menu {
+    grid-template-columns: 1fr 2fr 8fr;
+  }
+}
+
+@media screen and (max-width: 1024px) and (orientation: portrait) {
+  .container_menu {
+    grid-template-columns: 4fr 2fr 4fr;
+  }
+}
+
+.sided-block {
+  display: grid;
+  grid-template-rows: 1fr 23fr;
+}

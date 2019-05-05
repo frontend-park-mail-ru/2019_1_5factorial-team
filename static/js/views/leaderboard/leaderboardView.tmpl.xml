@@ -10,7 +10,7 @@
         </section>
 
         <section class="container__block container__block_center">
-            <div class="content content_leaderboard">
+            <div class="content">
                 <h1 class="content__header">leaders</h1>
                 <div class="leaders-table">
                     <div class="lead-users">

@@ -12,18 +12,18 @@
         <div class="content">
             <h1 class="content__header">about</h1>
             <div class="about">
-                <div class="unit unit_about inline">
+                <div class="unit unit_inline about__unit">
                     <h2 class="text-title content-block-unit__title">🛠 Our repo is</h2>
                     <a class="btn about__btn" href="https://github.com/frontend-park-mail-ru/2019_1_5factorial-team" target="_blank">here</a>
                 </div>
-                <div class="unit unit_about columned">
+                <div class="unit unit_columned about__unit">
                     <h2 class="text-title unit__title">👻 Our team</h2>
                     <a class="btn about__btn" href="https://github.com/Smet1" target="_blank">Kirill Smetankin</a>
                     <a class="btn about__btn" href="https://github.com/4taa" target="_blank">Pavel Pupchin</a>
                     <a class="btn about__btn" href="https://github.com/crueltycute" target="_blank">Nadezhda Merkulova</a>
                     <a class="btn about__btn" href="https://github.com/MrOcumare" target="_blank">Ilya Murashko</a>
                 </div>
-                <div class="unit unit_about columned">
+                <div class="unit unit_columned about__unit">
                     <h2 class="text-title unit__title">🐰 Our Mentor</h2>
                     <a class="btn about__btn" href="https://github.com/Thewhiterabbit123" target="_blank">Nadezhda Parpibaeva</a>
                 </div>

@@ -1,13 +1,8 @@
 import View from '../../libs/views.js';
 import template from './loginView.tmpl.xml';
 
-// import '../../../css/style.sass';
-// import '../../../css/settings.sass';
-// import '../../../css/userblock.sass';
-// import '../../../css/containers.sass';
-// import '../../../css/contentblocks.sass';
-// import '../../../css/buttons.sass';
-// import '../../../css/form.sass';
+import '../../components/userBlock/userblock.scss';
+import '../../../css/form.scss';
 
 export default class loginView extends View {
     constructor({ eventBus = {} }) {

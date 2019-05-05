@@ -30,7 +30,14 @@ module.exports = {
                 test: /\.(sa|sc|c)ss$/,
                 use: [
                     { loader: MiniCssExtractPlugin.loader },
-                    'css-loader', 'sass-loader' ,
+                    'css-loader',
+                    'resolve-url-loader',
+                    { loader: 'sass-loader',
+                        options: {
+                            sourceMap: true,
+                            sourceMapContents: false
+                        }
+                    },
                     { loader: 'postcss-loader',
                         options: {
                             plugins: () => [
