@@ -44,22 +44,23 @@ export default class Recognizer {
     }
 
     gestureStart(evt) {
+        evt.preventDefault();
         this.mouseIsDown = true;
         this.path = [this.jager.point(evt)];
-        evt.preventDefault();
         return false;
     }
 
     gestureMove(evt) {
+        evt.preventDefault();
         if (this.mouseIsDown) {
             this.path.push(this.jager.point(evt));
-            evt.preventDefault();
             return false;
         }
         return true;
     }
 
-    gestureEnd() {
+    gestureEnd(evt) {
+        evt.preventDefault();
         var gesture;
         if (this.mouseIsDown) {
             this.mouseIsDown = false;
