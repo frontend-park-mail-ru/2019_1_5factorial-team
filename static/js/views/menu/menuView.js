@@ -34,8 +34,8 @@ export default class viewMenu extends View {
         this.isAuth = isAuthorized;
         const checkHeader = new userBlock();
         const MW = new ModalWindow();
-        // const singleButton = document.getElementsByClassName('js-single')[0];
-        // const multiButton = document.getElementsByClassName('js-multi')[0];
+        const singleButton = document.getElementsByClassName('js-single')[0];
+        const multiButton = document.getElementsByClassName('js-multi')[0];
 
         if (checkHeader.changeButtons(statusText)) {
             const signoutButton = document.getElementsByClassName('js-signout')[0];
@@ -46,8 +46,14 @@ export default class viewMenu extends View {
         }
 
         if (this.detectmob()) {
-            const singleGameButton = document.getElementsByClassName('js-single')[0];
-            singleGameButton.addEventListener('click', (event) => {
+            window.alert('testing');
+            singleButton.addEventListener('click', (event) => {
+                window.alert('testing inside');
+                event.preventDefault();
+                MW.createModal('mobileBlock');
+            });
+            multiButton.addEventListener('click', (event) => {
+                window.alert('testing for multi');
                 event.preventDefault();
                 MW.createModal('mobileBlock');
             });
