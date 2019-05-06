@@ -158,6 +158,7 @@ export const MAP_OF_MODALS = new Map ([
     ['Profile change password', '<h1 class="text-title modal-window__header">Change password</h1><div class="modal-window__input-rows"><label class="form__label"><input class="form__input form__input_profile js-password-old" type="password" id="old-password" placeholder="Enter old password" autocomplete="current-password"/></label><label class="form__label"><input class="form__input form__input_profile js-password-new" type="password" id="new-password" placeholder="Enter new password" autocomplete="new-password"/></label></div><button class="btn btn_contained modal-window__btn form__btn form__btn_change-password js-button-submit" type="submit">Change</button>'],
     ['Profile change password success', '<h1 class="text-title modal-window__header">Password successfully changed!</h1><button class="btn btn_contained modal-window__btn js-close-mw">Close</button>'],
     ['Shop error login', ''],
+    ['mobileBlock', '<h1 class="text-title modal-window__header">Sorry, game is not avaliable on phone... For now...</h1><button class="btn btn_contained modal-window__btn js-close-mw">Cancel</button>'],
 ]);
 
 export const MAP_OF_USER_BLOCKS = new Map([

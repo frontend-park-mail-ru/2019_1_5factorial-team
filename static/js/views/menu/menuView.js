@@ -1,7 +1,7 @@
 import View from '../../libs/views.js';
 
 import userBlock from '../../components/userBlock/userBlock.js';
-// import ModalWindow from '../../components/modalWindow/modalWindow.js';
+import ModalWindow from '../../components/modalWindow/modalWindow.js';
 
 import template from './menuView.tmpl.xml';
 
@@ -15,10 +15,25 @@ export default class viewMenu extends View {
         this.localEventBus.getEvent('checkAuthorizationResponse', this.onCheckAuthResponse.bind(this));
     }
 
+    detectmob() { 
+        if (navigator.userAgent.match(/Android/i)
+        || navigator.userAgent.match(/webOS/i)
+        || navigator.userAgent.match(/iPhone/i)
+        || navigator.userAgent.match(/iPad/i)
+        || navigator.userAgent.match(/iPod/i)
+        || navigator.userAgent.match(/BlackBerry/i)
+        || navigator.userAgent.match(/Windows Phone/i)
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     onCheckAuthResponse({isAuthorized = false, statusText}) {
         this.isAuth = isAuthorized;
         const checkHeader = new userBlock();
-        // const MW = new ModalWindow();
+        const MW = new ModalWindow();
         // const singleButton = document.getElementsByClassName('js-single')[0];
         // const multiButton = document.getElementsByClassName('js-multi')[0];
 
@@ -28,6 +43,14 @@ export default class viewMenu extends View {
                 this.isAuth = false;
                 this.localEventBus.callEvent('signOut');
             });
+        }
+
+        if (this.detectmob()) {
+            const singleGameButton = document.getElementsByClassName('js-single')[0];
+            singleGameButton.addEventListener('click', (event) => {
+                event.preventDefault();
+                MW.createModal('mobileBlock');
+            })
         }
 
         // singleButton.addEventListener('click', (event) => {
