@@ -5,6 +5,7 @@ import './modalWindow.scss';
 export default class ModalWindow {
 
     createModal(element) {
+        console.log('got it', element);
         const modalElement = document.getElementsByClassName('modal-window')[0];
         this.isGame = false;
         if (element === 'Game single end') {

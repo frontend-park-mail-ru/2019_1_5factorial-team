@@ -45,23 +45,28 @@ export default class viewMenu extends View {
             });
         }
 
-        if (this.detectmob()) {
-            window.alert('testing');
-            singleButton.addEventListener('click', (event) => {
-                window.alert('testing inside');
-                event.preventDefault();
+        console.log('enter');
+        if (!this.detectmob()) {
+            console.log(singleButton);
+            singleButton.onclick = function (event) {
+                event.stopImmediatePropagation();
                 MW.createModal('mobileBlock');
-            });
+                return false;
+            }
+            // singleButton.addEventListener('click', (event) => {
+            //     event.stopImmediatePropagation();
+            //     MW.createModal('mobileBlock');
+            // });
             multiButton.addEventListener('click', (event) => {
-                window.alert('testing for multi');
                 event.preventDefault();
                 MW.createModal('mobileBlock');
+                return false;
             });
         }
 
         // singleButton.addEventListener('click', (event) => {
-        //     event.preventDefault();
         //     MW.createModal('Game training');
+        //     event.preventDefault();
         // });
 
         // multiButton.addEventListener('click', (event) => {
