@@ -50,7 +50,7 @@ export default class viewMenu extends View {
             singleGameButton.addEventListener('click', (event) => {
                 event.preventDefault();
                 MW.createModal('mobileBlock');
-            })
+            });
         }
 
         // singleButton.addEventListener('click', (event) => {
