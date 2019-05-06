@@ -32,16 +32,11 @@ module.exports = {
                     { loader: MiniCssExtractPlugin.loader },
                     'css-loader',
                     'resolve-url-loader',
-                    { loader: 'sass-loader',
-                        options: {
-                            sourceMap: true,
-                            sourceMapContents: false
-                        }
-                    },
                     { loader: 'postcss-loader',
                         options: {
                             plugins: () => [
-                                require('autoprefixer'), ]
+                                require('autoprefixer'),
+                                require('precss') ]
                         }
                     }
                 ]

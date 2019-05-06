@@ -21,6 +21,5 @@ RUN pwd
 RUN ls
 RUN npm -v
 RUN npm install
-RUN npm audit fix
 
 CMD npm start

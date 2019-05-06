@@ -1,4 +1,5 @@
-@import 'variables', 'flexbox';
+@import 'variables';
+@import 'flexbox';
 
 .form {
   @extend %columned;

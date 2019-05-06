@@ -21,13 +21,15 @@
     }
 
     &_logout {
-      background: url('../../../img/svg/sign_out.svg') center no-repeat;
+      background: center no-repeat;
+      background-image: url('../../../img/svg/sign_out.svg');
       height: 32px;
       width: 32px;
     }
 
     &_profile {
-      background: url('../../../img/svg/user.svg') center no-repeat;
+      background: center no-repeat;
+      background-image: url('../../../img/svg/user.svg');
       height: 32px;
       width: 32px;
     }

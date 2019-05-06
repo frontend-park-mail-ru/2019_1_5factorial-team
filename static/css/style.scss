@@ -1,4 +1,8 @@
-@import 'fonts', 'variables', 'buttons', 'containers', 'contentBlocks';
+@import 'fonts';
+@import 'variables';
+@import 'buttons';
+@import 'containers';
+@import 'contentBlocks';
 @import '../js/components/settingsBlock/settings';
 
 *:focus {
