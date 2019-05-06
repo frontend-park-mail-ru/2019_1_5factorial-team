@@ -42,7 +42,7 @@ export default class menuModel {
      * Проверяем пользователя - авторизован ли
      */
     checkAuthorization() {
-        this.detectmob() ? window.open('https://google.com') : console.log('false');
+        this.detectmob() ? window.alert('true') : window.alert('false');
         const res = Network.doGet({ url: '/api/session' });
         res.then(res => {
             if (res.status === ANAUTH_RESPONSE) {
