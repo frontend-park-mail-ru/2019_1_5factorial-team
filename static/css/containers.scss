@@ -1,5 +1,5 @@
-@import 'variables';
-@import 'flexbox';
+@import 'variables.scss';
+@import 'flexbox.scss';
 
 .container {
   color: var(--main-clr);
@@ -37,11 +37,11 @@
     }
   }
   &_menu {
-    @media screen and (min-width: 1024px) and (orientation: landscape) {
+    @media screen and (width > 1024px) and (orientation: landscape) {
         grid-template-columns: 1fr 2fr 8fr;
     }
 
-    @media screen and (max-width: 1024px) and (orientation: portrait) {
+    @media screen and (width < 1024px) and (orientation: portrait) {
         grid-template-columns: 4fr 2fr 4fr;
     }
   }

@@ -1,4 +1,4 @@
-@import '../../../css/variables';
+@import '../../../css/variables.scss';
 
 .name {
   animation: pulse 1s infinite;
@@ -7,11 +7,11 @@
   margin: 25vh auto 0 auto;
   text-align: center;
 
-  @media screen and (max-width: 1024px) {
+  @media screen and (width < 1024px) {
     display: none;
   }
 
-  @media screen and (min-width: 1024px) and (orientation: landscape) {
+  @media screen and (width > 1024px) and (orientation: landscape) {
     display: flex;
   }
 
