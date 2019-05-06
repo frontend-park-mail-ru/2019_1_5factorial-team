@@ -46,17 +46,16 @@ export default class viewMenu extends View {
         }
 
         if (this.detectmob()) {
-            window.alert('testing');
-            singleButton.addEventListener('click', (event) => {
-                window.alert('testing inside');
-                event.preventDefault();
+            singleButton.onclick = function (event) {
+                event.stopImmediatePropagation();
                 MW.createModal('mobileBlock');
-            });
-            multiButton.addEventListener('click', (event) => {
-                window.alert('testing for multi');
-                event.preventDefault();
+                return false;
+            };
+            multiButton.onclick = function (event) {
+                event.stopImmediatePropagation();
                 MW.createModal('mobileBlock');
-            });
+                return false;
+            };
         }
 
         // singleButton.addEventListener('click', (event) => {
