@@ -1,4 +1,4 @@
-@import 'variables';
+@import 'variables.scss';
 
 .btn {
   background: transparent;
@@ -69,5 +69,3 @@
     }
   }
 }
-
-// TODO(nmerk): отдельный модификатор на btn для svg кнопок

@@ -30,28 +30,14 @@ module.exports = {
                 test: /\.(sa|sc|c)ss$/,
                 use: [
                     { loader: MiniCssExtractPlugin.loader },
-                    'css-loader',
-                    'resolve-url-loader',
-                    { loader: 'sass-loader',
-                        options: {
-                            sourceMap: true,
-                            sourceMapContents: false
-                        }
-                    },
-                    { loader: 'postcss-loader',
-                        options: {
-                            plugins: () => [
-                                require('autoprefixer'), ]
-                        }
-                    }
+                    { loader: 'css-loader' },
+                    { loader: 'postcss-loader' }
                 ]
             },
             {
                 test: /\.xml$/,
                 use: [
-                    {
-                        loader: 'fest-webpack-loader'
-                    }
+                    { loader: 'fest-webpack-loader' }
                 ]
             },
         ]

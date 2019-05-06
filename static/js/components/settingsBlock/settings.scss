@@ -1,4 +1,4 @@
-@import '../../../css/variables';
+@import '../../../css/variables.scss';
 
 .settings {
   display: flex;
@@ -17,11 +17,11 @@
     }
 
     &_info {
-      background-image: url('../../../img/svg/info.svg');
+      background-image: url('../img/svg/info.svg');
     }
 
     &_sound-on {
-      background-image: url('../../../img/svg/volume_up.svg');
+      background-image: url('../img/svg/volume_up.svg');
     }
   }
 }

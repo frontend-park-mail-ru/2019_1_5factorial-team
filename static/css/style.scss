@@ -1,5 +1,9 @@
-@import 'fonts', 'variables', 'buttons', 'containers', 'contentBlocks';
-@import '../js/components/settingsBlock/settings';
+@import 'fonts.scss';
+@import 'variables.scss';
+@import 'buttons.scss';
+@import 'containers.scss';
+@import 'contentBlocks.scss';
+@import '../js/components/settingsBlock/settings.scss';
 
 *:focus {
   outline: none;
