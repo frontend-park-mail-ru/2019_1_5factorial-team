@@ -11,6 +11,21 @@ export default class menuModel {
         this.localEventBus.getEvent('signOut', this.onLogout.bind(this));
     }
 
+    detectmob() { 
+        if (navigator.userAgent.match(/Android/i)
+        || navigator.userAgent.match(/webOS/i)
+        || navigator.userAgent.match(/iPhone/i)
+        || navigator.userAgent.match(/iPad/i)
+        || navigator.userAgent.match(/iPod/i)
+        || navigator.userAgent.match(/BlackBerry/i)
+        || navigator.userAgent.match(/Windows Phone/i)
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Заканчиваем сессию пользователя
      */
@@ -27,6 +42,7 @@ export default class menuModel {
      * Проверяем пользователя - авторизован ли
      */
     checkAuthorization() {
+        this.detectmob() ? window.open('https://google.com') : console.log('false');
         const res = Network.doGet({ url: '/api/session' });
         res.then(res => {
             if (res.status === ANAUTH_RESPONSE) {
