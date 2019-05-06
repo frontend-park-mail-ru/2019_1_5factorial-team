@@ -39,8 +39,15 @@
   }
 
   &__header {
-    font-size: 4vh;
-    text-align: center;
+    @media screen and (orientation: portrait) {
+      white-space: normal;
+      font-size: 3vh;
+      text-align: center;
+    }
+    @media screen and (orientation: landscape) {
+      font-size: 4vh;
+      text-align: center;
+    }
   }
 
   &__input-rows {
