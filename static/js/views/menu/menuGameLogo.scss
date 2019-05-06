@@ -7,7 +7,7 @@
   margin: 25vh auto 0 auto;
   text-align: center;
 
-  @media screen and (width < 1024px) {
+  @media screen and (width <= 1024px) {
     display: none;
   }
 
