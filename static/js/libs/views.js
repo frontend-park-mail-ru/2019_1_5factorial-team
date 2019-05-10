@@ -1,12 +1,5 @@
-import EventBus from "./eventBus";
-
 export default class View {
-    element: Element;
-    tmpl: (data: any) => any;
-    localEventBus: EventBus;
-    prevRoot: any;
-    closedView: Boolean;
-    constructor(tmpl: any, eventBus: EventBus) {
+    constructor(tmpl, eventBus) {
         this.element = document.createElement('div');
         this.tmpl = tmpl;
         this.localEventBus = eventBus;
@@ -20,7 +13,7 @@ export default class View {
        * @param data
        * @returns {View}
        */
-    render(root: Element, data: { users?: any; }) {
+    render(root, data) {
         this.closedView = false;
         if (root === undefined || root === null) {
             root = this.prevRoot;
@@ -45,7 +38,7 @@ export default class View {
         }
     }
 
-    hide(root: { innerHTML: string; }) {
+    hide(root) {
         root.innerHTML = '';
         return this;
     }

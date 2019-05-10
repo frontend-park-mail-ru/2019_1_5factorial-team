@@ -3,6 +3,7 @@ import EventBus from "./eventBus";
 export default class Ws {
     localEventBus: EventBus;
     webs: any;
+    static __instance: Ws;
     constructor(eventBus: EventBus) {
         this.localEventBus = eventBus;
         this.localEventBus.getEvent('sendButton', this.send.bind(this));

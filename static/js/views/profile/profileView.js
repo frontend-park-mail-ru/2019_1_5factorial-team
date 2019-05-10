@@ -5,17 +5,9 @@ import template from './profileView.tmpl.xml';
 
 import '../../components/userBlock/userblock.scss';
 import '../../../css/form.scss';
-import EventBus from '../../libs/eventBus';
 
 export default class profileView extends View {
-    localAvatar: Element | HTMLImageElement;
-    localAvatarUploader: Element;
-    callSubmit: Element;
-    inputPasswordOld: HTMLInputElement;
-    inputPasswordNew: HTMLInputElement
-    submitPassword: Element;
-    formInput: Element;
-    constructor(eventBus: EventBus) {
+    constructor(eventBus) {
         super(template, eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('checkAuthResponse', this.onCheckAuthorizationResponse.bind(this));
@@ -27,7 +19,7 @@ export default class profileView extends View {
         this.localEventBus.getEvent('submitPasswordSuccess', this.onSubmitPasswordSuccess.bind(this));
     }
 
-    render(root: Element) {
+    render(root) {
         if (root !== undefined) {
             this.prevRoot = root;
         }
@@ -35,36 +27,36 @@ export default class profileView extends View {
         return this;
     }
 
-    onSubmitPasswordSuccess(data: { newPassword: any; }) {
+    onSubmitPasswordSuccess(data = {}) {
         if (data.newPassword) {
             const MW = new ModalWindow();
             MW.createModal('Profile change password success');
         }
     }
 
-    onChangePasswodResponse(data: { error: any; }) {
+    onChangePasswodResponse(data = {}) {
         //TODO(): добавить обработку ошибки в верстке
         console.log(data.error);
     }
 
-    onChangeAvatarResponse(data: { error: any; }) {
+    onChangeAvatarResponse(data = {}) {
         if (data.error !== undefined) {
             console.log(data.error);
             return;
         }
-        (this.localAvatar as HTMLElement).style.background = `transparent url(${AVATAR_DEFAULT}) no-repeat`;
-        (this.localAvatar as HTMLElement).style.backgroundSize = 'cover';
-        (this.localAvatar as HTMLElement).style.backgroundPosition = 'center';
+        this.localAvatar.style.background = `transparent url(${AVATAR_DEFAULT}) no-repeat`;
+        this.localAvatar.style.backgroundSize = 'cover';
+        this.localAvatar.style.backgroundPosition = 'center';
         this.localEventBus.callEvent('loadUser', data);
     }
 
-    onChangeAvatarSuccess(data: { avatar: any; }) {
+    onChangeAvatarSuccess(data = {}) {
         console.log(data);
-        (this.localAvatar as HTMLImageElement).src = data.avatar;
+        this.localAvatar.src = data.avatar;
         this.localEventBus.callEvent('loadUser', data);
     }
 
-    onCheckAuthorizationResponse(data: { error?: any; isAuth?: any; }) {
+    onCheckAuthorizationResponse(data = {}) {
         if (data.error || !data.isAuth) {
             this.localEventBus.callEvent('checkAuthError');
             return;
@@ -72,7 +64,7 @@ export default class profileView extends View {
         this.localEventBus.callEvent('loadUser', data);
     }
 
-    onLoadUserResponse(data: { users?: any; error?: any; user?: any; }) {
+    onLoadUserResponse(data = {}) {
         if (data.error || !data.user) {
             this.localEventBus.callEvent('checkAuthError');
             return;
@@ -85,9 +77,9 @@ export default class profileView extends View {
         }
         super.render(this.prevRoot, data);
         const imgToSet = document.getElementsByClassName('avatar__img')[0];
-        (imgToSet as HTMLElement).style.background = `transparent url(${data.user.avatar}) no-repeat`;
-        (imgToSet as HTMLElement).style.backgroundSize = 'cover';
-        (imgToSet as HTMLElement).style.backgroundPosition = 'center';
+        imgToSet.style.background = `transparent url(${data.user.avatar}) no-repeat`;
+        imgToSet.style.backgroundSize = 'cover';
+        imgToSet.style.backgroundPosition = 'center';
 
         this.initElements();
     }
@@ -107,22 +99,22 @@ export default class profileView extends View {
         const buttonUp = this.localAvatarUploader;
         const MW = new ModalWindow();
         buttonUp.addEventListener('change', () => {
-            this.localEventBus.callEvent('changeAvatar', { avatar: (this.localAvatarUploader as HTMLInputElement).files[0] });
+            this.localEventBus.callEvent('changeAvatar', { avatar: this.localAvatarUploader.files[0] });
         });
 
         signoutButton.addEventListener('click', () => {
             this.localEventBus.callEvent('signOut');
         });
 
-        this.callSubmit.addEventListener('click', (event: { preventDefault: () => void; }) => {
+        this.callSubmit.addEventListener('click', (event) => {
             event.preventDefault();
 
             MW.createModal('Profile change password');
-            (this.inputPasswordOld as Element) = document.getElementsByClassName('js-password-old')[0];
-            (this.inputPasswordNew as Element) = document.getElementsByClassName('js-password-new')[0];
+            this.inputPasswordOld = document.getElementsByClassName('js-password-old')[0];
+            this.inputPasswordNew = document.getElementsByClassName('js-password-new')[0];
             this.submitPassword = document.getElementsByClassName('js-button-submit')[0];
 
-            this.submitPassword.addEventListener('click', (event: { preventDefault: () => void; }) => {
+            this.submitPassword.addEventListener('click', (event) => {
                 event.preventDefault();
                 this.localEventBus.callEvent('submitPassword', {
                     newPassword: this.inputPasswordNew.value,

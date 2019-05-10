@@ -1,25 +1,24 @@
 import View from '../../libs/views';
-import * as template from './loginView.tmpl.xml';
+import template from './loginView.tmpl.xml';
 
 import '../../components/userBlock/userblock.scss';
 import '../../../css/form.scss';
-import EventBus from '../../libs/eventBus';
 
 export default class loginView extends View {
-    constructor(eventBus: EventBus) {
+    constructor(eventBus) {
         super(template, eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('loginResponse', this.onSubmitResponse.bind(this));
     }
 
-    render(root: Element, data = {}) {
+    render(root, data = {}) {
         super.render(root, data);
         const form = document.getElementsByClassName('js-login-form')[0];
         form.addEventListener('submit', this.onSubmit.bind(this, form));
         return this;
     }
 
-    onSubmit(form: { elements: { [x: string]: { value: any; }; }; }, event: Event) {
+    onSubmit(form, event) {
         event.preventDefault();
         const data = {
             loginOrEmail: form.elements['login-or-email'].value,
@@ -28,7 +27,7 @@ export default class loginView extends View {
         this.localEventBus.callEvent('login', data);
     }
 
-    onSubmitResponse(data: { error: any; inputField: string; }) {
+    onSubmitResponse(data) {
         const error = data.error;
         console.log(error);
 

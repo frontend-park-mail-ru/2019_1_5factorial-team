@@ -3,12 +3,9 @@ import View from '../../libs/views';
 import userBlock from '../../components/userBlock/userBlock';
 
 import './game.scss';
-import EventBus from '../../libs/eventBus';
 
 export default class gameView extends View {
-    isChecked: Boolean;
-    isStart: Boolean;
-    constructor(eventBus: EventBus) {
+    constructor(eventBus) {
         super(template, eventBus);
         this.localEventBus = eventBus;
 
@@ -30,7 +27,7 @@ export default class gameView extends View {
         this.localEventBus.callEvent('startGame');  
     }
 
-    render(root: Element, data = {}) {
+    render(root, data = {}) {
         super.render(root, data);
         this.localEventBus.callEvent('getUserDataForGame');
         return this;

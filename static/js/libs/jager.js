@@ -18,6 +18,7 @@ export default class Jager {
 
             circle: 11,
         };
+        this.isDrawingPatch = false;
 
         this.gestureColors = ['black', 'black', '#FF0000', '#2FA6EF', '#FFCC33', '#7AF330', '#56A521', '#FF9900', '#1976d2', '#FF0000', 'yellow', 'magenta'];
 

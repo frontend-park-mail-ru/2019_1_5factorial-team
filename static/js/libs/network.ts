@@ -75,10 +75,10 @@ export default class Network {
     * @param url
     * @returns {Promise<Response>}
     */
-    static doPostFormData({ url = '/', body = {} }) {
-        return fetch(Network.getServerURL() + url, {
+    static doPostFormData(data: {url: string | String, body: BodyInit} = {url: '/', body: null }) {
+        return fetch(Network.getServerURL() + data.url, {
             method: 'POST',
-            body,
+            body: data.body,
             mode: 'cors',
             credentials: 'include'
         });

@@ -6,15 +6,9 @@ import ModalWindow from '../../components/modalWindow/modalWindow';
 import template from './menuView.tmpl.xml';
 
 import './menuGameLogo.scss';
-import EventBus from '../../libs/eventBus';
-interface authorizationResponse {
-    isAuthorized: Boolean,
-    statusText: String | string
-}
 
 export default class viewMenu extends View {
-    isAuth: Boolean;
-    constructor(eventBus: EventBus) {
+    constructor(eventBus) {
         super(template, eventBus);
         this.isAuth = false;
         this.render(document.getElementsByClassName('body-cnt')[0]);
@@ -36,14 +30,14 @@ export default class viewMenu extends View {
         }
     }
 
-    onCheckAuthResponse(authorizationResponse: authorizationResponse) {
-        this.isAuth = authorizationResponse.isAuthorized;
+    onCheckAuthResponse(isAuthorized, statusText) {
+        this.isAuth = isAuthorized;
         const checkHeader = new userBlock();
         const MW = new ModalWindow();
         const singleButton = document.getElementsByClassName('js-single')[0];
         const multiButton = document.getElementsByClassName('js-multi')[0];
 
-        if (checkHeader.changeButtons(authorizationResponse.statusText)) {
+        if (checkHeader.changeButtons(statusText)) {
             const signoutButton = document.getElementsByClassName('js-signout')[0];
             signoutButton.addEventListener('click', () => {
                 this.isAuth = false;
@@ -52,12 +46,12 @@ export default class viewMenu extends View {
         }
 
         if (this.detectmob()) {
-            (singleButton as HTMLElement).onclick = function (event: Event) {
+            singleButton.onclick = function (event) {
                 event.stopImmediatePropagation();
                 MW.createModal('mobileBlock');
                 return false;
             };
-            (multiButton as HTMLElement).onclick = function (event: Event) {
+            multiButton.onclick = function (event) {
                 event.stopImmediatePropagation();
                 MW.createModal('mobileBlock');
                 return false;
@@ -80,7 +74,7 @@ export default class viewMenu extends View {
         // });
     }
 
-    render(root: Element, data = {}) {
+    render(root, data = {}) {
         super.render(root, data);
         this.localEventBus.callEvent('checkAuthorization');
         return this;

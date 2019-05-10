@@ -30,7 +30,7 @@ export default class profileModel {
 
         api.uploadAvatar(data.avatar).then(response => {
             if (response.status !== OK_RESPONSE) {
-                this.localEventBus.callEvent('changeAvatarResponse', {error: response.error});
+                response.json().then(data => this.localEventBus.callEvent('changeAvatarResponse', {error: data.error}));
                 return;
             }
             response.json().then(response => {
@@ -44,8 +44,10 @@ export default class profileModel {
                         new_password: undefined
                     }).then(response => {
                         if (response.status === OK_RESPONSE) {
-                            const avatarLink = NETWORK_ADRESS + response.avatar_link;
-                            this.localEventBus.callEvent('changeAvatarSuccess', {avatar: avatarLink});
+                            response.json().then(data => {
+                                const avatarLink = NETWORK_ADRESS + data.avatar_link;
+                                this.localEventBus.callEvent('changeAvatarSuccess', {avatar: avatarLink})
+                            });
                         } else {
                             response.json().then(response => {
                                 this.localEventBus.callEvent('changeAvatarResponse', {error: response.error});
@@ -129,10 +131,12 @@ export default class profileModel {
         Network.doGet({url: '/api/session'})
             .then(response => {
                 if (response.status !== OK_RESPONSE) {
-                    this.localEventBus.callEvent('checkAuthResponse', {
+                    response.json().then(data => {
+                        this.localEventBus.callEvent('checkAuthResponse', {
                         isAuth: false,
-                        error: response.error
-                    });
+                        error: data.error
+                    })
+                });
                 } else {
                     response.json().then(() => {
                         this.localEventBus.callEvent('checkAuthResponse', {

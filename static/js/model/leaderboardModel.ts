@@ -28,10 +28,13 @@ export default class leaderboardModel {
         const res = Network.doGet({ url: '/api/session' });
         res.then(res => {
             if (res.status === ANAUTH_RESPONSE) {
-                this.localEventBus.callEvent('checkAuthorizationResponse', {
+                res.json().then(data => {
+                    this.localEventBus.callEvent('checkAuthorizationResponse', {
                     isAuthorized: false,
-                    error: res.error
-                });
+                    statusText: data.statusText,
+                    error: data.error
+                })
+            });
             } else {
                 this.localEventBus.callEvent('checkAuthorizationResponse', {
                     isAuthorized: true,

@@ -5,21 +5,18 @@ import {OK_VALIDATE_EMAIL, OK_VALIDATE_LOGIN, OK_VALIDATE_PASSWORD} from '../../
 
 import '../../components/userBlock/userblock.scss';
 import '../../../css/form.scss';
-import EventBus from '../../libs/eventBus';
 
 export default class signUpView extends View {
-    form: HTMLFormElement;
-    passwordInput: HTMLInputElement;
-    constructor(eventBus: EventBus) {
+    constructor(eventBus) {
         super(template, eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('signupResponse', this.onSignupResponse.bind(this));
     }
 
-    render(root: Element, data = {}) {
+    render(root, data = {}) {
         super.render(root, data);
 
-        this.form = (document.getElementsByClassName('js-signup-form')[0] as HTMLFormElement);
+        this.form = document.getElementsByClassName('js-signup-form')[0];
         this.passwordInput = this.form.elements['password'];
         const submit = document.getElementsByClassName('js-submit')[0];
         submit.addEventListener('click', (event) => {
@@ -29,7 +26,7 @@ export default class signUpView extends View {
         return this;
     }
 
-    onSignupResponse(data: { arrReturn: string[]; error: string; }, check = 0) {
+    onSignupResponse(data = {}, check = 0) {
         const elementEmail = document.getElementsByClassName('js-email')[0];
         const elementLogin = document.getElementsByClassName('js-login')[0];
         const elementPassword = document.getElementsByClassName('js-password')[0];
@@ -82,9 +79,9 @@ export default class signUpView extends View {
     }
 
     onSubmit() {
-        const email: String | string = this.form.elements['email'].value;
-        const login: String | string = this.form.elements['login'].value;
-        const pass: String | string = this.form.elements['password'].value;
+        const email = this.form.elements['email'].value;
+        const login = this.form.elements['login'].value;
+        const pass = this.form.elements['password'].value;
 
         this.localEventBus.callEvent('signup', { email, login, pass });
     }

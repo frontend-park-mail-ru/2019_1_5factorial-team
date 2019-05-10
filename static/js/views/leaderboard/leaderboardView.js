@@ -4,12 +4,9 @@ import userBlock from '../../components/userBlock/userBlock';
 import template from './leaderboardView.tmpl.xml';
 
 import './leaderboard.scss';
-import EventBus from '../../libs/eventBus';
 
 export default class leaderboardView extends View {
-    pagination: any;
-    isClosed: Boolean;
-    constructor(eventBus: EventBus) {
+    constructor(eventBus) {
         super(template, eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('loadResponse', this.loadResponse.bind(this));
@@ -19,7 +16,7 @@ export default class leaderboardView extends View {
         this.isClosed = false;
     }
 
-    render(root: Element, data = {}) {
+    render(root, data = {}) {
         super.render(root, data);
         this.localEventBus.callEvent('loadPaginator');
         this.localEventBus.callEvent('load', { pageNum: 1 });
@@ -28,7 +25,7 @@ export default class leaderboardView extends View {
 
     onCheckAuthResponse({isAuthorized = false} = {}) {
         const checkHeader = new userBlock();
-        let statusText: string | String;
+        let statusText;
         isAuthorized ? statusText = 'OK' : statusText = 'anauth';
         if (checkHeader.changeButtons(statusText)) {
             const signoutButton = document.getElementsByClassName('js-signout')[0];
@@ -38,9 +35,9 @@ export default class leaderboardView extends View {
         }
     }
 
-    loadPaginatorResponse(data: { pagesCount: number; linksCount: number; }) {
+    loadPaginatorResponse(data) {
         if (data.pagesCount !== undefined && data.linksCount !== undefined) {
-            const callbackOnClick = (pageNum: any): any => {
+            const callbackOnClick = (pageNum) => {
                 this.localEventBus.callEvent('load', { pageNum });
             };
 
@@ -56,7 +53,7 @@ export default class leaderboardView extends View {
         }
     }
 
-    loadResponse(data: any) {
+    loadResponse(data) {
         super.render(null, { users: data });
 
         if (this.pagination !== null) {

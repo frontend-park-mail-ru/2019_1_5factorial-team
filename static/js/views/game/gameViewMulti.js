@@ -3,11 +3,9 @@ import View from '../../libs/views';
 import userBlock from '../../components/userBlock/userBlock';
 
 import './game.scss';
-import EventBus from '../../libs/eventBus';
 
 export default class gameViewMulti extends View {
-    state: { user: { first?: { nickname?: String; }; second?: { nickname?: String; }; } | { first: { nickname: string; }; second: { nickname: string; }; }; }
-    constructor(eventBus: EventBus) {
+    constructor(eventBus) {
         super(template, eventBus);
         this.state = {
             user: {
@@ -22,7 +20,7 @@ export default class gameViewMulti extends View {
         this.render(document.getElementsByClassName('body-cnt')[0]);
     }
 
-    render(root: Element, data = {}) {
+    render(root, data = {}) {
         super.render(root, data);
 
         const userStates = new userBlock();
