@@ -1,4 +1,6 @@
-import { MAP_OF_MODALS } from './constants.js';
+import { MAP_OF_MODALS } from '../constants.js';
+
+import './modalWindow.scss';
 
 export default class ModalWindow {
 
@@ -9,7 +11,7 @@ export default class ModalWindow {
             this.isGame = true;
         }
 
-        modalElement.classList.remove('hide');
+        modalElement.classList.remove('hidden');
         modalElement.innerHTML = '<div class="blur"></div><div class="modal"><div class="content content_modal"></div></div>';
         const divToAppend = document.getElementsByClassName('content_modal')[0];
         const elemToRender = MAP_OF_MODALS.get(element);
@@ -51,7 +53,7 @@ export default class ModalWindow {
     removeModal() {
         const modalElement = document.getElementsByClassName('modal-window')[0];
         const toDeleteModal = document.getElementsByClassName('content content_modal')[0];
-        modalElement.classList.add('hide');
+        modalElement.classList.add('hidden');
         toDeleteModal.remove();
         this.isGame = false;
     }

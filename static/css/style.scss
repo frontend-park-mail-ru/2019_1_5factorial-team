@@ -1,0 +1,32 @@
+@import 'fonts.scss';
+@import 'variables.scss';
+@import 'buttons.scss';
+@import 'containers.scss';
+@import 'contentBlocks.scss';
+@import '../js/components/settingsBlock/settings.scss';
+
+*:focus {
+  outline: none;
+}
+
+body {
+  background: var(--black-clr) url('../img/2.png') center no-repeat;
+  background-size: cover;
+  height: 100vh;
+}
+
+.text-title {
+  white-space: nowrap;
+  margin: 1vh 0;
+  text-shadow: var(--small-shdw);
+
+  &_change-password {
+    display: flex;
+    margin: 0;
+    flex-wrap: nowrap;
+  }
+}
+
+.hidden {
+  display: none !important;
+}

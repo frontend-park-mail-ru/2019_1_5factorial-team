@@ -1,0 +1,57 @@
+@import '../../../css/variables.scss';
+@import '../../../css/flexbox.scss';
+
+.leaders-table {
+  display: flex;
+  justify-content: center;
+  padding: 0 0 4vh 0;
+
+  &__column {
+    font-size: 3vh;
+
+    &li {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  &__header {
+    margin: 2vh 0 3vh 0;
+    text-shadow: var(--common-shdw);
+    white-space: nowrap;
+
+    @media screen and (orientation: landscape) {
+      font-size: 4.5vh;
+    }
+
+    @media screen and (orientation: portrait) {
+      font-size: 3.5vh
+    }
+  }
+}
+
+@media screen and (width > 800px) {
+  .leaders-table__column li {
+    width: 7em
+  }
+}
+
+@media screen and (width <= 800px) {
+  .leaders-table__column li {
+    width: 5em;
+  }
+}
+
+// TODO(nmerk): разделить на модификаторы
+.lead-users {
+  @extend %columned;
+  justify-content: center;
+  margin-right: 20px;
+  text-align: center;
+}
+
+.lead-scores {
+  @extend %columned;
+  justify-content: center;
+  text-align: center;
+}

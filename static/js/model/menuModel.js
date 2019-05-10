@@ -1,7 +1,7 @@
 import Network from '../libs/network.js';
 import api from '../libs/api.js';
 import {User} from '../libs/users.js';
-import userBlock from '../components/userBlock.js';
+import userBlock from '../components/userBlock/userBlock.js';
 import { ANAUTH_RESPONSE } from '../components/constants.js';
 
 export default class menuModel {
@@ -32,10 +32,12 @@ export default class menuModel {
             if (res.status === ANAUTH_RESPONSE) {
                 this.localEventBus.callEvent('checkAuthorizationResponse', {
                     isAuthorized: false,
+                    statusText: res.statusText,
                     error: res.error
                 });
             } else {
                 this.localEventBus.callEvent('checkAuthorizationResponse', {
+                    statusText: res.statusText, 
                     isAuthorized: true,
                 });
             }

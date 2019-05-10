@@ -1,7 +1,9 @@
 import View from '../../libs/views.js';
-import paginator from '../../components/pagination.js';
-import userBlock from '../../components/userBlock.js';
+import paginator from '../../components/pagination/pagination.js';
+import userBlock from '../../components/userBlock/userBlock.js';
 import template from './leaderboardView.tmpl.xml';
+
+import './leaderboard.scss';
 
 export default class leaderboardView extends View {
     constructor({ eventBus = {} }) {
@@ -22,7 +24,9 @@ export default class leaderboardView extends View {
 
     onCheckAuthResponse({isAuthorized = false} = {}) {
         const checkHeader = new userBlock();
-        if (checkHeader.changeButtons(isAuthorized)) {
+        let statusText;
+        isAuthorized ? statusText = 'OK' : statusText = 'anauth';
+        if (checkHeader.changeButtons(statusText)) {
             const signoutButton = document.getElementsByClassName('js-signout')[0];
             signoutButton.addEventListener('click', () => {
                 this.localEventBus.callEvent('signOut');

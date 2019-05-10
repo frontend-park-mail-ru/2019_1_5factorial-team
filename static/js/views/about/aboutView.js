@@ -1,5 +1,5 @@
 import View from '../../libs/views.js';
-import userBlock from '../../components/userBlock.js';
+import userBlock from '../../components/userBlock/userBlock.js';
 import template from './aboutView.tmpl.xml';
 
 export default class aboutView extends View {
@@ -16,7 +16,9 @@ export default class aboutView extends View {
 
     onCheckAuthResponse({isAuthorized = false} = {}) {
         const checkHeader = new userBlock();
-        if (checkHeader.changeButtons(isAuthorized)) {
+        let statusText;
+        isAuthorized ? statusText = 'OK' : statusText = 'anauth';
+        if (checkHeader.changeButtons(statusText)) {
             const signoutButton = document.getElementsByClassName('js-signout')[0];
             signoutButton.addEventListener('click', () => {
                 this.localEventBus.callEvent('signOut');

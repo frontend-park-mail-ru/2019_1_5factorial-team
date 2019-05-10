@@ -1,7 +1,11 @@
 import View from '../../libs/views.js';
-import userBlock from '../../components/userBlock.js';
-import ModalWindow from '../../components/modalWindow.js';
+
+import userBlock from '../../components/userBlock/userBlock.js';
+import ModalWindow from '../../components/modalWindow/modalWindow.js';
+
 import template from './menuView.tmpl.xml';
+
+import './menuGameLogo.scss';
 
 export default class viewMenu extends View {
     constructor({ eventBus = {} }) {
@@ -11,14 +15,29 @@ export default class viewMenu extends View {
         this.localEventBus.getEvent('checkAuthorizationResponse', this.onCheckAuthResponse.bind(this));
     }
 
-    onCheckAuthResponse({isAuthorized = false}) {
+    detectmob() { 
+        if (navigator.userAgent.match(/Android/i)
+        || navigator.userAgent.match(/webOS/i)
+        || navigator.userAgent.match(/iPhone/i)
+        || navigator.userAgent.match(/iPad/i)
+        || navigator.userAgent.match(/iPod/i)
+        || navigator.userAgent.match(/BlackBerry/i)
+        || navigator.userAgent.match(/Windows Phone/i)
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    onCheckAuthResponse({isAuthorized = false, statusText}) {
         this.isAuth = isAuthorized;
         const checkHeader = new userBlock();
         const MW = new ModalWindow();
-        // const singleButton = document.getElementsByClassName('js-single')[0];
+        const singleButton = document.getElementsByClassName('js-single')[0];
         const multiButton = document.getElementsByClassName('js-multi')[0];
 
-        if (checkHeader.changeButtons(isAuthorized)) {
+        if (checkHeader.changeButtons(statusText)) {
             const signoutButton = document.getElementsByClassName('js-signout')[0];
             signoutButton.addEventListener('click', () => {
                 this.isAuth = false;
@@ -26,20 +45,33 @@ export default class viewMenu extends View {
             });
         }
 
+        if (this.detectmob()) {
+            singleButton.onclick = function (event) {
+                event.stopImmediatePropagation();
+                MW.createModal('mobileBlock');
+                return false;
+            };
+            multiButton.onclick = function (event) {
+                event.stopImmediatePropagation();
+                MW.createModal('mobileBlock');
+                return false;
+            };
+        }
+
         // singleButton.addEventListener('click', (event) => {
         //     event.preventDefault();
         //     MW.createModal('Game training');
         // });
 
-        multiButton.addEventListener('click', (event) => {
-            if (this.isAuth) {
-                event.preventDefault();
-                MW.createModal('Menu multi waiting for player');
-            } else {
-                event.preventDefault();
-                MW.createModal('Menu multi error login');
-            }
-        });
+        // multiButton.addEventListener('click', (event) => {
+        //     if (this.isAuth) {
+        //         event.preventDefault();
+        //         MW.createModal('Menu multi waiting for player');
+        //     } else {
+        //         event.preventDefault();
+        //         MW.createModal('Menu multi error login');
+        //     }
+        // });
     }
 
     render(root, data = {}) {

@@ -23,42 +23,31 @@ module.exports = {
                 loader: 'babel-loader'
             },
             {
-                test: /\.(gif|png|jpe?g|svg)$/i,
-                use: [
-                    'file-loader',
-                    {
-                        loader: 'image-webpack-loader',
-                        options: {
-                            bypassOnDebug: true, // webpack@1.x
-                            disable: true, // webpack@2.x and newer
-                        },
-                    },
-                ],
+                test: /\.(woff|woff2|eot|ttf|gif|png|jpe?g|svg)$/,
+                loader: 'url-loader'
             },
             {
-                test: /\.ttf$/,
+                test: /\.(sa|sc|c)ss$/,
                 use: [
-                    {
-                        loader: 'file-loader?name=./assets/fonts/webfonts/[name].[ext]'
-                    },
-                ]
-            },
-            {
-                test: /\.css$/,
-                use: [
-                    {loader: MiniCssExtractPlugin.loader},
-                    {loader: 'css-loader'}
+                    { loader: MiniCssExtractPlugin.loader },
+                    { loader: 'css-loader' },
+                    { loader: 'postcss-loader'}
                 ]
             },
             {
                 test: /\.xml$/,
-                loader: 'fest-webpack-loader',
+                use: [
+                    { loader: 'fest-webpack-loader' }
+                ]
             },
         ]
     },
     plugins: [
         new ServiceWorkerWebpackPlugin({
-            entry: './static/js/sw.js',
+            entry: path.join(__dirname, 'static/js/sw.js'),
+        }),
+        new MiniCssExtractPlugin({
+            filename: 'style.css',
         }),
     ]
 };

@@ -1,0 +1,71 @@
+@import 'variables.scss';
+
+.btn {
+  background: transparent;
+  border: none;
+  color: var(--main-clr);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+
+  &:hover, &:focus {
+    border-width: 0;
+    text-shadow: var(--common-shdw);
+  }
+
+  &__photo {
+    display: none;
+  }
+
+  &_outlined {
+    border: 0.075em solid var(--blue-clr);
+    border-radius: 0.25em;
+    margin: 1vh 1vw;
+    padding: 1vh 1vw;
+
+    &:hover {
+      border: 0.075em solid var(--blue-clr);
+      box-shadow: var(--small-shdw);
+    }
+  }
+
+  &_contained {
+    background: var(--blue-clr);
+    border-radius: 0.25em;
+    font-family: var(--content-font);
+    margin: 1vh 1vw;
+    padding: 1vh 1vw;
+
+    &:hover {
+      box-shadow: var(--small-shdw);
+    }
+  }
+
+  &_change-password {
+    padding: 0;
+    border-bottom: 0.1em dotted;
+    margin: 0 0 0.15em 0.25em;
+    font-size: 2.75vh;
+
+    &:hover, &:focus {
+      border-bottom: 0.1em dotted;
+    }
+  }
+
+  &_back-menu {
+    font-size: 3vh;
+    justify-content: center;
+    margin-top: 6vh;
+    text-decoration: none;
+  }
+
+  &_singin {
+    margin: 0 0.5vw;
+
+    &:hover, &:focus {
+      filter: drop-shadow(0 0 1vh var(--light-blue-clr));
+    }
+  }
+}

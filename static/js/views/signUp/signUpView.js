@@ -1,6 +1,10 @@
 import View from '../../libs/views.js';
-import { INCORRECT_EMAIL, TOO_SHORT_LOGIN, TOO_SHORT_PASSWORD } from '../../components/constants.js';
 import template from './signUpView.tmpl.xml';
+
+import {OK_VALIDATE_EMAIL, OK_VALIDATE_LOGIN, OK_VALIDATE_PASSWORD} from '../../components/constants';
+
+import '../../components/userBlock/userblock.scss';
+import '../../../css/form.scss';
 
 export default class signUpView extends View {
     constructor({ eventBus = {} }) {
@@ -14,26 +18,66 @@ export default class signUpView extends View {
 
         this.form = document.getElementsByClassName('js-signup-form')[0];
         this.passwordInput = this.form.elements['password'];
-        this.form.addEventListener('submit', this.onSubmit.bind(this));
+        const submit = document.getElementsByClassName('js-submit')[0];
+        submit.addEventListener('click', (event) => {
+            event.preventDefault();
+            this.onSubmit();
+        });
     }
 
-    onSignupResponse(data) {
+    onSignupResponse(data, check = 0) {
         const elementEmail = document.getElementsByClassName('js-email')[0];
         const elementLogin = document.getElementsByClassName('js-login')[0];
         const elementPassword = document.getElementsByClassName('js-password')[0];
-        if (data.arrReturn[0] === INCORRECT_EMAIL) {
-            elementEmail.classList.add('invalid');
+
+        const emailWarning = document.getElementsByClassName('js-warning-email')[0];
+        const loginWarning = document.getElementsByClassName('js-warning-login')[0];
+        if (check !== 0) {
+            if (data.arrReturn[0] !== OK_VALIDATE_EMAIL) {
+                emailWarning.classList.remove('hide');
+                elementEmail.classList.remove('valid');
+                elementEmail.classList.add('invalid');
+                emailWarning.innerHTML = data.arrReturn[0];
+            } else {
+                elementEmail.classList.remove('invalid');
+                elementEmail.classList.add('valid');
+                emailWarning.classList.add('hide');
+            }
+
+            const loginWarning = document.getElementsByClassName('js-warning-login')[0];
+            if (data.arrReturn[1] !== OK_VALIDATE_LOGIN) {
+                loginWarning.classList.remove('hide');
+                elementLogin.classList.remove('valid');
+                elementLogin.classList.add('invalid');
+                loginWarning.innerHTML = data.arrReturn[1];
+            } else {
+                elementLogin.classList.remove('invalid');
+                elementLogin.classList.add('valid');
+                loginWarning.classList.add('hide');
+            }
+
+            const passwordWarning = document.getElementsByClassName('js-warning-password')[0];
+            if (data.arrReturn[2] !== OK_VALIDATE_PASSWORD) {
+                passwordWarning.classList.remove('hide');
+                elementPassword.classList.remove('valid');
+                elementPassword.classList.add('invalid');
+                passwordWarning.innerHTML = data.arrReturn[2];
+            } else {
+                elementPassword.classList.remove('invalid');
+                elementPassword.classList.add('valid');
+                passwordWarning.classList.add('hide');
+            }
         }
-        if (data.arrReturn[1] === TOO_SHORT_LOGIN) {
-            elementLogin.classList.add('invalid');
-        }
-        if (data.arrReturn[2] === TOO_SHORT_PASSWORD) {
-            elementPassword.classList.add('invalid');
+        if (data.error === 'email conflict') {
+            emailWarning.textContent = 'This email is used!';
+        } else if (data.error === 'login conflict') {
+            loginWarning.textContent = 'This login is used!';
+        } else {
+            loginWarning.textContent = 'Server is not OLLO';
         }
     }
 
-    onSubmit(event) {
-        event.preventDefault();
+    onSubmit() {
         const email = this.form.elements['email'].value;
         const login = this.form.elements['login'].value;
         const pass = this.form.elements['password'].value;

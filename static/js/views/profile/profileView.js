@@ -1,7 +1,10 @@
 import View from '../../libs/views.js';
-import ModalWindow from '../../components/modalWindow.js';
+import ModalWindow from '../../components/modalWindow/modalWindow.js';
 import { NETWORK_ADRESS, AVATAR_DEFAULT, DEFAULT_AVATAR } from '../../components/constants.js';
 import template from './profileView.tmpl.xml';
+
+import '../../components/userBlock/userblock.scss';
+import '../../../css/form.scss';
 
 export default class profileView extends View {
     constructor({ eventBus = {} }) {
@@ -40,12 +43,14 @@ export default class profileView extends View {
             console.log(data.error);
             return;
         }
-        this.localAvatar.src = AVATAR_DEFAULT;
+        this.localAvatar.style.background = `transparent url(${AVATAR_DEFAULT}) no-repeat`;
+        this.localAvatar.style.backgroundSize = 'cover';
+        this.localAvatar.style.backgroundPosition = 'center';
         this.localEventBus.callEvent('loadUser', data);
     }
 
     onChangeAvatarSuccess(data) {
-        console.log(data.avatar);
+        console.log(data);
         this.localAvatar.src = data.avatar;
         this.localEventBus.callEvent('loadUser', data);
     }
@@ -70,8 +75,10 @@ export default class profileView extends View {
             data.user.avatar = NETWORK_ADRESS + data.user.avatar;
         }
         super.render(this.prevRoot, data);
-        const imgToSet = document.getElementsByClassName('avatar-img')[0];
-        imgToSet.src = data.user.avatar;
+        const imgToSet = document.getElementsByClassName('avatar__img')[0];
+        imgToSet.style.background = `transparent url(${data.user.avatar}) no-repeat`;
+        imgToSet.style.backgroundSize = 'cover';
+        imgToSet.style.backgroundPosition = 'center';
 
         this.initElements();
     }

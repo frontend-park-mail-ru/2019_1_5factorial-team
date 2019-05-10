@@ -20,6 +20,10 @@ app.get('/sw.js', (req, res) => {
     res.sendFile(root + '/dist/sw.js');
 });
 
+app.get('/favicon.ico', (req, res) => {
+    res.sendFile(root + '/img/favicon.png');
+});
+
 app.get('*', (req, res) => {
     fs.readFile(indexPath, { encoding: 'utf-8' }, (err, file) => {
         if (err) {
