@@ -1,8 +1,3 @@
-// static/js/libs/jager.js
-// static/js/
-//static/js/components/game/recognition.js
-
-
 export default class Jager {
     constructor() {
         this.gestures = {

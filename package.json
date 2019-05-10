@@ -5,6 +5,7 @@
   "main": "temp/server.js",
   "dependencies": {
     "@babel/core": "^7.4.0",
+    "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.0.5",
     "body-parser": "latest",
     "eslint-loader": "^2.1.2",
@@ -12,6 +13,9 @@
     "fest": "^0.12.1",
     "multer": "^1.4.1",
     "postcss-loader": "^3.0.0",
+    "source-map-loader": "^0.2.4",
+    "ts-loader": "^6.0.0",
+    "typescript": "^3.4.5",
     "webpack-cli": "^3.2.3",
     "websocket": "^1.0.28",
     "ws": "^6.2.1"

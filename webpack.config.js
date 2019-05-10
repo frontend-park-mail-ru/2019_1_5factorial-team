@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     mode: 'development',
-    entry: './static/js/app.js',
+    entry: './static/js/app.ts',
     output: {
         path: build,
         filename: 'bundle.js'
@@ -14,13 +14,14 @@ module.exports = {
         alias : {
             Styles: path.resolve(__dirname, 'static/css'),
         },
+        extensions: [".ts", ".tsx", ".js", ".json"]
     },
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.(j|t)s$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader'
+                loader: ['babel-loader', 'ts-loader']
             },
             {
                 test: /\.(woff|woff2|eot|ttf|gif|png|jpe?g|svg)$/,
