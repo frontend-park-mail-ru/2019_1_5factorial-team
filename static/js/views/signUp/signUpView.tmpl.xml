@@ -27,7 +27,7 @@
 
                     <div class="form-btn-block">
                         <a class="btn btn_outlined form__btn form__btn_back" href="/">Back</a>
-                        <button onClick="getCustomAvatar(document.querySelector('.js-login').value, document.querySelector('.js-email').value)" class="btn btn_contained form__btn js-submit" type="submit">Sign Up</button>
+                        <button class="btn btn_contained form__btn js-submit" type="submit">Sign Up</button>
                     </div>
                 </form>
             </div>
@@ -38,34 +38,5 @@
                 <a class="btn users__btn" href="/signup">signup</a>
             </div>
         </section>
-        <script>
-    if (!WebAssembly.instantiateStreaming) { // polyfill
-        WebAssembly.instantiateStreaming = async (resp, importObject) => {
-            const source = await (await resp).arrayBuffer();
-            return await WebAssembly.instantiate(source, importObject);
-        };
-    }
-    (async function () {
-        const go = new Go()
-        const {instance} = await WebAssembly.instantiateStreaming(fetch("test.wasm"), go.importObject);
-        go.run(instance)
-    })();
-    let getCustomAvatar;
-    function setCustomAvatar(callback) {
-        getCustomAvatar = callback;
-        // document.querySelector('#printMessageButton').disabled = false
-    }
-    </script>
-    <script>
-    // var input = document.body.children[0];
-    let login = document.querySelector('.js-login');
-    login.oninput = function () {
-        getCustomAvatar(document.querySelector('.js-login').value, document.querySelector('.js-email').value)
-    };
-    let email = document.querySelector('.js-email');
-    email.oninput = function () {
-        getCustomAvatar(document.querySelector('.js-login').value, document.querySelector('.js-email').value)
-    };
-    </script>
     </div>
 </fest:template>
