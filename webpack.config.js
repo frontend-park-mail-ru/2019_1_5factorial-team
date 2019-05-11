@@ -2,10 +2,11 @@ const path = require('path');
 const build = path.resolve(__dirname, 'static/dist');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const webpack = require('webpack');
 
 module.exports = {
     mode: 'development',
-    entry: './static/js/app.ts',
+    entry: {index: ['./static/js/app.ts', 'webpack-hot-middleware/client']},
     output: {
         path: build,
         filename: 'bundle.js'
@@ -50,5 +51,7 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: 'style.css',
         }),
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoEmitOnErrorsPlugin()
     ]
 };

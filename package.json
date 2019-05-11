@@ -50,7 +50,9 @@
     "serviceworker-webpack-plugin": "^1.0.1",
     "style-loader": "^0.23.1",
     "url-loader": "^1.1.2",
-    "webpack": "^4.30.0"
+    "webpack": "^4.30.0",
+    "webpack-dev-middleware": "^3.6.2",
+    "webpack-hot-middleware": "^2.24.4"
   },
   "scripts": {
     "start": "node server.js",

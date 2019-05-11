@@ -3,6 +3,9 @@
 node_modules
 package-lock.json
 static/dist/
+wasm_kek/
+
+static/js/libs/wasm.js
 
 
 static/js/views/menu/menuView.tmpl.js
