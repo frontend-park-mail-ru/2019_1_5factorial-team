@@ -12,7 +12,7 @@ export default class Game {
     protected isMulti?: Boolean;
     protected localEventBus?: EventBus;
     protected MW: ModalWindow;
-    protected canvas: any;
+    protected canvas: HTMLCanvasElement;
     protected ctx: CanvasRenderingContext2D;
     protected ws: Ws;
 
@@ -30,10 +30,10 @@ export default class Game {
     protected recognizer: Recognizer;
     protected requestID: any;
 
-    protected playerImg: any;
-    protected ghostLeftImg: any;
-    protected ghostRightImg: any;
-    protected heartImg: any;
+    protected playerImg: HTMLImageElement;
+    protected ghostLeftImg: HTMLImageElement;
+    protected ghostRightImg: HTMLImageElement;
+    protected heartImg: HTMLImageElement;
 
     protected symbolLR: any;
     protected symbolTD: any;
@@ -51,7 +51,7 @@ export default class Game {
         this.localEventBus = eventBus;
 
         this.MW = new ModalWindow();
-        this.canvas = document.getElementsByClassName('temp_class_canvas')[0];
+        this.canvas = (document.getElementsByClassName('temp_class_canvas')[0] as HTMLCanvasElement);
         this.ctx = this.canvas.getContext('2d');
 
         /*
@@ -70,10 +70,10 @@ export default class Game {
 
         this.requestID = null;
 
-        this.playerImg = document.getElementById('player-sprite');
-        this.ghostLeftImg = document.getElementById('ghost-left-sprite');
-        this.ghostRightImg = document.getElementById('ghost-right-sprite');
-        this.heartImg = document.getElementById('heart-sprite');
+        this.playerImg = (document.getElementById('player-sprite') as HTMLImageElement);
+        this.ghostLeftImg = (document.getElementById('ghost-left-sprite') as HTMLImageElement);
+        this.ghostRightImg = (document.getElementById('ghost-right-sprite') as HTMLImageElement);
+        this.heartImg = (document.getElementById('heart-sprite') as HTMLImageElement);
 
         this.symbolLR = document.getElementById('symbol_LR');
         this.symbolTD = document.getElementById('symbol_TD');
@@ -127,7 +127,7 @@ export default class Game {
         this.gameLoop();
     }
 
-    resizer() {
+    resizer(): void {
         this.canvas.height = window.innerHeight;
         this.canvas.width = window.innerWidth;
 
@@ -135,7 +135,7 @@ export default class Game {
         this.recognizer.gcanvas.width = window.innerWidth;
     }
 
-    destroy() {
+    destroy(): void {
         if (this.requestID) {
             cancelAnimationFrame(this.requestID);
         }
@@ -146,7 +146,7 @@ export default class Game {
         window.removeEventListener('resize', this.resizer.bind(this));
     }
 
-    gameLoop() {
+    gameLoop(): void {
         let now = Date.now();
         let dt = (now - this.lastTime) / 1000.0;
 
@@ -171,7 +171,7 @@ export default class Game {
         this.requestID = requestAnimationFrame(this.gameLoop.bind(this));
     }
 
-    updateSingle(dt: number) {
+    updateSingle(dt: number): void {
         this.state.gameTime += dt;
 
         // Почему это тут? Вот почему: в конструкторе стейта
@@ -249,7 +249,7 @@ export default class Game {
         }
     }
 
-    renderSingle() {
+    renderSingle(): void {
         let heartsBetweenOffset = this.heartImg.width / 4;
 
         let heartOffset = this.heartImg.width;
@@ -348,7 +348,7 @@ export default class Game {
         }
     }
 
-    renderMulti() {
+    renderMulti(): void {
         /*
          * Блок первого игрока
          */
@@ -477,11 +477,11 @@ export default class Game {
         }
     }
 
-    generateDirection() {
+    generateDirection(): 'left' | 'right' {
         return Math.floor(Math.random() * 2) === 0 ? 'left' : 'right';
     }
 
-    generateDrawingsSequence() {
+    generateDrawingsSequence(): number[] {
         const maxSymbolsLength = 2, minSymbolsLength = 6;
         let generatedSymbolsLength = Math.floor(Math.random() * (maxSymbolsLength - minSymbolsLength + 1)) + minSymbolsLength;
 
@@ -503,7 +503,7 @@ export default class Game {
         return generatedDrawings;
     }
 
-    createGhost(direction: string) {
+    createGhost(direction: string): {x: number, speed: number, damage: number, sprite: HTMLImageElement, symbolsQueue: number[]} {
         if (direction === 'left') {
             return {
                 x: -this.ghostLeftImg.width,

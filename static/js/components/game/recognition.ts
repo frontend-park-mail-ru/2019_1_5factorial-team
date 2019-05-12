@@ -52,14 +52,14 @@ export default class Recognizer {
         this.gcanvas.remove();
     }
 
-    gestureStart(event: Event) {
+    gestureStart(event: Event): boolean {
         event.preventDefault();
         this.mouseIsDown = true;
         this.path = [this.jager.point(event)];
         return false;
     }
 
-    gestureMove(event: Event) {
+    gestureMove(event: Event): boolean {
         event.preventDefault();
         if (this.mouseIsDown) {
             this.path.push(this.jager.point(event));
@@ -68,7 +68,7 @@ export default class Recognizer {
         return true;
     }
 
-    gestureEnd(event: Event) {
+    gestureEnd(event: Event): boolean {
         event.preventDefault();
         var gesture;
         if (this.mouseIsDown) {

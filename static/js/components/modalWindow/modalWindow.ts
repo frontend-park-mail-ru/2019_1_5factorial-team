@@ -10,7 +10,7 @@ export default class ModalWindow {
     blur: Element;
     gameOverBackMenu: Element;
 
-    createModal(element: String) {
+    createModal(element: String): void {
         const modalElement = document.getElementsByClassName('modal-window')[0];
         this.isGame = false;
         if (element === 'Game single end') {
@@ -56,7 +56,7 @@ export default class ModalWindow {
         }
     }
 
-    removeModal() {
+    removeModal(): void {
         const modalElement = document.getElementsByClassName('modal-window')[0];
         const toDeleteModal = document.getElementsByClassName('content content_modal')[0];
         modalElement.classList.add('hidden');

@@ -108,19 +108,21 @@ export default class profileModel {
     onLoadUser() {
         api.loadUser()
             .then(response => {
-                if (response.error) {
-                    this.localEventBus.callEvent('loadUserResponse', {});
-                } else {
-                    const toSetUser = {
-                        avatar: response.avatar_link,
-                        score: response.score,
-                        login: response.nickname,
-                        email: response.email,
-                    };
-                    User.setUser(toSetUser);
-
-                    this.localEventBus.callEvent('loadUserResponse', {user: toSetUser});
-                }
+                response.json().then(response => {
+                    if (response.error) {
+                        this.localEventBus.callEvent('loadUserResponse', {});
+                    } else {
+                        const toSetUser = {
+                            avatar: response.avatar_link,
+                            score: response.score,
+                            login: response.nickname,
+                            email: response.email,
+                        };
+                        User.setUser(toSetUser);
+    
+                        this.localEventBus.callEvent('loadUserResponse', {user: toSetUser});
+                    }
+                })
             });
     }
 

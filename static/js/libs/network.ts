@@ -8,7 +8,7 @@ export default class Network {
     * @param host
     * @returns {Promise<Response>}
     */
-    static doPost({ url = '/', body = {}, host = Network.getServerURL() } = {}) {
+    static doPost({ url = '/', body = {}, host = Network.getServerURL() } = {}): Promise<Response> {
         return fetch(host + url, {
             method: 'POST',
             body: JSON.stringify(body),
@@ -25,7 +25,7 @@ export default class Network {
     * @param url
     * @returns {Promise<Response>}
     */
-    static doGet({ url = '/' } = {}) {
+    static doGet({ url = '/' } = {}): Promise<Response> {
         return fetch(Network.getServerURL() + url, {
             method: 'GET',
             credentials: 'include',
@@ -38,7 +38,7 @@ export default class Network {
     * @param body
     * @returns {Promise<Response>}
     */
-    static doDelete({ url = '/' } = {}) {
+    static doDelete({ url = '/' } = {}): Promise<Response> {
         return fetch(Network.getServerURL() + url, {
             method: 'DELETE',
             credentials: 'include',
@@ -48,7 +48,7 @@ export default class Network {
     /**
      * Get на урл сервера
      */
-    static getServerURL() {
+    static getServerURL(): string {
         return NETWORK_ADRESS;
     }
 
@@ -58,7 +58,7 @@ export default class Network {
     * @param body
     * @returns {Promise<Response>}
     */
-    static doPut({ url = '/', body = {} } = {}) {
+    static doPut({ url = '/', body = {} } = {}): Promise<Response> {
         return fetch(Network.getServerURL() + url, {
             method: 'PUT',
             body: JSON.stringify(body),
@@ -75,7 +75,7 @@ export default class Network {
     * @param url
     * @returns {Promise<Response>}
     */
-    static doPostFormData(data: {url: string | String, body: BodyInit} = {url: '/', body: null }) {
+    static doPostFormData(data: {url: string | String, body: BodyInit} = {url: '/', body: null }): Promise<Response> {
         return fetch(Network.getServerURL() + data.url, {
             method: 'POST',
             body: data.body,

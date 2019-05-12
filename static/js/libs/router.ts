@@ -100,7 +100,7 @@ export default class Router {
      * @returns {string}
      * @private
      */
-    static normalizePath(path: String) {
+    static normalizePath(path: String): String {
         return path.charAt(path.length - 1) === '/' && path !== '/' ? path.slice(0, path.length - 1) : path;
     }
 

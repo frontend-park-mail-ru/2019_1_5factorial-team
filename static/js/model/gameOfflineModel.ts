@@ -26,10 +26,12 @@ export default class gameOfflineModel {
                 } else {
                     api.loadUser()
                         .then(res => {
-                            const responseOnUser = {
-                                nickname: res.nickname,
-                            };
-                            this.localEventBus.callEvent('onGetUserDataForGameResponse', {status: 'authUser', user: responseOnUser});
+                            res.json().then(res => {
+                                const responseOnUser = {
+                                    nickname: res.nickname,
+                                };
+                                this.localEventBus.callEvent('onGetUserDataForGameResponse', {status: 'authUser', user: responseOnUser});
+                            })   
                         });
                 }
             });
