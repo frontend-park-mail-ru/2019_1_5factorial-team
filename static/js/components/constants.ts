@@ -23,7 +23,11 @@ export const EVENT_LIST_LOGIN = [
     'login',
     'loginResponse',
     'loginSuccess',
-    'loadWaiting'
+    'loadWaiting',
+    'loginOrEmailRTCheck',
+    'passwRTCheck',
+    'loginOrEmailRTCheckResponse',
+    'passwRTCheckResponse',
 ];
 
 export const EVENT_LIST_MENU = [
@@ -70,7 +74,13 @@ export const EVENT_LIST_SIGNUP = [
     'changePasswordResponse',
     'changePasswordRepeat',
     'changePasswordRepeatResponse',
-    'loadWaiting'
+    'loadWaiting',
+    'loginRTCheck',
+    'emailRTCheck',
+    'passwRTCheck',
+    'loginRTCheckResponse',
+    'emailRTCheckResponse',
+    'passwRTCheckResponse',
 ];
 
 export const EVENT_LIST_GAME_SINGLE = [

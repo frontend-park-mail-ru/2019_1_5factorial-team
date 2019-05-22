@@ -11,6 +11,21 @@ export default class signUpView extends View {
         super(template, eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('signupResponse', this.onSignupResponse.bind(this));
+        this.localEventBus.getEvent('loginRTCheckResponse', this.loginRTCheckResponse.bind(this));
+        this.localEventBus.getEvent('emailRTCheckResponse', this.emailRTCheckResponse.bind(this));
+        this.localEventBus.getEvent('passwRTCheckResponse', this.passwRTCheckResponse.bind(this));
+    }
+
+    passwRTCheckResponse({response = ''}) {
+        console.log(`passwRTCheckResponse ${response}`);
+    }
+
+    emailRTCheckResponse({response = ''}) {
+        console.log(`emailRTCheckResponse ${response}`);
+    }
+
+    loginRTCheckResponse({response = ''}) {
+        console.log(`loginRTCheckResponse ${response}`);
     }
 
     render(root, data = {}) {
@@ -23,7 +38,26 @@ export default class signUpView extends View {
             event.preventDefault();
             this.onSubmit();
         });
-        return this;
+        this.emailInput = document.getElementsByClassName('js-email')[0];
+        this.loginInput = document.getElementsByClassName('js-login')[0];
+        this.passwInput = document.getElementsByClassName('js-password')[0];
+
+        this.emailInput.addEventListener('change', this.emailRTCheck.bind(this, this.emailInput));
+        this.loginInput.addEventListener('change', this.loginRTCheck.bind(this, this.loginInput));
+        this.passwInput.addEventListener('change', this.passwRTCheck.bind(this, this.passwInput));
+        // return this;
+    }
+
+    emailRTCheck(input) {
+        this.localEventBus.callEvent('emailRTCheck', {data: input.value});
+    }
+    
+    loginRTCheck(input) {
+        this.localEventBus.callEvent('loginRTCheck', {data: input.value});
+    }
+
+    passwRTCheck(input) {
+        this.localEventBus.callEvent('passwRTCheck', {data: input.value});
     }
 
     onSignupResponse(data = {}, check = 0) {

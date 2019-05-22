@@ -5,6 +5,14 @@ import {User} from '../libs/users';
 import { OK_RESPONSE, NETWORK_ADRESS, DEFAULT_AVATAR, OK_VALIDATE_PASSWORD, OK_VALIDATE_AVATAR, AVATAR_DEFAULT } from '../components/constants';
 import EventBus from '../libs/eventBus';
 
+interface IResponseProfile extends Response {
+    avatar_link?: string;
+    error?: string;
+    score?: string;
+    nickname?: string;
+    email?: string;
+}
+
 export default class profileModel {
     localEventBus: EventBus;
     avatar: any;
@@ -107,24 +115,23 @@ export default class profileModel {
      */
     onLoadUser() {
         api.loadUser()
-            .then(response => {
-                response.json().then(response => {
-                    if (response.error) {
-                        this.localEventBus.callEvent('loadUserResponse', {});
-                    } else {
-                        const toSetUser = {
-                            avatar: response.avatar_link,
-                            score: response.score,
-                            login: response.nickname,
-                            email: response.email,
-                        };
-                        User.setUser(toSetUser);
-    
-                        this.localEventBus.callEvent('loadUserResponse', {user: toSetUser});
-                    }
-                })
-            });
-    }
+            .then((response: IResponseProfile) => {
+                console.log(response);
+                if (response.error) {
+                    this.localEventBus.callEvent('loadUserResponse', {});
+                } else {
+                    const toSetUser = {
+                        avatar: response.avatar_link,
+                        score: response.score,
+                        login: response.nickname,
+                        email: response.email,
+                    };
+                    User.setUser(toSetUser);
+
+                    this.localEventBus.callEvent('loadUserResponse', {user: toSetUser});
+                }
+            })
+    };
 
     /**
      * Проверяем пользователя - авторизован ли

@@ -2,6 +2,7 @@ import View from '../../libs/views';
 
 import userBlock from '../../components/userBlock/userBlock';
 import ModalWindow from '../../components/modalWindow/modalWindow';
+import detectMobile from '../../components/detectMobile';
 
 import template from './menuView.tmpl.xml';
 
@@ -13,21 +14,6 @@ export default class viewMenu extends View {
         this.isAuth = false;
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('checkAuthorizationResponse', this.onCheckAuthResponse.bind(this));
-    }
-
-    detectmob() { 
-        if (navigator.userAgent.match(/Android/i)
-        || navigator.userAgent.match(/webOS/i)
-        || navigator.userAgent.match(/iPhone/i)
-        || navigator.userAgent.match(/iPad/i)
-        || navigator.userAgent.match(/iPod/i)
-        || navigator.userAgent.match(/BlackBerry/i)
-        || navigator.userAgent.match(/Windows Phone/i)
-        ) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     onCheckAuthResponse(isAuthorized, statusText) {
@@ -45,7 +31,7 @@ export default class viewMenu extends View {
             });
         }
 
-        if (this.detectmob()) {
+        if (detectMobile.detect()) {
             singleButton.onclick = function (event) {
                 event.stopImmediatePropagation();
                 MW.createModal('mobileBlock');

@@ -1,6 +1,7 @@
 import ModalWindow from '../modalWindow/modalWindow';
 import Recognizer from './recognition';
 import Ws from '../../libs/websocket';
+import detectMobile from '../detectMobile';
 
 import { DEFAULT_GHOST_SPEED, DEFAULT_GHOST_DAMAGE, PLAYER_INITIAL_HP } from '../constants';
 import { SCORE_FOR_SYMBOL, SCORE_FOR_GHOST } from '../constants';
@@ -21,11 +22,12 @@ export default class Game {
     protected symbolsOffset: number;
     protected lastDrawing: Number;
     protected lastTime: number;
-    state: {  Players?: Array<{sprite: any, x: number, id: Number, hp: number, score: Number}>, 
-                        player?: {sprite: any, x: number, hp: number}, 
-                        ghosts: Array<{x: number, speed: number, symbolsQueue?: Array<number>, symbols?:Array<number>, sprite: any, damage: number}>, 
-                        score?: number, gameTime: number, isGameOver: Boolean
-                    };
+    state: {    Players?: Array<{sprite: any, x: number, id: Number, hp: number, score: Number}>, 
+                player?: {sprite: any, x: number, hp: number}, 
+                ghosts: Array<{x: number, speed: number, symbolsQueue?: Array<number>, 
+                symbols?:Array<number>, sprite: any, damage: number}>, 
+                score?: number, gameTime: number, isGameOver: Boolean
+            };
 
     protected recognizer: Recognizer;
     protected requestID: any;
@@ -81,6 +83,11 @@ export default class Game {
 
         this.localEventBus.getEvent('updateState', this.setState.bind(this));
 
+        if (detectMobile.detect()) {
+            console.log('kukuku');
+        } else {
+            console.log('kekeke');
+        }
         this.lastTime = Date.now();
 
         if (!this.isMulti) {  // если синглплеер
