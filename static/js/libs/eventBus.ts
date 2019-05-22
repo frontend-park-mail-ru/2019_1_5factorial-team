@@ -1,6 +1,7 @@
 
 export default class EventBus {
-    constructor(events) {
+    private list: Map<String, Function[]>
+    constructor(events: Array<String>) {
         this.list = new Map();
         events.forEach((name) => {
             this.list.set(name, []);
@@ -13,7 +14,7 @@ export default class EventBus {
      * @param {*} name Имя нашего события
      * @param {*} callback Функция, которую выполняем при вызове
      */
-    getEvent(name, callback) {
+    getEvent(name: String, callback: Function) {
         if (!this.list.has(name)) {
             console.log(`Unknown event ${name}`);
         }
@@ -26,12 +27,12 @@ export default class EventBus {
      * @param {*} name Имя нашего события
      * @param  {...any} args 
      */
-    callEvent(name, ...args) {
+    callEvent(name: String, ...args: any[]) {
         if (!this.list.has(name)) {
             console.log(`Unknown event ${name}`);
         }
         const listener = this.list.get(name);
-        listener.forEach((callback) => {
+        listener.forEach((callback: Function) => {
             callback(...args);
         });
     }

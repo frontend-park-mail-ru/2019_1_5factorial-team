@@ -1,9 +1,11 @@
-import api from '../libs/api.js';
-import Validator from '../libs/validation.js';
-import { OK_RESPONSE, OK_VALIDATE_EMAIL, OK_VALIDATE_LOGIN, OK_VALIDATE_PASSWORD } from '../components/constants.js';
+import api from '../libs/api';
+import Validator from '../libs/validation';
+import { OK_RESPONSE, OK_VALIDATE_EMAIL, OK_VALIDATE_LOGIN, OK_VALIDATE_PASSWORD } from '../components/constants';
+import EventBus from '../libs/eventBus';
 
 export default class loginModel {
-    constructor(eventBus) {
+    localEventBus: EventBus;
+    constructor(eventBus: EventBus) {
         this.localEventBus = eventBus;
         this.localEventBus.getEvent('login', this.onLogin.bind(this));
         this.oauthLogin();
@@ -13,7 +15,7 @@ export default class loginModel {
      * Проверяем данные на логин
      * @param {*} data
      */
-    onLogin(data) {
+    onLogin(data: { loginOrEmail: string; pass: string; }) {
         const loginOrEmailData = data.loginOrEmail;
         const password = data.pass;
         const validateLoginOrEmail = Validator.validateLoginOrEmail(loginOrEmailData);
@@ -38,16 +40,14 @@ export default class loginModel {
             return;
         }
 
-        api.login({
-            loginOrEmail: loginOrEmailData,
-            password: data.pass
-        }).then(res => {
-            if (res.status === OK_RESPONSE) {
-                res.json().then(data => this.localEventBus.callEvent('loginSuccess', data));
-            } else {
-                res.json().then(data => this.localEventBus.callEvent('loginResponse', data));
-            }
-        });
+        api.login(loginOrEmailData, data.pass)
+            .then((res) => {
+                if (res.status === OK_RESPONSE) {
+                    res.json().then((data: any) => this.localEventBus.callEvent('loginSuccess', data));
+                } else {
+                    res.json().then((data: any) => this.localEventBus.callEvent('loginResponse', data));
+                }
+            });
     }
 
     /**

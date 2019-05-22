@@ -1,6 +1,6 @@
 import template from './gameView.tmpl.xml';
-import View from '../../libs/views.js';
-import userBlock from '../../components/userBlock/userBlock.js';
+import View from '../../libs/views';
+import userBlock from '../../components/userBlock/userBlock';
 
 import './game.scss';
 
@@ -30,5 +30,6 @@ export default class gameView extends View {
     render(root, data = {}) {
         super.render(root, data);
         this.localEventBus.callEvent('getUserDataForGame');
+        return this;
     }
 }

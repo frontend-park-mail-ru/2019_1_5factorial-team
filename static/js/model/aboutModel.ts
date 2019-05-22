@@ -1,11 +1,13 @@
-import api from '../libs/api.js';
-import Network from '../libs/network.js';
-import {User} from '../libs/users.js';
-import userBlock from '../components/userBlock/userBlock.js';
-import { ANAUTH_RESPONSE } from '../components/constants.js';
+import api from '../libs/api';
+import Network from '../libs/network';
+import {User} from '../libs/users';
+import userBlock from '../components/userBlock/userBlock';
+import { ANAUTH_RESPONSE } from '../components/constants';
+import EventBus from '../libs/eventBus';
 
 export default class aboutModel {
-    constructor(eventBus) {
+    localEventBus: EventBus;
+    constructor(eventBus: EventBus) {
         this.localEventBus = eventBus;
         this.localEventBus.getEvent('checkAuthorization', this.checkAuthorization.bind(this));
         this.localEventBus.getEvent('signOut', this.onLogout.bind(this));
@@ -18,13 +20,17 @@ export default class aboutModel {
         const res = Network.doGet({ url: '/api/session' });
         res.then(res => {
             if (res.status === ANAUTH_RESPONSE) {
-                this.localEventBus.callEvent('checkAuthorizationResponse', {
+                res.json().then(data => {
+                    this.localEventBus.callEvent('checkAuthorizationResponse', {
                     isAuthorized: false,
-                    error: res.error
-                });
+                    statusText: data.statusText,
+                    error: data.error
+                })
+            });
             } else {
                 this.localEventBus.callEvent('checkAuthorizationResponse', {
                     isAuthorized: true,
+                    statusText: res.statusText,
                 });
             }
         });
@@ -35,9 +41,8 @@ export default class aboutModel {
      */
     onLogout() {
         api.deleteSession();
-        const isAuthorized = false;
         const checkHeader = new userBlock();
-        checkHeader.changeButtons(isAuthorized);
+        checkHeader.changeButtons('loggedOut');
         this.localEventBus.callEvent('closeView', { isAuth: false, signout: true });
         User.removeUser();
     }

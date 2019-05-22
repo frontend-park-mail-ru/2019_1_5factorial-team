@@ -1,11 +1,11 @@
-import View from '../../libs/views.js';
+import View from '../../libs/views';
 import template from './loginView.tmpl.xml';
 
 import '../../components/userBlock/userblock.scss';
 import '../../../css/form.scss';
 
 export default class loginView extends View {
-    constructor({ eventBus = {} }) {
+    constructor(eventBus) {
         super(template, eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('loginResponse', this.onSubmitResponse.bind(this));
@@ -15,6 +15,7 @@ export default class loginView extends View {
         super.render(root, data);
         const form = document.getElementsByClassName('js-login-form')[0];
         form.addEventListener('submit', this.onSubmit.bind(this, form));
+        return this;
     }
 
     onSubmit(form, event) {

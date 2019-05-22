@@ -1,14 +1,14 @@
-import View from '../../libs/views.js';
+import View from '../../libs/views';
 
-import userBlock from '../../components/userBlock/userBlock.js';
-import ModalWindow from '../../components/modalWindow/modalWindow.js';
+import userBlock from '../../components/userBlock/userBlock';
+import ModalWindow from '../../components/modalWindow/modalWindow';
 
 import template from './menuView.tmpl.xml';
 
 import './menuGameLogo.scss';
 
 export default class viewMenu extends View {
-    constructor({ eventBus = {} }) {
+    constructor(eventBus) {
         super(template, eventBus);
         this.isAuth = false;
         this.render(document.getElementsByClassName('body-cnt')[0]);
@@ -30,7 +30,7 @@ export default class viewMenu extends View {
         }
     }
 
-    onCheckAuthResponse({isAuthorized = false, statusText}) {
+    onCheckAuthResponse(isAuthorized, statusText) {
         this.isAuth = isAuthorized;
         const checkHeader = new userBlock();
         const MW = new ModalWindow();
@@ -77,5 +77,6 @@ export default class viewMenu extends View {
     render(root, data = {}) {
         super.render(root, data);
         this.localEventBus.callEvent('checkAuthorization');
+        return this;
     }
 }

@@ -1,12 +1,12 @@
-import View from '../../libs/views.js';
-import paginator from '../../components/pagination/pagination.js';
-import userBlock from '../../components/userBlock/userBlock.js';
+import View from '../../libs/views';
+import paginator from '../../components/pagination/pagination';
+import userBlock from '../../components/userBlock/userBlock';
 import template from './leaderboardView.tmpl.xml';
 
 import './leaderboard.scss';
 
 export default class leaderboardView extends View {
-    constructor({ eventBus = {} }) {
+    constructor(eventBus) {
         super(template, eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('loadResponse', this.loadResponse.bind(this));
@@ -20,6 +20,7 @@ export default class leaderboardView extends View {
         super.render(root, data);
         this.localEventBus.callEvent('loadPaginator');
         this.localEventBus.callEvent('load', { pageNum: 1 });
+        return this;
     }
 
     onCheckAuthResponse({isAuthorized = false} = {}) {

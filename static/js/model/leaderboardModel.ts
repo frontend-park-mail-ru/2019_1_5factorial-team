@@ -1,11 +1,16 @@
-import api from '../libs/api.js';
-import Network from '../libs/network.js';
-import {User} from '../libs/users.js';
-import userBlock from '../components/userBlock/userBlock.js';
-import { ANAUTH_RESPONSE, OK_RESPONSE, COUNT_OF_PAGES, NUM_OF_POSITIONS } from '../components/constants.js';
+import api from '../libs/api';
+import Network from '../libs/network';
+import {User} from '../libs/users';
+import userBlock from '../components/userBlock/userBlock';
+import { ANAUTH_RESPONSE, OK_RESPONSE, COUNT_OF_PAGES, NUM_OF_POSITIONS } from '../components/constants';
+import EventBus from '../libs/eventBus';
 
 export default class leaderboardModel {
-    constructor(eventBus) {
+    localEventBus: EventBus;
+    countOfPages: number;
+    numOfPositions: number;
+    sumOfUsers: number;
+    constructor(eventBus: EventBus) {
         this.localEventBus = eventBus;
         this.localEventBus.getEvent('load', this.loadPage.bind(this));
         this.localEventBus.getEvent('loadPaginator', this.loadPaginator.bind(this));
@@ -23,10 +28,13 @@ export default class leaderboardModel {
         const res = Network.doGet({ url: '/api/session' });
         res.then(res => {
             if (res.status === ANAUTH_RESPONSE) {
-                this.localEventBus.callEvent('checkAuthorizationResponse', {
+                res.json().then(data => {
+                    this.localEventBus.callEvent('checkAuthorizationResponse', {
                     isAuthorized: false,
-                    error: res.error
-                });
+                    statusText: data.statusText,
+                    error: data.error
+                })
+            });
             } else {
                 this.localEventBus.callEvent('checkAuthorizationResponse', {
                     isAuthorized: true,
@@ -40,9 +48,8 @@ export default class leaderboardModel {
      */
     onLogout() {
         api.deleteSession();
-        const isAuthorized = false;
         const checkHeader = new userBlock();
-        checkHeader.changeButtons(isAuthorized);
+        checkHeader.changeButtons('loggedOut');
         this.localEventBus.callEvent('closeView', { isAuth: false, signout: true });
         User.removeUser();
     }

@@ -1,4 +1,4 @@
-import View from '../../libs/views.js';
+import View from '../../libs/views';
 import template from './signUpView.tmpl.xml';
 
 import {OK_VALIDATE_EMAIL, OK_VALIDATE_LOGIN, OK_VALIDATE_PASSWORD} from '../../components/constants';
@@ -7,7 +7,7 @@ import '../../components/userBlock/userblock.scss';
 import '../../../css/form.scss';
 
 export default class signUpView extends View {
-    constructor({ eventBus = {} }) {
+    constructor(eventBus) {
         super(template, eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('signupResponse', this.onSignupResponse.bind(this));
@@ -23,9 +23,10 @@ export default class signUpView extends View {
             event.preventDefault();
             this.onSubmit();
         });
+        return this;
     }
 
-    onSignupResponse(data, check = 0) {
+    onSignupResponse(data = {}, check = 0) {
         const elementEmail = document.getElementsByClassName('js-email')[0];
         const elementLogin = document.getElementsByClassName('js-login')[0];
         const elementPassword = document.getElementsByClassName('js-password')[0];

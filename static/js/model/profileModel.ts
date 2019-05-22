@@ -1,11 +1,14 @@
-import Validation from '../libs/validation.js';
-import Network from '../libs/network.js';
-import api from '../libs/api.js';
-import {User} from '../libs/users.js';
-import { OK_RESPONSE, NETWORK_ADRESS, DEFAULT_AVATAR, OK_VALIDATE_PASSWORD, OK_VALIDATE_AVATAR, AVATAR_DEFAULT } from '../components/constants.js';
+import Validation from '../libs/validation';
+import Network from '../libs/network';
+import api from '../libs/api';
+import {User} from '../libs/users';
+import { OK_RESPONSE, NETWORK_ADRESS, DEFAULT_AVATAR, OK_VALIDATE_PASSWORD, OK_VALIDATE_AVATAR, AVATAR_DEFAULT } from '../components/constants';
+import EventBus from '../libs/eventBus';
 
 export default class profileModel {
-    constructor(eventBus) {
+    localEventBus: EventBus;
+    avatar: any;
+    constructor(eventBus: EventBus) {
         this.localEventBus = eventBus;
         this.localEventBus.getEvent('changeAvatar', this.onChangeAvatar.bind(this));
 
@@ -18,7 +21,7 @@ export default class profileModel {
     /**
      * Проверяем смену аватара
      */
-    onChangeAvatar(data) {
+    onChangeAvatar(data: {avatar: File}) {
         const validateNewAvatar = Validation.validateImage(data.avatar);
         if (validateNewAvatar !== OK_VALIDATE_AVATAR) {
             this.localEventBus.callEvent('changeAvatarResponse', {error: validateNewAvatar});
@@ -27,7 +30,7 @@ export default class profileModel {
 
         api.uploadAvatar(data.avatar).then(response => {
             if (response.status !== OK_RESPONSE) {
-                this.localEventBus.callEvent('changeAvatarResponse', {error: response.error});
+                response.json().then(data => this.localEventBus.callEvent('changeAvatarResponse', {error: data.error}));
                 return;
             }
             response.json().then(response => {
@@ -41,8 +44,10 @@ export default class profileModel {
                         new_password: undefined
                     }).then(response => {
                         if (response.status === OK_RESPONSE) {
-                            const avatarLink = NETWORK_ADRESS + response.avatar_link;
-                            this.localEventBus.callEvent('changeAvatarSuccess', {avatar: avatarLink});
+                            response.json().then(data => {
+                                const avatarLink = NETWORK_ADRESS + data.avatar_link;
+                                this.localEventBus.callEvent('changeAvatarSuccess', {avatar: avatarLink})
+                            });
                         } else {
                             response.json().then(response => {
                                 this.localEventBus.callEvent('changeAvatarResponse', {error: response.error});
@@ -67,7 +72,7 @@ export default class profileModel {
      * Вызываем смену пароля пользователя
      * @param {*} data
      */
-    onSubmitPassword(data) {
+    onSubmitPassword(data: {oldPassword: string, newPassword: string}) {
         const passOld = data.oldPassword;
         const passNew = data.newPassword;
         const errPassOld = Validation.validatePassword(passOld);
@@ -82,9 +87,9 @@ export default class profileModel {
         }
 
         api.updateUser({
-            avatar: this.avatar,
             old_password: passOld,
-            new_password: passNew
+            new_password: passNew,
+            avatar_input: this.avatar,
         }).then(response => {
             if (response.ok) {
                 this.localEventBus.callEvent('submitPasswordSuccess', {newPassword: passNew});
@@ -103,19 +108,21 @@ export default class profileModel {
     onLoadUser() {
         api.loadUser()
             .then(response => {
-                if (response.error) {
-                    this.localEventBus.callEvent('loadUserResponse', {});
-                } else {
-                    const toSetUser = {
-                        avatar: response.avatar_link,
-                        score: response.score,
-                        login: response.nickname,
-                        email: response.email,
-                    };
-                    User.setUser({ toSetUser });
-
-                    this.localEventBus.callEvent('loadUserResponse', {user: toSetUser});
-                }
+                response.json().then(response => {
+                    if (response.error) {
+                        this.localEventBus.callEvent('loadUserResponse', {});
+                    } else {
+                        const toSetUser = {
+                            avatar: response.avatar_link,
+                            score: response.score,
+                            login: response.nickname,
+                            email: response.email,
+                        };
+                        User.setUser(toSetUser);
+    
+                        this.localEventBus.callEvent('loadUserResponse', {user: toSetUser});
+                    }
+                })
             });
     }
 
@@ -126,10 +133,12 @@ export default class profileModel {
         Network.doGet({url: '/api/session'})
             .then(response => {
                 if (response.status !== OK_RESPONSE) {
-                    this.localEventBus.callEvent('checkAuthResponse', {
+                    response.json().then(data => {
+                        this.localEventBus.callEvent('checkAuthResponse', {
                         isAuth: false,
-                        error: response.error
-                    });
+                        error: data.error
+                    })
+                });
                 } else {
                     response.json().then(() => {
                         this.localEventBus.callEvent('checkAuthResponse', {

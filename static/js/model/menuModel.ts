@@ -1,12 +1,14 @@
-import Network from '../libs/network.js';
-import api from '../libs/api.js';
-import {User} from '../libs/users.js';
-import userBlock from '../components/userBlock/userBlock.js';
-import { ANAUTH_RESPONSE } from '../components/constants.js';
+import Network from '../libs/network';
+import api from '../libs/api';
+import {User} from '../libs/users';
+import userBlock from '../components/userBlock/userBlock';
+import { ANAUTH_RESPONSE } from '../components/constants';
+import EventBus from '../libs/eventBus';
 
 export default class menuModel {
-    constructor(events) {
-        this.localEventBus = events;
+    localEventBus: EventBus;
+    constructor(eventbus: EventBus) {
+        this.localEventBus = eventbus;
         this.localEventBus.getEvent('checkAuthorization', this.checkAuthorization.bind(this));
         this.localEventBus.getEvent('signOut', this.onLogout.bind(this));
     }
@@ -19,7 +21,7 @@ export default class menuModel {
         const isAuthorized = false;
         this.localEventBus.callEvent('closeView', { isAuth: isAuthorized, signout: true });
         const checkHeader = new userBlock();
-        checkHeader.changeButtons(isAuthorized);
+        checkHeader.changeButtons('loggedOut');
         User.removeUser();
     }
 
@@ -30,11 +32,13 @@ export default class menuModel {
         const res = Network.doGet({ url: '/api/session' });
         res.then(res => {
             if (res.status === ANAUTH_RESPONSE) {
-                this.localEventBus.callEvent('checkAuthorizationResponse', {
+                res.json().then(data => {
+                    this.localEventBus.callEvent('checkAuthorizationResponse', {
                     isAuthorized: false,
-                    statusText: res.statusText,
-                    error: res.error
-                });
+                    statusText: data.statusText,
+                    error: data.error
+                })
+            });
             } else {
                 this.localEventBus.callEvent('checkAuthorizationResponse', {
                     statusText: res.statusText, 

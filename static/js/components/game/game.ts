@@ -1,13 +1,44 @@
-import ModalWindow from '../modalWindow/modalWindow.js';
-import Recognizer from './recognition.js';
-import Ws from '../../libs/websocket.js';
+import ModalWindow from '../modalWindow/modalWindow';
+import Recognizer from './recognition';
+import Ws from '../../libs/websocket';
 
-import { DEFAULT_GHOST_SPEED, DEFAULT_GHOST_DAMAGE, PLAYER_INITIAL_HP } from '../constants.js';
-import { SCORE_FOR_SYMBOL, SCORE_FOR_GHOST } from '../constants.js';
+import { DEFAULT_GHOST_SPEED, DEFAULT_GHOST_DAMAGE, PLAYER_INITIAL_HP } from '../constants';
+import { SCORE_FOR_SYMBOL, SCORE_FOR_GHOST } from '../constants';
+import EventBus from '../../libs/eventBus';
 
-const symbolImgWidth = 60;
+const symbolImgWidth: number = 60;
 
 export default class Game {
+    protected isMulti?: Boolean;
+    protected localEventBus?: EventBus;
+    protected MW: ModalWindow;
+    protected canvas: HTMLCanvasElement;
+    protected ctx: CanvasRenderingContext2D;
+    protected ws: Ws;
+
+    protected axisY: number;
+    protected heartsBlockY: number;
+    protected symbolsOffset: number;
+    protected lastDrawing: Number;
+    protected lastTime: number;
+    state: {  Players?: Array<{sprite: any, x: number, id: Number, hp: number, score: Number}>, 
+                        player?: {sprite: any, x: number, hp: number}, 
+                        ghosts: Array<{x: number, speed: number, symbolsQueue?: Array<number>, symbols?:Array<number>, sprite: any, damage: number}>, 
+                        score?: number, gameTime: number, isGameOver: Boolean
+                    };
+
+    protected recognizer: Recognizer;
+    protected requestID: any;
+
+    protected playerImg: HTMLImageElement;
+    protected ghostLeftImg: HTMLImageElement;
+    protected ghostRightImg: HTMLImageElement;
+    protected heartImg: HTMLImageElement;
+
+    protected symbolLR: any;
+    protected symbolTD: any;
+    protected symbolDTD: any;
+
     /*
      * this.lastDrawing - последний считанный нарисованный символ
      * this.recognizer - распознаватель нарисованных символов
@@ -15,12 +46,12 @@ export default class Game {
      * this.state - состояние игры
      * @param {boolean} isMulti - true - мультиплеер
      */
-    constructor(eventBus, isMulti = false) {
+    constructor(eventBus: EventBus, isMulti = false) {
         this.isMulti = isMulti;
         this.localEventBus = eventBus;
 
         this.MW = new ModalWindow();
-        this.canvas = document.getElementsByClassName('temp_class_canvas')[0];
+        this.canvas = (document.getElementsByClassName('temp_class_canvas')[0] as HTMLCanvasElement);
         this.ctx = this.canvas.getContext('2d');
 
         /*
@@ -34,16 +65,15 @@ export default class Game {
 
         this.recognizer = new Recognizer();
 
-        this.bindedResizer = this.resizer.bind(this);
-        window.addEventListener('resize', this.bindedResizer);
+        window.addEventListener('resize', this.resizer.bind(this));
         this.resizer();
 
         this.requestID = null;
 
-        this.playerImg = document.getElementById('player-sprite');
-        this.ghostLeftImg = document.getElementById('ghost-left-sprite');
-        this.ghostRightImg = document.getElementById('ghost-right-sprite');
-        this.heartImg = document.getElementById('heart-sprite');
+        this.playerImg = (document.getElementById('player-sprite') as HTMLImageElement);
+        this.ghostLeftImg = (document.getElementById('ghost-left-sprite') as HTMLImageElement);
+        this.ghostRightImg = (document.getElementById('ghost-right-sprite') as HTMLImageElement);
+        this.heartImg = (document.getElementById('heart-sprite') as HTMLImageElement);
 
         this.symbolLR = document.getElementById('symbol_LR');
         this.symbolTD = document.getElementById('symbol_TD');
@@ -73,7 +103,7 @@ export default class Game {
         }
     }
 
-    setState(state) {
+    setState(state: { Players: { score: Number, x?: number, id?: Number, hp?: number }[]; Objects: { items: any; }; }) {
         console.log(state);
         this.state = {
             Players: [{
@@ -97,7 +127,7 @@ export default class Game {
         this.gameLoop();
     }
 
-    resizer() {
+    resizer(): void {
         this.canvas.height = window.innerHeight;
         this.canvas.width = window.innerWidth;
 
@@ -105,7 +135,7 @@ export default class Game {
         this.recognizer.gcanvas.width = window.innerWidth;
     }
 
-    destroy() {
+    destroy(): void {
         if (this.requestID) {
             cancelAnimationFrame(this.requestID);
         }
@@ -113,10 +143,10 @@ export default class Game {
         this.recognizer.destroyRecognizer();
 
         console.log('final score is', this.state.score);
-        window.removeEventListener('resize', this.bindedResizer);
+        window.removeEventListener('resize', this.resizer.bind(this));
     }
 
-    gameLoop() {
+    gameLoop(): void {
         let now = Date.now();
         let dt = (now - this.lastTime) / 1000.0;
 
@@ -132,7 +162,7 @@ export default class Game {
             this.destroy();
             let finalScore = this.state.score;
             this.MW.createModal('Game single end');
-            const scoreElement = document.getElementsByClassName('js-set-final-score')[0];
+            const scoreElement = (document.getElementsByClassName('js-set-final-score')[0] as HTMLElement);
             scoreElement.innerText = `Your score is : ${finalScore}`;
             return;
         }
@@ -141,7 +171,7 @@ export default class Game {
         this.requestID = requestAnimationFrame(this.gameLoop.bind(this));
     }
 
-    updateSingle(dt) {
+    updateSingle(dt: number): void {
         this.state.gameTime += dt;
 
         // Почему это тут? Вот почему: в конструкторе стейта
@@ -213,13 +243,13 @@ export default class Game {
                     this.recognizer.destroyRecognizer();
                 }
                 this.state.isGameOver = true;
-                this.localEventBus.callEvent('gameOver');
+                this.localEventBus.callEvent('gameOver')
                 return;
             }
         }
     }
 
-    renderSingle() {
+    renderSingle(): void {
         let heartsBetweenOffset = this.heartImg.width / 4;
 
         let heartOffset = this.heartImg.width;
@@ -318,7 +348,7 @@ export default class Game {
         }
     }
 
-    renderMulti() {
+    renderMulti(): void {
         /*
          * Блок первого игрока
          */
@@ -383,7 +413,7 @@ export default class Game {
                 let symbolsCounter = -2;
                 for (let j = this.state.ghosts[i].symbols.length; j >= 0; j--) {
                     symbolsCounter = this.state.ghosts[i].symbols.length - j;
-                    switch (this.state.ghosts[i].symbol[j]) {
+                    switch (this.state.ghosts[i].symbols[j]) {
                         case 2:  // LR - горизонтальный символ left-right
                             this.ctx.drawImage(this.symbolLR,
                                 this.state.ghosts[i].x + symbolImgWidth * symbolsCounter + leftSymbolOffset,
@@ -447,11 +477,11 @@ export default class Game {
         }
     }
 
-    generateDirection() {
+    generateDirection(): 'left' | 'right' {
         return Math.floor(Math.random() * 2) === 0 ? 'left' : 'right';
     }
 
-    generateDrawingsSequence() {
+    generateDrawingsSequence(): number[] {
         const maxSymbolsLength = 2, minSymbolsLength = 6;
         let generatedSymbolsLength = Math.floor(Math.random() * (maxSymbolsLength - minSymbolsLength + 1)) + minSymbolsLength;
 
@@ -473,7 +503,7 @@ export default class Game {
         return generatedDrawings;
     }
 
-    createGhost(direction) {
+    createGhost(direction: string): {x: number, speed: number, damage: number, sprite: HTMLImageElement, symbolsQueue: number[]} {
         if (direction === 'left') {
             return {
                 x: -this.ghostLeftImg.width,
@@ -493,7 +523,7 @@ export default class Game {
         }
     }
 
-    moveGhost(ghost, dt) {
+    moveGhost(ghost: { x: number; speed: number; }, dt: number) {
         ghost.x += ghost.speed * dt;
     }
 

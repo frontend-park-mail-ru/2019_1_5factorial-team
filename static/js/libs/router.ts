@@ -1,5 +1,13 @@
 export default class Router {
-    constructor(root) {
+    private root: any;
+    private routes: Map<String, {root: any, view: any, data: Object}>;
+    private currentRoute: String;
+    private isCurrentNotFound: Boolean;
+
+    private notFoundView: any;
+    private notFoundViewRoot: any;
+
+    constructor(root: Element) {
         this.root = root;
         this.routes = new Map();
 
@@ -16,7 +24,7 @@ export default class Router {
      * Переходит на начальную страницу с путем '/'
      * @param delPrev удаляет из истории Путь из которого сделан переход
      */
-    toStartPage(delPrev = false) {
+    toStartPage(delPrev: Boolean = false) {
         if (delPrev) {
             window.history.replaceState(null, null, '/');
         }
@@ -31,7 +39,7 @@ export default class Router {
      * @param view компонент, который отрисуется
      * @param data router data
      */
-    add(path, root = this.root, view, data) {
+    add(path: String, root = this.root, view: any, data?: Object) {
         this.routes.set(path, {
             root,
             view,
@@ -44,7 +52,7 @@ export default class Router {
      * @param root элемент куда будет рисоваться view, по-умолчание это this.root
      * @param view компонент, который отрисуется
      */
-    setNotFoundView(root = this.root, view) {
+    setNotFoundView(root = this.root, view: any) {
         this.notFoundView = view;
         this.notFoundViewRoot = root;
     }
@@ -55,7 +63,7 @@ export default class Router {
      * @param addToHistory добавлять Path в History Api или нет.
      * @private
      */
-    change(path, addToHistory = true) {
+    change(path: String, addToHistory: Boolean = true) {
         if (this.currentRoute === path) {
             return;
         }
@@ -72,7 +80,7 @@ export default class Router {
         }
 
         if (addToHistory) {
-            window.history.pushState(null, null, path);
+            window.history.pushState(null, null, (path as string));
         }
 
         if (this.routes.has(path)) {
@@ -92,7 +100,7 @@ export default class Router {
      * @returns {string}
      * @private
      */
-    static normalizePath(path) {
+    static normalizePath(path: String): String {
         return path.charAt(path.length - 1) === '/' && path !== '/' ? path.slice(0, path.length - 1) : path;
     }
 
@@ -100,7 +108,7 @@ export default class Router {
      * Запускает роутер
      */
     start() {
-        this.root.addEventListener('click', (event) => {
+        this.root.addEventListener('click', (event: any) => {
             if (event.target.tagName === 'A' && event.target.hostname === location.hostname) {
                 event.preventDefault();
                 this.change(Router.normalizePath(event.target.pathname));

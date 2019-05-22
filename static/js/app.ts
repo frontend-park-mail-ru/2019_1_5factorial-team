@@ -1,15 +1,15 @@
 import '../css/reset.scss';
 import '../css/style.scss';
 
-import menuController from './controllers/menuCtrl.js';
-import aboutController from './controllers/aboutCtrl.js';
-import loginController from './controllers/loginCtrl.js';
-import signUpController from './controllers/signUpCtrl.js';
-import leaderboardController from './controllers/leaderboardCtrl.js';
-import profileController from './controllers/profileCtrl.js';
-import gameController from './controllers/gameCtrl.js';
+import {menuController} from './controllers/menuCtrl';
+import {aboutController} from './controllers/aboutCtrl';
+import {loginController} from './controllers/loginCtrl';
+import {signUpController} from './controllers/signUpCtrl';
+import {leaderboardController} from './controllers/leaderboardCtrl';
+import {profileController} from './controllers/profileCtrl';
+import {gameController} from './controllers/gameCtrl';
 
-import Router from './libs/router.js';
+import Router from './libs/router';
 
 document.addEventListener('DOMContentLoaded', () => {
     if ('serviceWorker' in navigator) {
@@ -25,9 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuCntl = new menuController();
     const aboutCtrl = new aboutController();
     const loginCtrl = new loginController(router);
-    const signUpCtrl = new signUpController({router});
+    const signUpCtrl = new signUpController(router);
     const leaderboardCtrl = new leaderboardController();
-    const profileCtrl = new profileController({router});
+    const profileCtrl = new profileController(router);
 
     router.add('/about', main, aboutCtrl.aboutView);
     router.add('/login', main, loginCtrl.loginView);
@@ -41,6 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
     router.start();
 });
 
-function createPage(page) {
+function createPage(page: Element) {
     page.innerHTML = '<main class="main-container"></canvas></main>';
 }

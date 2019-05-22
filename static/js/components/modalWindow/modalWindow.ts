@@ -1,10 +1,16 @@
-import { MAP_OF_MODALS } from '../constants.js';
+import { MAP_OF_MODALS } from '../constants';
 
 import './modalWindow.scss';
 
 export default class ModalWindow {
+    
+    isGame: Boolean;
+    noCase: Element;
+    closeMW: Element;
+    blur: Element;
+    gameOverBackMenu: Element;
 
-    createModal(element) {
+    createModal(element: String): void {
         const modalElement = document.getElementsByClassName('modal-window')[0];
         this.isGame = false;
         if (element === 'Game single end') {
@@ -14,7 +20,7 @@ export default class ModalWindow {
         modalElement.classList.remove('hidden');
         modalElement.innerHTML = '<div class="blur"></div><div class="modal"><div class="content content_modal"></div></div>';
         const divToAppend = document.getElementsByClassName('content_modal')[0];
-        const elemToRender = MAP_OF_MODALS.get(element);
+        const elemToRender = MAP_OF_MODALS.get((element as string));
         divToAppend.innerHTML = elemToRender;
 
         this.noCase = document.getElementsByClassName('js-skip-training')[0];
@@ -50,7 +56,7 @@ export default class ModalWindow {
         }
     }
 
-    removeModal() {
+    removeModal(): void {
         const modalElement = document.getElementsByClassName('modal-window')[0];
         const toDeleteModal = document.getElementsByClassName('content content_modal')[0];
         modalElement.classList.add('hidden');

@@ -1,5 +1,6 @@
-import Game from '../components/game/game.js';
-import ModalWindow from '../components/modalWindow/modalWindow.js';
+import Game from '../components/game/game';
+import ModalWindow from '../components/modalWindow/modalWindow';
+import EventBus from '../libs/eventBus';
 
 /**
  * STATE - состояние игры
@@ -8,7 +9,12 @@ import ModalWindow from '../components/modalWindow/modalWindow.js';
  */
 
 export default class gameOnlineMulti {
-    constructor(eventBus) {
+    localEventBus: EventBus;
+    scene: Game;
+    MW: ModalWindow;
+    winnerText: Element;
+
+    constructor(eventBus: EventBus) {
         this.localEventBus = eventBus;
         this.scene = null;
         this.MW = new ModalWindow();
@@ -24,13 +30,14 @@ export default class gameOnlineMulti {
         }
         this.MW.createModal('Game multi end');
 
+        // TODO(): заменить id на никнеймы
         this.winnerText = document.getElementsByClassName('modal-window__header')[0];
-        if (this.scene.state.firstPlayer.hp === 0) {
-            console.log('first won', this.scene.state.firstPlayer);
-            this.winnerText.textContent = `Game over! ${this.scene.state.firstPlayer} won!`;
+        if (this.scene.state.Players[0].hp === 0) {
+            console.log('first won', this.scene.state.Players[0].id);
+            this.winnerText.textContent = `Game over! ${this.scene.state.Players[0]} won!`;
         } else {
-            console.log('second won', this.scene.state.secondPlayer);
-            this.winnerText.textContent = `Game over! ${this.scene.state.secondPlayer} won!`;
+            console.log('second won', this.scene.state.Players[1].id);
+            this.winnerText.textContent = `Game over! ${this.scene.state.Players[1].id} won!`;
         }
     }  
 

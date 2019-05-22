@@ -1,13 +1,13 @@
-import View from '../../libs/views.js';
-import ModalWindow from '../../components/modalWindow/modalWindow.js';
-import { NETWORK_ADRESS, AVATAR_DEFAULT, DEFAULT_AVATAR } from '../../components/constants.js';
+import View from '../../libs/views';
+import ModalWindow from '../../components/modalWindow/modalWindow';
+import { NETWORK_ADRESS, AVATAR_DEFAULT, DEFAULT_AVATAR } from '../../components/constants';
 import template from './profileView.tmpl.xml';
 
 import '../../components/userBlock/userblock.scss';
 import '../../../css/form.scss';
 
 export default class profileView extends View {
-    constructor({ eventBus = {} }) {
+    constructor(eventBus) {
         super(template, eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('checkAuthResponse', this.onCheckAuthorizationResponse.bind(this));
@@ -24,21 +24,22 @@ export default class profileView extends View {
             this.prevRoot = root;
         }
         this.localEventBus.callEvent('checkAuth');
+        return this;
     }
 
-    onSubmitPasswordSuccess(data) {
+    onSubmitPasswordSuccess(data = {}) {
         if (data.newPassword) {
             const MW = new ModalWindow();
             MW.createModal('Profile change password success');
         }
     }
 
-    onChangePasswodResponse(data) {
+    onChangePasswodResponse(data = {}) {
         //TODO(): добавить обработку ошибки в верстке
         console.log(data.error);
     }
 
-    onChangeAvatarResponse(data) {
+    onChangeAvatarResponse(data = {}) {
         if (data.error !== undefined) {
             console.log(data.error);
             return;
@@ -49,7 +50,7 @@ export default class profileView extends View {
         this.localEventBus.callEvent('loadUser', data);
     }
 
-    onChangeAvatarSuccess(data) {
+    onChangeAvatarSuccess(data = {}) {
         console.log(data);
         this.localAvatar.src = data.avatar;
         this.localEventBus.callEvent('loadUser', data);

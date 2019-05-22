@@ -1,6 +1,10 @@
+import EventBus from "./eventBus";
+
 export default class Ws {
-    constructor(eventBus) {
-        // debugger;
+    localEventBus: EventBus;
+    webs: any;
+    static __instance: Ws;
+    constructor(eventBus: EventBus) {
         this.localEventBus = eventBus;
         this.localEventBus.getEvent('sendButton', this.send.bind(this));
         if (Ws.__instance) {
@@ -27,7 +31,7 @@ export default class Ws {
         this.webs.close();
     }
 
-    handleMessage(event) {
+    handleMessage(event: { data: any; }) {
         if (event === undefined) {
             return;
         }
@@ -50,7 +54,7 @@ export default class Ws {
         }
     }
 
-    send(type, pressed) {
+    send(type: any, pressed: any) {
         this.webs.send(JSON.stringify({type, pressed}));
     }
 }

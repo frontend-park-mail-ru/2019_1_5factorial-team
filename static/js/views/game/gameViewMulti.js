@@ -1,6 +1,6 @@
 import template from './gameView.tmpl.xml';
-import View from '../../libs/views.js';
-import userBlock from '../../components/userBlock/userBlock.js';
+import View from '../../libs/views';
+import userBlock from '../../components/userBlock/userBlock';
 
 import './game.scss';
 
@@ -29,6 +29,7 @@ export default class gameViewMulti extends View {
         menuButton.addEventListener('click', () => {
             this.localEventBus.callEvent('stopGameManualy');
         });
-        this.localEventBus.callEvent('startGame');  
+        this.localEventBus.callEvent('startGame'); 
+        return this; 
     }
 }

@@ -1,5 +1,9 @@
 
 class UserSingleton {
+    login: String;
+    email: String;
+    score: String;
+    avatar: String;
     constructor() {
         this.login = null;
         this.email = null;
@@ -14,12 +18,12 @@ class UserSingleton {
      * @param avatar
      * @param login
      */
-    setUser({ email, score, avatar, login} = {}) {
+    setUser(toSetUser: { email: String, score: String, avatar: String, login: String}) {
 
-        this.email = email;
-        this.score = score;
-        this.avatar = avatar;
-        this.login = login;
+        this.avatar = toSetUser.avatar;
+        this.score = toSetUser.score;
+        this.email = toSetUser.email;
+        this.login = toSetUser.login;
     }
 
     /**

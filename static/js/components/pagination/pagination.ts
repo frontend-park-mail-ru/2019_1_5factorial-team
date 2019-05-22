@@ -1,20 +1,28 @@
-import { FIRST_POS } from '../constants.js';
+import { FIRST_POS } from '../constants';
 
 import './pagination.scss';
 
-const noop = () => null;
+const noop = (): any => null;
 
 export default class paginator {
+    protected localCountOfPages: number;
+    protected localNumOfPositions: number;
+    protected localCallbackOnClick: Function;
+    protected localLinks: Array<Element>
+    protected firstPos: number;
+    protected lastPos: number;
     /**
      * Создает пагинатор
      * @param countOfPages сколько всего страниц в пагинаторе
      * @param numOfPositions сколько кнопок в пагинаторе
      * @param callbackOnClick действие при клике на кнопку
      */
-    constructor({ countOfPages, numOfPositions, callbackOnClick = noop } = {}) {
-        this.localCountOfPages = countOfPages;
-        this.localNumOfPositions = numOfPositions;
-        this.localCallbackOnClick = callbackOnClick;
+    constructor(input: 
+        {countOfPages: number; numOfPositions: number; callbackOnClick: Function} = 
+        {countOfPages: 0, numOfPositions: 0, callbackOnClick: noop}) {
+        this.localCountOfPages = input.countOfPages;
+        this.localNumOfPositions = input.numOfPositions;
+        this.localCallbackOnClick = input.callbackOnClick;
         this.localLinks = [];
 
         this.firstPos = FIRST_POS;
@@ -26,7 +34,7 @@ export default class paginator {
             paginatorElem.classList.add('paginator__page');
             this.localLinks.push(paginatorElem);
             this.localLinks[i].addEventListener('click', this.onLinkClick.bind(this));
-            this.localLinks[i].textContent = i + 1;
+            this.localLinks[i].textContent = `${i + 1}`;
         }
         this.localLinks[0].classList.add('active-pagination');
     }
@@ -35,7 +43,7 @@ export default class paginator {
      * Вставляет пагинатор в root элемент
      * @param root
      */
-    render(root) {
+    render(root: { innerHTML: string; appendChild: (arg0: Element) => void; }) {
         root.innerHTML = '';
         this.localLinks.forEach(element => root.appendChild(element));
     }
@@ -45,12 +53,12 @@ export default class paginator {
      * Отрисовка страниц с учетом того, на какой находимся
      * @param {*} event
      */
-    onLinkClick(event) {
+    onLinkClick(event: Event) {
         event.preventDefault();
-        const linkStr = event.target.textContent;
+        const linkStr = (event.target as HTMLElement).textContent;
         const element = event.target;
         this.localLinks.forEach(element => element.classList.remove('active-pagination'));
-        element.classList.add('active-pagination');
+        (element as HTMLElement).classList.add('active-pagination');
 
         if (typeof +linkStr === 'number') {
             const linkNum = +linkStr;
@@ -71,9 +79,9 @@ export default class paginator {
         }
     }
 
-    localChanges(firstNum, lastNum) {
+    localChanges(firstNum: number, lastNum: number, linkNum?: Number) {
         this.firstPos = firstNum;
         this.lastPos = (lastNum >= this.localCountOfPages ? this.localCountOfPages : lastNum);
-        this.localLinks.forEach(val => val.textContent = firstNum++);
+        this.localLinks.forEach(val => val.textContent = `${firstNum++}`);
     }
 }

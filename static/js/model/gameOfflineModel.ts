@@ -1,9 +1,13 @@
-import Game from '../components/game/game.js';
-import api from '../libs/api.js';
-import { ANAUTH_RESPONSE } from '../components/constants.js';
+import Game from '../components/game/game';
+import api from '../libs/api';
+import { ANAUTH_RESPONSE } from '../components/constants';
+import EventBus from '../libs/eventBus';
 
 export default class gameOfflineModel {
-    constructor(eventBus) {
+    scene: Game;
+    localEventBus: EventBus;
+
+    constructor(eventBus: EventBus) {
         this.scene = null;
         this.localEventBus = eventBus;
 
@@ -22,10 +26,12 @@ export default class gameOfflineModel {
                 } else {
                     api.loadUser()
                         .then(res => {
-                            const responseOnUser = {
-                                nickname: res.nickname,
-                            };
-                            this.localEventBus.callEvent('onGetUserDataForGameResponse', {status: 'authUser', user: responseOnUser});
+                            res.json().then(res => {
+                                const responseOnUser = {
+                                    nickname: res.nickname,
+                                };
+                                this.localEventBus.callEvent('onGetUserDataForGameResponse', {status: 'authUser', user: responseOnUser});
+                            })   
                         });
                 }
             });

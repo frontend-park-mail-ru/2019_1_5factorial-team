@@ -1,25 +1,25 @@
-import network from './network.js';
+import network from './network';
 
 export default class api {
 
     /**
      * Загрузка пользователя
      */
-    static loadUser() {
+    static loadUser(): Promise<Response> {
         return network.doGet({ url:'/api/user' }).then(res => res.json());
     }
 
     /**
      * Проверка сессии пользователя
      */
-    static sessionCheck() {
+    static sessionCheck(): Promise<Response> {
         return network.doGet({ url:'/api/session' });
     }
 
     /**
      * Удаление сессии для логаута
      */
-    static deleteSession() {
+    static deleteSession(): void {
         network.doDelete({ url:'/api/session' }).then(response => {
             if (!response.ok) {
                 throw new Error(`fetch out (url: ${response.url}, status: ${response.status})`);
@@ -32,7 +32,7 @@ export default class api {
      * @param {*} loginOrEmail
      * @param {*} password
      */
-    static login({ loginOrEmail, password } = {}) {
+    static login(loginOrEmail: String, password: String): Promise<Response> {
         return network.doPost({
             url: '/api/session',
             body: {
@@ -47,11 +47,11 @@ export default class api {
      * @param {*} token
      * @param {*} service
      * */
-    static loginOauth({ token, service } = {}) {
+    static loginOauth(data: { token: String, service: String }): Promise<Response> {
         return network.doPost({
-            url: `/api/session/oauth/${service}`,
+            url: `/api/session/oauth/${data.service}`,
             body: {
-                'token': token
+                'token': data.token
             }
         });
     }
@@ -62,7 +62,7 @@ export default class api {
      * @param {*} email
      * @param {*} password
      */
-    static signUp({ login, email, password }) {
+    static signUp(login: string, email: string, password: string): Promise<Response> {
         return network.doPost({
             url: '/api/user',
             body: {
@@ -76,7 +76,7 @@ export default class api {
     /**
      * Счетчик пользователей для лидерборда
      */
-    static getUserCount() {
+    static getUserCount(): Promise<Response> {
         return network.doGet({
             url: '/api/user/count'
         });
@@ -88,13 +88,13 @@ export default class api {
      * @param {*} new_password
      * @param {*} avatar_input
      */
-    static updateUser({ old_password, new_password, avatar_input } = {}) {
+    static updateUser(data: { old_password: string, new_password: string, avatar_input: any }): Promise<Response> {
         return network.doPut({
             url: '/api/user',
             body: {
-                'avatar': avatar_input,
-                'new_password': new_password,
-                'old_password': old_password
+                'avatar': data.avatar_input,
+                'new_password': data.new_password,
+                'old_password': data.old_password
             }
         });
     }
@@ -103,7 +103,7 @@ export default class api {
      * Загрузка нового аватара на бэк
      * @param {*} avatar
      */
-    static uploadAvatar(avatar) {
+    static uploadAvatar(avatar: File): Promise<Response> {
         const formData = new FormData();
         formData.append('upload', avatar);
         return network.doPostFormData({
@@ -117,7 +117,7 @@ export default class api {
      * @param {*} limit
      * @param {*} offset
      */
-    static getScore({ limit = 5, offset = 0 } = {}) {
+    static getScore({ limit = 5, offset = 0 } = {}): Promise<Response> {
         return network.doGet({
             url: `/api/user/score?limit=${limit}&offset=${offset}`
         });

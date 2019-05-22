@@ -1,4 +1,4 @@
-import { OK_VALIDATE_EMAIL, OK_VALIDATE_LOGIN, OK_VALIDATE_PASSWORD, OK_VALIDATE_AVATAR } from '../components/constants.js';
+import { OK_VALIDATE_EMAIL, OK_VALIDATE_LOGIN, OK_VALIDATE_PASSWORD, OK_VALIDATE_AVATAR } from '../components/constants';
 import { EMPTY_EMAIL, EMPTY_LOGIN, EMPTY_PASSWORD } from '../components/constants';
 import { EMAIL_EXPRESSION, LOGIN_EXPRESSION, PASSWORD_EXPRESSION } from '../components/constants';
 import { INCORRECT_EMAIL, INCORRECT_LOGIN_OR_EMAIL, INCORRECT_AVATAR_FORMAT,  INCORRECT_LOGIN, INCORRECT_PASSWORD } from '../components/constants';
@@ -12,7 +12,7 @@ export default class Validator {
      * @param {string} email
      * @return {string}
      */
-    static validateEmail(email) {
+    static validateEmail(email: string): string {
         if (email.length === 0) {
             return EMPTY_EMAIL;
         }
@@ -29,12 +29,12 @@ export default class Validator {
      * @param {string} data
      * @return {string}
      */
-    static validateLogin(data)  {
-        if (data.length === 0) {
+    static validateLogin(login: string): string  {
+        if (login.length === 0) {
             return EMPTY_LOGIN;
         }
 
-        if (!LOGIN_EXPRESSION.test(data)) {
+        if (!LOGIN_EXPRESSION.test(login)) {
             return INCORRECT_LOGIN;
         }
 
@@ -46,7 +46,7 @@ export default class Validator {
      * @param {string} data
      * @return {string}
      */
-    static validateLoginOrEmail(data) {
+    static validateLoginOrEmail(data: string): string {
         const loginInput = Validator.validateLogin(data);
         const emailInput = Validator.validateEmail(data);
         if (loginInput === OK_VALIDATE_LOGIN) {
@@ -63,12 +63,12 @@ export default class Validator {
      * @param {string} data
      * @return {string}
      */
-    static validatePassword(data)  {
-        if (data.length === 0) {
+    static validatePassword(password: string): string  {
+        if (password.length === 0) {
             return EMPTY_PASSWORD;
         }
 
-        if (!PASSWORD_EXPRESSION.test(data)) {
+        if (!PASSWORD_EXPRESSION.test(password)) {
             return INCORRECT_PASSWORD;
         }
 
@@ -78,10 +78,10 @@ export default class Validator {
     /**
      * validateImage - check validity of input image
      * @param {HTMLElement} data
-     * @return {boolean}
+     * @return {string}
      */
-    static validateImage(data)  {
-        if (data.type !== JPEG_AVATAR_FORMAT && data.type !== PNG_AVATAR_FORMAT) {
+    static validateImage(avatar: File): string  {
+        if (avatar.type !== JPEG_AVATAR_FORMAT && avatar.type !== PNG_AVATAR_FORMAT) {
             return INCORRECT_AVATAR_FORMAT;
         }
         return OK_VALIDATE_AVATAR;

@@ -1,8 +1,17 @@
 import Jager from '../../libs/jager.js';
 
 export default class Recognizer {
+    gestureNames: Array<String>;
+    mouseIsDown: Boolean;
+    path: Array<Object>;
+    gcanvas: any;
+    gctx: CanvasRenderingContext2D;
+    jager: Jager;
+    lastDrawing: Number;
+    isDrawingPatch: Boolean;
     constructor() {
         this.jager = new Jager();
+        this.isDrawingPatch = true;
 
         this.lastDrawing = 0;
 
@@ -43,24 +52,24 @@ export default class Recognizer {
         this.gcanvas.remove();
     }
 
-    gestureStart(evt) {
-        evt.preventDefault();
+    gestureStart(event: Event): boolean {
+        event.preventDefault();
         this.mouseIsDown = true;
-        this.path = [this.jager.point(evt)];
+        this.path = [this.jager.point(event)];
         return false;
     }
 
-    gestureMove(evt) {
-        evt.preventDefault();
+    gestureMove(event: Event): boolean {
+        event.preventDefault();
         if (this.mouseIsDown) {
-            this.path.push(this.jager.point(evt));
+            this.path.push(this.jager.point(event));
             return false;
         }
         return true;
     }
 
-    gestureEnd(evt) {
-        evt.preventDefault();
+    gestureEnd(event: Event): boolean {
+        event.preventDefault();
         var gesture;
         if (this.mouseIsDown) {
             this.mouseIsDown = false;

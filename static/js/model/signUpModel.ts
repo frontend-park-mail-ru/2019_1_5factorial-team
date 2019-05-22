@@ -1,9 +1,11 @@
-import api from '../libs/api.js';
-import Validator from '../libs/validation.js';
-import { OK_RESPONSE, OK_VALIDATE_LOGIN, OK_VALIDATE_EMAIL, OK_VALIDATE_PASSWORD } from '../components/constants.js';
+import api from '../libs/api';
+import Validator from '../libs/validation';
+import { OK_RESPONSE, OK_VALIDATE_LOGIN, OK_VALIDATE_EMAIL, OK_VALIDATE_PASSWORD } from '../components/constants';
+import EventBus from '../libs/eventBus';
 
 export default class signUpModel {
-    constructor(eventBus) {
+    localEventBus: EventBus;
+    constructor(eventBus: EventBus) {
         this.localEventBus = eventBus;
         this.localEventBus.getEvent('signup', this.checkSignUp.bind(this));
     }
@@ -12,7 +14,7 @@ export default class signUpModel {
      * Проверка данных на регистрацию
      * @param {*} data
      */
-    checkSignUp(data) {
+    checkSignUp(data: {email: string, login: string, pass: string}) {
         const validateEmail = Validator.validateEmail(data.email);
         const validateLogin = Validator.validateLogin(data.login);
         const validatePassword = Validator.validatePassword(data.pass);
@@ -47,23 +49,20 @@ export default class signUpModel {
 
         console.log(data);
         
-        api.signUp({
-            email: data.email,
-            login: data.login,
-            password: data.pass
-        }).then(resp => {
-            if (resp.status === OK_RESPONSE) {
-                api.login({loginOrEmail: data.login, password: data.pass})
-                    .then(() => {
-                        this.localEventBus.callEvent('signupSuccess', {});
-                    });
-            } else {
-                resp
-                    .json()
-                    .then(data => this.localEventBus.callEvent('signupResponse', data));
-            }
-        }).catch(err => {
-            console.error(err.message);
-        });
+        api.signUp(data.login, data.email, data.pass)
+            .then(resp => {
+                if (resp.status === OK_RESPONSE) {
+                    api.login(data.login, data.pass)
+                        .then(() => {
+                            this.localEventBus.callEvent('signupSuccess', {});
+                        });
+                } else {
+                    resp
+                        .json()
+                        .then(data => this.localEventBus.callEvent('signupResponse', data));
+                }
+            }).catch(err => {
+                console.error(err.message);
+            });
     }
 }
