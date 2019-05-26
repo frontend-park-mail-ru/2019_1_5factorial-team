@@ -1,3 +1,4 @@
+import {NETWORK_ADRESS_WS_GAME} from '../components/constants';
 import EventBus from "./eventBus";
 
 export default class Ws {
@@ -11,7 +12,7 @@ export default class Ws {
             return Ws.__instance;
         }
 
-        const address = 'ws://78.155.207.69:5051/api/game/ws';
+        const address = NETWORK_ADRESS_WS_GAME;
         this.webs = new WebSocket(address);
 
         this.webs.onopen = () => {

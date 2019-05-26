@@ -23,7 +23,11 @@ export const EVENT_LIST_LOGIN = [
     'login',
     'loginResponse',
     'loginSuccess',
-    'loadWaiting'
+    'loadWaiting',
+    'loginOrEmailRTCheck',
+    'passwRTCheck',
+    'loginOrEmailRTCheckResponse',
+    'passwRTCheckResponse',
 ];
 
 export const EVENT_LIST_MENU = [
@@ -70,7 +74,13 @@ export const EVENT_LIST_SIGNUP = [
     'changePasswordResponse',
     'changePasswordRepeat',
     'changePasswordRepeatResponse',
-    'loadWaiting'
+    'loadWaiting',
+    'loginRTCheck',
+    'emailRTCheck',
+    'passwRTCheck',
+    'loginRTCheckResponse',
+    'emailRTCheckResponse',
+    'passwRTCheckResponse',
 ];
 
 export const EVENT_LIST_GAME_SINGLE = [
@@ -102,6 +112,7 @@ export const EVENT_LIST_GAME_MULTI = [
 ];
 
 export const NETWORK_ADRESS = 'http://78.155.207.69:5051';
+export const NETWORK_ADRESS_WS_GAME = 'ws://78.155.207.69:5053/api/game/ws';
 // export const NETWORK_ADRESS = 'http://localhost:5051';
 
 export const DEFAULT_AVATAR = '';
@@ -130,6 +141,7 @@ export const PASSWORD_EXPRESSION = new RegExp(/[^а-яёА-ЯЁ]{4,}$/);
 export const EMPTY_LOGIN = 'Login field is empty';
 export const EMPTY_EMAIL = 'Email field is empty';
 export const EMPTY_PASSWORD = 'Password field is empty';
+export const EXPTY_LOGIN_OR_EMAIL = 'Login or Email field is empty';
 
 export const INCORRECT_EMAIL = 'Email should contain "@" and latin letters, numbers, special symbols';
 export const INCORRECT_LOGIN = 'Login should have 4-20 symbols and contain latin letters and numbers';

@@ -8,7 +8,19 @@ export default class loginModel {
     constructor(eventBus: EventBus) {
         this.localEventBus = eventBus;
         this.localEventBus.getEvent('login', this.onLogin.bind(this));
+        this.localEventBus.getEvent('loginOrEmailRTCheck', this.loginOrEmailRTCheckResponse.bind(this));
+        this.localEventBus.getEvent('passwRTCheck', this.passwRTCheck.bind(this));
         this.oauthLogin();
+    }
+
+    loginOrEmailRTCheckResponse(input: {data: string}) {
+        let response =  Validator.validateLoginOrEmail(input.data);
+        this.localEventBus.callEvent('loginOrEmailRTCheckResponse', {response});
+    }
+
+    passwRTCheck(input: {data: string}) {
+        let response =  Validator.validatePassword(input.data);
+        return this.localEventBus.callEvent('passwRTCheckResponse', {response});
     }
 
     /**
@@ -16,31 +28,7 @@ export default class loginModel {
      * @param {*} data
      */
     onLogin(data: { loginOrEmail: string; pass: string; }) {
-        const loginOrEmailData = data.loginOrEmail;
-        const password = data.pass;
-        const validateLoginOrEmail = Validator.validateLoginOrEmail(loginOrEmailData);
-
-        if (validateLoginOrEmail !== OK_VALIDATE_EMAIL && validateLoginOrEmail !== OK_VALIDATE_LOGIN) {
-            const response = {
-                inputField: 'js-login-or-email',
-                error: validateLoginOrEmail
-            };
-            this.localEventBus.callEvent('loginResponse', response);
-            return;
-        }
-
-        const validatePassword = Validator.validatePassword(password);
-
-        if (validatePassword !== OK_VALIDATE_PASSWORD) {
-            const response = {
-                inputField: 'js-password',
-                error: validatePassword
-            };
-            this.localEventBus.callEvent('loginResponse', response);
-            return;
-        }
-
-        api.login(loginOrEmailData, data.pass)
+        api.login(data.loginOrEmail, data.pass)
             .then((res) => {
                 if (res.status === OK_RESPONSE) {
                     res.json().then((data: any) => this.localEventBus.callEvent('loginSuccess', data));

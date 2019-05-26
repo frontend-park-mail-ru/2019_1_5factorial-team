@@ -216,6 +216,11 @@ export default class Jager {
         return {x: evt.x, y: evt.y};
     }
 
+    pointTouch(evt) {
+        console.log('touching');
+        return {x: evt.touches[0].pageX, y: evt.touches[0].pageY};
+    }
+
     clearPath(path, tolerance = 100) {
         let l;
         while (path.length > 2 && this.getDistance(path[0], path[1]) < tolerance) {

@@ -10,10 +10,10 @@ export default class gameViewMulti extends View {
         this.state = {
             user: {
                 first: {
-                    nickname: 'Pasha',
+                    nickname: '',
                 },
                 second: {
-                    nickname: 'Kirill',
+                    nickname: '',
                 },
             },
         };
