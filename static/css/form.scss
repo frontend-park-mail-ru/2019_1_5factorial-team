@@ -13,6 +13,7 @@
   }
 
   &__input {
+    width: 100%;
     border: none;
     border-radius: 0.25em;
     font-size: 4vh;
@@ -37,26 +38,28 @@
   }
 
   &::placeholder {
+    padding: 0 4px;
     color: var(--black-clr);
     font-family: var(--content-font);
   }
 
   &__label {
-    display: flex;
     color: white;
     font-size: 3vh;
     margin: 1vh 0;
     text-shadow: var(--common-shdw);
-    width: 100%;
+    align-self: flex-start;
   }
 
   &__signins-header {
     margin-top: 2vh;
+    font-size: 3vh;
   }
 
   &__singins {
     @extend %inline;
     margin-top: 2vh;
+    justify-content: center;
   }
 
   &__btn {
@@ -71,6 +74,10 @@
 
   &__warning {
     color: var(--invalid-red-clr);
+    width: 300px;
+    font-size: 2vh;
+    overflow-wrap: break-word;
+    white-space: normal;
   }
 
   &__change-photo {
