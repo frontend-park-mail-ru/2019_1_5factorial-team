@@ -141,6 +141,7 @@ export const PASSWORD_EXPRESSION = new RegExp(/[^а-яёА-ЯЁ]{4,}$/);
 export const EMPTY_LOGIN = 'Login field is empty';
 export const EMPTY_EMAIL = 'Email field is empty';
 export const EMPTY_PASSWORD = 'Password field is empty';
+export const EXPTY_LOGIN_OR_EMAIL = 'Login or Email field is empty';
 
 export const INCORRECT_EMAIL = 'Email should contain "@" and latin letters, numbers, special symbols';
 export const INCORRECT_LOGIN = 'Login should have 4-20 symbols and contain latin letters and numbers';
