@@ -53,7 +53,6 @@ export default class Recognizer {
     }
 
     gestureStartTouch(event: Event): Boolean {
-        // console.log(event);
         event.preventDefault();
         this.mouseIsDown = true;
         this.path = [this.jager.pointTouch(event)];
@@ -89,7 +88,6 @@ export default class Recognizer {
         event.preventDefault();
         var gesture;
         if (this.mouseIsDown) {
-            console.log(this.path);
             this.mouseIsDown = false;
 
             gesture = this.jager.recognise(this.path, 5000, true);
@@ -106,7 +104,6 @@ export default class Recognizer {
         event.preventDefault();
         var gesture;
         if (this.mouseIsDown) {
-            console.log(this.path);
             this.mouseIsDown = false;
 
             gesture = this.jager.recognise(this.path, 5000, true);
