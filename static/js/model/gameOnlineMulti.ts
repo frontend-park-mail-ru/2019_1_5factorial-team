@@ -22,7 +22,8 @@ export default class gameOnlineMulti {
         this.localEventBus.getEvent('startGame', this.onStart.bind(this));
         this.localEventBus.getEvent('gameOver', this.onGameOver.bind(this));
         this.localEventBus.getEvent('stopGameManualy', this.stopGame.bind(this));
-    } 
+    }
+
     onGameOver() {
         console.log('this.scene first', this.scene);
         if (this.scene.state.isGameOver) {
