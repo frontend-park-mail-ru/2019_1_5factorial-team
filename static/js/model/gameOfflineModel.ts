@@ -3,6 +3,11 @@ import api from '../libs/api';
 import { ANAUTH_RESPONSE } from '../components/constants';
 import EventBus from '../libs/eventBus';
 
+interface IResponseGame extends Response {
+    error?: string;
+    nickname?: string;
+}
+
 export default class gameOfflineModel {
     scene: Game;
     localEventBus: EventBus;
@@ -25,13 +30,11 @@ export default class gameOfflineModel {
                     this.localEventBus.callEvent('onGetUserDataForGameResponse', {status: 'unAuthUser'});
                 } else {
                     api.loadUser()
-                        .then(res => {
-                            res.json().then(res => {
+                        .then((res: IResponseGame) => {
                                 const responseOnUser = {
                                     nickname: res.nickname,
                                 };
                                 this.localEventBus.callEvent('onGetUserDataForGameResponse', {status: 'authUser', user: responseOnUser});
-                            })   
                         });
                 }
             });

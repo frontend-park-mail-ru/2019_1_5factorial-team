@@ -112,6 +112,7 @@ export const EVENT_LIST_GAME_MULTI = [
 ];
 
 export const NETWORK_ADRESS = 'http://78.155.207.69:5051';
+export const NETWORK_ADRESS_WS_GAME = 'ws://78.155.207.69:5053/api/game/ws';
 // export const NETWORK_ADRESS = 'http://localhost:5051';
 
 export const DEFAULT_AVATAR = '';

@@ -5,6 +5,11 @@ import userBlock from '../components/userBlock/userBlock';
 import { ANAUTH_RESPONSE } from '../components/constants';
 import EventBus from '../libs/eventBus';
 
+interface IResponseMenu extends Response {
+    error?: string;
+    nickname?: string;
+}
+
 export default class menuModel {
     localEventBus: EventBus;
     constructor(eventbus: EventBus) {
@@ -30,21 +35,19 @@ export default class menuModel {
      */
     checkAuthorization() {
         const res = Network.doGet({ url: '/api/session' });
-        res.then(res => {
+        res.then((res: IResponseMenu) => {
             if (res.status === ANAUTH_RESPONSE) {
-                res.json().then(data => {
                     this.localEventBus.callEvent('checkAuthorizationResponse', {
                     isAuthorized: false,
-                    statusText: data.statusText,
-                    error: data.error
-                })
-            });
+                    statusText: res.statusText,
+                    error: res.error
+                });
             } else {
                 this.localEventBus.callEvent('checkAuthorizationResponse', {
                     statusText: res.statusText, 
                     isAuthorized: true,
                 });
             }
-        });
+        });   
     }
 }

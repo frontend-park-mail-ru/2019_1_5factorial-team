@@ -14,9 +14,11 @@ export default class viewMenu extends View {
         this.isAuth = false;
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('checkAuthorizationResponse', this.onCheckAuthResponse.bind(this));
+
+        this.localEventBus.callEvent('checkAuthorization');
     }
 
-    onCheckAuthResponse(isAuthorized, statusText) {
+    onCheckAuthResponse({isAuthorized, statusText}) {
         this.isAuth = isAuthorized;
         const checkHeader = new userBlock();
         const MW = new ModalWindow();
