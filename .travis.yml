@@ -2,9 +2,10 @@ language: node_js
 node_js:
 - 10
 script:
-- chmod 600 
 - npm install
 - npm start
 before_install:
 - openssl aes-256-cbc -K $encrypted_173836cec267_key -iv $encrypted_173836cec267_iv
   -in public.pem.enc -out ./public.pem -d
+- chmod 600 ~/public.pem
+- ssh-keyscan -H 78.155.207.69 >> ~/.ssh/known_hosts
