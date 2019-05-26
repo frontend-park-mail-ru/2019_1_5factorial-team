@@ -1,4 +1,4 @@
-const PORT = 4000;
+const PORT = 80;
 
 const path = require('path');
 const express = require('express');
