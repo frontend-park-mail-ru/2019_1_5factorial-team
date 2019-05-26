@@ -11,6 +11,7 @@ const symbolImgWidth: number = 60;
 
 export default class Game {
     protected isMulti?: Boolean;
+    protected isPlayers?: Boolean;
     protected localEventBus?: EventBus;
     protected MW: ModalWindow;
     protected canvas: HTMLCanvasElement;
@@ -22,7 +23,7 @@ export default class Game {
     protected symbolsOffset: number;
     protected lastDrawing: Number;
     protected lastTime: number;
-    state: {    Players?: Array<{sprite: any, x: number, id: Number, hp: number, score: Number}>, 
+    state: {    Players?: Array<{sprite: any, nick: string, x: number, id: Number, hp: number, score: Number}>, 
                 player?: {sprite: any, x: number, hp: number}, 
                 ghosts: Array<{x: number, speed: number, symbolsQueue?: Array<number>, 
                 symbols?:Array<number>, sprite: any, damage: number}>, 
@@ -64,6 +65,7 @@ export default class Game {
         this.symbolsOffset = this.canvas.height / 12;  // расстояние между призраком и символами над его головой
 
         this.lastDrawing = 0;
+        this.isPlayers = false;
 
         this.recognizer = new Recognizer();
 
@@ -110,16 +112,18 @@ export default class Game {
         }
     }
 
-    setState(state: { Players: { score: Number, x?: number, id?: Number, hp?: number }[]; Objects: { items: any; }; }) {
+    setState(state: { Players: { nick?: string, nickname?: string, score: Number, x?: number, id?: Number, hp?: number }[]; Objects: { items: any; }; }) {
         console.log(state);
         this.state = {
             Players: [{
+                nick: state.Players[0].nick,
                 sprite: this.playerImg,
                 x: state.Players[0].x,
                 id: state.Players[0].id,
                 hp: state.Players[0].hp,
                 score: state.Players[0].score,
             }, {
+                nick: state.Players[1].nick,
                 sprite: this.playerImg,
                 x: state.Players[1].x,
                 id: state.Players[1].id,
@@ -154,6 +158,14 @@ export default class Game {
     }
 
     gameLoop(): void {
+        if (!this.isPlayers) {
+            console.log('BLYA');
+            const userButtons = document.getElementsByClassName('js-check-user')[0];
+            userButtons.innerHTML = '';
+            userButtons.innerHTML = `<a class="btn users__btn login-btn">${this.state.Players[0].nick}</a><a class="btn users__btn login-btn">${this.state.Players[1].nick}</a><a class="btn users__btn signup-btn js-back-to-menu" href="/">Back to menu</a>`;
+            this.isPlayers = true;
+        }
+
         let now = Date.now();
         let dt = (now - this.lastTime) / 1000.0;
 
