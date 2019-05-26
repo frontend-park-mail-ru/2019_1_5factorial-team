@@ -158,13 +158,6 @@ export default class Game {
     }
 
     gameLoop(): void {
-        if (!this.isPlayers) {
-            console.log('BLYA');
-            const userButtons = document.getElementsByClassName('js-check-user')[0];
-            userButtons.innerHTML = '';
-            userButtons.innerHTML = `<a class="btn users__btn login-btn">${this.state.Players[0].nick}</a><a class="btn users__btn login-btn">${this.state.Players[1].nick}</a><a class="btn users__btn signup-btn js-back-to-menu" href="/">Back to menu</a>`;
-            this.isPlayers = true;
-        }
 
         let now = Date.now();
         let dt = (now - this.lastTime) / 1000.0;
@@ -173,6 +166,13 @@ export default class Game {
             this.updateSingle(dt);
             this.renderSingle();
         } else {
+            if (!this.isPlayers) {
+                console.log('BLYA');
+                const userButtons = document.getElementsByClassName('js-check-user')[0];
+                userButtons.innerHTML = '';
+                userButtons.innerHTML = `<a class="btn users__btn login-btn">${this.state.Players[0].nick}</a><a class="btn users__btn login-btn">${this.state.Players[1].nick}</a><a class="btn users__btn signup-btn js-back-to-menu" href="/">Back to menu</a>`;
+                this.isPlayers = true;
+            }
             this.renderMulti();
         }
 

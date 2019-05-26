@@ -32,10 +32,10 @@ export default class Recognizer {
         this.gcanvas.addEventListener('mouseup',    this.gestureEnd.bind(this));
         this.gcanvas.addEventListener('mouseout',   this.gestureEnd.bind(this));
 
-        this.gcanvas.addEventListener('touchstart',  this.gestureStart.bind(this));
-        this.gcanvas.addEventListener('touchmove',   this.gestureMove.bind(this));
-        this.gcanvas.addEventListener('touchcancel', this.gestureEnd.bind(this));
-        this.gcanvas.addEventListener('touchend',    this.gestureEnd.bind(this));
+        this.gcanvas.addEventListener('touchstart',  this.gestureStartTouch.bind(this));
+        this.gcanvas.addEventListener('touchmove',   this.gestureMoveTouch.bind(this));
+        this.gcanvas.addEventListener('touchcancel', this.gestureEndTouch.bind(this));
+        this.gcanvas.addEventListener('touchend',    this.gestureEndTouch.bind(this));
     }
 
     destroyRecognizer() {
@@ -52,11 +52,28 @@ export default class Recognizer {
         this.gcanvas.remove();
     }
 
+    gestureStartTouch(event: Event): Boolean {
+        // console.log(event);
+        event.preventDefault();
+        this.mouseIsDown = true;
+        this.path = [this.jager.pointTouch(event)];
+        return false;
+    }
+
     gestureStart(event: Event): boolean {
         event.preventDefault();
         this.mouseIsDown = true;
         this.path = [this.jager.point(event)];
         return false;
+    }
+
+    gestureMoveTouch(event: Event): Boolean {
+        event.preventDefault();
+        if (this.mouseIsDown) {
+            this.path.push(this.jager.pointTouch(event));
+            return false;
+        }
+        return true;
     }
 
     gestureMove(event: Event): boolean {
@@ -68,10 +85,28 @@ export default class Recognizer {
         return true;
     }
 
+    gestureEndTouch(event: Event): Boolean {
+        event.preventDefault();
+        var gesture;
+        if (this.mouseIsDown) {
+            console.log(this.path);
+            this.mouseIsDown = false;
+
+            gesture = this.jager.recognise(this.path, 5000, true);
+            console.log(this.gestureNames[gesture]);
+            this.lastDrawing = gesture;
+            this.gctx.clearRect(0, 0, this.gcanvas.width, this.gcanvas.height);
+
+            return false;
+        }
+        return true;
+    }
+
     gestureEnd(event: Event): boolean {
         event.preventDefault();
         var gesture;
         if (this.mouseIsDown) {
+            console.log(this.path);
             this.mouseIsDown = false;
 
             gesture = this.jager.recognise(this.path, 5000, true);
