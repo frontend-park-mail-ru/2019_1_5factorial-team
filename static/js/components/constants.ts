@@ -111,8 +111,8 @@ export const EVENT_LIST_GAME_MULTI = [
     'sendButton'
 ];
 
-export const NETWORK_ADRESS = 'http://95.163.180.8:8001';
-export const NETWORK_ADRESS_WS_GAME = 'ws://95.163.180.8:8003/api/game/ws';
+export const NETWORK_ADRESS = 'http://95.163.180.8';
+export const NETWORK_ADRESS_WS_GAME = 'ws://95.163.180.8/api/game/ws';
 // export const NETWORK_ADRESS = 'http://localhost:5051';
 
 export const DEFAULT_AVATAR = '';
