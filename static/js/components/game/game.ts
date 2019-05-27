@@ -557,8 +557,10 @@ export default class Game {
 
         if (this.recognizer.lastDrawing !== null) {
             this.lastDrawing = this.recognizer.lastDrawing;
-            this.recognizer.lastDrawing = null; // чтобы не сносить сразу все одинаковые символы, идущие подряд
+            this.recognizer.lastDrawing = null;
         }
+
+        this.ws.send("MOVE", this.lastDrawing);
     }
 
     generateDirection(): 'left' | 'right' {
