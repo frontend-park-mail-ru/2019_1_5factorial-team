@@ -17,12 +17,15 @@ export default class Game {
     protected canvas: HTMLCanvasElement;
     protected ctx: CanvasRenderingContext2D;
     protected ws: Ws;
+    protected isSet?: Boolean;
 
     protected axisY: number;
     protected heartsBlockY: number;
     protected symbolsOffset: number;
     protected lastDrawing: Number;
     protected lastTime: number;
+    protected deltaX: number;
+
     state: {    Players?: Array<{sprite: any, nick: string, x: number, id: Number, hp: number, score: Number}>, 
                 player?: {sprite: any, x: number, hp: number}, 
                 ghosts: Array<{x: number, speed: number, symbolsQueue?: Array<number>, 
@@ -65,6 +68,7 @@ export default class Game {
         this.symbolsOffset = this.canvas.height / 12;  // расстояние между призраком и символами над его головой
 
         this.lastDrawing = 0;
+        this.isSet = false;
         this.isPlayers = false;
 
         this.recognizer = new Recognizer();
@@ -113,27 +117,78 @@ export default class Game {
     }
 
     setState(state: { Players: { nick?: string, nickname?: string, score: Number, x?: number, id?: Number, hp?: number }[]; Objects: { items: any; }; }) {
+        this.deltaX = this.ghostLeftImg.width / 2;
         console.log(state);
-        this.state = {
-            Players: [{
-                nick: state.Players[0].nick,
-                sprite: this.playerImg,
-                x: state.Players[0].x,
-                id: state.Players[0].id,
-                hp: state.Players[0].hp,
-                score: state.Players[0].score,
-            }, {
-                nick: state.Players[1].nick,
-                sprite: this.playerImg,
-                x: state.Players[1].x,
-                id: state.Players[1].id,
-                hp: state.Players[1].hp,
-                score: state.Players[1].score,
-            }],
-            ghosts: state.Objects.items,
-            gameTime: 0,
-            isGameOver: false
-        };
+
+
+        ///////////////////////////////////
+
+        if (!this.isSet) {  // сеттим стейт в первый раз
+            this.state = {
+                Players: [{
+                    nick: state.Players[0].nick,
+                    sprite: this.playerImg,
+                    x: state.Players[0].x,
+                    id: state.Players[0].id,
+                    hp: state.Players[0].hp,
+                    score: state.Players[0].score,
+                }, {
+                    nick: state.Players[1].nick,
+                    sprite: this.playerImg,
+                    x: state.Players[1].x,
+                    id: state.Players[1].id,
+                    hp: state.Players[1].hp,
+                    score: state.Players[1].score,
+                }],
+                ghosts: state.Objects.items,
+                gameTime: 0,
+                isGameOver: false
+            };
+
+            this.isSet = true;
+        } else {
+            console.log('в моем стейте столько призраков: ' + this.state.ghosts.length);
+            console.log('в новом стейте столько: '+ state.Objects.items.length);
+
+            console.log('дельта: ' + this.deltaX);
+
+            if (this.state.ghosts.length === state.Objects.items.length) {
+                for (let i = 0; i < state.Objects.items.length; i++) {
+                    if (Math.abs(state.Objects.items[i].x - this.state.ghosts[i].x) >= this.deltaX) {
+                        this.state.ghosts[i] = state.Objects.items[i];
+                        console.log('reset');
+                    } else {
+                        console.log('no need to reset');
+                    }
+                }
+            } else if (this.state.ghosts.length < state.Objects.items.length && state.Objects.items.length === 2) {
+                this.state.ghosts.push(state.Objects.items[1]);
+                for (let i = 0; i < state.Objects.items.length; i++) {
+                    if (Math.abs(state.Objects.items[i].x - this.state.ghosts[i].x) >= this.deltaX) {
+                        this.state.ghosts[i] = state.Objects.items[i];
+                        console.log('reset');
+                    } else {
+                        console.log('no need to reset');
+                    }
+                }
+            } else if (this.state.ghosts.length > state.Objects.items.length && state.Objects.items.length === 1) {
+                this.state.ghosts.splice(0, 1);
+                if (Math.abs(state.Objects.items[0].x - this.state.ghosts[0].x) >= this.deltaX) {
+                    this.state.ghosts[0] = state.Objects.items[0];
+                    console.log('reset');
+                } else {
+                    console.log('no need to reset');
+                }
+            }
+
+            this.state.Players[0].x = state.Players[0].x;
+            this.state.Players[0].hp = state.Players[0].hp;
+            this.state.Players[0].score = state.Players[0].score;
+
+            this.state.Players[1].x = state.Players[1].x;
+            this.state.Players[1].hp = state.Players[1].hp;
+            this.state.Players[1].score = state.Players[1].score;
+        }
 
         this.gameLoop();
     }
@@ -158,7 +213,6 @@ export default class Game {
     }
 
     gameLoop(): void {
-
         let now = Date.now();
         let dt = (now - this.lastTime) / 1000.0;
 
@@ -173,7 +227,7 @@ export default class Game {
                 userButtons.innerHTML = `<a class="btn users__btn login-btn">${this.state.Players[0].nick}</a><a class="btn users__btn login-btn">${this.state.Players[1].nick}</a><a class="btn users__btn signup-btn js-back-to-menu" href="/">Back to menu</a>`;
                 this.isPlayers = true;
             }
-            this.renderMulti();
+            this.renderMulti(dt);
         }
 
         if (this.state.isGameOver === true) {
@@ -262,7 +316,7 @@ export default class Game {
                     this.recognizer.destroyRecognizer();
                 }
                 this.state.isGameOver = true;
-                this.localEventBus.callEvent('gameOver')
+                this.localEventBus.callEvent('gameOver');
                 return;
             }
         }
@@ -367,7 +421,7 @@ export default class Game {
         }
     }
 
-    renderMulti(): void {
+    renderMulti(dt: number): void {
         /*
          * Блок первого игрока
          */
@@ -384,11 +438,10 @@ export default class Game {
         this.state.Players[0].x = leftPlayerX;
 
         this.ctx.clearRect(leftPlayerX, this.axisY - this.state.Players[0].sprite.height,
-            this.state.Players[0].sprite.width, 
-            this.state.Players[0].sprite.height);
+            this.playerImg.width, this.playerImg.height);
 
-        this.ctx.drawImage(this.state.Players[0].sprite, leftPlayerX,
-            this.axisY - this.state.Players[0].sprite.height);
+        this.ctx.drawImage(this.playerImg, leftPlayerX,
+            this.axisY - this.playerImg.height);
 
         /*
          * Блок второго игрока
@@ -404,17 +457,28 @@ export default class Game {
         }
 
         // позиция игрока
-        let rightPlayerX = leftPlayerX + this.state.Players[0].sprite.width;
+        let rightPlayerX = leftPlayerX + this.playerImg.width;
         this.state.Players[1].x = rightPlayerX;
 
-        this.ctx.clearRect(rightPlayerX, this.axisY - this.state.Players[1].sprite.height,
-            this.state.Players[1].sprite.width, 
-            this.state.Players[1].sprite.height);
-            
-        this.ctx.drawImage(this.state.Players[1].sprite, rightPlayerX,
-            this.axisY - this.state.Players[1].sprite.height);
+        this.ctx.clearRect(rightPlayerX, this.axisY - this.playerImg.height,
+            this.playerImg.width, this.playerImg.height);
+
+        this.ctx.drawImage(this.playerImg, rightPlayerX,
+            this.axisY - this.playerImg.height);
 
         for (let i = 0; i < this.state.ghosts.length; i++) {  // призраки
+            this.moveGhost(this.state.ghosts[i], dt);
+
+            if (this.state.ghosts[i].speed > 0) {
+                if (this.state.ghosts[i].x + this.ghostLeftImg.width >= this.state.Players[0].x) {
+                    this.state.ghosts[i].speed = 0;
+                }
+            } else if (this.state.ghosts[i].speed < 0) {
+                if (this.state.ghosts[i].x <= this.state.Players[1].x + this.playerImg.width) {
+                    this.state.ghosts[i].speed = 0;
+                }
+            }
+
             let leftSymbolOffset = (this.ghostLeftImg.width / 2 - (this.state.ghosts[i].symbols.length * symbolImgWidth) / 2);
 
             if (this.state.ghosts[i].speed > 0) {
@@ -458,9 +522,10 @@ export default class Game {
                 this.ctx.drawImage(this.ghostRightImg,
                     this.state.ghosts[i].x, this.axisY - this.ghostRightImg.height);
 
-                this.ctx.clearRect(this.state.Players[1].x + this.playerImg.width / 2,
+                this.ctx.clearRect(this.canvas.width / 2,
                     this.axisY - this.ghostRightImg.height - symbolImgWidth - this.symbolsOffset,
                     this.canvas.width / 2, symbolImgWidth);
+
                 for (let j = 0; j < this.state.ghosts[i].symbols.length; j++) {
                     switch (this.state.ghosts[i].symbols[j]) {
                         case 2:  // LR
@@ -492,8 +557,10 @@ export default class Game {
 
         if (this.recognizer.lastDrawing !== null) {
             this.lastDrawing = this.recognizer.lastDrawing;
-            this.recognizer.lastDrawing = null; // чтобы не сносить сразу все одинаковые символы, идущие подряд
+            this.recognizer.lastDrawing = null;
         }
+
+        this.ws.send("MOVE", this.lastDrawing);
     }
 
     generateDirection(): 'left' | 'right' {
@@ -543,20 +610,23 @@ export default class Game {
     }
 
     moveGhost(ghost: { x: number; speed: number; }, dt: number) {
-        ghost.x += ghost.speed * dt;
+        let speedDelta = 0;
+        ghost.speed > 0 ? speedDelta = 30 : speedDelta = - 30;
+
+        ghost.x += (ghost.speed + speedDelta) * dt;  // TODO(): вынести в константу разность скоростей
     }
 
     /*
      *  Конвертирует координаты с бэка
      *  под текущую ширину канваса (экрана)
      */
-    // convertCoordinate(coordinate) {
-    //     const serverAxisLength = 1440;
-    //     const segmentServerAxis = 1 / serverAxisLength;
-    //
-    //     const newAxisLength = this.canvas.width;
-    //     const segmentNewAxis = segmentServerAxis * (1 / newAxisLength);
-    //
-    //     coordinate *= segmentNewAxis;
-    // }
+    convertCoordinate(coordinate: number): number {
+        const serverAxisLength = 1440;
+        const segmentServerAxis = 1 / serverAxisLength;
+
+        const newAxisLength = this.canvas.width;
+        const segmentNewAxis = segmentServerAxis * (1 / newAxisLength);
+
+        return coordinate * segmentNewAxis;
+    }
 }
