@@ -1,5 +1,5 @@
 import api from '../libs/api';
-import Network from '../libs/network';
+import {doGet} from '../libs/network';
 import {User} from '../libs/users';
 import userBlock from '../components/userBlock/userBlock';
 import { ANAUTH_RESPONSE, OK_RESPONSE, COUNT_OF_PAGES, NUM_OF_POSITIONS } from '../components/constants';
@@ -24,23 +24,19 @@ export default class leaderboardModel {
     /**
      * Проверяем пользователя - авторизован ли
      */
-    checkAuthorization() {
-        const res = Network.doGet({ url: '/api/session' });
-        res.then(res => {
-            if (res.status === ANAUTH_RESPONSE) {
-                res.json().then(data => {
-                    this.localEventBus.callEvent('checkAuthorizationResponse', {
-                    isAuthorized: false,
-                    statusText: data.statusText,
-                    error: data.error
-                })
+    async checkAuthorization() {
+        const res = await doGet({ url: '/api/session' });
+        if (res.status === ANAUTH_RESPONSE) {
+            return this.localEventBus.callEvent('checkAuthorizationResponse', {
+                isAuthorized: false,
+                statusText: res.statusText,
             });
-            } else {
-                this.localEventBus.callEvent('checkAuthorizationResponse', {
-                    isAuthorized: true,
-                });
-            }
-        });
+        } else {
+            return this.localEventBus.callEvent('checkAuthorizationResponse', {
+                isAuthorized: true,
+                statusText: res.statusText,
+            });
+        }
     }
 
     /**

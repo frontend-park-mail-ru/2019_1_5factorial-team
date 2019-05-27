@@ -7,7 +7,20 @@ import './userblock.scss';
 export default class userBlock {
     changeButtons(statusText: String): boolean {
         const userButtons = document.getElementsByClassName('js-check-auth')[0];
-        if (statusText === 'OK') {
+        if (statusText === 'OK' || statusText === 'session is valid') {
+            const toAdd = MAP_OF_USER_BLOCKS.get('isAuth block');
+            userButtons.innerHTML = toAdd;
+            return true;
+        } else {
+            const toAdd = MAP_OF_USER_BLOCKS.get('unAuth block');
+            userButtons.innerHTML = toAdd;
+            return false;
+        }
+    }
+
+    changeButtonsBool(isAuth: Boolean) {
+        const userButtons = document.getElementsByClassName('js-check-auth')[0];
+        if (isAuth === true) {
             const toAdd = MAP_OF_USER_BLOCKS.get('isAuth block');
             userButtons.innerHTML = toAdd;
             return true;

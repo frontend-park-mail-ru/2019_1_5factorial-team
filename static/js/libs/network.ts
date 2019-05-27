@@ -84,3 +84,10 @@ export default class Network {
         });
     }
 }
+
+export const  doGet = async ({ url = '/' } = {}): Promise<Response> => {
+    return fetch(Network.getServerURL() + url, {
+        method: 'GET',
+        credentials: 'include',
+    });
+}

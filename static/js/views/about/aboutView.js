@@ -17,9 +17,7 @@ export default class aboutView extends View {
 
     onCheckAuthResponse({isAuthorized = false} = {}) {
         const checkHeader = new userBlock();
-        let statusText;
-        isAuthorized ? statusText = 'OK' : statusText = 'anauth';
-        if (checkHeader.changeButtons(statusText)) {
+        if (checkHeader.changeButtonsBool(isAuthorized)) {
             const signoutButton = document.getElementsByClassName('js-signout')[0];
             signoutButton.addEventListener('click', () => {
                 this.localEventBus.callEvent('signOut');

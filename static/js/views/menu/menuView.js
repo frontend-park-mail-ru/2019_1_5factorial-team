@@ -13,8 +13,6 @@ export default class viewMenu extends View {
         this.isAuth = false;
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('checkAuthorizationResponse', this.onCheckAuthResponse.bind(this));
-
-        this.localEventBus.callEvent('checkAuthorization');
     }
 
     onCheckAuthResponse({isAuthorized, statusText}) {
@@ -25,7 +23,7 @@ export default class viewMenu extends View {
         // const singleButton = document.getElementsByClassName('js-single')[0];
         // const multiButton = document.getElementsByClassName('js-multi')[0];
 
-        if (checkHeader.changeButtons(statusText) || this.isAuth) {
+        if (checkHeader.changeButtonsBool(this.isAuth)) {
             const signoutButton = document.getElementsByClassName('js-signout')[0];
             signoutButton.addEventListener('click', () => {
                 this.isAuth = false;
@@ -50,8 +48,10 @@ export default class viewMenu extends View {
     }
 
     render(root, data = {}) {
-        super.render(root, data);
         this.localEventBus.callEvent('checkAuthorization');
-        return this;
+        super.render(root, data);
+        console.log('called render');
+        // this.localEventBus.callEvent('checkAuthorization');
+        // return this;
     }
 }
