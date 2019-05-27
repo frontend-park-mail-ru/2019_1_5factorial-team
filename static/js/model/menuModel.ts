@@ -35,7 +35,8 @@ export default class menuModel {
      */
     checkAuthorization() {
         const res = Network.doGet({ url: '/api/session' });
-        res.then(res => {
+        res.then((res: IResponseMenu) => {
+            console.log(res);
             if (res.status === ANAUTH_RESPONSE) {
                 res.json().then(data => {
                     this.localEventBus.callEvent('checkAuthorizationResponse', {
