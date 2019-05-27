@@ -6,7 +6,7 @@ const webpack = require('webpack');
 
 module.exports = {
     mode: 'development',
-    entry: {index: ['./static/js/app.ts', 'webpack-hot-middleware/client']},
+    entry: {index: ['./static/js/app.ts']},
     output: {
         path: build,
         filename: 'bundle.js'
@@ -51,7 +51,5 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: 'style.css',
         }),
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoEmitOnErrorsPlugin()
     ]
 };

@@ -5,9 +5,6 @@ const express = require('express');
 const body = require('body-parser');
 const fs = require('fs');
 const morgan = require('morgan');
-const webpack = require('webpack');
-const webpackConfig = require('./webpack.config');
-const compiler = webpack(webpackConfig);
 
 const app = express();
 app.use(morgan('dev'));
@@ -17,10 +14,6 @@ const root = path.resolve(__dirname, 'static');
 app.use(express.static(__dirname + '/static'));
 
 app.use(body.json());
- 
-app.use(require("webpack-dev-middleware")(compiler, {
-    noInfo: true, publicPath: webpackConfig.output.publicPath
-}));
 
 app.get('/sw.js', (req, res) => {
     res.set('Cache-Control', 'no-cache, no-store, must-revalidate');

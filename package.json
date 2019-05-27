@@ -58,6 +58,7 @@
     "start": "node server.js",
     "prestart": "webpack --mode development",
     "build": "fest-build --dir=./static/js/views",
+    "build-travis": "npm run build && npm run prestart",
     "lint": "./node_modules/.bin/eslint .",
     "lint-fix": "./node_modules/.bin/eslint --fix ."
   },

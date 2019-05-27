@@ -6,6 +6,7 @@ static/dist/
 wasm_kek/
 
 static/js/libs/wasm.js
+webpack.config.js
 
 
 static/js/views/menu/menuView.tmpl.js
@@ -14,6 +15,7 @@ static/js/views/about/aboutView.tmpl.js
 static/js/views/profile/profileView.tmpl.js
 static/js/views/signUp/signUpView.tmpl.js
 static/js/views/leaderboard/leaderboardView.tmpl.js
+static/js/views/game/gameView.tmpl.js
 
 
 static/js/views/menu/menuView.tmpl.xml

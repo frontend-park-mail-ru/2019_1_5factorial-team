@@ -2,6 +2,8 @@
 
 Репозиторий фронтенда 
 
+[![Build Status](https://travis-ci.org/frontend-park-mail-ru/2019_1_5factorial-team.svg?branch=dev)](https://travis-ci.org/frontend-park-mail-ru/2019_1_5factorial-team)
+
 ## Состав
 
 - [Сметанкин Кирилл](https://github.com/smet1)
