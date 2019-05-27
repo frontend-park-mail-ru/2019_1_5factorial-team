@@ -112,7 +112,7 @@ export const EVENT_LIST_GAME_MULTI = [
 ];
 
 export const NETWORK_ADRESS = 'https://5factorial.tech';
-export const NETWORK_ADRESS_WS_GAME = 'https://5factorial.tech/api/game/ws';
+export const NETWORK_ADRESS_WS_GAME = 'wss://5factorial.tech/api/game/ws';
 // export const NETWORK_ADRESS = 'http://localhost:5051';
 
 export const DEFAULT_AVATAR = '';

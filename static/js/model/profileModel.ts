@@ -53,7 +53,7 @@ export default class profileModel {
                     }).then(response => {
                         if (response.status === OK_RESPONSE) {
                             response.json().then(data => {
-                                const avatarLink = NETWORK_ADRESS + data.avatar_link;
+                                const avatarLink = NETWORK_ADRESS + '/var/www/5factorial/' + data.avatar_link;
                                 this.localEventBus.callEvent('changeAvatarSuccess', {avatar: avatarLink})
                             });
                         } else {
