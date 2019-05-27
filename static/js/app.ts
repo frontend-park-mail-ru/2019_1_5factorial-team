@@ -13,7 +13,7 @@ import Router from './libs/router';
 
 document.addEventListener('DOMContentLoaded', () => {
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js');
+        navigator.serviceWorker.register('/dist/sw.js');
     }
 
     const page = document.getElementsByClassName('body-cnt')[0];
