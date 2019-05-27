@@ -34,8 +34,8 @@ export default class menuModel {
      * Проверяем пользователя - авторизован ли
      */
     checkAuthorization() {
-        const res = Network.doGet({ url: '/api/session' });
-        res.then((res: IResponseMenu) => {
+        return Network.doGet({ url: '/api/session' }).then(res => {
+        res.json().then((res: IResponseMenu) => {
             if (res.status === ANAUTH_RESPONSE) {
                     this.localEventBus.callEvent('checkAuthorizationResponse', {
                     isAuthorized: false,
@@ -48,6 +48,7 @@ export default class menuModel {
                     isAuthorized: true,
                 });
             }
-        });   
+        });
+    })   
     }
 }

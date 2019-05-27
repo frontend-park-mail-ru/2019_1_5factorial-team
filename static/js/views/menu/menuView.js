@@ -19,12 +19,13 @@ export default class viewMenu extends View {
 
     onCheckAuthResponse({isAuthorized, statusText}) {
         this.isAuth = isAuthorized;
+        this.statusText = statusText;
         const checkHeader = new userBlock();
         // const MW = new ModalWindow();
         // const singleButton = document.getElementsByClassName('js-single')[0];
         // const multiButton = document.getElementsByClassName('js-multi')[0];
 
-        if (checkHeader.changeButtons(statusText)) {
+        if (checkHeader.changeButtons(statusText) || this.isAuth) {
             const signoutButton = document.getElementsByClassName('js-signout')[0];
             signoutButton.addEventListener('click', () => {
                 this.isAuth = false;
