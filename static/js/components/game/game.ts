@@ -469,6 +469,16 @@ export default class Game {
         for (let i = 0; i < this.state.ghosts.length; i++) {  // призраки
             this.moveGhost(this.state.ghosts[i], dt);
 
+            if (this.state.ghosts[i].speed > 0) {
+                if (this.state.ghosts[i].x + this.ghostLeftImg.width >= this.state.Players[0].x) {
+                    this.state.ghosts[i].speed = 0;
+                }
+            } else if (this.state.ghosts[i].speed < 0) {
+                if (this.state.ghosts[i].x <= this.state.Players[1].x + this.playerImg.width) {
+                    this.state.ghosts[i].speed = 0;
+                }
+            }
+
             let leftSymbolOffset = (this.ghostLeftImg.width / 2 - (this.state.ghosts[i].symbols.length * symbolImgWidth) / 2);
 
             if (this.state.ghosts[i].speed > 0) {
