@@ -5,6 +5,7 @@
   "main": "temp/server.js",
   "dependencies": {
     "@babel/core": "^7.4.0",
+    "@types/mocha": "^5.2.6",
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.0.5",
     "body-parser": "latest",
