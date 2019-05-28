@@ -94,7 +94,7 @@ export default class Game {
         this.localEventBus.getEvent('updateState', this.setState.bind(this));
 
         if (detectMobile.detect()) {
-            screen.orientation.lock('portrait');
+            screen.orientation.lock('landscape-primary');
             this.isLocked = true;
 
         } else {
