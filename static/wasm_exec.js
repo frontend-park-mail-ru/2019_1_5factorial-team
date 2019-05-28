@@ -261,6 +261,11 @@
 						crypto.getRandomValues(loadSlice(sp + 8));
 					},
 
+					                    // func scheduleCallback(delay int64)
+					"runtime.scheduleCallback": (sp) => {
+						setTimeout(() => { this._resolveCallbackPromise(); }, getInt64(sp + 8));
+					},
+
 					// func stringVal(value string) ref
 					"syscall/js.stringVal": (sp) => {
 						storeValue(sp + 24, loadString(sp + 8));

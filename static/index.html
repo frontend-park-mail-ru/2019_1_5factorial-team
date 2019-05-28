@@ -18,15 +18,15 @@
         };
     }
 
-    const go = new Go();
-    const {instance} = await WebAssembly.instantiateStreaming(fetch("test.wasm"), go.importObject).then((inst) => {
-        go.run(inst);
-    });
-    // (async function () {
-    //     const go = new Go();
-    //     const {instance} = await WebAssembly.instantiateStreaming(fetch("test.wasm"), go.importObject);
-    //     // go.run(instance);
-    // })();
+    // const go = new Go();
+    // const {instance} = await WebAssembly.instantiateStreaming(fetch("test.wasm"), go.importObject).then((inst) => {
+        // go.run(inst);
+    // });
+    (async function () {
+        const go = new Go();
+        const {instance} = await WebAssembly.instantiateStreaming(fetch("test.wasm"), go.importObject);
+        go.run(instance);
+    })();
 
     let getCustomAvatar;
 
