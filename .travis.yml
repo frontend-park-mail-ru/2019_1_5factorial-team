@@ -4,6 +4,7 @@ node_js:
 script:
 - ssh-keyscan -H 95.163.180.8 >> ~/.ssh/known_hosts
 - chmod 600 ~/5factorial_id_rsa.pem
+- npm run test
 - npm run build-travis
 - mkdir ./deploy
 - cp ./static/*.* ./deploy
