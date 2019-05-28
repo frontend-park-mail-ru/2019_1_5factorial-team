@@ -217,7 +217,9 @@ export default class Game {
         }
         this.recognizer.destroyRecognizer();
 
-        console.log('final score is', this.state.score);
+        if (this.state) {
+            console.log('final score is', this.state.score);
+        }
         window.removeEventListener('resize', this.resizer.bind(this));
         if (this.isLocked) {
             screen.orientation.unlock();
