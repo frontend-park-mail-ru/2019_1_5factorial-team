@@ -19,9 +19,9 @@
     }
 
     (async function () {
-        const go = new Go()
+        const go = new Go();
         const {instance} = await WebAssembly.instantiateStreaming(fetch("test.wasm"), go.importObject);
-        go.run(instance)
+        go.run(instance);
     })();
 
     let getCustomAvatar;
@@ -31,22 +31,6 @@
         // document.querySelector('#printMessageButton').disabled = false
     }
 </script>
-    <script>
-        // var input = document.body.children[0];
-        let login = document.querySelector('.js-login');
-        if (login) {
-            login.oninput = function () {
-                getCustomAvatar(document.querySelector('.js-login').value, document.querySelector('.js-email').value)
-            };
-        }
-
-        let email = document.querySelector('.js-email');
-        if (email) {
-            email.oninput = function () {
-                getCustomAvatar(document.querySelector('.js-login').value, document.querySelector('.js-email').value)
-            };
-        }
-    </script>
 <body class="body-cnt">
 </body>
 <script src="./dist/bundle.js"></script>
