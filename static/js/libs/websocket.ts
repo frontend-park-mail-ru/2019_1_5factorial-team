@@ -29,6 +29,7 @@ export default class Ws {
     }
 
     closeConn() {
+        Ws.__instance = null;
         this.webs.close();
     }
 
