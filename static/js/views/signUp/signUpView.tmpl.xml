@@ -1,25 +1,4 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
-    <script>
-        if (!WebAssembly.instantiateStreaming) { // polyfill
-            WebAssembly.instantiateStreaming = async (resp, importObject) => {
-                const source = await (await resp).arrayBuffer();
-                return await WebAssembly.instantiate(source, importObject);
-            };
-        }
-
-        (async function () {
-            const go = new Go()
-            const {instance} = await WebAssembly.instantiateStreaming(fetch("test.wasm"), go.importObject);
-            go.run(instance)
-        })();
-
-        let getCustomAvatar;
-
-        function setCustomAvatar(callback) {
-            getCustomAvatar = callback;
-            // document.querySelector('#printMessageButton').disabled = false
-        }
-    </script>
     <div class="container">
         <section class="container__block container__block_left sided-block">
             <div class="settings">
@@ -60,16 +39,4 @@
             </div>
         </section>
     </div>
-    <script>
-        // var input = document.body.children[0];
-        let login = document.querySelector('.js-login');
-        login.oninput = function () {
-            getCustomAvatar(document.querySelector('.js-login').value, document.querySelector('.js-email').value)
-        };
-
-        let email = document.querySelector('.js-email');
-        email.oninput = function () {
-            getCustomAvatar(document.querySelector('.js-login').value, document.querySelector('.js-email').value)
-        };
-    </script>
 </fest:template>
