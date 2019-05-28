@@ -266,6 +266,13 @@
 						setTimeout(() => { this._resolveCallbackPromise(); }, getInt64(sp + 8));
 					},
 
+					// func clearScheduledCallback(id int32)
+					"runtime.clearScheduledCallback": (sp) => {
+						const id = mem().getInt32(sp + 8, true);
+						clearTimeout(this._callbackTimeouts.get(id));
+						this._callbackTimeouts.delete(id);
+					},
+
 					// func stringVal(value string) ref
 					"syscall/js.stringVal": (sp) => {
 						storeValue(sp + 24, loadString(sp + 8));
