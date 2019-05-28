@@ -7,7 +7,7 @@ script:
 - npm run build-travis
 - mkdir ./deploy
 - cp ./static/*.* ./deploy
-- mv ./static/(css|dist|img|fonts)$ ./deploy
+- mv ./static/{css,dist,img,fonts} ./deploy
 # - mv ./static/dist ./deploy
 # - mv ./static/img ./deploy
 # - mv ./static/fonts ./deploy
