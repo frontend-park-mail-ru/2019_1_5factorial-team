@@ -46,7 +46,7 @@ export default class leaderboardModel {
         api.deleteSession();
         const checkHeader = new userBlock();
         checkHeader.changeButtons('loggedOut');
-        this.localEventBus.callEvent('closeView', { isAuth: false, signout: true });
+        // this.localEventBus.callEvent('closeView', { isAuth: false, signout: true });
         User.removeUser();
     }
 
