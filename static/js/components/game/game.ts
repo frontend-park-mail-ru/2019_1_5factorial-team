@@ -577,7 +577,7 @@ export default class Game {
             this.isSent = false;
         }
         if (!this.isSent) {
-            this.ws.send("MOVE", this.lastDrawing);
+            this.ws.send("MOVE", String(this.lastDrawing));
             this.isSent = true;
             this.lastDrawing = null;
         }

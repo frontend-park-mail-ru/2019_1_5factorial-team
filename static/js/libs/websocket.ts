@@ -56,7 +56,7 @@ export default class Ws {
     }
 
     send(type: any, pressed: any) {
-        console.log(type, pressed);
+        console.log(type,  pressed);
         this.webs.send(JSON.stringify({type, pressed}));
     }
 }
