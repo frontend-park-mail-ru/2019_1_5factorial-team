@@ -28,6 +28,7 @@ export const EVENT_LIST_LOGIN = [
     'passwRTCheck',
     'loginOrEmailRTCheckResponse',
     'passwRTCheckResponse',
+    'oauthCheck',
 ];
 
 export const EVENT_LIST_MENU = [

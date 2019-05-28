@@ -10,7 +10,8 @@ export default class loginModel {
         this.localEventBus.getEvent('login', this.onLogin.bind(this));
         this.localEventBus.getEvent('loginOrEmailRTCheck', this.loginOrEmailRTCheckResponse.bind(this));
         this.localEventBus.getEvent('passwRTCheck', this.passwRTCheck.bind(this));
-        this.oauthLogin();
+        this.localEventBus.getEvent('oauthCheck', this.oauthLogin.bind(this));
+        // this.oauthLogin();
     }
 
     loginOrEmailRTCheckResponse(input: {data: string}) {

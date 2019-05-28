@@ -59,7 +59,8 @@ export default class loginView extends View {
 
         this.loginOrEmailInput.addEventListener('change', this.loginOrEmailRTCheck.bind(this, this.loginOrEmailInput));
         this.passwInput.addEventListener('change', this.passwRTCheck.bind(this, this.passwInput));
-        return this;
+        this.localEventBus.callEvent('oauthCheck');
+        // return this;
     }
 
     loginOrEmailRTCheck(input) {
