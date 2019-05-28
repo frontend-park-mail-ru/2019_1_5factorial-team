@@ -279,12 +279,13 @@
 					},
 
 					// func valueGet(v ref, p string) ref
-					// "syscall/js.valueGet": (sp) => {
-					// 	const result = Reflect.get(loadValue(sp + 8), loadString(sp + 16));
-					// 	console.log(this._inst);
-					// 	sp = this._inst.exports.getsp(); // see comment above
-					// 	storeValue(sp + 32, result);
-					// },
+					"syscall/js.valueGet": (sp) => {
+						const result = Reflect.get(loadValue(sp + 8), loadString(sp + 16));
+						console.log(this._inst.exports);
+						console.log(this._inst);
+						sp = this._inst.exports.getsp(); // see comment above
+						storeValue(sp + 32, result);
+					},
 
 					// func valueSet(v ref, p string, x ref)
 					"syscall/js.valueSet": (sp) => {
@@ -302,50 +303,50 @@
 					},
 
 					// func valueCall(v ref, m string, args []ref) (ref, bool)
-					// "syscall/js.valueCall": (sp) => {
-					// 	try {
-					// 		const v = loadValue(sp + 8);
-					// 		const m = Reflect.get(v, loadString(sp + 16));
-					// 		const args = loadSliceOfValues(sp + 32);
-					// 		const result = Reflect.apply(m, v, args);
-					// 		sp = this._inst.exports.getsp(); // see comment above
-					// 		storeValue(sp + 56, result);
-					// 		mem().setUint8(sp + 64, 1);
-					// 	} catch (err) {
-					// 		storeValue(sp + 56, err);
-					// 		mem().setUint8(sp + 64, 0);
-					// 	}
-					// },
+					"syscall/js.valueCall": (sp) => {
+						try {
+							const v = loadValue(sp + 8);
+							const m = Reflect.get(v, loadString(sp + 16));
+							const args = loadSliceOfValues(sp + 32);
+							const result = Reflect.apply(m, v, args);
+							sp = this._inst.exports.getsp(); // see comment above
+							storeValue(sp + 56, result);
+							mem().setUint8(sp + 64, 1);
+						} catch (err) {
+							storeValue(sp + 56, err);
+							mem().setUint8(sp + 64, 0);
+						}
+					},
 
-					// // func valueInvoke(v ref, args []ref) (ref, bool)
-					// "syscall/js.valueInvoke": (sp) => {
-					// 	try {
-					// 		const v = loadValue(sp + 8);
-					// 		const args = loadSliceOfValues(sp + 16);
-					// 		const result = Reflect.apply(v, undefined, args);
-					// 		sp = this._inst.exports.getsp(); // see comment above
-					// 		storeValue(sp + 40, result);
-					// 		mem().setUint8(sp + 48, 1);
-					// 	} catch (err) {
-					// 		storeValue(sp + 40, err);
-					// 		mem().setUint8(sp + 48, 0);
-					// 	}
-					// },
+					// func valueInvoke(v ref, args []ref) (ref, bool)
+					"syscall/js.valueInvoke": (sp) => {
+						try {
+							const v = loadValue(sp + 8);
+							const args = loadSliceOfValues(sp + 16);
+							const result = Reflect.apply(v, undefined, args);
+							sp = this._inst.exports.getsp(); // see comment above
+							storeValue(sp + 40, result);
+							mem().setUint8(sp + 48, 1);
+						} catch (err) {
+							storeValue(sp + 40, err);
+							mem().setUint8(sp + 48, 0);
+						}
+					},
 
-					// // func valueNew(v ref, args []ref) (ref, bool)
-					// "syscall/js.valueNew": (sp) => {
-					// 	try {
-					// 		const v = loadValue(sp + 8);
-					// 		const args = loadSliceOfValues(sp + 16);
-					// 		const result = Reflect.construct(v, args);
-					// 		sp = this._inst.exports.getsp(); // see comment above
-					// 		storeValue(sp + 40, result);
-					// 		mem().setUint8(sp + 48, 1);
-					// 	} catch (err) {
-					// 		storeValue(sp + 40, err);
-					// 		mem().setUint8(sp + 48, 0);
-					// 	}
-					// },
+					// func valueNew(v ref, args []ref) (ref, bool)
+					"syscall/js.valueNew": (sp) => {
+						try {
+							const v = loadValue(sp + 8);
+							const args = loadSliceOfValues(sp + 16);
+							const result = Reflect.construct(v, args);
+							sp = this._inst.exports.getsp(); // see comment above
+							storeValue(sp + 40, result);
+							mem().setUint8(sp + 48, 1);
+						} catch (err) {
+							storeValue(sp + 40, err);
+							mem().setUint8(sp + 48, 0);
+						}
+					},
 
 					// func valueLength(v ref) int
 					"syscall/js.valueLength": (sp) => {
