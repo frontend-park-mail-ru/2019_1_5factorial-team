@@ -47,6 +47,9 @@ package-lock.json
 .DS_Store
 */.DS_Store
 
+public.pem
+5factorial_id_rsa.pem
+
 package.json
 
 # User-specific stuff

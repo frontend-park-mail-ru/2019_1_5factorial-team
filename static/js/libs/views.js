@@ -1,4 +1,3 @@
-
 export default class View {
     constructor(tmpl, eventBus) {
         this.element = document.createElement('div');

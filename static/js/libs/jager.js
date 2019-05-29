@@ -1,8 +1,3 @@
-// static/js/libs/jager.js
-// static/js/
-//static/js/components/game/recognition.js
-
-
 export default class Jager {
     constructor() {
         this.gestures = {
@@ -23,6 +18,7 @@ export default class Jager {
 
             circle: 11,
         };
+        this.isDrawingPatch = false;
 
         this.gestureColors = ['black', 'black', '#FF0000', '#2FA6EF', '#FFCC33', '#7AF330', '#56A521', '#FF9900', '#1976d2', '#FF0000', 'yellow', 'magenta'];
 
@@ -218,6 +214,11 @@ export default class Jager {
 
     point(evt) {
         return {x: evt.x, y: evt.y};
+    }
+
+    pointTouch(evt) {
+        console.log('touching');
+        return {x: evt.touches[0].pageX, y: evt.touches[0].pageY};
     }
 
     clearPath(path, tolerance = 100) {

@@ -2,6 +2,8 @@
 
 Репозиторий фронтенда 
 
+[![Build Status](https://travis-ci.org/frontend-park-mail-ru/2019_1_5factorial-team.svg?branch=dev)](https://travis-ci.org/frontend-park-mail-ru/2019_1_5factorial-team)
+
 ## Состав
 
 - [Сметанкин Кирилл](https://github.com/smet1)
@@ -15,7 +17,7 @@
 
 ## Ссылка на поиграть
 
-[Поиграть](http://78.155.207.69:4000/)
+[Поиграть](https://5factorial.tech)
 
 ## Репозиторий бекенда
  
@@ -31,5 +33,5 @@
 **npm run-script build** - запускает fest-build, который создает из шаблонов формата *.xml формат *.js.
 
 ### Старт сервера
-**npm install** - загрузка необхоимых пакетов npm
+**npm install** - загрузка необходимых пакетов npm
 **npm start** - компилирует шаблоны страниц и запускает сервер, отвечающий за фронтенд.

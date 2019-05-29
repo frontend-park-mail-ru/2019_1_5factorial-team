@@ -2,10 +2,11 @@ const path = require('path');
 const build = path.resolve(__dirname, 'static/dist');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const webpack = require('webpack');
 
 module.exports = {
     mode: 'development',
-    entry: './static/js/app.js',
+    entry: {index: ['./static/js/app.ts']},
     output: {
         path: build,
         filename: 'bundle.js'
@@ -14,13 +15,14 @@ module.exports = {
         alias : {
             Styles: path.resolve(__dirname, 'static/css'),
         },
+        extensions: [".ts", ".tsx", ".js", ".json"]
     },
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.(j|t)s$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader'
+                loader: ['babel-loader', 'ts-loader']
             },
             {
                 test: /\.(woff|woff2|eot|ttf|gif|png|jpe?g|svg)$/,

@@ -1,61 +1,34 @@
-import View from '../../libs/views.js';
+import View from '../../libs/views';
 
-import userBlock from '../../components/userBlock/userBlock.js';
-import ModalWindow from '../../components/modalWindow/modalWindow.js';
+import userBlock from '../../components/userBlock/userBlock';
+// import ModalWindow from '../../components/modalWindow/modalWindow';
 
 import template from './menuView.tmpl.xml';
 
 import './menuGameLogo.scss';
 
 export default class viewMenu extends View {
-    constructor({ eventBus = {} }) {
+    constructor(eventBus) {
         super(template, eventBus);
         this.isAuth = false;
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('checkAuthorizationResponse', this.onCheckAuthResponse.bind(this));
     }
 
-    detectmob() { 
-        if (navigator.userAgent.match(/Android/i)
-        || navigator.userAgent.match(/webOS/i)
-        || navigator.userAgent.match(/iPhone/i)
-        || navigator.userAgent.match(/iPad/i)
-        || navigator.userAgent.match(/iPod/i)
-        || navigator.userAgent.match(/BlackBerry/i)
-        || navigator.userAgent.match(/Windows Phone/i)
-        ) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    onCheckAuthResponse({isAuthorized = false, statusText}) {
+    onCheckAuthResponse({isAuthorized, statusText}) {
         this.isAuth = isAuthorized;
+        this.statusText = statusText;
         const checkHeader = new userBlock();
-        const MW = new ModalWindow();
-        const singleButton = document.getElementsByClassName('js-single')[0];
-        const multiButton = document.getElementsByClassName('js-multi')[0];
+        // const MW = new ModalWindow();
+        // const singleButton = document.getElementsByClassName('js-single')[0];
+        // const multiButton = document.getElementsByClassName('js-multi')[0];
 
-        if (checkHeader.changeButtons(statusText)) {
+        if (checkHeader.changeButtonsBool(this.isAuth)) {
             const signoutButton = document.getElementsByClassName('js-signout')[0];
             signoutButton.addEventListener('click', () => {
                 this.isAuth = false;
                 this.localEventBus.callEvent('signOut');
             });
-        }
-
-        if (this.detectmob()) {
-            singleButton.onclick = function (event) {
-                event.stopImmediatePropagation();
-                MW.createModal('mobileBlock');
-                return false;
-            };
-            multiButton.onclick = function (event) {
-                event.stopImmediatePropagation();
-                MW.createModal('mobileBlock');
-                return false;
-            };
         }
 
         // singleButton.addEventListener('click', (event) => {
@@ -75,7 +48,10 @@ export default class viewMenu extends View {
     }
 
     render(root, data = {}) {
-        super.render(root, data);
         this.localEventBus.callEvent('checkAuthorization');
+        super.render(root, data);
+        console.log('called render');
+        // this.localEventBus.callEvent('checkAuthorization');
+        // return this;
     }
 }
