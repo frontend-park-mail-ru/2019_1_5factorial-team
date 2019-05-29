@@ -18,6 +18,9 @@ export default class Game {
     protected ctx: CanvasRenderingContext2D;
     protected ws: Ws;
     protected isSet?: Boolean;
+    protected isLocked?: Boolean;
+    protected onceLoop?: Boolean;
+    protected isSent?: Boolean;
 
     protected axisY: number;
     protected heartsBlockY: number;
@@ -69,6 +72,7 @@ export default class Game {
 
         this.lastDrawing = 0;
         this.isSet = false;
+        this.onceLoop = false;
         this.isPlayers = false;
 
         this.recognizer = new Recognizer();
@@ -90,9 +94,11 @@ export default class Game {
         this.localEventBus.getEvent('updateState', this.setState.bind(this));
 
         if (detectMobile.detect()) {
-            console.log('kukuku');
+            screen.orientation.lock('landscape-primary');
+            this.isLocked = true;
+
         } else {
-            console.log('kekeke');
+            console.log('non mobile');
         }
         this.lastTime = Date.now();
 
@@ -118,7 +124,7 @@ export default class Game {
 
     setState(state: { Players: { nick?: string, nickname?: string, score: Number, x?: number, id?: Number, hp?: number }[]; Objects: { items: any; }; }) {
         this.deltaX = this.ghostLeftImg.width / 2;
-        console.log(state);
+        // console.log(state);
 
 
         ///////////////////////////////////
@@ -147,18 +153,18 @@ export default class Game {
 
             this.isSet = true;
         } else {
-            console.log('в моем стейте столько призраков: ' + this.state.ghosts.length);
-            console.log('в новом стейте столько: '+ state.Objects.items.length);
+            // console.log('в моем стейте столько призраков: ' + this.state.ghosts.length);
+            // console.log('в новом стейте столько: '+ state.Objects.items.length);
 
-            console.log('дельта: ' + this.deltaX);
+            // console.log('дельта: ' + this.deltaX);
 
             if (this.state.ghosts.length === state.Objects.items.length) {
                 for (let i = 0; i < state.Objects.items.length; i++) {
                     if (Math.abs(state.Objects.items[i].x - this.state.ghosts[i].x) >= this.deltaX) {
                         this.state.ghosts[i] = state.Objects.items[i];
-                        console.log('reset');
+                        // console.log('reset');
                     } else {
-                        console.log('no need to reset');
+                        // console.log('no need to reset');
                     }
                 }
             } else if (this.state.ghosts.length < state.Objects.items.length && state.Objects.items.length === 2) {
@@ -166,18 +172,18 @@ export default class Game {
                 for (let i = 0; i < state.Objects.items.length; i++) {
                     if (Math.abs(state.Objects.items[i].x - this.state.ghosts[i].x) >= this.deltaX) {
                         this.state.ghosts[i] = state.Objects.items[i];
-                        console.log('reset');
+                        // console.log('reset');
                     } else {
-                        console.log('no need to reset');
+                        // console.log('no need to reset');
                     }
                 }
             } else if (this.state.ghosts.length > state.Objects.items.length && state.Objects.items.length === 1) {
                 this.state.ghosts.splice(0, 1);
                 if (Math.abs(state.Objects.items[0].x - this.state.ghosts[0].x) >= this.deltaX) {
                     this.state.ghosts[0] = state.Objects.items[0];
-                    console.log('reset');
+                    // console.log('reset');
                 } else {
-                    console.log('no need to reset');
+                    // console.log('no need to reset');
                 }
             }
 
@@ -190,7 +196,10 @@ export default class Game {
             this.state.Players[1].score = state.Players[1].score;
         }
 
-        this.gameLoop();
+        if (!this.onceLoop) {
+            this.onceLoop = true;
+            this.gameLoop();
+        }
     }
 
     resizer(): void {
@@ -202,14 +211,22 @@ export default class Game {
     }
 
     destroy(): void {
+        console.log('destroy');
         if (this.requestID) {
             cancelAnimationFrame(this.requestID);
         }
-        console.log('called');
         this.recognizer.destroyRecognizer();
 
-        console.log('final score is', this.state.score);
+        if (this.state) {
+            console.log('final score is', this.state.score);
+        }
         window.removeEventListener('resize', this.resizer.bind(this));
+        if (this.isLocked) {
+            screen.orientation.unlock();
+        }
+        if (this.isMulti) {
+            this.ws.closeConn();
+        }
     }
 
     gameLoop(): void {
@@ -221,7 +238,6 @@ export default class Game {
             this.renderSingle();
         } else {
             if (!this.isPlayers) {
-                console.log('BLYA');
                 const userButtons = document.getElementsByClassName('js-check-user')[0];
                 userButtons.innerHTML = '';
                 userButtons.innerHTML = `<a class="btn users__btn login-btn">${this.state.Players[0].nick}</a><a class="btn users__btn login-btn">${this.state.Players[1].nick}</a><a class="btn users__btn signup-btn js-back-to-menu" href="/">Back to menu</a>`;
@@ -299,6 +315,7 @@ export default class Game {
                     } else {
                         this.state.player.hp -= this.state.ghosts[i].damage;
                         this.state.ghosts.splice(i, 1);
+                        console.log('damage');
                     }
                 } else if (this.state.ghosts[i].speed < 0) {
                     if (this.state.ghosts[i].x > this.state.player.x + this.state.player.sprite.width) {
@@ -306,6 +323,7 @@ export default class Game {
                     } else {
                         this.state.player.hp -= this.state.ghosts[i].damage;
                         this.state.ghosts.splice(i, 1);
+                        console.log('damage');
                     }
                 }
             }
@@ -554,13 +572,18 @@ export default class Game {
                 this.recognizer.jager.drawPatch(this.recognizer.path, this.recognizer.gctx, this.recognizer.jager.recognise(this.recognizer.path));
             }
         }
-
+        
         if (this.recognizer.lastDrawing !== null) {
             this.lastDrawing = this.recognizer.lastDrawing;
             this.recognizer.lastDrawing = null;
+            this.isSent = false;
+        }
+        if (!this.isSent) {
+            this.ws.send("MOVE", String(this.lastDrawing));
+            this.isSent = true;
+            this.lastDrawing = null;
         }
 
-        this.ws.send("MOVE", this.lastDrawing);
     }
 
     generateDirection(): 'left' | 'right' {

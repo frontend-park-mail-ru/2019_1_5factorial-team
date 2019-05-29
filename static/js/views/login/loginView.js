@@ -17,7 +17,6 @@ export default class loginView extends View {
     }
 
     passwRTCheckResponse({response = ''}) {
-        console.log(`passwRTCheckResponse ${response}`);
         this.passwordValue = response;
         if (response !== EMPTY_PASSWORD && response !== OK_VALIDATE_PASSWORD) {
             this.passwordErrorWarning(response);
@@ -32,15 +31,14 @@ export default class loginView extends View {
     }
 
     loginOrEmailRTCheckResponse({response = ''}) {
-        console.log(`loginOrEmailRTCheckResponse ${response}`);
         this.loginOrEmailValue = response;
         if (response !== EXPTY_LOGIN_OR_EMAIL && (response !== OK_VALIDATE_EMAIL || response !== OK_VALIDATE_LOGIN)) {
             this.loginOrEmailErrorWarning(response);
         }
         if (response === OK_VALIDATE_EMAIL || response === OK_VALIDATE_LOGIN) {
             this.isEmail = true;
-            this.loginOrEmailWarning.classList.remove('invalid');
-            this.loginOrEmailWarning.classList.add('valid');
+            this.loginOrEmailInput.classList.remove('invalid');
+            this.loginOrEmailInput.classList.add('valid');
             this.loginOrEmailWarning.classList.add('hide');
             this.loginOrEmailWarning.textContent = '';
         }
@@ -59,7 +57,8 @@ export default class loginView extends View {
 
         this.loginOrEmailInput.addEventListener('change', this.loginOrEmailRTCheck.bind(this, this.loginOrEmailInput));
         this.passwInput.addEventListener('change', this.passwRTCheck.bind(this, this.passwInput));
-        return this;
+        this.localEventBus.callEvent('oauthCheck');
+        // return this;
     }
 
     loginOrEmailRTCheck(input) {
@@ -73,7 +72,7 @@ export default class loginView extends View {
     onSubmit(form, event) {
         event.preventDefault();
         if (this.loginOrEmailValue !== OK_VALIDATE_LOGIN && this.passwordValue !== OK_VALIDATE_PASSWORD) {
-            console.log('Cant validate!!!');
+            console.warn('Incorrect login or email!');
         } else {
             this.localEventBus.callEvent('login', {
                 loginOrEmail: this.loginOrEmailInput.value, pass:this.passwInput.value
@@ -82,17 +81,11 @@ export default class loginView extends View {
     }
 
     onSubmitResponse(data) {
-        const error = data.error;
-        console.log(error);
-
-        // TODO(): добавление стиля к полям, что все хуево, понять - почему не светится красным
-        console.log(data);
         const incorrectField = document.getElementsByClassName(data.inputField)[0];
         incorrectField.classList.add('invalid');
     }
 
     loginOrEmailErrorWarning(data) {
-        console.log('qwe');
         this.loginOrEmailWarning.textContent = data;
         this.loginOrEmailWarning.classList.remove('hide');
         this.loginOrEmailInput.classList.remove('valid');
@@ -100,7 +93,6 @@ export default class loginView extends View {
     }
 
     passwordErrorWarning(data) {
-        console.log('qwe');
         this.passwordWarning.textContent = data;
         this.passwordWarning.classList.remove('hide');
         this.passwInput.classList.remove('valid');

@@ -39,4 +39,20 @@
             </div>
         </section>
     </div>
+        <script>
+        // var input = document.body.children[0];
+        let login = document.querySelector('.js-login');
+        if (login) {
+            login.oninput = function () {
+                getCustomAvatar(document.querySelector('.js-login').value, document.querySelector('.js-email').value)
+            };
+        }
+
+        let email = document.querySelector('.js-email');
+        if (email) {
+            email.oninput = function () {
+                getCustomAvatar(document.querySelector('.js-login').value, document.querySelector('.js-email').value)
+            };
+        }
+    </script>
 </fest:template>

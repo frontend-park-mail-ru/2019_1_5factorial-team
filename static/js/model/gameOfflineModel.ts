@@ -20,6 +20,7 @@ export default class gameOfflineModel {
         this.localEventBus.getEvent('gameOver', this.onGameOver.bind(this));
         this.localEventBus.getEvent('getUserDataForGame', this.getUser.bind(this));
         this.localEventBus.getEvent('stopGameManualy', this.stopGame.bind(this));
+        this.localEventBus.getEvent('close', this.stopGame.bind(this));
     }
 
     getUser() {

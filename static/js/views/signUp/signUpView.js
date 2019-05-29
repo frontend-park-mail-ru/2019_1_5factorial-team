@@ -21,7 +21,6 @@ export default class signUpView extends View {
     }
 
     passwRTCheckResponse({response = ''}) {
-        console.log(`passwRTCheckResponse ${response}`);
         if (response !== EMPTY_PASSWORD && response !== OK_VALIDATE_PASSWORD) {
             this.passwordErrorWarning(response);
         }
@@ -35,7 +34,6 @@ export default class signUpView extends View {
     }
 
     emailRTCheckResponse({response = ''}) {
-        console.log(`emailRTCheckResponse ${response}`);
         if (response !== EMPTY_EMAIL && response !== OK_VALIDATE_EMAIL) {
             this.emailErrorWarning(response);
         }
@@ -49,7 +47,6 @@ export default class signUpView extends View {
     }
 
     loginRTCheckResponse({response = ''}) {
-        console.log(`loginRTCheckResponse ${response}`);
         if (response !== EMPTY_LOGIN && response !== OK_VALIDATE_LOGIN) {
             this.loginErrorWarning(response);
         }
@@ -99,7 +96,7 @@ export default class signUpView extends View {
     }
 
     onSignupResponse(data = {}, check = 0) {
-        console.log(data, check);
+        console.warn(data, check);
     }
 
     onSubmit() {
@@ -113,7 +110,6 @@ export default class signUpView extends View {
     }
 
     loginErrorWarning(data) {
-        console.log('qwe');
         this.loginWarning.textContent = data;
         this.loginWarning.classList.remove('hide');
         this.loginInput.classList.remove('valid');
@@ -121,7 +117,6 @@ export default class signUpView extends View {
     }
 
     emailErrorWarning(data) {
-        console.log('qwe');
         this.emailWarning.textContent = data;
         this.emailWarning.classList.remove('hide');
         this.emailInput.classList.remove('valid');
@@ -129,7 +124,6 @@ export default class signUpView extends View {
     }
 
     passwordErrorWarning(data) {
-        console.log('qwe');
         this.passwordWarning.textContent = data;
         this.passwordWarning.classList.remove('hide');
         this.passwInput.classList.remove('valid');
