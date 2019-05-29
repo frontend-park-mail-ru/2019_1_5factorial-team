@@ -13,7 +13,7 @@ body {
   background: var(--black-clr) url('../img/2.png') center no-repeat;
   background-size: cover;
   height: 100vh;
-  overflow: hidden;
+  overflow-y: hidden;
 }
 
 .text-title {
