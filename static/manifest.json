@@ -1,0 +1,6 @@
+{
+    "name": "TheGame",
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "landscape"
+}

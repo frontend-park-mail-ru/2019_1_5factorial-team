@@ -1,8 +1,8 @@
 import Validation from '../libs/validation';
-import Network from '../libs/network';
+import {doGet} from '../libs/network';
 import api from '../libs/api';
 import {User} from '../libs/users';
-import { OK_RESPONSE, NETWORK_ADRESS, DEFAULT_AVATAR, OK_VALIDATE_PASSWORD, OK_VALIDATE_AVATAR, AVATAR_DEFAULT } from '../components/constants';
+import { OK_RESPONSE, NETWORK_ADRESS, DEFAULT_AVATAR, OK_VALIDATE_PASSWORD, OK_VALIDATE_AVATAR, AVATAR_DEFAULT, ANAUTH_RESPONSE } from '../components/constants';
 import EventBus from '../libs/eventBus';
 
 interface IResponseProfile extends Response {
@@ -136,26 +136,38 @@ export default class profileModel {
     /**
      * Проверяем пользователя - авторизован ли
      */
-    onCheckAuth() {
-        Network.doGet({url: '/api/session'})
-            .then(response => {
-                if (response.status !== OK_RESPONSE) {
-                    response.json().then(data => {
-                        this.localEventBus.callEvent('checkAuthResponse', {
-                        isAuth: false,
-                        error: data.error
-                    })
-                });
-                } else {
-                    response.json().then(() => {
-                        this.localEventBus.callEvent('checkAuthResponse', {
-                            isAuth: true,
-                        });
-                    });
-                }
-            })
-            .catch((error) => {
-                this.localEventBus.callEvent('checkAuthResponse', {error});
+    async onCheckAuth() {
+        const res = await doGet({ url: '/api/session' });
+        console.log(res);
+        if (res.status === ANAUTH_RESPONSE) {
+            return this.localEventBus.callEvent('checkAuthResponse', {
+                isAuth: false,
+                error: (res as IResponseProfile).error,
             });
+        } else {
+            return this.localEventBus.callEvent('checkAuthResponse', {
+                isAuth: true,
+            });
+        }
+        // Network.doGet({url: '/api/session'})
+        //     .then(response => {
+        //         if (response.status !== OK_RESPONSE) {
+        //             response.json().then(data => {
+        //                 this.localEventBus.callEvent('checkAuthResponse', {
+        //                 isAuth: false,
+        //                 error: data.error
+        //             })
+        //         });
+        //         } else {
+        //             response.json().then(() => {
+        //                 this.localEventBus.callEvent('checkAuthResponse', {
+        //                     isAuth: true,
+        //                 });
+        //             });
+        //         }
+        //     })
+        //     .catch((error) => {
+        //         this.localEventBus.callEvent('checkAuthResponse', {error});
+        //     });
     }
 }
