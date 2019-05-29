@@ -10,6 +10,7 @@
   grid-template-columns: 4fr 2fr 4fr;
   overflow: hidden;
   height: 100vh;
+  position: relative;
 
   &_game {
     display: flex;
