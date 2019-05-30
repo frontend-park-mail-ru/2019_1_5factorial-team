@@ -109,7 +109,7 @@ export default class Game {
                 isGameOver: false
             };
             if (detectMobile.detect()) {
-                window.alert(Screen);
+                window.alert(new Screen);
                 window.screen.orientation.onchange = () => {
                     matchMedia('(orientation: landscape)').matches ? window.alert('OK') : window.alert('need to add pause');
                 };
