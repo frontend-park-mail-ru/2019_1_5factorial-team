@@ -93,13 +93,6 @@ export default class Game {
 
         this.localEventBus.getEvent('updateState', this.setState.bind(this));
 
-        // if (detectMobile.detect()) {
-        //     screen.orientation.lock('landscape-primary');
-        //     this.isLocked = true;
-
-        // } else {
-        //     console.log('non mobile');
-        // }
         this.lastTime = Date.now();
 
         if (!this.isMulti) {  // если синглплеер
@@ -198,7 +191,12 @@ export default class Game {
 
         if (!this.onceLoop) {
             this.onceLoop = true;
-            this.gameLoop();
+            if (detectMobile.detect()) {
+                screen.orientation.onchange = () => {
+                    matchMedia('(orientation: landscape)').matches ? console.log('OK') : console.log('need to add pause');
+                };
+                matchMedia('(orientation: landscape)').matches ? this.gameLoop() : alert('move your phone to horizontal orientation');
+            }
         }
     }
 
@@ -221,9 +219,6 @@ export default class Game {
             console.log('final score is', this.state.score);
         }
         window.removeEventListener('resize', this.resizer.bind(this));
-        // if (this.isLocked) {
-        //     screen.orientation.unlock();
-        // }
         if (this.isMulti) {
             this.ws.closeConn();
         }
