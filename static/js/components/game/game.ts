@@ -109,8 +109,8 @@ export default class Game {
                 isGameOver: false
             };
             if (detectMobile.detect()) {
-                window.alert(screen.orientation);
-                screen.orientation.onchange = () => {
+                window.alert(window.screen.orientation);
+                window.screen.orientation.onchange = () => {
                     matchMedia('(orientation: landscape)').matches ? window.alert('OK') : window.alert('need to add pause');
                 };
                 matchMedia('(orientation: landscape)').matches ? this.gameLoop() : window.alert('move your phone to horizontal orientation');
