@@ -108,7 +108,12 @@ export default class Game {
                 gameTime: 0,
                 isGameOver: false
             };
-            this.gameLoop();
+            if (detectMobile.detect()) {
+                screen.orientation.onchange = () => {
+                    matchMedia('(orientation: landscape)').matches ? console.log('OK') : console.log('need to add pause');
+                };
+                matchMedia('(orientation: landscape)').matches ? this.gameLoop() : alert('move your phone to horizontal orientation');
+            }
         } else {
             console.log('creating ws');
             this.ws = new Ws(this.localEventBus);
@@ -191,12 +196,7 @@ export default class Game {
 
         if (!this.onceLoop) {
             this.onceLoop = true;
-            if (detectMobile.detect()) {
-                screen.orientation.onchange = () => {
-                    matchMedia('(orientation: landscape)').matches ? console.log('OK') : console.log('need to add pause');
-                };
-                matchMedia('(orientation: landscape)').matches ? this.gameLoop() : alert('move your phone to horizontal orientation');
-            }
+            this.gameLoop();
         }
     }
 
