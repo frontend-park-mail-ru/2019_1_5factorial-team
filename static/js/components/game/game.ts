@@ -93,13 +93,13 @@ export default class Game {
 
         this.localEventBus.getEvent('updateState', this.setState.bind(this));
 
-        if (detectMobile.detect()) {
-            screen.orientation.lock('landscape-primary');
-            this.isLocked = true;
+        // if (detectMobile.detect()) {
+        //     screen.orientation.lock('landscape-primary');
+        //     this.isLocked = true;
 
-        } else {
-            console.log('non mobile');
-        }
+        // } else {
+        //     console.log('non mobile');
+        // }
         this.lastTime = Date.now();
 
         if (!this.isMulti) {  // если синглплеер
@@ -221,9 +221,9 @@ export default class Game {
             console.log('final score is', this.state.score);
         }
         window.removeEventListener('resize', this.resizer.bind(this));
-        if (this.isLocked) {
-            screen.orientation.unlock();
-        }
+        // if (this.isLocked) {
+        //     screen.orientation.unlock();
+        // }
         if (this.isMulti) {
             this.ws.closeConn();
         }
