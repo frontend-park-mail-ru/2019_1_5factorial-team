@@ -113,6 +113,8 @@ export default class Game {
                     matchMedia('(orientation: landscape)').matches ? console.log('OK') : console.log('need to add pause');
                 };
                 matchMedia('(orientation: landscape)').matches ? this.gameLoop() : alert('move your phone to horizontal orientation');
+            } else {
+                this.gameLoop();
             }
         } else {
             console.log('creating ws');
