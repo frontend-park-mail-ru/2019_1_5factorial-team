@@ -14,10 +14,10 @@ html, body {
 body {
   height: 100%;
   width: 100%;
-  position: fixed;
+  //position: fixed;
   background: var(--black-clr) url('../img/2.png') center no-repeat;
+  background-size: cover;
   background-attachment: fixed;
-  background-size: auto 100%;
 }
 
 .text-title {
