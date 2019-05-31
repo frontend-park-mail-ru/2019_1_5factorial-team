@@ -108,14 +108,14 @@ export default class Game {
                 gameTime: 0,
                 isGameOver: false
             };
-            if (detectMobile.detect()) {
-                window.screen.orientation.onchange = () => {
-                    matchMedia('(orientation: landscape)').matches ? window.alert('OK') : window.alert('need to add pause');
-                };
+            // if (detectMobile.detect()) {
+            //     window.screen.orientation.onchange = () => {
+            //         matchMedia('(orientation: landscape)').matches ? window.alert('OK') : window.alert('need to add pause');
+            //     };
                 // matchMedia('(orientation: landscape)').matches ? this.gameLoop() : window.alert('move your phone to horizontal orientation');
-            } else {
+            // } else {
                 this.gameLoop();
-            }
+            // }
         } else {
             console.log('creating ws');
             this.ws = new Ws(this.localEventBus);
