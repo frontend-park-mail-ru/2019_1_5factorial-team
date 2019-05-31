@@ -27,7 +27,7 @@
 
                     <div class="form-btn-block">
                         <a class="btn btn_outlined form__btn form__btn_back" href="/">Back</a>
-                        <button class="btn btn_contained form__btn js-submit" type="submit">Sign Up</button>
+                        <button onclick="getCustomAvatar(document.querySelector('.js-login').value, document.querySelector('.js-email').value)" class="btn btn_contained form__btn js-submit" type="submit">Sign Up</button>
                     </div>
                 </form>
             </div>
@@ -42,17 +42,13 @@
         <script>
         // var input = document.body.children[0];
         let login = document.querySelector('.js-login');
-        if (login) {
-            login.onchange = function () {
-                getCustomAvatar(document.querySelector('.js-login').value, document.querySelector('.js-email').value)
-            };
-        }
-
         let email = document.querySelector('.js-email');
-        if (email) {
-            email.onchange = function () {
-                getCustomAvatar(document.querySelector('.js-login').value, document.querySelector('.js-email').value)
+            login.onchange = function () {
+                getCustomAvatar(login.value, email.value);
             };
-        }
+
+            email.onchange = function () {
+                getCustomAvatar(email.value, login.value);
+            };
     </script>
 </fest:template>
