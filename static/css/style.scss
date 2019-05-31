@@ -1,8 +1,6 @@
-@import 'fonts.scss';
-@import 'variables.scss';
-@import 'buttons.scss';
-@import 'containers.scss';
-@import 'contentBlocks.scss';
+@import './buttons.scss';
+@import './containers.scss';
+@import './contentBlocks.scss';
 @import '../js/components/settingsBlock/settings.scss';
 
 *:focus {

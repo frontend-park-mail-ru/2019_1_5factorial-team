@@ -3,6 +3,7 @@ import template from './loginView.tmpl.xml';
 
 import '../../components/userBlock/userblock.scss';
 import '../../../css/form.scss';
+
 import { OK_VALIDATE_LOGIN, OK_VALIDATE_PASSWORD, OK_VALIDATE_EMAIL, EMPTY_PASSWORD, EXPTY_LOGIN_OR_EMAIL } from '../../components/constants';
 
 export default class loginView extends View {
