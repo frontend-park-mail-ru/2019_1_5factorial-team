@@ -125,6 +125,8 @@ export const AVATAR_DEFAULT = '../../../img/default.jpg';
 
 // game constants
 export const DEFAULT_GHOST_SPEED = 80;
+
+export const GHOST_SPEED_DELTA = 40;
 export const DEFAULT_GHOST_DAMAGE = 1;
 
 export const PLAYER_INITIAL_HP = 5;

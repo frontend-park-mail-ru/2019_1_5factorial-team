@@ -5,6 +5,8 @@ import detectMobile from '../detectMobile';
 
 import { DEFAULT_GHOST_SPEED, DEFAULT_GHOST_DAMAGE, PLAYER_INITIAL_HP } from '../constants';
 import { SCORE_FOR_SYMBOL, SCORE_FOR_GHOST } from '../constants';
+import { GHOST_SPEED_DELTA } from '../constants';
+
 import EventBus from '../../libs/eventBus';
 
 const symbolImgWidth: number = 60;
@@ -631,7 +633,7 @@ export default class Game {
 
     moveGhost(ghost: { x: number; speed: number; }, dt: number) {
         let speedDelta = 0;
-        ghost.speed > 0 ? speedDelta = 30 : speedDelta = - 30;
+        ghost.speed > 0 ? speedDelta = GHOST_SPEED_DELTA : speedDelta = - GHOST_SPEED_DELTA;
 
         ghost.x += (ghost.speed + speedDelta) * dt;  // TODO(): вынести в константу разность скоростей
     }
