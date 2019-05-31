@@ -82,9 +82,10 @@ export default class loginView extends View {
     }
 
     onSubmitResponse(data) {
+        // TODO() : Modal or another alert of wrong auth
         console.log(data);
-        const incorrectField = document.getElementsByClassName(data.inputField)[0];
-        incorrectField.classList.add('invalid');
+        // const incorrectField = document.getElementsByClassName(data.inputField)[0];
+        // incorrectField.classList.add('invalid');
     }
 
     loginOrEmailErrorWarning(data) {
