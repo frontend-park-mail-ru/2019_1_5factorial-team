@@ -8,7 +8,7 @@
   &__column {
     font-size: 3vh;
 
-    &li {
+    li {
       overflow: hidden;
       text-overflow: ellipsis;
     }
@@ -31,13 +31,13 @@
 
 @media screen and (width > 800px) {
   .leaders-table__column li {
-    width: 7em
+    width: 10em;
   }
 }
 
 @media screen and (width <= 800px) {
   .leaders-table__column li {
-    width: 5em;
+    width: 6em;
   }
 }
 
