@@ -38,19 +38,6 @@
   @extend %inline ;
 }
 
-.menu {
-  @extend %columned;
-  padding: 0 3vw;
-  margin-top: 10vh;
-  //grid-row: 2;
-  font-size: 11vh;
-
-  &__btn {
-    font-family: var(--title-font);
-    margin: 1vh 0;
-  }
-}
-
 .profile {
   @extend %columned;
   font-size: 2.75vh;
@@ -124,6 +111,11 @@
 
 .unit {
   display: flex;
+
+  &_menu {
+    align-items: center;
+    justify-content: center;
+  }
 
   &_back-btn-block {
     width: 100%;

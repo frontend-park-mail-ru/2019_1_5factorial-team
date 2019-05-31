@@ -1,7 +1,41 @@
+@import '../../../css/flexbox.scss';
+
+.menu {
+  @extend %columned;
+  padding: 0 3vw;
+  margin-top: 10vh;
+  font-size: 10vh;
+
+  &__btn {
+    font-family: var(--title-font);
+    margin: 1vh 0;
+  }
+
+  &__symbol {
+    background: center no-repeat;
+    background-size: 0.5em;
+    height: 0.5em;
+    width: 0.5em;
+    margin: 0 0 0 15px;
+
+    &_td {
+      background-image: url('../../../img/menu/td.png');
+    }
+
+    &_lr {
+      background-image: url('../../../img/menu/lr.png');
+    }
+
+    &_dtd {
+      background-image: url('../../../img/menu/dtd.png');
+    }
+  }
+}
+
 .name {
   animation: pulse 1s infinite;
   font-family: var(--title-font);
-  font-size: 32vh;
+  font-size: 28vh;
   margin: 25vh auto 0 auto;
   text-align: center;
 

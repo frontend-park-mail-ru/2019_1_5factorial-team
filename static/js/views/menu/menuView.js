@@ -5,7 +5,7 @@ import userBlock from '../../components/userBlock/userBlock';
 
 import template from './menuView.tmpl.xml';
 
-import './menuGameLogo.scss';
+import './menu.scss';
 
 export default class viewMenu extends View {
     constructor(eventBus) {
