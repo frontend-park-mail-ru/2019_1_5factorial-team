@@ -13,8 +13,12 @@
     grid-template-columns: 4fr 4fr 4fr;
   }
 
-  @media screen and (max-height: 320px) {
+  @media screen and (max-height: 320px)  {
     grid-template-columns: 15vw 70vw 15vw;
+  }
+
+  @media screen and (max-height: 320px) and (orientation: landscape) {
+    grid-template-columns: 4fr 4fr 4fr;
   }
 
   &_game {
