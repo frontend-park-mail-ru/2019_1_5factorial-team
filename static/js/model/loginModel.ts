@@ -32,10 +32,10 @@ export default class loginModel {
         api.login(data.loginOrEmail, data.pass)
             .then((res) => {
                 if (res.status === OK_RESPONSE) {
-                    res.json().then((data: any) => this.localEventBus.callEvent('loginSuccess', data));
-                } else {
-                    res.json().then((data: any) => this.localEventBus.callEvent('loginResponse', data));
-                }
+                    this.localEventBus.callEvent('loginSuccess', res);
+                  } else {
+                    this.localEventBus.callEvent('loginResponse', res);
+                  }
             });
     }
 

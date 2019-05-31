@@ -73,7 +73,7 @@ export default class profileView extends View {
         if (data.user.avatar === DEFAULT_AVATAR || data.user.avatar === AVATAR_DEFAULT) {
             data.user.avatar = AVATAR_DEFAULT;
         } else {
-            data.user.avatar = NETWORK_ADRESS +'/static/'+ data.user.avatar;
+            data.user.avatar = NETWORK_ADRESS + data.user.avatar;
         }
         super.render(this.prevRoot, data);
         const imgToSet = document.getElementsByClassName('avatar__img')[0];

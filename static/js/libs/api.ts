@@ -62,13 +62,14 @@ export default class api {
      * @param {*} email
      * @param {*} password
      */
-    static signUp(login: string, email: string, password: string): Promise<Response> {
+    static signUp(login: string, email: string, password: string, avatar_link: string): Promise<Response> {
         return network.doPost({
             url: '/api/user',
             body: {
-                email,
                 login,
-                password
+                email,
+                password,
+                avatar_link
             }
         });
     }

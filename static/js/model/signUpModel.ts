@@ -32,8 +32,8 @@ export default class signUpModel {
      * Проверка данных на регистрацию
      * @param {*} data
      */
-    SignUp(data: {email: string, login: string, pass: string}) {
-        api.signUp(data.login, data.email, data.pass)
+    SignUp(data: {email: string, login: string, pass: string, avatarLink: string}) {
+        api.signUp(data.login, data.email, data.pass, data.avatarLink)
             .then(resp => {
                 if (resp.status === OK_RESPONSE) {
                     api.login(data.login, data.pass)
