@@ -12,11 +12,12 @@ html, body {
 }
 
 body {
-  background: var(--black-clr) url('../img/2.png') center no-repeat;
-  background-size: cover;
   height: 100%;
   width: 100%;
-  position: relative;
+  position: fixed;
+  background: var(--black-clr) url('../img/2.png') center no-repeat;
+  background-attachment: fixed;
+  background-size: auto 100%;
 }
 
 .text-title {
