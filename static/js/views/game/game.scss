@@ -6,6 +6,11 @@
   background: url('../../../img/1.png') center no-repeat/cover;
 }
 
+@media screen and (width > height){
+  background-size: 100% auto;
+
+}
+
 #gcanvas {
   width: 100%;
   height: 100vh;

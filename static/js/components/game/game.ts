@@ -79,19 +79,37 @@ export default class Game {
 
         this.recognizer = new Recognizer();
 
-        window.addEventListener('resize', this.resizer.bind(this));
-        this.resizer();
+        this.canvas.height = window.innerHeight;
+        this.canvas.width = window.innerWidth;
+
+        this.recognizer.gcanvas.height = window.innerHeight;
+        this.recognizer.gcanvas.width = window.innerWidth;
 
         this.requestID = null;
 
-        this.playerImg = (document.getElementById('player-sprite') as HTMLImageElement);
-        this.ghostLeftImg = (document.getElementById('ghost-left-sprite') as HTMLImageElement);
-        this.ghostRightImg = (document.getElementById('ghost-right-sprite') as HTMLImageElement);
-        this.heartImg = (document.getElementById('heart-sprite') as HTMLImageElement);
+        this.playerImg = new Image();
+        this.playerImg.src = '../../../img/game/hero.png';
 
-        this.symbolLR = document.getElementById('symbol_LR');
-        this.symbolTD = document.getElementById('symbol_TD');
-        this.symbolDTD = document.getElementById('symbol_DTD');
+        this.ghostLeftImg = new Image();
+        this.ghostLeftImg.src = '../../../img/game/ghost_l.png';
+
+        this.ghostRightImg = new Image();
+        this.ghostRightImg.src = '../../../img/game/ghost_r.png';
+
+        this.heartImg = new Image();
+        this.heartImg.src = '../../../img/game/heart.png';
+
+        this.symbolLR = new Image();
+        this.symbolLR.src = '../../../img/game/symbols/LR.png';
+
+        this.symbolTD = new Image();
+        this.symbolTD.src = '../../../img/game/symbols/TD.png';
+
+        this.symbolDTD = new Image();
+        this.symbolDTD.src = '../../../img/game/symbols/DTD.png';
+
+        window.addEventListener('resize', this.resizer.bind(this));
+        // this.resizer();
 
         this.localEventBus.getEvent('updateState', this.setState.bind(this));
 
@@ -201,7 +219,7 @@ export default class Game {
     }
 
     resizer(): void {
-        let oldCanvasHeight = this.canvas.height;
+        let oldCanvasWidth = this.canvas.width;
 
         this.canvas.height = window.innerHeight;
         this.canvas.width = window.innerWidth;
@@ -209,7 +227,9 @@ export default class Game {
         this.recognizer.gcanvas.height = window.innerHeight;
         this.recognizer.gcanvas.width = window.innerWidth;
 
-        // this.playerImg.height = (this.playerImg.height / oldCanvasHeight) * this.canvas.height;
+        this.axisY = this.canvas.height - this.canvas.height / 40; // координата Y оси X
+
+        // this.playerImg.width = (this.playerImg.width / oldCanvasWidth) * this.canvas.width;
 
     }
 
