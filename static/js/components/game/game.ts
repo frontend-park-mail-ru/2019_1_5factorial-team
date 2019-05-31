@@ -125,11 +125,7 @@ export default class Game {
     }
 
     setState(state: { Players: { nick?: string, nickname?: string, score: Number, x?: number, id?: Number, hp?: number }[]; Objects: { items: any; }; }) {
-        this.deltaX = this.ghostLeftImg.width / 2;
-        // console.log(state);
-
-
-        ///////////////////////////////////
+        this.deltaX = this.ghostLeftImg.width * 3 / 4;
 
         if (!this.isSet) {  // сеттим стейт в первый раз
             this.state = {
@@ -489,7 +485,7 @@ export default class Game {
             this.axisY - this.playerImg.height);
 
         for (let i = 0; i < this.state.ghosts.length; i++) {  // призраки
-            this.moveGhost(this.state.ghosts[i], dt);
+            this.moveGhostMulti(this.state.ghosts[i], dt);
 
             if (this.state.ghosts[i].speed > 0) {
                 if (this.state.ghosts[i].x + this.ghostLeftImg.width >= this.state.Players[0].x) {
@@ -636,11 +632,15 @@ export default class Game {
         }
     }
 
-    moveGhost(ghost: { x: number; speed: number; }, dt: number) {
+    moveGhostMulti(ghost: { x: number; speed: number; }, dt: number) {
         let speedDelta = 0;
-        ghost.speed > 0 ? speedDelta = GHOST_SPEED_DELTA : speedDelta = - GHOST_SPEED_DELTA;
+        ghost.speed > 0 ? speedDelta = GHOST_SPEED_DELTA : speedDelta = - GHOST_SPEED_DELTA - 10;
 
         ghost.x += (ghost.speed + speedDelta) * dt;
+    }
+
+    moveGhost(ghost: { x: number; speed: number; }, dt: number) {
+        ghost.x += (ghost.speed) * dt;
     }
 
     /*
