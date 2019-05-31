@@ -213,7 +213,7 @@ export default class Game {
         this.recognizer.gcanvas.height = window.innerHeight;
         this.recognizer.gcanvas.width = window.innerWidth;
 
-        this.playerImg.height = (this.playerImg.height / oldCanvasHeight) * this.canvas.height;
+        // this.playerImg.height = (this.playerImg.height / oldCanvasHeight) * this.canvas.height;
 
     }
 
