@@ -14,7 +14,7 @@
             <h1 class="content__header">profile</h1>
             <div class="avatar">
                 <div class="avatar__img js-upload-avatar" src="{params.user.avatar}"/>
-                <form class="form js-upload-photo">
+                <form class="form form_avatar js-upload-photo">
                     <div class="form__change-photo">
                         <label>
                             <input class="btn btn__photo js-change-image" type="file" title="avatar" accept=""/>
