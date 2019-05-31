@@ -4,11 +4,15 @@
   width: 100%;
   height: 100vh;
   background: url('../../../img/1.png') center no-repeat/cover;
+
+  @media screen and (width > height){
+    background-size: 100% auto;
+  }
 }
 
-@media screen and (width > height){
-  background-size: 100% auto;
-
+#player-sprite {
+  max-width: 3vw;
+  height: auto;
 }
 
 #gcanvas {

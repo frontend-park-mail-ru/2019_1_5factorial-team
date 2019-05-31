@@ -8,6 +8,7 @@ import { SCORE_FOR_SYMBOL, SCORE_FOR_GHOST } from '../constants';
 import { GHOST_SPEED_DELTA } from '../constants';
 
 import EventBus from '../../libs/eventBus';
+import type = Mocha.utils.type;
 
 const symbolImgWidth: number = 60;
 
@@ -23,6 +24,7 @@ export default class Game {
     protected isLocked?: Boolean;
     protected onceLoop?: Boolean;
     protected isSent?: Boolean;
+    protected initialResizerCall?: Boolean;
 
     protected axisY: number;
     protected heartsBlockY: number;
@@ -75,6 +77,7 @@ export default class Game {
         this.lastDrawing = 0;
         this.isSet = false;
         this.onceLoop = false;
+        this.initialResizerCall = false;
         this.isPlayers = false;
 
         this.recognizer = new Recognizer();
@@ -87,30 +90,16 @@ export default class Game {
 
         this.requestID = null;
 
-        this.playerImg = new Image();
-        this.playerImg.src = '../../../img/game/hero.png';
+        this.playerImg = (document.getElementById('player-sprite') as HTMLImageElement);
+        this.ghostLeftImg = (document.getElementById('ghost-left-sprite') as HTMLImageElement);
+        this.ghostRightImg = (document.getElementById('ghost-right-sprite') as HTMLImageElement);
+        this.heartImg = (document.getElementById('heart-sprite') as HTMLImageElement);
 
-        this.ghostLeftImg = new Image();
-        this.ghostLeftImg.src = '../../../img/game/ghost_l.png';
-
-        this.ghostRightImg = new Image();
-        this.ghostRightImg.src = '../../../img/game/ghost_r.png';
-
-        this.heartImg = new Image();
-        this.heartImg.src = '../../../img/game/heart.png';
-
-        this.symbolLR = new Image();
-        this.symbolLR.src = '../../../img/game/symbols/LR.png';
-
-        this.symbolTD = new Image();
-        this.symbolTD.src = '../../../img/game/symbols/TD.png';
-
-        this.symbolDTD = new Image();
-        this.symbolDTD.src = '../../../img/game/symbols/DTD.png';
+        this.symbolLR = document.getElementById('symbol_LR');
+        this.symbolTD = document.getElementById('symbol_TD');
+        this.symbolDTD = document.getElementById('symbol_DTD');
 
         window.addEventListener('resize', this.resizer.bind(this));
-        // this.resizer();
-
         this.localEventBus.getEvent('updateState', this.setState.bind(this));
 
         this.lastTime = Date.now();
@@ -128,14 +117,7 @@ export default class Game {
                 gameTime: 0,
                 isGameOver: false
             };
-            // if (detectMobile.detect()) {
-            //     window.screen.orientation.onchange = () => {
-            //         matchMedia('(orientation: landscape)').matches ? window.alert('OK') : window.alert('need to add pause');
-            //     };
-                // matchMedia('(orientation: landscape)').matches ? this.gameLoop() : window.alert('move your phone to horizontal orientation');
-            // } else {
-                this.gameLoop();
-            // }
+            this.gameLoop();
         } else {
             console.log('creating ws');
             this.ws = new Ws(this.localEventBus);
@@ -219,7 +201,7 @@ export default class Game {
     }
 
     resizer(): void {
-        let oldCanvasWidth = this.canvas.width;
+        let oldCanvasHeight = this.canvas.height;
 
         this.canvas.height = window.innerHeight;
         this.canvas.width = window.innerWidth;
@@ -229,8 +211,32 @@ export default class Game {
 
         this.axisY = this.canvas.height - this.canvas.height / 40; // координата Y оси X
 
-        // this.playerImg.width = (this.playerImg.width / oldCanvasWidth) * this.canvas.width;
+        this.resizeSprite(this.playerImg);
+        this.resizeSprite(this.ghostRightImg);
+        this.resizeSprite(this.ghostLeftImg);
 
+        console.log(this.playerImg.width);
+        console.log(this.playerImg.height);
+    }
+
+    resizeSprite(sprite: HTMLImageElement): void {
+        let oldHeight = sprite.height;
+        if (this.canvas.height < 600) {
+            if (((sprite.height / oldHeight) * this.canvas.height) > 270 || ((sprite.height / oldHeight) * this.canvas.height) < 100) {
+                sprite.height = 120;
+                sprite.width = (sprite.width / oldHeight) * sprite.height;
+                return;
+            }
+        } else {
+            if (((sprite.height / oldHeight) * this.canvas.height) > 320 || ((sprite.height / oldHeight) * this.canvas.height) < 120) {
+                sprite.height = 200;
+                sprite.width = (sprite.width / oldHeight) * sprite.height;
+                return;
+            }
+        }
+
+        sprite.height = (sprite.height / oldHeight) * this.canvas.height;
+        sprite.width = (sprite.width / oldHeight) * sprite.height;
     }
 
     destroy(): void {
@@ -335,7 +341,6 @@ export default class Game {
                     } else {
                         this.state.player.hp -= this.state.ghosts[i].damage;
                         this.state.ghosts.splice(i, 1);
-                        console.log('damage');
                     }
                 } else if (this.state.ghosts[i].speed < 0) {
                     if (this.state.ghosts[i].x > this.state.player.x + this.state.player.sprite.width) {
@@ -343,7 +348,6 @@ export default class Game {
                     } else {
                         this.state.player.hp -= this.state.ghosts[i].damage;
                         this.state.ghosts.splice(i, 1);
-                        console.log('damage');
                     }
                 }
             }
@@ -361,6 +365,11 @@ export default class Game {
     }
 
     renderSingle(): void {
+        if (!this.initialResizerCall) {
+            this.resizer();
+            this.initialResizerCall = true;
+        }
+
         let heartsBetweenOffset = this.heartImg.width / 4;
 
         let heartOffset = this.heartImg.width;
@@ -372,24 +381,25 @@ export default class Game {
         }
 
         // игрок
-        this.ctx.clearRect(this.state.player.x, this.axisY - this.state.player.sprite.height,
-            this.state.player.sprite.width, this.state.player.sprite.height);
-        this.ctx.drawImage(this.state.player.sprite, this.state.player.x,
-            this.axisY - this.state.player.sprite.height);
+        this.ctx.clearRect(this.state.player.x, this.axisY - this.playerImg.height,
+            this.playerImg.width, this.playerImg.height);
+        this.ctx.drawImage(this.playerImg, this.state.player.x,
+            this.axisY - this.playerImg.height, this.playerImg.width, this.playerImg.height);
 
         for (let i = 0; i < this.state.ghosts.length; i++) {  // призраки
-            let leftSymbolOffset = (this.state.ghosts[i].sprite.width / 2 - (this.state.ghosts[i].symbolsQueue.length * symbolImgWidth) / 2);
+            let leftSymbolOffset = (this.ghostRightImg.width / 2 - (this.state.ghosts[i].symbolsQueue.length * symbolImgWidth) / 2);
 
             if (this.state.ghosts[i].speed > 0) {
                 // очистка + рендер призрака
-                this.ctx.clearRect(0, this.axisY - this.state.ghosts[i].sprite.height,
-                    this.state.player.x, this.state.ghosts[i].sprite.height);
+                this.ctx.clearRect(0, this.axisY - this.ghostLeftImg.height,
+                    this.state.player.x, this.ghostLeftImg.height);
                 this.ctx.drawImage(this.state.ghosts[i].sprite,
-                    this.state.ghosts[i].x,this.axisY - this.state.ghosts[i].sprite.height);
+                    this.state.ghosts[i].x,this.axisY - this.ghostLeftImg.height,
+                    this.ghostLeftImg.width, this.ghostLeftImg.height);
 
                 // очистка + рендер символов над призраком
                 this.ctx.clearRect(0,
-                    this.axisY - this.state.ghosts[i].sprite.height - symbolImgWidth - this.symbolsOffset,
+                    this.axisY - this.ghostLeftImg.height - symbolImgWidth - this.symbolsOffset,
                     this.canvas.width / 2, symbolImgWidth);
 
                 let symbolsCounter = -2;
@@ -399,47 +409,48 @@ export default class Game {
                         case 2:  // LR - горизонтальный символ left-right
                             this.ctx.drawImage(this.symbolLR,
                                 this.state.ghosts[i].x + symbolImgWidth * symbolsCounter + leftSymbolOffset,
-                                this.axisY - this.state.ghosts[i].sprite.height - symbolImgWidth);
+                                this.axisY - this.ghostLeftImg.height - symbolImgWidth);
                             break;
                         case 3:  // TD - вертикальный символ - top-down
                             this.ctx.drawImage(this.symbolTD,
                                 this.state.ghosts[i].x + symbolImgWidth * symbolsCounter + leftSymbolOffset,
-                                this.axisY - this.state.ghosts[i].sprite.height - symbolImgWidth);
+                                this.axisY - this.ghostLeftImg.height - symbolImgWidth);
                             break;
                         case 4:  // DTD - стрелка - down-top-down
                             this.ctx.drawImage(this.symbolDTD,
                                 this.state.ghosts[i].x + symbolImgWidth * symbolsCounter + leftSymbolOffset,
-                                this.axisY - this.state.ghosts[i].sprite.height - symbolImgWidth);
+                                this.axisY - this.ghostLeftImg.height - symbolImgWidth);
                             break;
                     }
                 }
             } else if (this.state.ghosts[i].speed < 0) {  // все то же самое, что и для призрака справа
-                this.ctx.clearRect(this.state.player.x + this.state.player.sprite.width,
-                    this.axisY - this.state.ghosts[i].sprite.height,
-                    this.canvas.width / 2, this.state.ghosts[i].sprite.height);
+                this.ctx.clearRect(this.state.player.x + this.playerImg.width,
+                    this.axisY - this.ghostRightImg.height,
+                    this.canvas.width / 2, this.ghostRightImg.height);
 
                 this.ctx.drawImage(this.state.ghosts[i].sprite,
-                    this.state.ghosts[i].x, this.axisY - this.state.ghosts[i].sprite.height);
+                    this.state.ghosts[i].x, this.axisY - this.ghostRightImg.height,
+                    this.ghostRightImg.width, this.ghostRightImg.height);
 
-                this.ctx.clearRect(this.state.player.x + this.state.player.sprite.width / 2,
-                    this.axisY - this.state.ghosts[i].sprite.height - symbolImgWidth - this.symbolsOffset,
+                this.ctx.clearRect(this.state.player.x + this.playerImg.width / 2,
+                    this.axisY - this.ghostRightImg.height - symbolImgWidth - this.symbolsOffset,
                     this.canvas.width / 2, symbolImgWidth);
                 for (let j = 0; j < this.state.ghosts[i].symbolsQueue.length; j++) {
                     switch (this.state.ghosts[i].symbolsQueue[j]) {
                         case 2:  // LR
                             this.ctx.drawImage(this.symbolLR,
                                 this.state.ghosts[i].x + symbolImgWidth * j + leftSymbolOffset,
-                                this.axisY - this.state.ghosts[i].sprite.height - symbolImgWidth - this.symbolsOffset);
+                                this.axisY - this.ghostRightImg.height - symbolImgWidth - this.symbolsOffset);
                             break;
                         case 3:  // TD
                             this.ctx.drawImage(this.symbolTD,
                                 this.state.ghosts[i].x + symbolImgWidth * j + leftSymbolOffset,
-                                this.axisY - this.state.ghosts[i].sprite.height - symbolImgWidth - this.symbolsOffset);
+                                this.axisY - this.ghostRightImg.height - symbolImgWidth - this.symbolsOffset);
                             break;
                         case 4:  // DTD
                             this.ctx.drawImage(this.symbolDTD,
                                 this.state.ghosts[i].x + symbolImgWidth * j + leftSymbolOffset,
-                                this.axisY - this.state.ghosts[i].sprite.height - symbolImgWidth - this.symbolsOffset);
+                                this.axisY - this.ghostRightImg.height - symbolImgWidth - this.symbolsOffset);
                             break;
                     }
                 }
