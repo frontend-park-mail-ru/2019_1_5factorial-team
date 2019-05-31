@@ -20,7 +20,7 @@
     }
     (async function () {
         const e = new Go();
-        const {i} = await WebAssembly.instantiateStreaming(fetch("test.wasm"), go.importObject);
+        const {i} = await WebAssembly.instantiateStreaming(fetch("test.wasm"), e.importObject);
         e.run(i);
     })();
 
