@@ -205,11 +205,16 @@ export default class Game {
     }
 
     resizer(): void {
+        let oldCanvasHeight = this.canvas.height;
+
         this.canvas.height = window.innerHeight;
         this.canvas.width = window.innerWidth;
 
         this.recognizer.gcanvas.height = window.innerHeight;
         this.recognizer.gcanvas.width = window.innerWidth;
+
+        this.playerImg.height = (this.playerImg.height / oldCanvasHeight) * this.canvas.height;
+
     }
 
     destroy(): void {
@@ -635,7 +640,7 @@ export default class Game {
         let speedDelta = 0;
         ghost.speed > 0 ? speedDelta = GHOST_SPEED_DELTA : speedDelta = - GHOST_SPEED_DELTA;
 
-        ghost.x += (ghost.speed + speedDelta) * dt;  // TODO(): вынести в константу разность скоростей
+        ghost.x += (ghost.speed + speedDelta) * dt;
     }
 
     /*
