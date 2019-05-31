@@ -78,7 +78,7 @@
 
   &__score {
     @extend %inline;
-    margin-left: 0.25em;
+    padding-left: 0.5em;
     user-select: text;
     cursor: default;
   }
