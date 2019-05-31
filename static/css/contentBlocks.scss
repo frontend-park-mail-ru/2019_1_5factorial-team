@@ -4,7 +4,6 @@
 .content {
   @extend %columned;
   padding: 4vh 4vw;
-  grid-row: 2;
   justify-content: center;
 
   &_modal {
@@ -44,7 +43,7 @@
   @extend %columned;
   padding: 0 3vw;
   margin-top: 10vh;
-  grid-row: 2;
+  //grid-row: 2;
   font-size: 11vh;
 
   &__btn {
@@ -98,6 +97,11 @@
     height: 10em;
     background-size: cover;
     width: 10em;
+
+    &_generated {
+      width: 6em;
+      height: 6em;
+    }
   }
 }
 
