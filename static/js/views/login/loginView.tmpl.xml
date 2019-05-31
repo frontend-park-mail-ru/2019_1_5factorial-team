@@ -12,7 +12,7 @@
             <form class="form js-login-form">
                 <h1 class="form__header">LOG IN</h1>
 
-                <label class="form__label" for="login-or-email">Login</label>
+                <label class="form__label" for="login-or-email">Login or Email</label>
                 <input class="form__input js-login-or-email" type="text" name="login-or-email" placeholder=" " id="login-or-email" autofocus="true" autocomplete="on"/>
                 <div class="form__warning js-warning-login-or-email"></div>
                 <label class="form__label" for="password">Password</label>

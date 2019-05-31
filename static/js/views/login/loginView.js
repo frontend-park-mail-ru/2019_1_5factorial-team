@@ -82,6 +82,7 @@ export default class loginView extends View {
     }
 
     onSubmitResponse(data) {
+        console.log(data);
         const incorrectField = document.getElementsByClassName(data.inputField)[0];
         incorrectField.classList.add('invalid');
     }
