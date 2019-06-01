@@ -3,19 +3,32 @@
   display: flex;
   background: url('../../../img/1.png') center no-repeat/cover;
 }
+
 #gcanvas {
   display: flex;
   position: absolute;
   z-index: 1;
 }
 
+.modal-window_rotation {
+  display: none;
+}
+
 @media screen and (orientation: portrait) {
-  #canvas, #gcanvas, .modal-window {
-    transform: rotate(90deg);
-    background-size: cover;
+  #canvas {
+    display: none;
   }
 
-  .blur {
+  .modal-window_rotation {
+    display: flex;
+  }
+
+  .modal-window__warning {
+    padding: 1vh 1vw;
+    text-align: center;
+  }
+
+  .modal-window_game-over {
     display: none;
   }
 }

@@ -21,13 +21,12 @@ export default class Game {
     protected ctx: CanvasRenderingContext2D;
     protected ws: Ws;
     protected isSet?: Boolean;
-    protected isLocked?: Boolean;
     protected onceLoop?: Boolean;
     protected isSent?: Boolean;
     protected initialResizerCall?: Boolean;
     protected wasSwapped?: Boolean;
-    protected spritesAreLoaded?: Boolean;
-    protected needToUpdateSprites?: Boolean;
+
+    protected ghostsSpeed?: Array<Boolean>;
 
     protected axisY: number;
     protected heartsBlockY: number;
@@ -83,8 +82,8 @@ export default class Game {
         this.initialResizerCall = false;
         this.isPlayers = false;
         this.wasSwapped = false;
-        this.spritesAreLoaded = false;
-        this.needToUpdateSprites = true;
+
+        this.ghostsSpeed = new Array<Boolean>(2);
 
         this.recognizer = new Recognizer();
 
@@ -157,18 +156,10 @@ export default class Game {
 
             this.isSet = true;
         } else {
-            // console.log('в моем стейте столько призраков: ' + this.state.ghosts.length);
-            // console.log('в новом стейте столько: '+ state.Objects.items.length);
-
-            // console.log('дельта: ' + this.deltaX);
-
             if (this.state.ghosts.length === state.Objects.items.length) {
                 for (let i = 0; i < state.Objects.items.length; i++) {
                     if (Math.abs(state.Objects.items[i].x - this.state.ghosts[i].x) >= this.deltaX) {
                         this.state.ghosts[i] = state.Objects.items[i];
-                        // console.log('reset');
-                    } else {
-                        // console.log('no need to reset');
                     }
                 }
             } else if (this.state.ghosts.length < state.Objects.items.length && state.Objects.items.length === 2) {
@@ -176,18 +167,12 @@ export default class Game {
                 for (let i = 0; i < state.Objects.items.length; i++) {
                     if (Math.abs(state.Objects.items[i].x - this.state.ghosts[i].x) >= this.deltaX) {
                         this.state.ghosts[i] = state.Objects.items[i];
-                        // console.log('reset');
-                    } else {
-                        // console.log('no need to reset');
                     }
                 }
             } else if (this.state.ghosts.length > state.Objects.items.length && state.Objects.items.length === 1) {
                 this.state.ghosts.splice(0, 1);
                 if (Math.abs(state.Objects.items[0].x - this.state.ghosts[0].x) >= this.deltaX) {
                     this.state.ghosts[0] = state.Objects.items[0];
-                    // console.log('reset');
-                } else {
-                    // console.log('no need to reset');
                 }
             }
 
@@ -213,72 +198,13 @@ export default class Game {
         this.recognizer.gcanvas.height = window.innerHeight;
         this.recognizer.gcanvas.width = window.innerWidth;
 
-        if (this.canvas.height <= this.canvas.width) {
-            if (this.wasSwapped) {
-                let oldWidth = window.innerWidth;
-                this.canvas.width = window.innerHeight;
-                this.canvas.height = oldWidth;
-
-                this.recognizer.gcanvas.height = window.innerHeight;
-                this.recognizer.gcanvas.width = oldWidth;
-
-                console.log(this.canvas.width);
-                console.log(this.canvas.height);
-
-                Game.unswapWidthAndHeight(this.playerImg);
-                Game.unswapWidthAndHeight(this.ghostLeftImg);
-                Game.unswapWidthAndHeight(this.ghostRightImg);
-
-                this.wasSwapped = false;
-            }
-        }
-
         if (this.canvas.height > this.canvas.width) {
-            let oldWidth = window.innerWidth;
-            this.canvas.width = window.innerHeight;
-            this.canvas.height = oldWidth;
-
-            this.recognizer.gcanvas.height = window.innerHeight;
-            this.recognizer.gcanvas.width = oldWidth;
-
-            console.log(this.canvas.width);
-            console.log(this.canvas.height);
-
-            Game.swapWidthAndHeight(this.playerImg);
-            Game.swapWidthAndHeight(this.ghostRightImg);
-            Game.swapWidthAndHeight(this.ghostLeftImg);
-
-            this.wasSwapped = true;
+            this.makePause();
+        } else {
+            this.recoverFromPause();
         }
 
         this.axisY = this.canvas.height - this.canvas.height / 40; // координата Y оси X
-
-        if (!this.spritesAreLoaded) {
-            console.log('sprites are not loaded');
-
-            this.playerImg.addEventListener('load', () => {  // TODO(): remove event listener
-                this.resizeSprite(this.playerImg);
-            });
-
-            this.ghostRightImg.addEventListener('load', () => {  // TODO(): remove event listener
-                this.resizeSprite(this.ghostRightImg);
-            });
-
-            this.ghostLeftImg.addEventListener('load', () => {  // TODO(): remove event listener
-                this.resizeSprite(this.ghostLeftImg);
-            });
-
-            if (this.needToUpdateSprites) {
-                this.resizeSprite(this.playerImg);
-                this.resizeSprite(this.ghostRightImg);
-                this.resizeSprite(this.ghostLeftImg);
-                this.needToUpdateSprites = false;
-                return;
-            }
-
-            this.spritesAreLoaded = true;
-            return;
-        }
 
         this.resizeSprite(this.playerImg);
         this.resizeSprite(this.ghostRightImg);
@@ -287,17 +213,33 @@ export default class Game {
 
     resizeSprite(sprite: HTMLImageElement): void {
         let oldHeight = sprite.height;
-        if (this.canvas.height < 600) {
-            if (((sprite.height / oldHeight) * this.canvas.height) > 270 || ((sprite.height / oldHeight) * this.canvas.height) < 100) {
-                sprite.height = 120;
-                sprite.width = (sprite.width / oldHeight) * sprite.height;
-                return;
+        if (this.canvas.height > this.canvas.width) {
+            if (this.canvas.height < 600) {
+                if (((sprite.height / oldHeight) * this.canvas.height) > 120 || ((sprite.height / oldHeight) * this.canvas.height) < 100) {
+                    sprite.height = 80;
+                    sprite.width = (sprite.width / oldHeight) * sprite.height;
+                    return;
+                }
+            } else {
+                if (((sprite.height / oldHeight) * this.canvas.height) > 320 || ((sprite.height / oldHeight) * this.canvas.height) < 120) {
+                    sprite.height = 200;
+                    sprite.width = (sprite.width / oldHeight) * sprite.height;
+                    return;
+                }
             }
         } else {
-            if (((sprite.height / oldHeight) * this.canvas.height) > 320 || ((sprite.height / oldHeight) * this.canvas.height) < 120) {
-                sprite.height = 200;
-                sprite.width = (sprite.width / oldHeight) * sprite.height;
-                return;
+            if (this.canvas.height < 400) {
+                if (((sprite.height / oldHeight) * this.canvas.height) > 120 || ((sprite.height / oldHeight) * this.canvas.height) < 100) {
+                    sprite.height = 80;
+                    sprite.width = (sprite.width / oldHeight) * sprite.height;
+                    return;
+                }
+            } else {
+                if (((sprite.height / oldHeight) * this.canvas.height) > 320 || ((sprite.height / oldHeight) * this.canvas.height) < 120) {
+                    sprite.height = 200;
+                    sprite.width = (sprite.width / oldHeight) * sprite.height;
+                    return;
+                }
             }
         }
 
@@ -305,20 +247,23 @@ export default class Game {
         sprite.width = (sprite.width / oldHeight) * sprite.height;
     }
 
-    static swapWidthAndHeight(sprite: HTMLImageElement): void {
-        let oldWidth = sprite.width;
-        sprite.width = sprite.height;
-        sprite.height = oldWidth;
+    makePause() {
+        console.log('pause');
+        for (let i = 0; i < this.state.ghosts.length; i++) {
+            this.state.ghosts[i].speed > 0 ? this.ghostsSpeed[i] = true : this.ghostsSpeed[i] = false;
+            this.state.ghosts[i].speed = 0;
+        }
     }
 
-    static unswapWidthAndHeight(sprite: HTMLImageElement): void {
-        let oldWidth = sprite.width;
-        sprite.width = sprite.height;
-        sprite.height = oldWidth;
+    recoverFromPause() {
+        console.log('pause recovered');
+        for (let i = 0; i < this.state.ghosts.length; i++) {
+            this.ghostsSpeed[i] ? this.state.ghosts[i].speed = DEFAULT_GHOST_SPEED : this.state.ghosts[i].speed = -DEFAULT_GHOST_SPEED;
+            delete this.ghostsSpeed[i];
+        }
     }
 
     destroy(): void {
-        this.needToUpdateSprites = true;
         console.log('destroy');
 
         if (this.requestID) {
@@ -464,7 +409,7 @@ export default class Game {
         // игрок
         this.ctx.clearRect(this.state.player.x, this.axisY - this.playerImg.height,
             this.playerImg.width, this.playerImg.height);
-        this.ctx.drawImage(this.playerImg, this.state.player.x,
+        this.ctx.drawImage(this.playerImg, this.canvas.width / 2 - this.playerImg.width / 2,
             this.axisY - this.playerImg.height, this.playerImg.width, this.playerImg.height);
 
         for (let i = 0; i < this.state.ghosts.length; i++) {  // призраки
