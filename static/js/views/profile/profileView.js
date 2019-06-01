@@ -35,6 +35,22 @@ export default class profileView extends View {
     }
 
     onChangePasswodResponse(data = {}) {
+        this.oldWarn.textContent = '';
+        this.oldWarn.classList.add('hide');
+
+        this.newWarn.textContent = '';
+        this.newWarn.classList.add('hide');
+        if (data.error === 'Password should has at least 4 symbols and not contain russian letters') {
+            this.newWarn.classList.remove('hide');
+            this.newWarn.textContent = data.error;
+            console.warn('Password should has at least 4 symbols and not contain russian letters');
+        } else if (data.error.split(': ')[2] === 'invalid old password') {
+            this.oldWarn.classList.remove('hide');
+            this.oldWarn.textContent = data.error.split(': ')[2];
+        } else {
+            this.oldWarn.classList.remove('hide');
+            this.oldWarn.textContent = data.error.split(': ')[2];
+        }
         //TODO(): добавить обработку ошибки в верстке
         console.log(data.error);
     }
@@ -73,7 +89,7 @@ export default class profileView extends View {
         if (data.user.avatar === DEFAULT_AVATAR || data.user.avatar === AVATAR_DEFAULT) {
             data.user.avatar = AVATAR_DEFAULT;
         } else {
-            data.user.avatar = NETWORK_ADRESS +'/static/'+ data.user.avatar;
+            data.user.avatar = NETWORK_ADRESS + data.user.avatar;
         }
         super.render(this.prevRoot, data);
         const imgToSet = document.getElementsByClassName('avatar__img')[0];
@@ -110,6 +126,10 @@ export default class profileView extends View {
             event.preventDefault();
 
             MW.createModal('Profile change password');
+            
+            this.newWarn = document.getElementsByClassName('js-warning-new')[0];
+            this.oldWarn = document.getElementsByClassName('js-warning-old')[0];
+
             this.inputPasswordOld = document.getElementsByClassName('js-password-old')[0];
             this.inputPasswordNew = document.getElementsByClassName('js-password-new')[0];
             this.submitPassword = document.getElementsByClassName('js-button-submit')[0];

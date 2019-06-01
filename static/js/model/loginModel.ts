@@ -10,7 +10,6 @@ export default class loginModel {
         this.localEventBus.getEvent('login', this.onLogin.bind(this));
         this.localEventBus.getEvent('loginOrEmailRTCheck', this.loginOrEmailRTCheckResponse.bind(this));
         this.localEventBus.getEvent('passwRTCheck', this.passwRTCheck.bind(this));
-        this.localEventBus.getEvent('oauthCheck', this.oauthLogin.bind(this));
         // this.oauthLogin();
     }
 
@@ -38,27 +37,4 @@ export default class loginModel {
                 }
             });
     }
-
-    /**
-     * Авторизация через сторонние сервисы
-     */
-    oauthLogin() {
-        const params = new URLSearchParams(window.location.hash.slice(1));
-        const token = params.get('access_token');
-        const qparams = new URLSearchParams(window.location.search);
-        const service = qparams.get('service') || 'vk';
-        if (token) {
-            api.loginOauth({
-                token,
-                service
-            }).then(res => {
-                if (res.status === OK_RESPONSE) {
-                    res.json().then(data => this.localEventBus.callEvent('loginSuccess', data));
-                } else {
-                    res.json().then(data => this.localEventBus.callEvent('loginResponse', data));
-                }
-            });
-        }
-    }
-
 }

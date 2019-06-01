@@ -9,11 +9,14 @@ export default class ModalWindow {
     closeMW: Element;
     blur: Element;
     gameOverBackMenu: Element;
+    header: Element;
 
-    createModal(element: String): void {
+    createModal(element: String, room?: string): void {
         const modalElement = document.getElementsByClassName('modal-window')[0];
         this.isGame = false;
-        if (element === 'Game single end') {
+        if (element === 'Game single end' || 
+            element === 'Game multi choose' ||
+            element === 'Menu multi waiting for player') {
             this.isGame = true;
         }
 
@@ -54,13 +57,20 @@ export default class ModalWindow {
                 this.removeModal();
             });
         }
+
+        if (room) {
+            this.header = document.getElementsByClassName('js-set-text')[0];
+            this.header.textContent = room;
+        }
     }
 
     removeModal(): void {
         const modalElement = document.getElementsByClassName('modal-window')[0];
         const toDeleteModal = document.getElementsByClassName('content content_modal')[0];
-        modalElement.classList.add('hidden');
-        toDeleteModal.remove();
-        this.isGame = false;
+        if (toDeleteModal) {
+            modalElement.classList.add('hidden');
+            toDeleteModal.remove();
+            this.isGame = false;
+        }
     }
 }

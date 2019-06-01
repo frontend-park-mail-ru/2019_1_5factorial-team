@@ -17,7 +17,6 @@ branches:
   only:
     - master
     - dev
-    - issues
     - final-updates
 before_install:
 - openssl aes-256-cbc -K $encrypted_173836cec267_key -iv $encrypted_173836cec267_iv

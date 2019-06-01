@@ -11,10 +11,25 @@ export default class loginView extends View {
         super(template, eventBus);
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('loginResponse', this.onSubmitResponse.bind(this));
+        this.localEventBus.getEvent('loginResponseError', this.onSubmitResponseError.bind(this));
         this.localEventBus.getEvent('loginOrEmailRTCheckResponse', this.loginOrEmailRTCheckResponse.bind(this));
         this.localEventBus.getEvent('passwRTCheckResponse', this.passwRTCheckResponse.bind(this));
         this.loginOrEmailValue = '';
         this.passwordValue = '';
+    }
+
+    onSubmitResponseError(res) {
+        res.json().then((data) => {
+            if (data.error === 'Wrong password or login') {
+                this.passwordWarning.textContent = 'Wrong password or login';
+                this.passwInput.classList.remove('valid');
+                this.passwInput.classList.add('invalid');
+    
+                this.loginOrEmailWarning.textContent = 'Wrong password or login';
+                this.loginOrEmailInput.classList.remove('valid');
+                this.loginOrEmailInput.classList.add('invalid');
+            }
+        });
     }
 
     passwRTCheckResponse({response = ''}) {
@@ -58,7 +73,6 @@ export default class loginView extends View {
 
         this.loginOrEmailInput.addEventListener('change', this.loginOrEmailRTCheck.bind(this, this.loginOrEmailInput));
         this.passwInput.addEventListener('change', this.passwRTCheck.bind(this, this.passwInput));
-        this.localEventBus.callEvent('oauthCheck');
         // return this;
     }
 
@@ -82,10 +96,7 @@ export default class loginView extends View {
     }
 
     onSubmitResponse(data) {
-        // TODO() : Modal or another alert of wrong auth
         console.log(data);
-        // const incorrectField = document.getElementsByClassName(data.inputField)[0];
-        // incorrectField.classList.add('invalid');
     }
 
     loginOrEmailErrorWarning(data) {

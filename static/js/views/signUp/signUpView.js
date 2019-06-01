@@ -84,10 +84,12 @@ export default class signUpView extends View {
     }
 
     emailRTCheck(input) {
+        // getCustomAvatar(this.loginInput.value, this.emailInput.value);
         this.localEventBus.callEvent('emailRTCheck', {data: input.value});
     }
     
     loginRTCheck(input) {
+        // getCustomAvatar(this.loginInput.value, this.emailInput.value);
         this.localEventBus.callEvent('loginRTCheck', {data: input.value});
     }
 
@@ -97,15 +99,34 @@ export default class signUpView extends View {
 
     onSignupResponse(data = {}, check = 0) {
         console.warn(data, check);
+        if (data.error === 'invalid avatar') {
+            this.loginWarning.textContent = data.error;
+            this.loginWarning.classList.remove('valid');
+            this.loginWarning.classList.add('invalid');
+        }
+        if (data.error === 'invalid user data') {
+            this.emailWarning.textContent = data.error;
+            this.emailWarning.classList.remove('valid');
+            this.emailWarning.classList.add('invalid');
+            this.loginWarning.textContent = data.error;
+            this.loginWarning.classList.remove('valid');
+            this.loginWarning.classList.add('invalid');
+            this.passwordWarning.textContent = data.error;
+            this.passwordWarning.classList.remove('valid');
+            this.passwordWarning.classList.add('invalid');
+        }
     }
 
     onSubmit() {
         const email = this.form.elements['email'].value;
         const login = this.form.elements['login'].value;
         const pass = this.form.elements['password'].value;
+        const avatar = document.getElementById('js-user-avatar');
+
+        const avatarLink = avatar.src.split('/')[3];
 
         if (this.isEmail && this.isLogin && this.isPass) {
-            this.localEventBus.callEvent('signup', { email, login, pass });
+            this.localEventBus.callEvent('signup', { email, login, pass, avatarLink });
         }
     }
 

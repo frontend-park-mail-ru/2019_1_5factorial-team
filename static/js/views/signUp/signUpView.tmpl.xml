@@ -2,34 +2,32 @@
     <div class="container">
         <section class="container__block container__block_left sided-block">
             <div class="settings">
-                <a class="btn settings__btn settings__btn_sound-on">
-                </a>
                 <a class="btn settings__btn settings__btn_info" href="/about">
                 </a>
             </div>
         </section>
         <section class="container__block container__block_center">
-            <form class="form js-signup-form">
-                <h1 class="form__header">SIGN UP</h1>
-                <img class="avatar__img avatar__img_generated" src="/" alt="default" id="js-user-avatar"/>
-
-                <label class="form__label" for="login">Login</label>
-                <input class="form__input js-login" type="text" id="login" autofocus="true"/>
-                <div class="form__warning js-warning-login hide"></div>
-
+            <div class="content">
+                <h1 class="content__header">SIGN UP</h1>
+                <img class="avatar__img avatar__img_generated" src="001-default-avatar.png" alt="default" id="js-user-avatar"/>
+                <form class="form js-signup-form">
                 <label class="form__label" for="email">Email</label>
                 <input class="form__input js-email" type="text" id="email"/>
                 <div class="form__warning js-warning-email hide"></div>
 
-                <label class="form__label" for="password">Password</label>
-                <input class="form__input js-password" type="password" id="password"/>
-                <div class="form__warning js-warning-password hide"></div>
-
-                <div class="form-btn-block">
-                    <a class="btn btn_outlined form__btn form__btn_back" href="/">Back</a>
-                    <button class="btn btn_contained form__btn js-submit" type="submit">Sign Up</button>
-                </div>
-            </form>
+                <label class="form__label" for="login">Login</label>
+                <input class="form__input js-login" type="text" id="login" autofocus="true"/>
+                <div class="form__warning js-warning-login hide"></div>
+                    <label class="form__label" for="password">Password</label>
+                    <input class="form__input js-password" type="password" id="password"/>
+                    <div class="form__warning js-warning-password hide"></div>
+<!-- onclick="getCustomAvatar(document.querySelector('.js-login').value, document.querySelector('.js-email').value)" -->
+                    <div class="form-btn-block">
+                        <a class="btn btn_outlined form__btn form__btn_back" href="/">Back</a>
+                        <button class="btn btn_contained form__btn js-submit" type="submit">Sign Up</button>
+                    </div>
+                </form>
+            </div>
         </section>
         <section class="container__block container__block_right sided-block">
             <div class="users">
@@ -38,20 +36,4 @@
             </div>
         </section>
     </div>
-        <script>
-        // var input = document.body.children[0];
-        let login = document.querySelector('.js-login');
-        if (login) {
-            login.oninput = function () {
-                getCustomAvatar(document.querySelector('.js-login').value, document.querySelector('.js-email').value)
-            };
-        }
-
-        let email = document.querySelector('.js-email');
-        if (email) {
-            email.oninput = function () {
-                getCustomAvatar(document.querySelector('.js-login').value, document.querySelector('.js-email').value)
-            };
-        }
-    </script>
 </fest:template>
