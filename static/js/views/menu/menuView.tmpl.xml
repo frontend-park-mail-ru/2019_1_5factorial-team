@@ -8,9 +8,18 @@
         </section>
         <section class="container__block container__block_center">
             <div class="menu">
-                <a class="btn menu__btn js-single" href="/single">Single</a>
-                <a class="btn menu__btn js-multi" href="/multi">Multi</a>
-                <a class="btn menu__btn js-leaders" href="/leaders">Leaders</a>
+                <div class="unit unit_menu">
+                    <a class="btn menu__btn js-single" href="/single">Single</a>
+                    <div class="menu__symbol menu__symbol_td"></div>
+                </div>
+                <div class="unit unit_menu">
+                    <a class="btn menu__btn js-multi" href="/multi">Multi</a>
+                    <div class="menu__symbol menu__symbol_lr"></div>
+                </div>
+                <div class="unit unit_menu">
+                    <a class="btn menu__btn js-leaders" href="/leaders">Leaders</a>
+                    <div class="menu__symbol menu__symbol_dtd"></div>
+                </div>
             </div>
         </section>
         <section class="modal-window hidden">

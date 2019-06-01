@@ -21,6 +21,7 @@
 
   .modal-window_rotation {
     display: flex;
+    z-index: 1;
   }
 
   .modal-window__warning {
