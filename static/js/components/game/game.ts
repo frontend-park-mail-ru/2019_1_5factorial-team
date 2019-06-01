@@ -218,7 +218,13 @@ export default class Game {
                 this.resizeSprite(this.ghostLeftImg);
             }
         } else {
-            console.log('resizer called');
+            if (this.canvas.height > this.canvas.width ) {
+                this.ws.send("PAUSE", "");
+                this.makePause();
+            } else {
+                this.ws.send("RESUME", "");
+                this.recoverFromPause();
+            }
 
             this.axisY = this.canvas.height - this.canvas.height / 40; // координата Y оси X
 
