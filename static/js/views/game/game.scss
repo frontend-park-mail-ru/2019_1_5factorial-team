@@ -2,23 +2,28 @@
   z-index: 0;
   display: flex;
   background: url('../../../img/1.png') center no-repeat/cover;
-  width: inherit;
-  height: inherit;
+  //width: inherit;
+  //height: inherit;
 }
 #gcanvas {
   display: flex;
   position: absolute;
   z-index: 1;
-  width: inherit;
-  height: inherit;
+  //width: inherit;
+  //height: inherit;
 }
 
 @media screen and (orientation: portrait) {
   #canvas, #gcanvas {
-    width: 100vh;
-    height: 100%;
     transform: rotate(90deg);
     align-self: center;
     background-size: cover;
   }
 }
+
+//@media screen and (orientation: portrait) {
+//  #canvas, #gcanvas {
+//    width: 100vh;
+//    height: 100%;
+//  }
+//}
