@@ -7,20 +7,11 @@ export default class Jager {
             swipeTD: 3,
             swipeDTD: 4,
             swipeTDT: 5,
-
-            swipeLRL: 6,
-            swipeRLR: 7,
-
-            pigtail: 8,
-            pigtail_reverse: 9,
-
-            lightning: 10,
-
-            circle: 11,
         };
+
         this.isDrawingPatch = false;
 
-        this.gestureColors = ['black', 'black', '#FF0000', '#2FA6EF', '#FFCC33', '#7AF330', '#56A521', '#FF9900', '#1976d2', '#FF0000', 'yellow', 'magenta'];
+        this.gestureColors = ['black', 'black', '#FF0000', '#2FA6EF', '#FFCC33', '#7AF330'];
 
         this.gesturesRules = [
             {
@@ -49,46 +40,6 @@ export default class Jager {
                 distanceX: [30, 1000],
                 distanceY: null,
                 points: [],
-            },
-            {
-                gesture: this.gestures.pigtail,
-                startAngle: [5, 60],
-                endAngle: [130, 175],
-                terminatorForce: [0.35, 0.8],
-                distanceX: null,
-                distanceY: null,
-                points: [],
-            },
-            {
-                gesture: this.gestures.pigtail,
-                startAngle: [-60, 40],
-                endAngle: [155, 240],
-                terminatorForce: [0, 0.75],
-                distanceX: null,
-                distanceY: null,
-                points: [
-                    {angle: [125, 200], force: [[0.1, 0.5], [0, 0.5]]}
-                ],
-            },
-            {
-                gesture: this.gestures.circle,
-                startAngle: [180, 230],
-                endAngle: [-60, 20],
-                terminatorForce: [0.4, 0.6],
-                distanceX: null,
-                distanceY: null,
-                points: [],
-            },
-            {
-                gesture: this.gestures.circle,
-                startAngle: [140, 210],
-                endAngle: [-40, 20],
-                terminatorForce: [0.1, 0.5],
-                distanceX: null,
-                distanceY: null,
-                points: [
-                    {angle: [-40, 40], force: [[0.3, 0.5], [0.3, 0.5]]}
-                ],
             },
         ];
     }
