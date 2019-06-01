@@ -25,6 +25,9 @@ export default class Game {
     protected onceLoop?: Boolean;
     protected isSent?: Boolean;
     protected initialResizerCall?: Boolean;
+    protected wasSwapped?: Boolean;
+    protected spritesAreLoaded?: Boolean;
+    protected needToUpdateSprites?: Boolean;
 
     protected axisY: number;
     protected heartsBlockY: number;
@@ -79,6 +82,9 @@ export default class Game {
         this.onceLoop = false;
         this.initialResizerCall = false;
         this.isPlayers = false;
+        this.wasSwapped = false;
+        this.spritesAreLoaded = false;
+        this.needToUpdateSprites = true;
 
         this.recognizer = new Recognizer();
 
@@ -201,22 +207,70 @@ export default class Game {
     }
 
     resizer(): void {
-        let oldCanvasHeight = this.canvas.height;
-
         this.canvas.height = window.innerHeight;
         this.canvas.width = window.innerWidth;
 
         this.recognizer.gcanvas.height = window.innerHeight;
         this.recognizer.gcanvas.width = window.innerWidth;
 
+        if (this.wasSwapped) {
+            Game.unswapWidthAndHeight(this.playerImg);
+            Game.unswapWidthAndHeight(this.ghostLeftImg);
+            Game.unswapWidthAndHeight(this.ghostRightImg);
+
+            this.wasSwapped = false;
+        }
+
+        if (this.canvas.height > this.canvas.width) {
+            let oldWidth = window.innerWidth;
+            this.canvas.width = window.innerHeight;
+            this.canvas.height = oldWidth;
+
+            this.recognizer.gcanvas.height = window.innerHeight;
+            this.recognizer.gcanvas.width = oldWidth;
+
+            console.log(this.canvas.width);
+            console.log(this.canvas.height);
+
+            Game.swapWidthAndHeight(this.playerImg);
+            Game.swapWidthAndHeight(this.ghostRightImg);
+            Game.swapWidthAndHeight(this.ghostLeftImg);
+
+            this.wasSwapped = true;
+        }
+
         this.axisY = this.canvas.height - this.canvas.height / 40; // координата Y оси X
+
+        if (!this.spritesAreLoaded) {
+            console.log('sprites are not loaded');
+
+            this.playerImg.addEventListener('load', () => {  // TODO(): remove event listener
+                this.resizeSprite(this.playerImg);
+            });
+
+            this.ghostRightImg.addEventListener('load', () => {  // TODO(): remove event listener
+                this.resizeSprite(this.ghostRightImg);
+            });
+
+            this.ghostLeftImg.addEventListener('load', () => {  // TODO(): remove event listener
+                this.resizeSprite(this.ghostLeftImg);
+            });
+
+            if (this.needToUpdateSprites) {
+                this.resizeSprite(this.playerImg);
+                this.resizeSprite(this.ghostRightImg);
+                this.resizeSprite(this.ghostLeftImg);
+                this.needToUpdateSprites = false;
+                return;
+            }
+
+            this.spritesAreLoaded = true;
+            return;
+        }
 
         this.resizeSprite(this.playerImg);
         this.resizeSprite(this.ghostRightImg);
         this.resizeSprite(this.ghostLeftImg);
-
-        console.log(this.playerImg.width);
-        console.log(this.playerImg.height);
     }
 
     resizeSprite(sprite: HTMLImageElement): void {
@@ -239,8 +293,22 @@ export default class Game {
         sprite.width = (sprite.width / oldHeight) * sprite.height;
     }
 
+    static swapWidthAndHeight(sprite: HTMLImageElement): void {
+        let oldWidth = sprite.width;
+        sprite.width = sprite.height;
+        sprite.height = oldWidth;
+    }
+
+    static unswapWidthAndHeight(sprite: HTMLImageElement): void {
+        let oldWidth = sprite.width;
+        sprite.width = sprite.height;
+        sprite.height = oldWidth;
+    }
+
     destroy(): void {
+        this.needToUpdateSprites = true;
         console.log('destroy');
+
         if (this.requestID) {
             cancelAnimationFrame(this.requestID);
         }
@@ -368,6 +436,7 @@ export default class Game {
         if (!this.initialResizerCall) {
             this.resizer();
             this.initialResizerCall = true;
+            console.log('resizer initial call');
         }
 
         let heartsBetweenOffset = this.heartImg.width / 4;
