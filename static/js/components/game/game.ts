@@ -213,7 +213,7 @@ export default class Game {
         this.recognizer.gcanvas.height = window.innerHeight;
         this.recognizer.gcanvas.width = window.innerWidth;
 
-        if (this.canvas.height < this.canvas.width) {
+        if (this.canvas.height <= this.canvas.width) {
             if (this.wasSwapped) {
                 let oldWidth = window.innerWidth;
                 this.canvas.width = window.innerHeight;
