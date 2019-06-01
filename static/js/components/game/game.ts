@@ -221,7 +221,6 @@ export default class Game {
             console.log('resizer called');
 
             this.axisY = this.canvas.height - this.canvas.height / 40; // координата Y оси X
-            console.log(this.axisY);
 
             this.resizeSprite(this.playerImg);
             this.resizeSprite(this.ghostRightImg);
@@ -527,7 +526,8 @@ export default class Game {
             this.playerImg.width, this.playerImg.height);
 
         this.ctx.drawImage(this.playerImg, leftPlayerX,
-            this.axisY - this.playerImg.height);
+            this.axisY - this.playerImg.height,
+            this.playerImg.width, this.playerImg.height);
 
         /*
          * Блок второго игрока
@@ -550,7 +550,8 @@ export default class Game {
             this.playerImg.width, this.playerImg.height);
 
         this.ctx.drawImage(this.playerImg, rightPlayerX,
-            this.axisY - this.playerImg.height);
+            this.axisY - this.playerImg.height,
+            this.playerImg.width, this.playerImg.height);
 
         for (let i = 0; i < this.state.ghosts.length; i++) {  // призраки
             this.moveGhostMulti(this.state.ghosts[i], dt);
@@ -572,16 +573,17 @@ export default class Game {
                 this.ctx.clearRect(0, this.axisY - this.ghostLeftImg.height,
                     this.state.Players[0].x, this.ghostLeftImg.height);
                 this.ctx.drawImage(this.ghostLeftImg,
-                    this.state.ghosts[i].x,this.axisY - this.ghostLeftImg.height);
+                    this.state.ghosts[i].x,this.axisY - this.ghostLeftImg.height,
+                    this.ghostLeftImg.width, this.ghostLeftImg.height);
 
                 // очистка + рендер символов над призраком
                 this.ctx.clearRect(0,
                     this.axisY - this.ghostLeftImg.height - symbolImgWidth - this.symbolsOffset,
                     this.canvas.width / 2, symbolImgWidth);
 
-                let symbolsCounter = -2;
+                let symbolsCounter = 0;
                 for (let j = this.state.ghosts[i].symbols.length; j >= 0; j--) {
-                    symbolsCounter = this.state.ghosts[i].symbols.length - j;
+                    symbolsCounter = (this.state.ghosts[i].symbols.length - 1) - j;
                     switch (this.state.ghosts[i].symbols[j]) {
                         case 2:  // LR - горизонтальный символ left-right
                             this.ctx.drawImage(this.symbolLR,
@@ -606,7 +608,8 @@ export default class Game {
                     this.canvas.width / 2, this.ghostRightImg.height);
 
                 this.ctx.drawImage(this.ghostRightImg,
-                    this.state.ghosts[i].x, this.axisY - this.ghostRightImg.height);
+                    this.state.ghosts[i].x, this.axisY - this.ghostRightImg.height,
+                    this.ghostRightImg.width, this.ghostRightImg.height);
 
                 this.ctx.clearRect(this.canvas.width / 2,
                     this.axisY - this.ghostRightImg.height - symbolImgWidth - this.symbolsOffset,
