@@ -12,5 +12,10 @@
 @media screen and (orientation: portrait) {
   #canvas, #gcanvas, .modal-window {
     transform: rotate(90deg);
+    background-size: cover;
+  }
+
+  .blur {
+    display: none;
   }
 }

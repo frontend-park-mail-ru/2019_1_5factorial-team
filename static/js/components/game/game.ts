@@ -213,12 +213,24 @@ export default class Game {
         this.recognizer.gcanvas.height = window.innerHeight;
         this.recognizer.gcanvas.width = window.innerWidth;
 
-        if (this.wasSwapped) {
-            Game.unswapWidthAndHeight(this.playerImg);
-            Game.unswapWidthAndHeight(this.ghostLeftImg);
-            Game.unswapWidthAndHeight(this.ghostRightImg);
+        if (this.canvas.height < this.canvas.width) {
+            if (this.wasSwapped) {
+                let oldWidth = window.innerWidth;
+                this.canvas.width = window.innerHeight;
+                this.canvas.height = oldWidth;
 
-            this.wasSwapped = false;
+                this.recognizer.gcanvas.height = window.innerHeight;
+                this.recognizer.gcanvas.width = oldWidth;
+
+                console.log(this.canvas.width);
+                console.log(this.canvas.height);
+
+                Game.unswapWidthAndHeight(this.playerImg);
+                Game.unswapWidthAndHeight(this.ghostLeftImg);
+                Game.unswapWidthAndHeight(this.ghostRightImg);
+
+                this.wasSwapped = false;
+            }
         }
 
         if (this.canvas.height > this.canvas.width) {
