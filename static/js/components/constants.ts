@@ -95,7 +95,8 @@ export const EVENT_LIST_GAME_SINGLE = [
     'updateState',
     'callingGameWS',
     'sendButton',
-    'close'
+    'close',
+    'getRoom'
 ];
 
 export const EVENT_LIST_GAME_MULTI = [

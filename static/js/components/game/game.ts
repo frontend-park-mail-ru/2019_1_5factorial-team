@@ -141,6 +141,7 @@ export default class Game {
                 this.okChoose.addEventListener('click', (event) => {
                     event.preventDefault();
                     this.ws = new Ws(this.localEventBus, true);
+                    console.log('done');
                 });
                 this.noChoose.addEventListener('click', (event) => {
                     event.preventDefault();
