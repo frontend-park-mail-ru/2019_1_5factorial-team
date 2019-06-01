@@ -99,6 +99,22 @@ export default class signUpView extends View {
 
     onSignupResponse(data = {}, check = 0) {
         console.warn(data, check);
+        if (data.error === 'invalid avatar') {
+            this.loginWarning.textContent = data.error;
+            this.loginWarning.classList.remove('valid');
+            this.loginWarning.classList.add('invalid');
+        }
+        if (data.error === 'invalid user data') {
+            this.emailWarning.textContent = data.error;
+            this.emailWarning.classList.remove('valid');
+            this.emailWarning.classList.add('invalid');
+            this.loginWarning.textContent = data.error;
+            this.loginWarning.classList.remove('valid');
+            this.loginWarning.classList.add('invalid');
+            this.passwordWarning.textContent = data.error;
+            this.passwordWarning.classList.remove('valid');
+            this.passwordWarning.classList.add('invalid');
+        }
     }
 
     onSubmit() {

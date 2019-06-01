@@ -34,7 +34,7 @@ export default class loginModel {
                 if (res.status === OK_RESPONSE) {
                     this.localEventBus.callEvent('loginSuccess', res);
                   } else {
-                    this.localEventBus.callEvent('loginResponse', res);
+                    this.localEventBus.callEvent('loginResponseError', res);
                   }
             });
     }
