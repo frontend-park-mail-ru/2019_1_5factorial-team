@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const main = document.getElementsByClassName('main-container')[0];
     const router = new Router(page);
 
-    const gameCtrl = new gameController();
+    const gameCtrl = new gameController(router);
     const menuCntl = new menuController();
     const aboutCtrl = new aboutController();
     const loginCtrl = new loginController(router);

@@ -1,19 +1,26 @@
-import {NETWORK_ADRESS_WS_GAME} from '../components/constants';
+import {NETWORK_ADRESS_WS_GAME_SOLO, NETWORK_ADRESS_WS_GAME_LINK} from '../components/constants';
 import EventBus from "./eventBus";
 
 export default class Ws {
     localEventBus: EventBus;
     webs: any;
     static __instance: Ws;
-    constructor(eventBus: EventBus) {
+    constructor(eventBus: EventBus, isFriend: Boolean, room?: string) {
         this.localEventBus = eventBus;
         this.localEventBus.getEvent('sendButton', this.send.bind(this));
         if (Ws.__instance) {
             return Ws.__instance;
         }
 
-        const address = NETWORK_ADRESS_WS_GAME;
-        this.webs = new WebSocket(address);
+        const address = NETWORK_ADRESS_WS_GAME_SOLO;
+        console.log(room);
+        if (isFriend && room) {
+            this.webs = new WebSocket('wss://5factorial.tech/api/game/connect?room=' + room);
+        } else if (isFriend && !room){
+            this.webs = new WebSocket(NETWORK_ADRESS_WS_GAME_LINK)
+        } else {
+            this.webs = new WebSocket(address);
+        }
 
         this.webs.onopen = () => {
             console.log(`WebSocket on address ${address} opened`);
@@ -47,6 +54,10 @@ export default class Ws {
 
         if (message.type === 'END') {
             this.localEventBus.callEvent('gameOverWS');
+        }
+
+        if (message.type === 'LINK') {
+            this.localEventBus.callEvent('getRoom', message.payload);
         }
 
         try {

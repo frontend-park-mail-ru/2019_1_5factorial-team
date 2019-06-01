@@ -72,7 +72,6 @@ export default class loginView extends View {
 
         this.loginOrEmailInput.addEventListener('change', this.loginOrEmailRTCheck.bind(this, this.loginOrEmailInput));
         this.passwInput.addEventListener('change', this.passwRTCheck.bind(this, this.passwInput));
-        this.localEventBus.callEvent('oauthCheck');
         // return this;
     }
 
@@ -96,10 +95,7 @@ export default class loginView extends View {
     }
 
     onSubmitResponse(data) {
-        // TODO() : Modal or another alert of wrong auth
         console.log(data);
-        // const incorrectField = document.getElementsByClassName(data.inputField)[0];
-        // incorrectField.classList.add('invalid');
     }
 
     loginOrEmailErrorWarning(data) {

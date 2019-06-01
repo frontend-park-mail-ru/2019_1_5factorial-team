@@ -6,6 +6,7 @@ import detectMobile from '../detectMobile';
 import { DEFAULT_GHOST_SPEED, DEFAULT_GHOST_DAMAGE, PLAYER_INITIAL_HP } from '../constants';
 import { SCORE_FOR_SYMBOL, SCORE_FOR_GHOST } from '../constants';
 import EventBus from '../../libs/eventBus';
+import { whileStatement } from '@babel/types';
 
 const symbolImgWidth: number = 60;
 
@@ -21,6 +22,7 @@ export default class Game {
     protected isLocked?: Boolean;
     protected onceLoop?: Boolean;
     protected isSent?: Boolean;
+    protected isRemoved?: Boolean;
 
     protected axisY: number;
     protected heartsBlockY: number;
@@ -43,6 +45,10 @@ export default class Game {
     protected ghostLeftImg: HTMLImageElement;
     protected ghostRightImg: HTMLImageElement;
     protected heartImg: HTMLImageElement;
+
+    protected okChoose: HTMLButtonElement;
+    protected noChoose: HTMLButtonElement;
+    protected cancelBtn: HTMLButtonElement;
 
     protected symbolLR: any;
     protected symbolTD: any;
@@ -74,6 +80,7 @@ export default class Game {
         this.isSet = false;
         this.onceLoop = false;
         this.isPlayers = false;
+        this.isRemoved = false;
 
         this.recognizer = new Recognizer();
 
@@ -92,6 +99,7 @@ export default class Game {
         this.symbolDTD = document.getElementById('symbol_DTD');
 
         this.localEventBus.getEvent('updateState', this.setState.bind(this));
+        this.localEventBus.getEvent('getRoom', this.getRoom.bind(this));
 
         this.lastTime = Date.now();
 
@@ -114,12 +122,55 @@ export default class Game {
                 };
                 // matchMedia('(orientation: landscape)').matches ? this.gameLoop() : window.alert('move your phone to horizontal orientation');
             } else {
+                this.MW.removeModal();
                 this.gameLoop();
             }
         } else {
-            console.log('creating ws');
-            this.ws = new Ws(this.localEventBus);
+            const paramsString = window.location.search;
+            const searchParams = new URLSearchParams(paramsString);
+            const room = searchParams.get('room');
+            console.log(room);
+            if (room !== null) {
+                this.ws = new Ws(this.localEventBus, true, room);
+            } else {
+                console.log('creating ws');
+                this.MW.createModal('Game multi choose');
+                this.okChoose = (document.getElementsByClassName('js-friend-yes')[0] as HTMLButtonElement);
+                this.noChoose = (document.getElementsByClassName('js-friend-no')[0] as HTMLButtonElement);
+    
+                this.okChoose.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    this.ws = new Ws(this.localEventBus, true);
+                });
+                this.noChoose.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    this.ws = new Ws(this.localEventBus, false);
+                    this.MW.removeModal();
+                    this.MW.createModal('Menu multi waiting for player');
+
+                    this.cancelBtn = (document.getElementsByClassName('js-close-mw')[0] as HTMLButtonElement);
+                    this.cancelBtn.addEventListener('click', (event) => {
+                        event.preventDefault();
+                        this.localEventBus.callEvent('closeForce');
+                    });
+                });
+            }
+            // this.ws = new Ws(this.localEventBus);
         }
+    }
+
+    getRoom(url: string) {
+        const room = url;
+        console.log(room);
+        this.MW.removeModal();
+        this.MW.createModal('Menu multi waiting for player', room);
+
+        this.cancelBtn = (document.getElementsByClassName('js-close-mw')[0] as HTMLButtonElement);
+        this.cancelBtn.addEventListener('click', (event) => {
+            event.preventDefault();
+            this.localEventBus.callEvent('closeForce');
+        });
+        // const room = searchParams.get('room');
     }
 
     setState(state: { Players: { nick?: string, nickname?: string, score: Number, x?: number, id?: Number, hp?: number }[]; Objects: { items: any; }; }) {
@@ -198,6 +249,7 @@ export default class Game {
 
         if (!this.onceLoop) {
             this.onceLoop = true;
+            this.MW.removeModal();
             this.gameLoop();
         }
     }

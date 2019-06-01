@@ -43,20 +43,6 @@ export default class api {
     }
 
     /**
-     * Авторизация через сторонние сервисы
-     * @param {*} token
-     * @param {*} service
-     * */
-    static loginOauth(data: { token: String, service: String }): Promise<Response> {
-        return network.doPost({
-            url: `/api/session/oauth/${data.service}`,
-            body: {
-                'token': data.token
-            }
-        });
-    }
-
-    /**
      * Регистрация пользователя
      * @param {*} login
      * @param {*} email

@@ -2,8 +2,6 @@
     <div class="container container_menu">
         <section class="container__block container__block_left sided-block">
             <div class="settings">
-                <a class="btn settings__btn settings__btn_sound-on">
-                </a>
                 <a class="btn settings__btn settings__btn_info" href="/about">
                 </a>
             </div>
@@ -13,7 +11,6 @@
                 <a class="btn menu__btn js-single" href="/single">Single</a>
                 <a class="btn menu__btn js-multi" href="/multi">Multi</a>
                 <a class="btn menu__btn js-leaders" href="/leaders">Leaders</a>
-                <a class="btn menu__btn js-about" href="/about">About</a>
             </div>
         </section>
         <section class="modal-window hidden">

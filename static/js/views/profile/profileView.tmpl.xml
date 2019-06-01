@@ -2,8 +2,6 @@
 <div class="container">
     <section class="container__block container__block_left sided-block">
         <div class="settings">
-            <a class="btn settings__btn settings__btn_sound-on">
-            </a>
             <a class="btn settings__btn settings__btn_info" href="/about">
             </a>
         </div>
