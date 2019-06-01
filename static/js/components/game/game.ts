@@ -198,17 +198,25 @@ export default class Game {
         this.recognizer.gcanvas.height = window.innerHeight;
         this.recognizer.gcanvas.width = window.innerWidth;
 
-        if (this.canvas.height > this.canvas.width) {
-            this.makePause();
+        if (!this.isMulti) {
+            if (this.canvas.height > this.canvas.width ) {
+                this.makePause();
+            } else {
+                this.recoverFromPause();
+
+                this.axisY = this.canvas.height - this.canvas.height / 40; // координата Y оси X
+
+                this.resizeSprite(this.playerImg);
+                this.resizeSprite(this.ghostRightImg);
+                this.resizeSprite(this.ghostLeftImg);
+            }
         } else {
-            this.recoverFromPause();
+            this.axisY = this.canvas.height - this.canvas.height / 40; // координата Y оси X
+
+            this.resizeSprite(this.playerImg);
+            this.resizeSprite(this.ghostRightImg);
+            this.resizeSprite(this.ghostLeftImg);
         }
-
-        this.axisY = this.canvas.height - this.canvas.height / 40; // координата Y оси X
-
-        this.resizeSprite(this.playerImg);
-        this.resizeSprite(this.ghostRightImg);
-        this.resizeSprite(this.ghostLeftImg);
     }
 
     resizeSprite(sprite: HTMLImageElement): void {
@@ -428,9 +436,9 @@ export default class Game {
                     this.axisY - this.ghostLeftImg.height - symbolImgWidth - this.symbolsOffset,
                     this.canvas.width / 2, symbolImgWidth);
 
-                let symbolsCounter = -2;
+                let symbolsCounter = 0;
                 for (let j = this.state.ghosts[i].symbolsQueue.length; j >= 0; j--) {
-                    symbolsCounter = this.state.ghosts[i].symbolsQueue.length - j;
+                    symbolsCounter = (this.state.ghosts[i].symbolsQueue.length - 1) - j;
                     switch (this.state.ghosts[i].symbolsQueue[j]) {
                         case 2:  // LR - горизонтальный символ left-right
                             this.ctx.drawImage(this.symbolLR,
@@ -575,17 +583,17 @@ export default class Game {
                         case 2:  // LR - горизонтальный символ left-right
                             this.ctx.drawImage(this.symbolLR,
                                 this.state.ghosts[i].x + symbolImgWidth * symbolsCounter + leftSymbolOffset,
-                                this.axisY - this.ghostLeftImg.height - symbolImgWidth);
+                                this.axisY - this.ghostLeftImg.height - symbolImgWidth - this.symbolsOffset);
                             break;
                         case 3:  // TD - вертикальный символ - top-down
                             this.ctx.drawImage(this.symbolTD,
                                 this.state.ghosts[i].x + symbolImgWidth * symbolsCounter + leftSymbolOffset,
-                                this.axisY - this.ghostLeftImg.height - symbolImgWidth);
+                                this.axisY - this.ghostLeftImg.height - symbolImgWidth - this.symbolsOffset);
                             break;
                         case 4:  // DTD - стрелка - down-top-down
                             this.ctx.drawImage(this.symbolDTD,
                                 this.state.ghosts[i].x + symbolImgWidth * symbolsCounter + leftSymbolOffset,
-                                this.axisY - this.ghostLeftImg.height - symbolImgWidth);
+                                this.axisY - this.ghostLeftImg.height - symbolImgWidth - this.symbolsOffset);
                             break;
                     }
                 }
@@ -648,7 +656,7 @@ export default class Game {
     }
 
     generateDrawingsSequence(): number[] {
-        const maxSymbolsLength = 2, minSymbolsLength = 6;
+        const maxSymbolsLength = 2, minSymbolsLength = 4;
         let generatedSymbolsLength = Math.floor(Math.random() * (maxSymbolsLength - minSymbolsLength + 1)) + minSymbolsLength;
 
         let generatedDrawings = [];
@@ -691,7 +699,7 @@ export default class Game {
 
     moveGhostMulti(ghost: { x: number; speed: number; }, dt: number) {
         let speedDelta = 0;
-        ghost.speed > 0 ? speedDelta = GHOST_SPEED_DELTA : speedDelta = - GHOST_SPEED_DELTA - 10;
+        ghost.speed > 0 ? speedDelta = GHOST_SPEED_DELTA : speedDelta = - GHOST_SPEED_DELTA - 14;
 
         ghost.x += (ghost.speed + speedDelta) * dt;
     }
