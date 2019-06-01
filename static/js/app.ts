@@ -1,4 +1,6 @@
 import '../css/reset.scss';
+import '../css/fonts.scss';
+import '../css/variables.scss';
 import '../css/style.scss';
 
 import {menuController} from './controllers/menuCtrl';

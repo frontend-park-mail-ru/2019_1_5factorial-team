@@ -5,8 +5,9 @@ import detectMobile from '../detectMobile';
 
 import { DEFAULT_GHOST_SPEED, DEFAULT_GHOST_DAMAGE, PLAYER_INITIAL_HP } from '../constants';
 import { SCORE_FOR_SYMBOL, SCORE_FOR_GHOST } from '../constants';
+import { GHOST_SPEED_DELTA } from '../constants';
+
 import EventBus from '../../libs/eventBus';
-import { whileStatement } from '@babel/types';
 
 const symbolImgWidth: number = 60;
 
@@ -19,10 +20,13 @@ export default class Game {
     protected ctx: CanvasRenderingContext2D;
     protected ws: Ws;
     protected isSet?: Boolean;
-    protected isLocked?: Boolean;
     protected onceLoop?: Boolean;
     protected isSent?: Boolean;
     protected isRemoved?: Boolean;
+    protected initialResizerCall?: Boolean;
+    protected wasSwapped?: Boolean;
+
+    protected ghostsSpeed?: Array<Boolean>;
 
     protected axisY: number;
     protected heartsBlockY: number;
@@ -79,13 +83,20 @@ export default class Game {
         this.lastDrawing = 0;
         this.isSet = false;
         this.onceLoop = false;
+        this.initialResizerCall = false;
         this.isPlayers = false;
         this.isRemoved = false;
+        this.wasSwapped = false;
+
+        this.ghostsSpeed = new Array<Boolean>(2);
 
         this.recognizer = new Recognizer();
 
-        window.addEventListener('resize', this.resizer.bind(this));
-        this.resizer();
+        this.canvas.height = window.innerHeight;
+        this.canvas.width = window.innerWidth;
+
+        this.recognizer.gcanvas.height = window.innerHeight;
+        this.recognizer.gcanvas.width = window.innerWidth;
 
         this.requestID = null;
 
@@ -98,6 +109,7 @@ export default class Game {
         this.symbolTD = document.getElementById('symbol_TD');
         this.symbolDTD = document.getElementById('symbol_DTD');
 
+        window.addEventListener('resize', this.resizer.bind(this));
         this.localEventBus.getEvent('updateState', this.setState.bind(this));
         this.localEventBus.getEvent('getRoom', this.getRoom.bind(this));
 
@@ -175,11 +187,7 @@ export default class Game {
     }
 
     setState(state: { Players: { nick?: string, nickname?: string, score: Number, x?: number, id?: Number, hp?: number }[]; Objects: { items: any; }; }) {
-        this.deltaX = this.ghostLeftImg.width / 2;
-        // console.log(state);
-
-
-        ///////////////////////////////////
+        this.deltaX = this.ghostLeftImg.width;
 
         if (!this.isSet) {  // сеттим стейт в первый раз
             this.state = {
@@ -203,20 +211,17 @@ export default class Game {
                 isGameOver: false
             };
 
+            for (let i = 0; i < this.state.ghosts.length; i++) {  // призраки
+                this.convertCoordinate(this.state.ghosts[i].x);
+            }
+
             this.isSet = true;
         } else {
-            // console.log('в моем стейте столько призраков: ' + this.state.ghosts.length);
-            // console.log('в новом стейте столько: '+ state.Objects.items.length);
-
-            // console.log('дельта: ' + this.deltaX);
-
             if (this.state.ghosts.length === state.Objects.items.length) {
                 for (let i = 0; i < state.Objects.items.length; i++) {
                     if (Math.abs(state.Objects.items[i].x - this.state.ghosts[i].x) >= this.deltaX) {
                         this.state.ghosts[i] = state.Objects.items[i];
-                        // console.log('reset');
-                    } else {
-                        // console.log('no need to reset');
+                        this.convertCoordinate(this.state.ghosts[i].x);
                     }
                 }
             } else if (this.state.ghosts.length < state.Objects.items.length && state.Objects.items.length === 2) {
@@ -224,18 +229,14 @@ export default class Game {
                 for (let i = 0; i < state.Objects.items.length; i++) {
                     if (Math.abs(state.Objects.items[i].x - this.state.ghosts[i].x) >= this.deltaX) {
                         this.state.ghosts[i] = state.Objects.items[i];
-                        // console.log('reset');
-                    } else {
-                        // console.log('no need to reset');
+                        this.convertCoordinate(this.state.ghosts[i].x);
                     }
                 }
             } else if (this.state.ghosts.length > state.Objects.items.length && state.Objects.items.length === 1) {
                 this.state.ghosts.splice(0, 1);
                 if (Math.abs(state.Objects.items[0].x - this.state.ghosts[0].x) >= this.deltaX) {
                     this.state.ghosts[0] = state.Objects.items[0];
-                    // console.log('reset');
-                } else {
-                    // console.log('no need to reset');
+                    this.convertCoordinate(this.state.ghosts[0].x);
                 }
             }
 
@@ -261,10 +262,78 @@ export default class Game {
 
         this.recognizer.gcanvas.height = window.innerHeight;
         this.recognizer.gcanvas.width = window.innerWidth;
+
+        if (!this.isMulti) {
+            if (this.canvas.height > this.canvas.width ) {
+                this.makePause();
+            } else {
+                this.recoverFromPause();
+
+                this.axisY = this.canvas.height - this.canvas.height / 40; // координата Y оси X
+
+                this.resizeSprite(this.playerImg);
+                this.resizeSprite(this.ghostRightImg);
+                this.resizeSprite(this.ghostLeftImg);
+            }
+        } else {
+            if (this.canvas.height > this.canvas.width ) {
+                this.ws.send("PAUSE", "");
+                this.makePause();
+            } else {
+                this.ws.send("RESUME", "");
+                this.recoverFromPause();
+            }
+
+            this.axisY = this.canvas.height - this.canvas.height / 40; // координата Y оси X
+
+            this.resizeSprite(this.playerImg);
+            this.resizeSprite(this.ghostRightImg);
+            this.resizeSprite(this.ghostLeftImg);
+        }
+    }
+
+    resizeSprite(sprite: HTMLImageElement): void {
+        let oldHeight = sprite.height;
+        if (this.canvas.height < this.canvas.width) {
+            if (this.canvas.height < 600) {
+                if (((sprite.height / oldHeight) * this.canvas.height) > 120 || ((sprite.height / oldHeight) * this.canvas.height) < 100) {
+                    sprite.height = 140;
+                    sprite.width = (sprite.width / oldHeight) * sprite.height;
+                    console.log('h / w: ' + sprite.height + '/' + sprite.width);
+                    return;
+                }
+            } else {
+                if (((sprite.height / oldHeight) * this.canvas.height) > 320 || ((sprite.height / oldHeight) * this.canvas.height) < 120) {
+                    sprite.height = 200;
+                    sprite.width = (sprite.width / oldHeight) * sprite.height;
+                    return;
+                }
+            }
+        }
+
+        sprite.height = (sprite.height / oldHeight) * this.canvas.height;
+        sprite.width = (sprite.width / oldHeight) * sprite.height;
+    }
+
+    makePause() {
+        console.log('pause');
+        for (let i = 0; i < this.state.ghosts.length; i++) {
+            this.state.ghosts[i].speed > 0 ? this.ghostsSpeed[i] = true : this.ghostsSpeed[i] = false;
+            this.state.ghosts[i].speed = 0;
+        }
+    }
+
+    recoverFromPause() {
+        console.log('pause recovered');
+        for (let i = 0; i < this.state.ghosts.length; i++) {
+            this.ghostsSpeed[i] ? this.state.ghosts[i].speed = DEFAULT_GHOST_SPEED : this.state.ghosts[i].speed = -DEFAULT_GHOST_SPEED;
+            delete this.ghostsSpeed[i];
+        }
     }
 
     destroy(): void {
         console.log('destroy');
+
         if (this.requestID) {
             cancelAnimationFrame(this.requestID);
         }
@@ -365,7 +434,6 @@ export default class Game {
                     } else {
                         this.state.player.hp -= this.state.ghosts[i].damage;
                         this.state.ghosts.splice(i, 1);
-                        console.log('damage');
                     }
                 } else if (this.state.ghosts[i].speed < 0) {
                     if (this.state.ghosts[i].x > this.state.player.x + this.state.player.sprite.width) {
@@ -373,7 +441,6 @@ export default class Game {
                     } else {
                         this.state.player.hp -= this.state.ghosts[i].damage;
                         this.state.ghosts.splice(i, 1);
-                        console.log('damage');
                     }
                 }
             }
@@ -391,6 +458,12 @@ export default class Game {
     }
 
     renderSingle(): void {
+        if (!this.initialResizerCall) {
+            this.resizer();
+            this.initialResizerCall = true;
+            console.log('resizer initial call');
+        }
+
         let heartsBetweenOffset = this.heartImg.width / 4;
 
         let heartOffset = this.heartImg.width;
@@ -402,74 +475,76 @@ export default class Game {
         }
 
         // игрок
-        this.ctx.clearRect(this.state.player.x, this.axisY - this.state.player.sprite.height,
-            this.state.player.sprite.width, this.state.player.sprite.height);
-        this.ctx.drawImage(this.state.player.sprite, this.state.player.x,
-            this.axisY - this.state.player.sprite.height);
+        this.ctx.clearRect(this.state.player.x, this.axisY - this.playerImg.height,
+            this.playerImg.width, this.playerImg.height);
+        this.ctx.drawImage(this.playerImg, this.canvas.width / 2 - this.playerImg.width / 2,
+            this.axisY - this.playerImg.height, this.playerImg.width, this.playerImg.height);
 
         for (let i = 0; i < this.state.ghosts.length; i++) {  // призраки
-            let leftSymbolOffset = (this.state.ghosts[i].sprite.width / 2 - (this.state.ghosts[i].symbolsQueue.length * symbolImgWidth) / 2);
+            let leftSymbolOffset = (this.ghostRightImg.width / 2 - (this.state.ghosts[i].symbolsQueue.length * symbolImgWidth) / 2);
 
             if (this.state.ghosts[i].speed > 0) {
                 // очистка + рендер призрака
-                this.ctx.clearRect(0, this.axisY - this.state.ghosts[i].sprite.height,
-                    this.state.player.x, this.state.ghosts[i].sprite.height);
+                this.ctx.clearRect(0, this.axisY - this.ghostLeftImg.height,
+                    this.state.player.x, this.ghostLeftImg.height);
                 this.ctx.drawImage(this.state.ghosts[i].sprite,
-                    this.state.ghosts[i].x,this.axisY - this.state.ghosts[i].sprite.height);
+                    this.state.ghosts[i].x,this.axisY - this.ghostLeftImg.height,
+                    this.ghostLeftImg.width, this.ghostLeftImg.height);
 
                 // очистка + рендер символов над призраком
                 this.ctx.clearRect(0,
-                    this.axisY - this.state.ghosts[i].sprite.height - symbolImgWidth - this.symbolsOffset,
+                    this.axisY - this.ghostLeftImg.height - symbolImgWidth - this.symbolsOffset,
                     this.canvas.width / 2, symbolImgWidth);
 
-                let symbolsCounter = -2;
+                let symbolsCounter = 0;
                 for (let j = this.state.ghosts[i].symbolsQueue.length; j >= 0; j--) {
-                    symbolsCounter = this.state.ghosts[i].symbolsQueue.length - j;
+                    symbolsCounter = (this.state.ghosts[i].symbolsQueue.length - 1) - j;
                     switch (this.state.ghosts[i].symbolsQueue[j]) {
                         case 2:  // LR - горизонтальный символ left-right
                             this.ctx.drawImage(this.symbolLR,
-                                this.state.ghosts[i].x + symbolImgWidth * symbolsCounter + leftSymbolOffset,
-                                this.axisY - this.state.ghosts[i].sprite.height - symbolImgWidth);
+                                this.state.ghosts[i].x + symbolImgWidth * symbolsCounter,
+                                this.axisY - this.ghostLeftImg.height - symbolImgWidth);
                             break;
                         case 3:  // TD - вертикальный символ - top-down
                             this.ctx.drawImage(this.symbolTD,
-                                this.state.ghosts[i].x + symbolImgWidth * symbolsCounter + leftSymbolOffset,
-                                this.axisY - this.state.ghosts[i].sprite.height - symbolImgWidth);
+                                this.state.ghosts[i].x + symbolImgWidth * symbolsCounter,
+                                this.axisY - this.ghostLeftImg.height - symbolImgWidth);
                             break;
                         case 4:  // DTD - стрелка - down-top-down
                             this.ctx.drawImage(this.symbolDTD,
-                                this.state.ghosts[i].x + symbolImgWidth * symbolsCounter + leftSymbolOffset,
-                                this.axisY - this.state.ghosts[i].sprite.height - symbolImgWidth);
+                                this.state.ghosts[i].x + symbolImgWidth * symbolsCounter,
+                                this.axisY - this.ghostLeftImg.height - symbolImgWidth);
                             break;
                     }
                 }
             } else if (this.state.ghosts[i].speed < 0) {  // все то же самое, что и для призрака справа
-                this.ctx.clearRect(this.state.player.x + this.state.player.sprite.width,
-                    this.axisY - this.state.ghosts[i].sprite.height,
-                    this.canvas.width / 2, this.state.ghosts[i].sprite.height);
+                this.ctx.clearRect(this.state.player.x + this.playerImg.width,
+                    this.axisY - this.ghostRightImg.height,
+                    this.canvas.width / 2, this.ghostRightImg.height);
 
                 this.ctx.drawImage(this.state.ghosts[i].sprite,
-                    this.state.ghosts[i].x, this.axisY - this.state.ghosts[i].sprite.height);
+                    this.state.ghosts[i].x, this.axisY - this.ghostRightImg.height,
+                    this.ghostRightImg.width, this.ghostRightImg.height);
 
-                this.ctx.clearRect(this.state.player.x + this.state.player.sprite.width / 2,
-                    this.axisY - this.state.ghosts[i].sprite.height - symbolImgWidth - this.symbolsOffset,
+                this.ctx.clearRect(this.state.player.x + this.playerImg.width / 2,
+                    this.axisY - this.ghostRightImg.height - symbolImgWidth - this.symbolsOffset,
                     this.canvas.width / 2, symbolImgWidth);
                 for (let j = 0; j < this.state.ghosts[i].symbolsQueue.length; j++) {
                     switch (this.state.ghosts[i].symbolsQueue[j]) {
                         case 2:  // LR
                             this.ctx.drawImage(this.symbolLR,
-                                this.state.ghosts[i].x + symbolImgWidth * j + leftSymbolOffset,
-                                this.axisY - this.state.ghosts[i].sprite.height - symbolImgWidth - this.symbolsOffset);
+                                this.state.ghosts[i].x + symbolImgWidth * j,
+                                this.axisY - this.ghostRightImg.height - symbolImgWidth - this.symbolsOffset);
                             break;
                         case 3:  // TD
                             this.ctx.drawImage(this.symbolTD,
-                                this.state.ghosts[i].x + symbolImgWidth * j + leftSymbolOffset,
-                                this.axisY - this.state.ghosts[i].sprite.height - symbolImgWidth - this.symbolsOffset);
+                                this.state.ghosts[i].x + symbolImgWidth * j,
+                                this.axisY - this.ghostRightImg.height - symbolImgWidth - this.symbolsOffset);
                             break;
                         case 4:  // DTD
                             this.ctx.drawImage(this.symbolDTD,
-                                this.state.ghosts[i].x + symbolImgWidth * j + leftSymbolOffset,
-                                this.axisY - this.state.ghosts[i].sprite.height - symbolImgWidth - this.symbolsOffset);
+                                this.state.ghosts[i].x + symbolImgWidth * j,
+                                this.axisY - this.ghostRightImg.height - symbolImgWidth - this.symbolsOffset);
                             break;
                     }
                 }
@@ -490,6 +565,12 @@ export default class Game {
     }
 
     renderMulti(dt: number): void {
+        if (!this.initialResizerCall) {
+            this.resizer();
+            this.initialResizerCall = true;
+            console.log('resizer initial call');
+        }
+
         /*
          * Блок первого игрока
          */
@@ -502,14 +583,15 @@ export default class Game {
                 this.heartImg.width, this.heartImg.height);
         }
 
-        let leftPlayerX = this.canvas.width / 2 - this.state.Players[0].sprite.width;  // позиция игрока
+        let leftPlayerX = this.canvas.width / 2 - this.playerImg.width;  // позиция игрока
         this.state.Players[0].x = leftPlayerX;
 
-        this.ctx.clearRect(leftPlayerX, this.axisY - this.state.Players[0].sprite.height,
+        this.ctx.clearRect(leftPlayerX, this.axisY - this.playerImg.height,
             this.playerImg.width, this.playerImg.height);
 
         this.ctx.drawImage(this.playerImg, leftPlayerX,
-            this.axisY - this.playerImg.height);
+            this.axisY - this.playerImg.height,
+            this.playerImg.width, this.playerImg.height);
 
         /*
          * Блок второго игрока
@@ -532,10 +614,11 @@ export default class Game {
             this.playerImg.width, this.playerImg.height);
 
         this.ctx.drawImage(this.playerImg, rightPlayerX,
-            this.axisY - this.playerImg.height);
+            this.axisY - this.playerImg.height,
+            this.playerImg.width, this.playerImg.height);
 
         for (let i = 0; i < this.state.ghosts.length; i++) {  // призраки
-            this.moveGhost(this.state.ghosts[i], dt);
+            this.moveGhostMulti(this.state.ghosts[i], dt);
 
             if (this.state.ghosts[i].speed > 0) {
                 if (this.state.ghosts[i].x + this.ghostLeftImg.width >= this.state.Players[0].x) {
@@ -554,31 +637,32 @@ export default class Game {
                 this.ctx.clearRect(0, this.axisY - this.ghostLeftImg.height,
                     this.state.Players[0].x, this.ghostLeftImg.height);
                 this.ctx.drawImage(this.ghostLeftImg,
-                    this.state.ghosts[i].x,this.axisY - this.ghostLeftImg.height);
+                    this.state.ghosts[i].x,this.axisY - this.ghostLeftImg.height,
+                    this.ghostLeftImg.width, this.ghostLeftImg.height);
 
                 // очистка + рендер символов над призраком
                 this.ctx.clearRect(0,
                     this.axisY - this.ghostLeftImg.height - symbolImgWidth - this.symbolsOffset,
                     this.canvas.width / 2, symbolImgWidth);
 
-                let symbolsCounter = -2;
+                let symbolsCounter = 0;
                 for (let j = this.state.ghosts[i].symbols.length; j >= 0; j--) {
-                    symbolsCounter = this.state.ghosts[i].symbols.length - j;
+                    symbolsCounter = (this.state.ghosts[i].symbols.length - 1) - j;
                     switch (this.state.ghosts[i].symbols[j]) {
                         case 2:  // LR - горизонтальный символ left-right
                             this.ctx.drawImage(this.symbolLR,
-                                this.state.ghosts[i].x + symbolImgWidth * symbolsCounter + leftSymbolOffset,
-                                this.axisY - this.ghostLeftImg.height - symbolImgWidth);
+                                this.state.ghosts[i].x + symbolImgWidth * symbolsCounter,
+                                this.axisY - this.ghostLeftImg.height - symbolImgWidth - this.symbolsOffset);
                             break;
                         case 3:  // TD - вертикальный символ - top-down
                             this.ctx.drawImage(this.symbolTD,
-                                this.state.ghosts[i].x + symbolImgWidth * symbolsCounter + leftSymbolOffset,
-                                this.axisY - this.ghostLeftImg.height - symbolImgWidth);
+                                this.state.ghosts[i].x + symbolImgWidth * symbolsCounter,
+                                this.axisY - this.ghostLeftImg.height - symbolImgWidth - this.symbolsOffset);
                             break;
                         case 4:  // DTD - стрелка - down-top-down
                             this.ctx.drawImage(this.symbolDTD,
-                                this.state.ghosts[i].x + symbolImgWidth * symbolsCounter + leftSymbolOffset,
-                                this.axisY - this.ghostLeftImg.height - symbolImgWidth);
+                                this.state.ghosts[i].x + symbolImgWidth * symbolsCounter,
+                                this.axisY - this.ghostLeftImg.height - symbolImgWidth - this.symbolsOffset);
                             break;
                     }
                 }
@@ -588,7 +672,8 @@ export default class Game {
                     this.canvas.width / 2, this.ghostRightImg.height);
 
                 this.ctx.drawImage(this.ghostRightImg,
-                    this.state.ghosts[i].x, this.axisY - this.ghostRightImg.height);
+                    this.state.ghosts[i].x, this.axisY - this.ghostRightImg.height,
+                    this.ghostRightImg.width, this.ghostRightImg.height);
 
                 this.ctx.clearRect(this.canvas.width / 2,
                     this.axisY - this.ghostRightImg.height - symbolImgWidth - this.symbolsOffset,
@@ -598,17 +683,17 @@ export default class Game {
                     switch (this.state.ghosts[i].symbols[j]) {
                         case 2:  // LR
                             this.ctx.drawImage(this.symbolLR,
-                                this.state.ghosts[i].x + symbolImgWidth * j + leftSymbolOffset,
+                                this.state.ghosts[i].x + symbolImgWidth * j,
                                 this.axisY - this.ghostRightImg.height - symbolImgWidth - this.symbolsOffset);
                             break;
                         case 3:  // TD
                             this.ctx.drawImage(this.symbolTD,
-                                this.state.ghosts[i].x + symbolImgWidth * j + leftSymbolOffset,
+                                this.state.ghosts[i].x + symbolImgWidth * j,
                                 this.axisY - this.ghostRightImg.height - symbolImgWidth - this.symbolsOffset);
                             break;
                         case 4:  // DTD
                             this.ctx.drawImage(this.symbolDTD,
-                                this.state.ghosts[i].x + symbolImgWidth * j + leftSymbolOffset,
+                                this.state.ghosts[i].x + symbolImgWidth * j,
                                 this.axisY - this.ghostRightImg.height - symbolImgWidth - this.symbolsOffset);
                             break;
                     }
@@ -628,12 +713,21 @@ export default class Game {
             this.recognizer.lastDrawing = null;
             this.isSent = false;
         }
+
+
         if (!this.isSent) {
             this.ws.send("MOVE", String(this.lastDrawing));
             this.isSent = true;
+
+            for (let i = 0; i < this.state.ghosts.length; i++) {
+                // сносим символ
+                if (this.state.ghosts[i].symbols[0] === this.lastDrawing) {
+                    this.state.ghosts[i].symbols.shift();
+                }
+            }
+
             this.lastDrawing = null;
         }
-
     }
 
     generateDirection(): 'left' | 'right' {
@@ -641,7 +735,7 @@ export default class Game {
     }
 
     generateDrawingsSequence(): number[] {
-        const maxSymbolsLength = 2, minSymbolsLength = 6;
+        const maxSymbolsLength = 2, minSymbolsLength = 4;
         let generatedSymbolsLength = Math.floor(Math.random() * (maxSymbolsLength - minSymbolsLength + 1)) + minSymbolsLength;
 
         let generatedDrawings = [];
@@ -682,11 +776,15 @@ export default class Game {
         }
     }
 
-    moveGhost(ghost: { x: number; speed: number; }, dt: number) {
+    moveGhostMulti(ghost: { x: number; speed: number; }, dt: number) {
         let speedDelta = 0;
-        ghost.speed > 0 ? speedDelta = 30 : speedDelta = - 30;
+        ghost.speed > 0 ? speedDelta = GHOST_SPEED_DELTA : speedDelta = - GHOST_SPEED_DELTA - 14;
 
-        ghost.x += (ghost.speed + speedDelta) * dt;  // TODO(): вынести в константу разность скоростей
+        ghost.x += (ghost.speed + speedDelta) * dt;
+    }
+
+    moveGhost(ghost: { x: number; speed: number; }, dt: number) {
+        ghost.x += (ghost.speed) * dt;
     }
 
     /*

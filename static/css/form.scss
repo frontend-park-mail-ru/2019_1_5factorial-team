@@ -1,26 +1,40 @@
-@import 'variables.scss';
-@import 'flexbox.scss';
+@import './flexbox.scss';
 
 .form {
   @extend %columned;
+  padding: 4vh 4vw;
+
+  &_avatar {
+    padding: 0;
+  }
+
+  &__header {
+    cursor: default;
+    font-family: var(--title-font);
+    font-size: 10vh;
+    margin-bottom: 4vh;
+    text-align: center;
+    text-shadow: var(--common-shdw);
+  }
 
   &_change-password {
     @extend %inline;
     font-size: 2.5vh;
     align-content: center;
     justify-content: center;
+    padding: 0;
     margin-top: 1vh;
   }
 
   &__input {
-    width: 100%;
     border: none;
     border-radius: 0.25em;
     font-size: 4vh;
-    height: 6vh;
     margin: 0.5vh 0;
     padding: 0 0.25em;
     text-align: left;
+    width: 400px;
+    height: 6vh;
 
     &:focus {
       box-shadow: var(--small-shdw)
@@ -54,12 +68,14 @@
   &__signins-header {
     margin-top: 2vh;
     font-size: 3vh;
+    display: none;
   }
 
   &__singins {
     @extend %inline;
     margin-top: 2vh;
     justify-content: center;
+    display: none;
   }
 
   &__btn {
@@ -74,7 +90,7 @@
 
   &__warning {
     color: var(--invalid-red-clr);
-    width: 300px;
+    //width: 300px;
     font-size: 2vh;
     overflow-wrap: break-word;
     white-space: normal;
@@ -87,12 +103,54 @@
       display: none
     }
   }
+
+  @media screen and (min-width: 375px) and (max-width: 600px) {
+    &__input {
+      width: 280px;
+    }
+  }
+
+  @media screen and (max-width: 374px) {
+    &__input {
+      width: 230px;
+    }
+  }
+
+  @media screen and (min-height: 421px) and (max-height: 600px) {
+    &__input {
+      height: 36px;
+      width: 200px;
+    }
+  }
+
+  @media screen and (max-height: 420px) {
+    &__input {
+      height: 28px;
+      width: 200px;
+    }
+
+    &__header {
+      font-size: 40px;
+    }
+
+    &__label {
+      font-size: 16px;
+    }
+
+    &__signins-header {
+      font-size: 12px;
+    }
+
+    &__btn {
+      font-size: 18px;
+    }
+  }
 }
 
 .form-btn-block {
   @extend %inline;
   justify-content: center;
-  width: 100%;
+  //width: 100%;
 }
 
 .invalid {

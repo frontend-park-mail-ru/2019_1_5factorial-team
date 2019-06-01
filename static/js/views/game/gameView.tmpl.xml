@@ -3,7 +3,7 @@
         <canvas id="gcanvas">
         </canvas>
         <canvas class="temp_class_canvas" id="canvas">
-            <img id="player-sprite" src="../../../img/game/hero.png"/>
+            <img id="player-sprite" width="164" src="../../../img/game/hero.png"/>
 
             <img id="ghost-left-sprite" src="../../../img/game/ghost_l.png"/>
             <img id="ghost-right-sprite" src="../../../img/game/ghost_r.png"/>
@@ -14,7 +14,15 @@
             <img id="symbol_TD" src="../../../img/game/symbols/TD.png"/>
             <img id="symbol_DTD" src="../../../img/game/symbols/DTD.png"/>
         </canvas>
-        <section class="modal-window hidden">
+        <section class="modal-window modal-window_rotation">
+            <div class="blur"></div>
+            <div class="modal">
+                <div class="modal-window__warning">
+                    Please, rotate your device to landscape mode
+                </div>
+            </div>
+        </section>
+        <section class="modal-window modal-window_game-over hidden">
         </section>
         <div class="users users_absolute js-check-user">
         </div>

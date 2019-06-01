@@ -130,6 +130,8 @@ export const AVATAR_DEFAULT = '../../../img/default.jpg';
 
 // game constants
 export const DEFAULT_GHOST_SPEED = 80;
+
+export const GHOST_SPEED_DELTA = 76;
 export const DEFAULT_GHOST_DAMAGE = 1;
 
 export const PLAYER_INITIAL_HP = 5;
@@ -171,7 +173,7 @@ export const MAP_OF_MODALS = new Map ([
     ['Game multi end', '<h1 class="text-title modal-window__header js-header-over"></h1><p class="js-set-final-score"></p><a class="btn btn_contained js-back-to-menu-modal" href="/">Back to menu</a>'],
     ['Game multi leave', ''],
     ['Game training', '<h1 class="text-title modal-window__header">Do you want to start training?</h1><div class="modal-window-btns"><button class="btn btn_inlined modal-window__btn js-skip-training">No</button><button class="btn btn_contained modal-window__btn js-start-training">Yes</button></div>'],
-    ['Game single end', '<h1 class="text-title modal-window__header">Game Over! You Lost!</h1><p class="js-set-final-score"></p><a class="btn btn_contained js-back-to-menu-modal" href="/">Back to menu</a>'],
+    ['Game single end', '<h1 class="text-title modal-window__header">Game Over! You Lost!</h1><p class="modal-window__score js-set-final-score"></p><a class="btn btn_contained modal-window__btn js-back-to-menu-modal" href="/">Back to menu</a>'],
     ['Game single pause', ''],
     ['Game single leave', ''],
     ['Game multi choose', '<h1 class="text-title modal-window__header">Do you want to play with friend?</h1><button class="btn btn_contained modal-window__btn js-friend-yes">Yes</button><button class="btn btn_contained modal-window__btn js-friend-no">No</button>'],

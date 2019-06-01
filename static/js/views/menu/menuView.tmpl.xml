@@ -21,6 +21,7 @@
             <div class="name">
                 <h1 class="name__text">the game</h1>
             </div>
+            <canvas id="gcanvas"></canvas>
         </section>
     </div>
 </fest:template>
