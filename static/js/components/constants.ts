@@ -37,7 +37,8 @@ export const EVENT_LIST_MENU = [
     'checkAuthorization',
     'signoutResponse',
     'signOut',
-    'closeView'
+    'closeView',
+    'close'
 ];
 
 export const EVENT_LIST_PROFILE = [
@@ -186,7 +187,7 @@ export const MAP_OF_MODALS = new Map ([
 ]);
 
 export const MAP_OF_USER_BLOCKS = new Map([
-    ['isAuth block', '<a class="btn users__btn users__btn_profile" href="/profile"></a><a class="btn users__btn users__btn_logout js-signout" href="/"></a>'],
+    ['isAuth block', '<a class="btn users__btn users__btn_profile" href="/profile"></a><a class="btn users__btn users__btn_logout js-signout"></a>'],
     ['unAuth block', '<a class="btn users__btn login-btn" href="/login">login</a><a class="btn users__btn signup-btn" href="/signup">signup</a>'],
     ['inGame unAuth', '<a class="btn users__btn signup-btn js-back-to-menu" href="/">Back to menu</a>'],
 ]);

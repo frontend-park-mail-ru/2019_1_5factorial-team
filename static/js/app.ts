@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const aboutCtrl = new aboutController();
     const loginCtrl = new loginController(router);
     const signUpCtrl = new signUpController(router);
-    const leaderboardCtrl = new leaderboardController();
+    const leaderboardCtrl = new leaderboardController(router);
     const profileCtrl = new profileController(router);
 
     router.add('/about', main, aboutCtrl.aboutView);

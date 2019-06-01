@@ -1,4 +1,4 @@
-import {doGet} from '../libs/network';
+import Network from '../libs/network';
 import api from '../libs/api';
 import {User} from '../libs/users';
 import userBlock from '../components/userBlock/userBlock';
@@ -26,19 +26,22 @@ export default class menuModel {
     /**
      * Проверяем пользователя - авторизован ли
      */
-    async checkAuthorization() {
-        const res = await doGet({ url: '/api/session' });
-        console.log(res);
-        if (res.status === ANAUTH_RESPONSE) {
-            return this.localEventBus.callEvent('checkAuthorizationResponse', {
-                isAuthorized: false,
-                statusText: res.statusText,
-            });
-        } else {
-            return this.localEventBus.callEvent('checkAuthorizationResponse', {
-                isAuthorized: true,
-                statusText: res.statusText,
-            });
-        }
+    checkAuthorization() {
+        const res = Network.doGet({ url: '/api/session' });
+        res.then((resp) => {
+            if (resp.status === ANAUTH_RESPONSE) {
+                console.log(resp);
+                return this.localEventBus.callEvent('checkAuthorizationResponse', {
+                    isAuthorized: false,
+                    statusText: resp.statusText,
+                });
+            } else {
+                console.log(resp);
+                return this.localEventBus.callEvent('checkAuthorizationResponse', {
+                    isAuthorized: true,
+                    statusText: resp.statusText,
+                });
+            }
+        })
     }
 }

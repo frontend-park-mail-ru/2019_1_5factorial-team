@@ -1,5 +1,5 @@
 import Validation from '../libs/validation';
-import {doGet} from '../libs/network';
+import {doGet, doDelete} from '../libs/network';
 import api from '../libs/api';
 import {User} from '../libs/users';
 import { OK_RESPONSE, NETWORK_ADRESS, DEFAULT_AVATAR, OK_VALIDATE_PASSWORD, OK_VALIDATE_AVATAR, AVATAR_DEFAULT, ANAUTH_RESPONSE } from '../components/constants';
@@ -71,7 +71,8 @@ export default class profileModel {
      * Заканчиваем сессию пользователя
      */
     onLogout() {
-        api.deleteSession();
+        // const res = api.deleteSession();
+        const res = doDelete({ url:'/api/session' });
         this.localEventBus.callEvent('closeView', { isAuth: false, signout: true });
         User.removeUser();
     }
@@ -139,7 +140,7 @@ export default class profileModel {
     async onCheckAuth() {
         const res = await doGet({ url: '/api/session' });
         console.log(res);
-        if (res.status === ANAUTH_RESPONSE) {
+        if ((res as Response).status === ANAUTH_RESPONSE) {
             return this.localEventBus.callEvent('checkAuthResponse', {
                 isAuth: false,
                 error: (res as IResponseProfile).error,

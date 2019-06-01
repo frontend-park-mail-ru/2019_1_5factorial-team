@@ -16,8 +16,10 @@ export default class Ws {
         console.log(room);
         if (isFriend && room) {
             this.webs = new WebSocket('wss://5factorial.tech/api/game/connect?room=' + room);
+            console.log('connect');
         } else if (isFriend && !room){
             this.webs = new WebSocket(NETWORK_ADRESS_WS_GAME_LINK)
+            console.log('friend');
         } else {
             this.webs = new WebSocket(address);
         }

@@ -13,7 +13,7 @@
                 <a class="btn menu__btn js-leaders" href="/leaders">Leaders</a>
             </div>
         </section>
-        <section class="modal-window hidden">
+        <section class="modal-window js-modal-window hidden">
         </section>
         <section class="container__block container__block_right sided-block right-elems">
             <div class="users js-check-auth">

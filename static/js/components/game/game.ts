@@ -38,7 +38,7 @@ export default class Game {
     state: {    Players?: Array<{sprite: any, nick: string, x: number, id: Number, hp: number, score: Number}>, 
                 player?: {sprite: any, x: number, hp: number}, 
                 ghosts: Array<{x: number, speed: number, symbolsQueue?: Array<number>, 
-                symbols?:Array<number>, sprite: any, damage: number}>, 
+                symbols?: Array<number>, sprite: any, damage: number}>, 
                 score?: number, gameTime: number, isGameOver: Boolean
             };
 
@@ -277,10 +277,10 @@ export default class Game {
             }
         } else {
             if (this.canvas.height > this.canvas.width ) {
-                this.ws.send("PAUSE", "");
+                this.ws.send('PAUSE', '');
                 this.makePause();
             } else {
-                this.ws.send("RESUME", "");
+                this.ws.send('RESUME', '');
                 this.recoverFromPause();
             }
 
@@ -716,7 +716,7 @@ export default class Game {
 
 
         if (!this.isSent) {
-            this.ws.send("MOVE", String(this.lastDrawing));
+            this.ws.send('MOVE', String(this.lastDrawing));
             this.isSent = true;
 
             for (let i = 0; i < this.state.ghosts.length; i++) {

@@ -1,7 +1,7 @@
 import View from '../../libs/views';
 
 import userBlock from '../../components/userBlock/userBlock';
-// import ModalWindow from '../../components/modalWindow/modalWindow';
+import ModalWindow from '../../components/modalWindow/modalWindow';
 
 import template from './menuView.tmpl.xml';
 import Recognizer from '../../components/game/recognition';
@@ -17,15 +17,20 @@ export default class viewMenu extends View {
 
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('checkAuthorizationResponse', this.onCheckAuthResponse.bind(this));
+        this.localEventBus.getEvent('close', this.closeAndCancel.bind(this));
+    }
+
+    closeAndCancel() {
+        console.log('closed tick');
+        cancelAnimationFrame(this.ticking);
     }
 
     onCheckAuthResponse({isAuthorized, statusText}) {
         this.isAuth = isAuthorized;
         this.statusText = statusText;
         const checkHeader = new userBlock();
-        // const MW = new ModalWindow();
-        // const singleButton = document.getElementsByClassName('js-single')[0];
-        // const multiButton = document.getElementsByClassName('js-multi')[0];
+        const MW = new ModalWindow();
+        const multiButton = document.getElementsByClassName('js-multi')[0];
 
         if (checkHeader.changeButtonsBool(this.isAuth)) {
             const signoutButton = document.getElementsByClassName('js-signout')[0];
@@ -35,26 +40,19 @@ export default class viewMenu extends View {
             });
         }
 
-        // singleButton.addEventListener('click', (event) => {
-        //     event.preventDefault();
-        //     MW.createModal('Game training');
-        // });
+        multiButton.addEventListener('click', (event) => {
+            if (!this.isAuth) {
+                event.stopImmediatePropagation();
+                event.preventDefault();
+                MW.createModal('Menu multi error login');
+            }
+        });
 
-        // multiButton.addEventListener('click', (event) => {
-        //     if (this.isAuth) {
-        //         event.preventDefault();
-        //         MW.createModal('Menu multi waiting for player');
-        //     } else {
-        //         event.preventDefault();
-        //         MW.createModal('Menu multi error login');
-        //     }
-        // });
+        console.log(this);
     }
 
     render(root, data = {}) {
-        this.localEventBus.callEvent('checkAuthorization');
         super.render(root, data);
-        console.log('called render');
 
         window.addEventListener('orientationchange', () =>  {
             this.recognizer.gcanvas.width  = window.scrollWidth;
@@ -65,13 +63,13 @@ export default class viewMenu extends View {
             this.recognizer.height = window.scrollHeight;
         });
 
-        requestAnimationFrame(this.tick);
+        setTimeout(() => {this.localEventBus.callEvent('checkAuthorization');}, 100);
 
-        // this.localEventBus.callEvent('checkAuthorization');
-        // return this;
+        // this.tick();
     }
 
     tick() {
+        this.ticking = requestAnimationFrame(this.tick.bind(this));
         if (this.recognizer.mouseIsDown) {
             this.recognizer.gctx.clearRect(0, 0, this.recognizer.gcanvas.scrollWidth, this.recognizer.gcanvas.scrollHeight);
             this.recognizer.jager.drawPatch(this.recognizer.path, this.recognizer.gctx, this.recognizer.jager.recognise(this.recognizer.path));

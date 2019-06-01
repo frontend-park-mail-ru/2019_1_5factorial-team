@@ -12,7 +12,7 @@ export default class ModalWindow {
     header: Element;
 
     createModal(element: String, room?: string): void {
-        const modalElement = document.getElementsByClassName('modal-window')[0];
+        const modalElement = document.getElementsByClassName('js-modal-window')[0];
         this.isGame = false;
         if (element === 'Game single end' || 
             element === 'Game multi choose' ||
@@ -28,7 +28,7 @@ export default class ModalWindow {
 
         this.noCase = document.getElementsByClassName('js-skip-training')[0];
         this.closeMW = document.getElementsByClassName('js-close-mw')[0];
-        this.blur = document.getElementsByClassName('blur')[0];
+        this.blur = document.getElementsByClassName('js-blur')[0];
         this.gameOverBackMenu = document.getElementsByClassName('js-back-to-menu-modal')[0];
 
         if (this.noCase !== undefined) {
@@ -65,7 +65,7 @@ export default class ModalWindow {
     }
 
     removeModal(): void {
-        const modalElement = document.getElementsByClassName('modal-window')[0];
+        const modalElement = document.getElementsByClassName('js-modal-window')[0];
         const toDeleteModal = document.getElementsByClassName('content content_modal')[0];
         if (toDeleteModal) {
             modalElement.classList.add('hidden');

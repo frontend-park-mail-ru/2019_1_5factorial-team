@@ -85,9 +85,16 @@ export default class Network {
     }
 }
 
-export const  doGet = async ({ url = '/' } = {}): Promise<Response> => {
+export const doGet = async ({ url = '/' } = {}) => {
     return fetch(Network.getServerURL() + url, {
         method: 'GET',
+        credentials: 'include',
+    });
+}
+
+export const doDelete = async ({ url = '/' } = {}): Promise<Response> => {
+    return fetch(Network.getServerURL() + url, {
+        method: 'DELETE',
         credentials: 'include',
     });
 }

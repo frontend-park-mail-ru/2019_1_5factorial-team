@@ -26,15 +26,15 @@ export default class leaderboardModel {
      */
     async checkAuthorization() {
         const res = await doGet({ url: '/api/session' });
-        if (res.status === ANAUTH_RESPONSE) {
+        if ((res as Response).status === ANAUTH_RESPONSE) {
             return this.localEventBus.callEvent('checkAuthorizationResponse', {
                 isAuthorized: false,
-                statusText: res.statusText,
+                statusText: (res as Response).statusText,
             });
         } else {
             return this.localEventBus.callEvent('checkAuthorizationResponse', {
                 isAuthorized: true,
-                statusText: res.statusText,
+                statusText: (res as Response).statusText,
             });
         }
     }
