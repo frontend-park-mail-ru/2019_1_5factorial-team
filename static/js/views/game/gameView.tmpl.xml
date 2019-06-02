@@ -4,6 +4,14 @@
         </canvas>
         <canvas class="temp_class_canvas" id="canvas">
             <!--<img id="player-sprite" width="164" src="../../../img/game/hero.png"/>-->
+            <img id="green0" width="164" src="../../../img/game/green0.png"/>
+            <img id="green1" width="164" src="../../../img/game/green1.png"/>
+
+            <img id="red0" width="164" src="../../../img/game/red0.png"/>
+            <img id="red1" width="164" src="../../../img/game/red1.png"/>
+
+            <img id="blue0" width="164" src="../../../img/game/blue0.png"/>
+            <img id="blue1" width="164" src="../../../img/game/blue1.png"/>
 
             <img id="ghost-left-sprite" src="../../../img/game/ghost_l.png"/>
             <img id="ghost-right-sprite" src="../../../img/game/ghost_r.png"/>

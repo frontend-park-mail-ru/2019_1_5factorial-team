@@ -104,7 +104,13 @@ export default class Game {
 
         this.requestID = null;
 
-        // this.playerImg = (document.getElementById('player-sprite') as HTMLImageElement);
+        this.leftColor = '';
+        this.rightColor = '';
+
+        this.generateColors();
+
+        this.playerImg = (document.getElementById(this.leftColor + '0') as HTMLImageElement);
+        this.playerImgRight =  (document.getElementById(this.rightColor + '1') as HTMLImageElement);
 
         this.ghostLeftImg = (document.getElementById('ghost-left-sprite') as HTMLImageElement);
         this.ghostRightImg = (document.getElementById('ghost-right-sprite') as HTMLImageElement);
@@ -113,17 +119,6 @@ export default class Game {
         this.symbolLR = document.getElementById('symbol_LR');
         this.symbolTD = document.getElementById('symbol_TD');
         this.symbolDTD = document.getElementById('symbol_DTD');
-
-        this.leftColor = '';
-        this.rightColor = '';
-
-        this.generateColors();
-
-        this.playerImg = new Image();
-        this.playerImg.src = '../../../img/game/' + this.leftColor + '0.png';
-
-        this.playerImgRight = new Image();
-        this.playerImgRight.src = '../../../img/game/' + this.rightColor + '1.png';
 
         console.log(this.playerImg.src);
         console.log(this.playerImgRight.src);
@@ -147,15 +142,15 @@ export default class Game {
                 gameTime: 0,
                 isGameOver: false
             };
-            if (detectMobile.detect()) {
-                window.screen.orientation.onchange = () => {
-                    matchMedia('(orientation: landscape)').matches ? window.alert('OK') : window.alert('need to add pause');
-                };
-                // matchMedia('(orientation: landscape)').matches ? this.gameLoop() : window.alert('move your phone to horizontal orientation');
-            } else {
+            // if (detectMobile.detect()) {
+            //     window.screen.orientation.onchange = () => {
+            //         matchMedia('(orientation: landscape)').matches ? window.alert('OK') : window.alert('need to add pause');
+            //     };
+            //     // matchMedia('(orientation: landscape)').matches ? this.gameLoop() : window.alert('move your phone to horizontal orientation');
+            // } else {
                 this.MW.removeModal();
                 this.gameLoop();
-            }
+            // }
         } else {
             const paramsString = window.location.search;
             const searchParams = new URLSearchParams(paramsString);
@@ -306,9 +301,7 @@ export default class Game {
         if (!this.onceLoop) {
             this.onceLoop = true;
             this.MW.removeModal();
-            this.playerImgRight.addEventListener('load', () => {
-                this.gameLoop();
-            });
+            this.gameLoop();
         }
     }
 
@@ -394,10 +387,6 @@ export default class Game {
             cancelAnimationFrame(this.requestID);
         }
         this.recognizer.destroyRecognizer();
-
-        this.playerImgRight.removeEventListener('load', () => {
-            this.gameLoop();
-        });
 
         if (this.state) {
             console.log('final score is', this.state.score);
