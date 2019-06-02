@@ -23,7 +23,6 @@
     (async function() {
         const go = new Go()
         const {instance} = await WebAssembly.instantiateStreaming(fetch("test.wasm"), go.importObject);
-        console.log(instance);
         go.run(instance);
     })();      
     let getCustomAvatar;

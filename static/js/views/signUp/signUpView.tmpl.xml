@@ -22,7 +22,6 @@
                 <label class="form__label" for="password">Password</label>
                 <input class="form__input js-password" type="password" id="password"/>
                 <div class="form__warning js-warning-password hide"></div>
-<!-- onclick="getCustomAvatar(document.querySelector('.js-login').value, document.querySelector('.js-email').value)" -->
                 <div class="form-btn-block">
                     <a class="btn btn_outlined form__btn form__btn_back" href="/">Back</a>
                     <button class="btn btn_contained form__btn js-submit" type="submit">Sign Up</button>
