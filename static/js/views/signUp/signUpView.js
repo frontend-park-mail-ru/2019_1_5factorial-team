@@ -84,12 +84,12 @@ export default class signUpView extends View {
     }
 
     emailRTCheck(input) {
-        // getCustomAvatar(this.loginInput.value, this.emailInput.value);
+        getCustomAvatar(this.loginInput.value, this.emailInput.value);
         this.localEventBus.callEvent('emailRTCheck', {data: input.value});
     }
     
     loginRTCheck(input) {
-        // getCustomAvatar(this.loginInput.value, this.emailInput.value);
+        getCustomAvatar(this.loginInput.value, this.emailInput.value);
         this.localEventBus.callEvent('loginRTCheck', {data: input.value});
     }
 
