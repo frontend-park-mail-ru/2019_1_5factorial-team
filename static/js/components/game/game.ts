@@ -25,6 +25,7 @@ export default class Game {
     protected isRemoved?: Boolean;
     protected initialResizerCall?: Boolean;
     protected wasSwapped?: Boolean;
+    protected spritesAreLoaded?: Boolean;
 
     protected ghostsSpeed?: Array<Boolean>;
 
@@ -77,6 +78,8 @@ export default class Game {
         this.canvas = (document.getElementsByClassName('temp_class_canvas')[0] as HTMLCanvasElement);
         this.ctx = this.canvas.getContext('2d');
 
+        this.spritesAreLoaded = false;
+
         /*
          * Общие координаты
          */
@@ -120,8 +123,7 @@ export default class Game {
         this.symbolTD = document.getElementById('symbol_TD');
         this.symbolDTD = document.getElementById('symbol_DTD');
 
-        console.log(this.playerImg.src);
-        console.log(this.playerImgRight.src);
+        // this.ghostRightImg.onload = () => (this.spritesAreLoaded = true);
 
         window.addEventListener('resize', this.resizer.bind(this));
         this.localEventBus.getEvent('updateState', this.setState.bind(this));
@@ -149,7 +151,10 @@ export default class Game {
             //     // matchMedia('(orientation: landscape)').matches ? this.gameLoop() : window.alert('move your phone to horizontal orientation');
             // } else {
                 this.MW.removeModal();
-                this.gameLoop();
+                // if (this.spritesAreLoaded) {
+                //     console.log(this.spritesAreLoaded);
+                    this.gameLoop();
+                // }
             // }
         } else {
             const paramsString = window.location.search;
@@ -192,8 +197,13 @@ export default class Game {
         let left = Math.floor(Math.random() * (max - min)) + min;
         let right = left;
 
-        while (left !== right) {
-            right = Math.floor(Math.random() * (max - min)) + min;
+        while (true) {
+            if (left === right) {
+                right = Math.floor(Math.random() * (max - min)) + min;
+            } else {
+                console.log('break');
+                break;
+            }
         }
 
         switch (left) {
@@ -301,7 +311,9 @@ export default class Game {
         if (!this.onceLoop) {
             this.onceLoop = true;
             this.MW.removeModal();
-            this.gameLoop();
+            // if (this.spritesAreLoaded) {
+                this.gameLoop();
+            // }
         }
     }
 
