@@ -10,6 +10,7 @@ export default class Ws {
     protected MW?: ModalWindow;
     protected solo?: Boolean;
     protected isPlaying?: Boolean;
+    protected isStart?: Boolean;
 
     constructor(eventBus: EventBus, isFriend: Boolean, room?: string) {
         this.localEventBus = eventBus;
@@ -17,6 +18,7 @@ export default class Ws {
         this.friend = false;
         this.solo = false;
         this.isPlaying = false;
+        this.isStart = false;
         this.MW = new ModalWindow();
         if (Ws.__instance) {
             return Ws.__instance;
@@ -45,11 +47,11 @@ export default class Ws {
 
             this.webs.onclose = () => {
                 console.log(`WebSocket closed`);
-                if (this.friend && !this.isPlaying) {
+                if (this.friend && !this.isPlaying && this.isStart) {
                     this.MW.removeModal();
                     this.MW.createModal('TTL multi');
                 }
-                if (this.solo && !this.isPlaying) {
+                if (this.solo && !this.isPlaying && this.isStart) {
                     this.MW.removeModal();
                     this.MW.createModal('TTL multi solo');
                 }
@@ -76,6 +78,7 @@ export default class Ws {
 
         if (message.type === 'STATE') {
             if (!this.isPlaying) {
+                this.isStart = true;
                 this.isPlaying = true;
             }
             this.localEventBus.callEvent('updateState', message.payload);
@@ -85,7 +88,7 @@ export default class Ws {
             if (this.isPlaying) {
                 this.isPlaying = false;
             }
-            this.localEventBus.callEvent('gameOverWS');
+            setTimeout(() => this.localEventBus.callEvent('gameOverWS'), 10);
         }
 
         if (message.type === 'LINK') {
