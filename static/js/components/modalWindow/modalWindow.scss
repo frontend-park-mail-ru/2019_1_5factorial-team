@@ -40,6 +40,8 @@
   }
 
   &__header {
+    font-size: 0.5em;
+
     @media screen and (orientation: portrait) {
       white-space: normal;
       font-size: 3vh;
