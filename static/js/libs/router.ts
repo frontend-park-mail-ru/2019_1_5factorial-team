@@ -75,6 +75,7 @@ export default class Router {
         }
 
         if (this.isCurrentNotFound) {
+            // this.toStartPage();
             this.notFoundView.close();
             this.notFoundView.hide(this.notFoundViewRoot);
         }
@@ -88,9 +89,7 @@ export default class Router {
             route.view.render(route.data);
             this.currentRoute = path;
         } else {
-            this.notFoundView.render(this.notFoundViewRoot);
-            this.currentRoute = null;
-            this.isCurrentNotFound = true;
+            this.toStartPage();
         }
     }
 
