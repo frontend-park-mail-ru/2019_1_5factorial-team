@@ -24,6 +24,10 @@ export default class Ws {
             this.webs = new WebSocket(address);
         }
 
+        this.webs.onerror = (event: any) => {
+            this.localEventBus.callEvent('errorOnWs', {});
+        }
+
         this.webs.onopen = () => {
             console.log(`WebSocket on address ${address} opened`);
 

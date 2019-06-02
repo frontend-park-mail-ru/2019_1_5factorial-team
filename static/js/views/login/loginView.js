@@ -96,7 +96,16 @@ export default class loginView extends View {
     }
 
     onSubmitResponse(data) {
-        console.log(data);
+        console.log(data.error);
+        this.loginOrEmailWarning.textContent = 'Invalid login/email or password';
+        this.loginOrEmailWarning.classList.remove('hide');
+        this.loginOrEmailInput.classList.remove('valid');
+        this.loginOrEmailInput.classList.add('invalid');
+
+        this.passwordWarning.textContent = 'Invalid login/email or password';
+        this.passwordWarning.classList.remove('hide');
+        this.passwInput.classList.remove('valid');
+        this.passwInput.classList.add('invalid');
     }
 
     loginOrEmailErrorWarning(data) {

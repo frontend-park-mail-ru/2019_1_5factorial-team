@@ -12,6 +12,7 @@ export default class viewMenu extends View {
     constructor(eventBus) {
         super(template, eventBus);
         this.isAuth = false;
+        this.isFirst = true;
 
         this.recognizer = new Recognizer();
 
@@ -63,8 +64,12 @@ export default class viewMenu extends View {
             this.recognizer.height = window.scrollHeight;
         });
 
-        setTimeout(() => {this.localEventBus.callEvent('checkAuthorization');}, 100);
 
+        if (this.isFirst) {
+            this.isFirst = false;
+        } else {
+            setTimeout(() => {this.localEventBus.callEvent('checkAuthorization');}, 100);
+        }
         // this.tick();
     }
 

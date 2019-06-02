@@ -50,7 +50,7 @@
             <a class="btn btn_outlined btn_back-menu" href="/">Back</a>
         </div>
     </section>
-    <section class="modal-window hidden">
+    <section class="modal-window js-modal-window hidden">
     </section>
     <section class="container__block container__block_right sided-block">
         <div class="users">

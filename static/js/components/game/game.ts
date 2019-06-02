@@ -25,6 +25,7 @@ export default class Game {
     protected isRemoved?: Boolean;
     protected initialResizerCall?: Boolean;
     protected wasSwapped?: Boolean;
+    protected isOpened?: Boolean;
 
     protected ghostsSpeed?: Array<Boolean>;
 
@@ -87,6 +88,7 @@ export default class Game {
         this.isPlayers = false;
         this.isRemoved = false;
         this.wasSwapped = false;
+        this.isOpened = false;
 
         this.ghostsSpeed = new Array<Boolean>(2);
 
@@ -144,6 +146,7 @@ export default class Game {
             console.log(room);
             if (room !== null) {
                 this.ws = new Ws(this.localEventBus, true, room);
+                this.isOpened = true;
             } else {
                 console.log('creating ws');
                 this.MW.createModal('Game multi choose');
@@ -153,11 +156,13 @@ export default class Game {
                 this.okChoose.addEventListener('click', (event) => {
                     event.preventDefault();
                     this.ws = new Ws(this.localEventBus, true);
+                    this.isOpened = true;
                     console.log('done');
                 });
                 this.noChoose.addEventListener('click', (event) => {
                     event.preventDefault();
                     this.ws = new Ws(this.localEventBus, false);
+                    this.isOpened = true;
                     this.MW.removeModal();
                     this.MW.createModal('Menu multi waiting for player');
 
@@ -343,8 +348,9 @@ export default class Game {
             console.log('final score is', this.state.score);
         }
         window.removeEventListener('resize', this.resizer.bind(this));
-        if (this.isMulti) {
+        if (this.isMulti && this.isOpened) {
             this.ws.closeConn();
+            this.isOpened = false;
         }
     }
 

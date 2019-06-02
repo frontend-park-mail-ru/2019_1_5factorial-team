@@ -3,6 +3,7 @@ import View from '../../libs/views';
 import userBlock from '../../components/userBlock/userBlock';
 
 import './game.scss';
+import ModalWindow from '../../components/modalWindow/modalWindow';
 
 export default class gameViewMulti extends View {
     constructor(eventBus) {
@@ -18,6 +19,13 @@ export default class gameViewMulti extends View {
             },
         };
         this.render(document.getElementsByClassName('body-cnt')[0]);
+        this.localEventBus.getEvent('errorOnWs', this.errorOnWs.bind(this));
+    }
+
+    errorOnWs({error}) {
+        console.log(error);
+        const MW = new ModalWindow();
+        MW.createModal('Error in multi');
     }
 
     render(root, data = {}) {
