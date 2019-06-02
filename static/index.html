@@ -22,7 +22,8 @@
     }
     const go = new Go()
         const {instance} = WebAssembly.instantiateStreaming(fetch("test.wasm"), go.importObject);
-        instance.then(res => go.run(res))
+        console.log(instance);
+        go.run(instance);
         
     let getCustomAvatar;
     function setCustomAvatar(callback) {
