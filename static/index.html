@@ -20,34 +20,14 @@
             return await WebAssembly.instantiate(source, importObject);
         };
     }
-    (async function () {
-        const go = new Go()
-        const {instance} = await WebAssembly.instantiateStreaming(fetch("test.wasm"), go.importObject);
-        go.run(instance)
-    })();
+    const go = new Go()
+        const {instance} = WebAssembly.instantiateStreaming(fetch("test.wasm"), go.importObject);
+        instance.then(res => go.run(res))
+        
     let getCustomAvatar;
     function setCustomAvatar(callback) {
         getCustomAvatar = callback;
     }
-    // if (!WebAssembly.instantiateStreaming) {
-    //     WebAssembly.instantiateStreaming = async (o, t) => {
-    //         const d = await (await o).arrayBuffer();
-    //         return await WebAssembly.instantiate(d, t);
-    //     };
-    // }
-    // // const e = new Go();
-    // // const {i} = WebAssembly.instantiateStreaming(fetch("test.wasm"), e.importObject);
-    // // e.run(i);
-    // (async function () {
-    //     const e = new Go();
-    //     const {i} = await WebAssembly.instantiateStreaming(fetch("test.wasm"), e.importObject);
-    //     e.run(i);
-    // })();
-
-    // let w;
-    // function setCustomAvatar(c) {
-    //     w = c;
-    // }
 </script>
 <body class="body-cnt">
 </body>
