@@ -154,12 +154,7 @@ export default class Jager {
                 }
             }
         }
-
-        if (debug) {
-            console.log(lines);
-            console.log(result);
-        }
-
+        this.lock = debug;
         return result;
     }
 
@@ -168,7 +163,6 @@ export default class Jager {
     }
 
     pointTouch(evt) {
-        console.log('touching');
         return {x: evt.touches[0].pageX, y: evt.touches[0].pageY};
     }
 

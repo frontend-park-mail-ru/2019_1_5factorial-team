@@ -42,6 +42,7 @@
   &__header {
     white-space: normal;
     line-height: 1.5em;
+    user-select: text;
 
     @media screen and (orientation: portrait) {
       white-space: normal;

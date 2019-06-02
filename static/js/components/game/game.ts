@@ -170,11 +170,9 @@ export default class Game {
             const paramsString = window.location.search;
             const searchParams = new URLSearchParams(paramsString);
             const room = searchParams.get('room');
-            console.log(room);
             if (room !== null) {
                 this.ws = new Ws(this.localEventBus, true, room);
             } else {
-                console.log('creating ws');
                 this.MW.createModal('Game multi choose');
                 this.okChoose = (document.getElementsByClassName('js-friend-yes')[0] as HTMLButtonElement);
                 this.noChoose = (document.getElementsByClassName('js-friend-no')[0] as HTMLButtonElement);
@@ -182,7 +180,6 @@ export default class Game {
                 this.okChoose.addEventListener('click', (event) => {
                     event.preventDefault();
                     this.ws = new Ws(this.localEventBus, true);
-                    console.log('done');
                 });
                 this.noChoose.addEventListener('click', (event) => {
                     event.preventDefault();
@@ -202,7 +199,6 @@ export default class Game {
     }
 
     generateColors() {
-        console.log('generate colors called');
         const max = 0, min = 3;
         let left = Math.floor(Math.random() * (max - min)) + min;
         let right = left;
@@ -211,7 +207,6 @@ export default class Game {
             if (left === right) {
                 right = Math.floor(Math.random() * (max - min)) + min;
             } else {
-                console.log('break');
                 break;
             }
         }
@@ -243,7 +238,6 @@ export default class Game {
 
     getRoom(url: string) {
         const room = url;
-        console.log(room);
         this.MW.removeModal();
         this.MW.createModal('Menu multi waiting for player', room);
 
@@ -336,7 +330,6 @@ export default class Game {
 
         if (!this.isMulti) {
             if (this.canvas.height > this.canvas.width ) {
-                console.log('height > width');
                 this.makePause();
                 this.gameIsPaused = true;
             } else {
@@ -376,7 +369,6 @@ export default class Game {
                 if (((sprite.height / oldHeight) * this.canvas.height) > 120 || ((sprite.height / oldHeight) * this.canvas.height) < 100) {
                     sprite.height = 140;
                     sprite.width = (sprite.width / oldHeight) * sprite.height;
-                    console.log('h / w: ' + sprite.height + '/' + sprite.width);
                     return;
                 }
             } else {
@@ -407,16 +399,11 @@ export default class Game {
     }
 
     destroy(): void {
-        console.log('destroy');
 
         if (this.requestID) {
             cancelAnimationFrame(this.requestID);
         }
         this.recognizer.destroyRecognizer();
-
-        if (this.state) {
-            console.log('final score is', this.state.score);
-        }
         window.removeEventListener('resize', this.resizer.bind(this));
         if (this.isMulti) {
             this.ws.closeConn();
@@ -536,7 +523,6 @@ export default class Game {
         if (!this.initialResizerCall) {
             this.resizer();
             this.initialResizerCall = true;
-            console.log('resizer initial call');
         }
 
         let heartsBetweenOffset = this.heartImg.width / 4;
@@ -643,7 +629,6 @@ export default class Game {
         if (!this.initialResizerCall) {
             this.resizer();
             this.initialResizerCall = true;
-            console.log('resizer initial call');
         }
 
         /*

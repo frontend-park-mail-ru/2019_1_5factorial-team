@@ -25,14 +25,11 @@ export default class Ws {
         }
 
         const address = NETWORK_ADRESS_WS_GAME_SOLO;
-        console.log(room);
         if (isFriend && room) {
             this.webs = new WebSocket('wss://5factorial.tech/api/game/connect?room=' + room);
-            console.log('connect');
         } else if (isFriend && !room){
             this.webs = new WebSocket(NETWORK_ADRESS_WS_GAME_LINK)
             this.friend = true;
-            console.log('friend');
         } else {
             this.webs = new WebSocket(address);
             this.solo = true;
@@ -43,10 +40,8 @@ export default class Ws {
         }
 
         this.webs.onopen = () => {
-            console.log(`WebSocket on address ${address} opened`);
 
             this.webs.onclose = () => {
-                console.log(`WebSocket closed`);
                 if (this.friend && !this.isPlaying && this.isStart) {
                     this.MW.removeModal();
                     this.MW.createModal('TTL multi');
@@ -74,7 +69,6 @@ export default class Ws {
         }
         const messageText = event.data;
         const message = JSON.parse(messageText);
-        console.log(message);
 
         if (message.type === 'STATE') {
             if (!this.isPlaying) {
@@ -103,7 +97,6 @@ export default class Ws {
     }
 
     send(type: any, pressed: any) {
-        console.log(type,  pressed);
         this.webs.send(JSON.stringify({type, pressed}));
     }
 }

@@ -30,13 +30,11 @@ export default class menuModel {
         const res = Network.doGet({ url: '/api/session' });
         res.then((resp) => {
             if (resp.status === ANAUTH_RESPONSE) {
-                console.log(resp);
                 return this.localEventBus.callEvent('checkAuthorizationResponse', {
                     isAuthorized: false,
                     statusText: resp.statusText,
                 });
             } else {
-                console.log(resp);
                 return this.localEventBus.callEvent('checkAuthorizationResponse', {
                     isAuthorized: true,
                     statusText: resp.statusText,

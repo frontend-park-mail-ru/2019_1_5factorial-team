@@ -47,7 +47,7 @@ export default class leaderboardView extends View {
             });
             this.pagination.render(root);
         } else {
-            console.error('There is no pageCount or linksCount, while creating Paginator');
+            console.warn('There is no pageCount or linksCount, while creating Paginator');
         }
     }
 

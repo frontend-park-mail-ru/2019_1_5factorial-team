@@ -23,7 +23,7 @@ export default class gameViewMulti extends View {
     }
 
     errorOnWs({error}) {
-        console.log(error);
+        this.lock = error;
         const MW = new ModalWindow();
         MW.createModal('Error in multi');
     }

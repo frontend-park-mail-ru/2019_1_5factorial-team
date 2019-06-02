@@ -15,13 +15,7 @@ export default class viewMenu extends View {
 
         this.render(document.getElementsByClassName('body-cnt')[0]);
         this.localEventBus.getEvent('checkAuthorizationResponse', this.onCheckAuthResponse.bind(this));
-        // this.localEventBus.getEvent('close', this.closeAndCancel.bind(this));
     }
-
-    // closeAndCancel() {
-    //     console.log('closed tick');
-    //     cancelAnimationFrame(this.ticking);
-    // }
 
     onCheckAuthResponse({isAuthorized, statusText}) {
         this.isAuth = isAuthorized;
@@ -46,7 +40,6 @@ export default class viewMenu extends View {
             }
         });
 
-        console.log(this);
     }
 
     render(root, data = {}) {

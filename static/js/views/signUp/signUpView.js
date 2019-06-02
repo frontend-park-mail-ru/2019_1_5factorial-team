@@ -98,7 +98,6 @@ export default class signUpView extends View {
     }
 
     onSignupResponse(data = {}, check = 0) {
-        console.warn(data, check);
         if (data.error === 'invalid avatar') {
             this.loginWarning.textContent = data.error;
             this.loginWarning.classList.remove('valid');
@@ -114,6 +113,11 @@ export default class signUpView extends View {
             this.passwordWarning.textContent = data.error;
             this.passwordWarning.classList.remove('valid');
             this.passwordWarning.classList.add('invalid');
+        }
+        if (data.error === 'email conflict') {
+            this.emailWarning.textContent = data.error;
+            this.emailWarning.classList.remove('valid');
+            this.emailWarning.classList.add('invalid');
         }
     }
 

@@ -83,7 +83,6 @@ export default class leaderboardModel {
             this.localEventBus.callEvent('loadResponse', data.scores);
         }
         ).catch(err => {
-            console.error(err);
             this.localEventBus.callEvent('loadResponse', {});
         });
     }

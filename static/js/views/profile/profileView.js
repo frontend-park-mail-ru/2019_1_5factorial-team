@@ -43,7 +43,6 @@ export default class profileView extends View {
         if (data.error === 'Password should has at least 4 symbols and not contain russian letters') {
             this.newWarn.classList.remove('hide');
             this.newWarn.textContent = data.error;
-            console.warn('Password should has at least 4 symbols and not contain russian letters');
         } else if (data.error.split(': ')[2] === 'invalid old password') {
             this.oldWarn.classList.remove('hide');
             this.oldWarn.textContent = data.error.split(': ')[2];
@@ -52,12 +51,10 @@ export default class profileView extends View {
             this.oldWarn.textContent = data.error.split(': ')[2];
         }
         //TODO(): добавить обработку ошибки в верстке
-        console.log(data.error);
     }
 
     onChangeAvatarResponse(data = {}) {
         if (data.error !== undefined) {
-            console.log(data.error);
             return;
         }
         this.localAvatar.style.background = `transparent url(${AVATAR_DEFAULT}) no-repeat`;
@@ -67,7 +64,6 @@ export default class profileView extends View {
     }
 
     onChangeAvatarSuccess(data = {}) {
-        console.log(data);
         this.localAvatar.src = data.avatar;
         this.localEventBus.callEvent('loadUser', data);
     }

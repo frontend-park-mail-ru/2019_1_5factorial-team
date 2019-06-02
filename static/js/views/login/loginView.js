@@ -85,9 +85,10 @@ export default class loginView extends View {
     }
 
     onSubmit(form, event) {
+        this.lock = form;
         event.preventDefault();
         if (this.loginOrEmailValue !== OK_VALIDATE_LOGIN && this.passwordValue !== OK_VALIDATE_PASSWORD) {
-            console.warn('Incorrect login or email!');
+            this.locak = 0;
         } else {
             this.localEventBus.callEvent('login', {
                 loginOrEmail: this.loginOrEmailInput.value, pass:this.passwInput.value
@@ -96,7 +97,7 @@ export default class loginView extends View {
     }
 
     onSubmitResponse(data) {
-        console.log(data.error);
+        this.lock = data;
         this.loginOrEmailWarning.textContent = 'Invalid login/email or password';
         this.loginOrEmailWarning.classList.remove('hide');
         this.loginOrEmailInput.classList.remove('valid');

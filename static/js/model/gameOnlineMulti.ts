@@ -27,7 +27,6 @@ export default class gameOnlineMulti {
     }
 
     onGameOver() {
-        console.log('this.scene first', this.scene);
         if (this.scene.state.isGameOver) {
             this.scene.destroy();
         }
@@ -36,10 +35,8 @@ export default class gameOnlineMulti {
         // TODO(): заменить id на никнеймы
         this.winnerText = document.getElementsByClassName('modal-window__header')[0];
         if (this.scene.state.Players[0].hp === 0) {
-            console.log('first won', this.scene.state.Players[0].nick);
             this.winnerText.textContent = `Game over! ${this.scene.state.Players[0].nick} won!`;
         } else {
-            console.log('second won', this.scene.state.Players[1].nick);
             this.winnerText.textContent = `Game over! ${this.scene.state.Players[1].nick} won!`;
         }
     }  
