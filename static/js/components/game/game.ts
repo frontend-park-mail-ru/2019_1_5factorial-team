@@ -45,7 +45,11 @@ export default class Game {
     protected recognizer: Recognizer;
     protected requestID: any;
 
+    protected leftColor: string;
+    protected rightColor: string;
+
     protected playerImg: HTMLImageElement;
+    protected playerImgRight: HTMLImageElement;
     protected ghostLeftImg: HTMLImageElement;
     protected ghostRightImg: HTMLImageElement;
     protected heartImg: HTMLImageElement;
@@ -100,7 +104,8 @@ export default class Game {
 
         this.requestID = null;
 
-        this.playerImg = (document.getElementById('player-sprite') as HTMLImageElement);
+        // this.playerImg = (document.getElementById('player-sprite') as HTMLImageElement);
+
         this.ghostLeftImg = (document.getElementById('ghost-left-sprite') as HTMLImageElement);
         this.ghostRightImg = (document.getElementById('ghost-right-sprite') as HTMLImageElement);
         this.heartImg = (document.getElementById('heart-sprite') as HTMLImageElement);
@@ -108,6 +113,20 @@ export default class Game {
         this.symbolLR = document.getElementById('symbol_LR');
         this.symbolTD = document.getElementById('symbol_TD');
         this.symbolDTD = document.getElementById('symbol_DTD');
+
+        this.leftColor = '';
+        this.rightColor = '';
+
+        this.generateColors();
+
+        this.playerImg = new Image();
+        this.playerImg.src = '../../../img/game/' + this.leftColor + '0.png';
+
+        this.playerImgRight = new Image();
+        this.playerImgRight.src = '../../../img/game/' + this.rightColor + '1.png';
+
+        console.log(this.playerImg.src);
+        console.log(this.playerImgRight.src);
 
         window.addEventListener('resize', this.resizer.bind(this));
         this.localEventBus.getEvent('updateState', this.setState.bind(this));
@@ -169,6 +188,41 @@ export default class Game {
                 });
             }
             // this.ws = new Ws(this.localEventBus);
+        }
+    }
+
+    generateColors() {
+        console.log('generate colors called');
+        const max = 0, min = 3;
+        let left = Math.floor(Math.random() * (max - min)) + min;
+        let right = left;
+
+        while (left !== right) {
+            right = Math.floor(Math.random() * (max - min)) + min;
+        }
+
+        switch (left) {
+            case 0:
+                this.leftColor = 'red';
+                break;
+            case 1:
+                this.leftColor = 'blue';
+                break;
+            case 2:
+                this.leftColor = 'green';
+                break;
+        }
+
+        switch (right) {
+            case 0:
+                this.rightColor = 'red';
+                break;
+            case 1:
+                this.rightColor = 'blue';
+                break;
+            case 2:
+                this.rightColor = 'green';
+                break;
         }
     }
 
@@ -252,7 +306,9 @@ export default class Game {
         if (!this.onceLoop) {
             this.onceLoop = true;
             this.MW.removeModal();
-            this.gameLoop();
+            this.playerImgRight.addEventListener('load', () => {
+                this.gameLoop();
+            });
         }
     }
 
@@ -338,6 +394,10 @@ export default class Game {
             cancelAnimationFrame(this.requestID);
         }
         this.recognizer.destroyRecognizer();
+
+        this.playerImgRight.removeEventListener('load', () => {
+            this.gameLoop();
+        });
 
         if (this.state) {
             console.log('final score is', this.state.score);
@@ -613,7 +673,7 @@ export default class Game {
         this.ctx.clearRect(rightPlayerX, this.axisY - this.playerImg.height,
             this.playerImg.width, this.playerImg.height);
 
-        this.ctx.drawImage(this.playerImg, rightPlayerX,
+        this.ctx.drawImage(this.playerImgRight, rightPlayerX,
             this.axisY - this.playerImg.height,
             this.playerImg.width, this.playerImg.height);
 
