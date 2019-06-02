@@ -3,7 +3,7 @@ import { MAP_OF_MODALS } from '../constants';
 import './modalWindow.scss';
 
 export default class ModalWindow {
-    
+
     isGame: Boolean;
     noCase: Element;
     closeMW: Element;
@@ -14,7 +14,7 @@ export default class ModalWindow {
     createModal(element: String, room?: string): void {
         const modalElement = document.getElementsByClassName('js-modal-window')[0];
         this.isGame = false;
-        if (element === 'Game single end' || 
+        if (element === 'Game single end' ||
             element === 'Game multi choose' ||
             element === 'Menu multi waiting for player') {
             this.isGame = true;

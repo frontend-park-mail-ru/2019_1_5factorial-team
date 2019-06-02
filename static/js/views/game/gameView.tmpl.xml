@@ -2,8 +2,15 @@
     <div class="container container_game">
         <canvas id="gcanvas">
         </canvas>
-        <canvas class="temp_class_canvas" id="canvas">
-            <img id="player-sprite" width="164" src="../../../img/game/hero.png"/>
+        <canvas class="temp_class_canvas" id="canvas">    
+            <img id="green0" width="164" src="../../../img/game/green0.png"/>
+            <img id="green1" width="164" src="../../../img/game/green1.png"/>
+
+            <img id="red0" width="164" src="../../../img/game/red0.png"/>
+            <img id="red1" width="164" src="../../../img/game/red1.png"/>
+
+            <img id="blue0" width="164" src="../../../img/game/blue0.png"/>
+            <img id="blue1" width="164" src="../../../img/game/blue1.png"/>
 
             <img id="ghost-left-sprite" src="../../../img/game/ghost_l.png"/>
             <img id="ghost-right-sprite" src="../../../img/game/ghost_r.png"/>
@@ -14,22 +21,20 @@
             <img id="symbol_TD" src="../../../img/game/symbols/TD.png"/>
             <img id="symbol_DTD" src="../../../img/game/symbols/DTD.png"/>
         </canvas>
-        
         <section class="modal-window js-modal-window hidden">
             <div class="blur js-blur"></div>
             <div class="modal js-modal-modal"></div>
         </section>
-
         <section class="modal-window modal-window_rotation">
             <div class="blur"></div>
             <div class="modal">
                 <div class="modal-window__warning">
-                    Please, rotate your device to landscape mode
+                    Please, rotate your device to landscape mode!
                 </div>
             </div>
         </section>
-        <section class="modal-window modal-window_game-over hidden">
-        </section>
+        <!-- <section class="modal-window modal-window_game-over hidden"> -->
+        <!-- </section> -->
         <div class="users users_absolute js-check-user">
         </div>
     </div>

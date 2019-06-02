@@ -172,13 +172,13 @@ export const INCORRECT_LOGIN_OR_EMAIL = 'Incorrect login or email!';
 export const INCORRECT_AVATAR_FORMAT = 'Avatar must be jpeg or png format!';
 
 export const MAP_OF_MODALS = new Map ([
-    ['Game multi end', '<h1 class="text-title modal-window__header js-header-over"></h1><p class="js-set-final-score"></p><a class="btn btn_contained js-back-to-menu-modal" href="/">Back to menu</a>'],
+    ['Game multi end', '<h1 class="text-title modal-window__header js-header-over"></h1><p class="js-set-final-score"></p><a class="btn btn_contained form__btn js-back-to-menu-modal" href="/">Back to menu</a>'],
     ['TTL multi solo', '<h1 class="text-title modal-window__header">Timeout during player finding!</h1><a class="btn btn_contained modal-window__btn js-back-to-menu-modal" href="/">Back to menu</a>'],
     ['Game training', '<h1 class="text-title modal-window__header">Do you want to start training?</h1><div class="modal-window-btns"><button class="btn btn_inlined modal-window__btn js-skip-training">No</button><button class="btn btn_contained modal-window__btn js-start-training">Yes</button></div>'],
     ['Game single end', '<h1 class="text-title modal-window__header">Game Over! You Lost!</h1><p class="modal-window__score js-set-final-score"></p><a class="btn btn_contained modal-window__btn js-back-to-menu-modal" href="/">Back to menu</a>'],
     ['TTL multi', '<h1 class="text-title modal-window__header">Timeout during friend connection!</h1><a class="btn btn_contained modal-window__btn js-back-to-menu-modal" href="/">Back to menu</a>'],
     ['Error in multi', '<h1 class="text-title modal-window__header">Something went wrong, sorry!</h1><a class="btn btn_contained modal-window__btn js-back-to-menu-modal" href="/">Back to menu</a>'],
-    ['Game multi choose', '<h1 class="text-title modal-window__header">Do you want to play with friend?</h1><button class="btn btn_contained modal-window__btn js-friend-yes">Yes</button><button class="btn btn_contained modal-window__btn js-friend-no">No</button>'],
+    ['Game multi choose', '<h1 class="text-title modal-window__header">Do you want to play with friend?</h1><div class="modal-window-btns"><button class="btn btn_contained modal-window__btn js-friend-yes">Yes</button><button class="btn btn_contained modal-window__btn js-friend-no">No</button></div>'],
     ['Menu multi waiting for player', '<p class="text-title modal-window__header js-set-text">Please, wait. We are looking for your opponent...</p><button class="btn btn_contained modal-window__btn js-close-mw">Cancel</button>'],
     ['Menu multi error login', '<h1 class="text-title modal-window__header">To play multiplayer you need to be logged in!</h1><button class="btn btn_contained modal-window__btn js-close-mw">Close</button>'],
     ['Profile change password', '<h1 class="text-title modal-window__header">Change password</h1><div class="modal-window__input-rows"><label class="form__label"><input class="form__input form__input_profile js-password-old" type="password" id="old-password" placeholder="Enter old password" autocomplete="current-password"/><div class="form__warning js-warning-old hide"></div></label><label class="form__label"><input class="form__input form__input_profile js-password-new" type="password" id="new-password" placeholder="Enter new password" autocomplete="new-password"/><div class="form__warning js-warning-new hide"></label></div><button class="btn btn_contained modal-window__btn form__btn form__btn_change-password js-button-submit" type="submit">Change</button>'],
@@ -190,5 +190,5 @@ export const MAP_OF_MODALS = new Map ([
 export const MAP_OF_USER_BLOCKS = new Map([
     ['isAuth block', '<a class="btn users__btn users__btn_profile" href="/profile"></a><a class="btn users__btn users__btn_logout js-signout"></a>'],
     ['unAuth block', '<a class="btn users__btn login-btn" href="/login">login</a><a class="btn users__btn signup-btn" href="/signup">signup</a>'],
-    ['inGame unAuth', '<a class="btn users__btn signup-btn js-back-to-menu" href="/">Back to menu</a>'],
+    ['inGame unAuth', '<a class="btn users__btn signup-btn js-back-to-menu" href="/">Back</a>'],
 ]);

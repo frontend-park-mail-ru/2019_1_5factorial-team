@@ -25,7 +25,12 @@ export default class Game {
     protected isRemoved?: Boolean;
     protected initialResizerCall?: Boolean;
     protected wasSwapped?: Boolean;
-    protected isOpened?: Boolean;
+    protected spritesAreLoaded?: Boolean;
+    protected gameIsPaused?: Boolean;
+    protected leftOk?: Boolean;
+    protected rightOk?: Boolean;
+    protected playerOk?: Boolean;
+    protected checkedLoad?: Boolean;
 
     protected ghostsSpeed?: Array<Boolean>;
 
@@ -39,14 +44,18 @@ export default class Game {
     state: {    Players?: Array<{sprite: any, nick: string, x: number, id: Number, hp: number, score: Number}>, 
                 player?: {sprite: any, x: number, hp: number}, 
                 ghosts: Array<{x: number, speed: number, symbolsQueue?: Array<number>, 
-                symbols?: Array<number>, sprite: any, damage: number}>, 
+                symbols?:Array<number>, sprite: any, damage: number}>, 
                 score?: number, gameTime: number, isGameOver: Boolean
             };
 
     protected recognizer: Recognizer;
     protected requestID: any;
 
+    protected leftColor: string;
+    protected rightColor: string;
+
     protected playerImg: HTMLImageElement;
+    protected playerImgRight: HTMLImageElement;
     protected ghostLeftImg: HTMLImageElement;
     protected ghostRightImg: HTMLImageElement;
     protected heartImg: HTMLImageElement;
@@ -74,6 +83,8 @@ export default class Game {
         this.canvas = (document.getElementsByClassName('temp_class_canvas')[0] as HTMLCanvasElement);
         this.ctx = this.canvas.getContext('2d');
 
+        this.spritesAreLoaded = false;
+
         /*
          * Общие координаты
          */
@@ -88,7 +99,11 @@ export default class Game {
         this.isPlayers = false;
         this.isRemoved = false;
         this.wasSwapped = false;
-        this.isOpened = false;
+        this.gameIsPaused = false;
+        this.leftOk = false;
+        this.rightOk = false;
+        this.playerOk = false;
+        this.checkedLoad = false;
 
         this.ghostsSpeed = new Array<Boolean>(2);
 
@@ -102,14 +117,24 @@ export default class Game {
 
         this.requestID = null;
 
-        this.playerImg = (document.getElementById('player-sprite') as HTMLImageElement);
+        this.leftColor = '';
+        this.rightColor = '';
+
+        this.generateColors();
+
+        this.playerImg = (document.getElementById(this.leftColor + '0') as HTMLImageElement);
+        this.playerImgRight =  (document.getElementById(this.rightColor + '1') as HTMLImageElement);
+
         this.ghostLeftImg = (document.getElementById('ghost-left-sprite') as HTMLImageElement);
         this.ghostRightImg = (document.getElementById('ghost-right-sprite') as HTMLImageElement);
+
         this.heartImg = (document.getElementById('heart-sprite') as HTMLImageElement);
 
         this.symbolLR = document.getElementById('symbol_LR');
         this.symbolTD = document.getElementById('symbol_TD');
         this.symbolDTD = document.getElementById('symbol_DTD');
+
+        // this.ghostRightImg.onload = () => (this.spritesAreLoaded = true);
 
         window.addEventListener('resize', this.resizer.bind(this));
         this.localEventBus.getEvent('updateState', this.setState.bind(this));
@@ -130,15 +155,17 @@ export default class Game {
                 gameTime: 0,
                 isGameOver: false
             };
-            if (detectMobile.detect()) {
-                window.screen.orientation.onchange = () => {
-                    matchMedia('(orientation: landscape)').matches ? window.alert('OK') : window.alert('need to add pause');
-                };
-                // matchMedia('(orientation: landscape)').matches ? this.gameLoop() : window.alert('move your phone to horizontal orientation');
-            } else {
+            // if (detectMobile.detect()) {
+            //     window.screen.orientation.onchange = () => {
+            //         matchMedia('(orientation: landscape)').matches ? window.alert('OK') : window.alert('need to add pause');
+            //     };
+            //     // matchMedia('(orientation: landscape)').matches ? this.gameLoop() : window.alert('move your phone to horizontal orientation');
+            // } else {
                 this.MW.removeModal();
-                this.gameLoop();
-            }
+                    this.gameLoop();
+                // }
+                // }
+            // }
         } else {
             const paramsString = window.location.search;
             const searchParams = new URLSearchParams(paramsString);
@@ -146,7 +173,6 @@ export default class Game {
             console.log(room);
             if (room !== null) {
                 this.ws = new Ws(this.localEventBus, true, room);
-                this.isOpened = true;
             } else {
                 console.log('creating ws');
                 this.MW.createModal('Game multi choose');
@@ -156,13 +182,11 @@ export default class Game {
                 this.okChoose.addEventListener('click', (event) => {
                     event.preventDefault();
                     this.ws = new Ws(this.localEventBus, true);
-                    this.isOpened = true;
                     console.log('done');
                 });
                 this.noChoose.addEventListener('click', (event) => {
                     event.preventDefault();
                     this.ws = new Ws(this.localEventBus, false);
-                    this.isOpened = true;
                     this.MW.removeModal();
                     this.MW.createModal('Menu multi waiting for player');
 
@@ -174,6 +198,46 @@ export default class Game {
                 });
             }
             // this.ws = new Ws(this.localEventBus);
+        }
+    }
+
+    generateColors() {
+        console.log('generate colors called');
+        const max = 0, min = 3;
+        let left = Math.floor(Math.random() * (max - min)) + min;
+        let right = left;
+
+        while (true) {
+            if (left === right) {
+                right = Math.floor(Math.random() * (max - min)) + min;
+            } else {
+                console.log('break');
+                break;
+            }
+        }
+
+        switch (left) {
+            case 0:
+                this.leftColor = 'red';
+                break;
+            case 1:
+                this.leftColor = 'blue';
+                break;
+            case 2:
+                this.leftColor = 'green';
+                break;
+        }
+
+        switch (right) {
+            case 0:
+                this.rightColor = 'red';
+                break;
+            case 1:
+                this.rightColor = 'blue';
+                break;
+            case 2:
+                this.rightColor = 'green';
+                break;
         }
     }
 
@@ -257,7 +321,9 @@ export default class Game {
         if (!this.onceLoop) {
             this.onceLoop = true;
             this.MW.removeModal();
-            this.gameLoop();
+            // if (this.spritesAreLoaded) {
+                this.gameLoop();
+            // }
         }
     }
 
@@ -270,7 +336,9 @@ export default class Game {
 
         if (!this.isMulti) {
             if (this.canvas.height > this.canvas.width ) {
+                console.log('height > width');
                 this.makePause();
+                this.gameIsPaused = true;
             } else {
                 this.recoverFromPause();
 
@@ -279,14 +347,18 @@ export default class Game {
                 this.resizeSprite(this.playerImg);
                 this.resizeSprite(this.ghostRightImg);
                 this.resizeSprite(this.ghostLeftImg);
+
+                this.gameIsPaused = false;
             }
         } else {
             if (this.canvas.height > this.canvas.width ) {
-                this.ws.send('PAUSE', '');
+                this.ws.send("PAUSE", "");
                 this.makePause();
+                this.gameIsPaused = true;
             } else {
-                this.ws.send('RESUME', '');
+                this.ws.send("RESUME", "");
                 this.recoverFromPause();
+                this.gameIsPaused = false;
             }
 
             this.axisY = this.canvas.height - this.canvas.height / 40; // координата Y оси X
@@ -321,7 +393,6 @@ export default class Game {
     }
 
     makePause() {
-        console.log('pause');
         for (let i = 0; i < this.state.ghosts.length; i++) {
             this.state.ghosts[i].speed > 0 ? this.ghostsSpeed[i] = true : this.ghostsSpeed[i] = false;
             this.state.ghosts[i].speed = 0;
@@ -329,7 +400,6 @@ export default class Game {
     }
 
     recoverFromPause() {
-        console.log('pause recovered');
         for (let i = 0; i < this.state.ghosts.length; i++) {
             this.ghostsSpeed[i] ? this.state.ghosts[i].speed = DEFAULT_GHOST_SPEED : this.state.ghosts[i].speed = -DEFAULT_GHOST_SPEED;
             delete this.ghostsSpeed[i];
@@ -348,9 +418,8 @@ export default class Game {
             console.log('final score is', this.state.score);
         }
         window.removeEventListener('resize', this.resizer.bind(this));
-        if (this.isMulti && this.isOpened) {
+        if (this.isMulti) {
             this.ws.closeConn();
-            this.isOpened = false;
         }
     }
 
@@ -358,27 +427,27 @@ export default class Game {
         let now = Date.now();
         let dt = (now - this.lastTime) / 1000.0;
 
-        if (!this.isMulti) {
-            this.updateSingle(dt);
-            this.renderSingle();
-        } else {
-            if (!this.isPlayers) {
-                const userButtons = document.getElementsByClassName('js-check-user')[0];
-                userButtons.innerHTML = '';
-                userButtons.innerHTML = `<a class="btn users__btn login-btn">${this.state.Players[0].nick}</a><a class="btn users__btn login-btn">${this.state.Players[1].nick}</a><a class="btn users__btn signup-btn js-back-to-menu" href="/">Back to menu</a>`;
-                this.isPlayers = true;
-            }
-            this.renderMulti(dt);
+        if (!this.isMulti && !this.gameIsPaused) {
+        this.updateSingle(dt);
+        this.renderSingle();
+        } else if (!this.gameIsPaused) {
+        if (!this.isPlayers) {
+            const userButtons = document.getElementsByClassName('js-check-user')[0];
+            userButtons.innerHTML = '';
+            userButtons.innerHTML = `<a class="btn users__btn login-btn">${this.state.Players[0].nick}</a><a class="btn users__btn login-btn">${this.state.Players[1].nick}</a><a class="btn users__btn signup-btn js-back-to-menu" href="/">Back</a>`;
+            this.isPlayers = true;
+        }
+        this.renderMulti(dt);
         }
 
         if (this.state.isGameOver === true) {
-            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            this.destroy();
-            let finalScore = this.state.score;
-            this.MW.createModal('Game single end');
-            const scoreElement = (document.getElementsByClassName('js-set-final-score')[0] as HTMLElement);
-            scoreElement.innerText = `Your score is : ${finalScore}`;
-            return;
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.destroy();
+        let finalScore = this.state.score;
+        this.MW.createModal('Game single end');
+        const scoreElement = (document.getElementsByClassName('js-set-final-score')[0] as HTMLElement);
+        scoreElement.innerText = 'Your score is : ${finalScore}';
+        return;
         }
 
         this.lastTime = now;
@@ -435,14 +504,14 @@ export default class Game {
         for (let i = 0; i < this.state.ghosts.length; i++) {
             if (this.state.ghosts.length !== 0) {
                 if (this.state.ghosts[i].speed > 0) {
-                    if (this.state.ghosts[i].x + this.state.ghosts[i].sprite.width < this.state.player.x) {
+                    if (this.state.ghosts[i].x + this.ghostLeftImg.width < this.state.player.x) {
                         this.moveGhost(this.state.ghosts[i], dt);
                     } else {
                         this.state.player.hp -= this.state.ghosts[i].damage;
                         this.state.ghosts.splice(i, 1);
                     }
                 } else if (this.state.ghosts[i].speed < 0) {
-                    if (this.state.ghosts[i].x > this.state.player.x + this.state.player.sprite.width) {
+                    if (this.state.ghosts[i].x > this.state.player.x + this.playerImg.width) {
                         this.moveGhost(this.state.ghosts[i], dt);
                     } else {
                         this.state.player.hp -= this.state.ghosts[i].damage;
@@ -619,7 +688,7 @@ export default class Game {
         this.ctx.clearRect(rightPlayerX, this.axisY - this.playerImg.height,
             this.playerImg.width, this.playerImg.height);
 
-        this.ctx.drawImage(this.playerImg, rightPlayerX,
+        this.ctx.drawImage(this.playerImgRight, rightPlayerX,
             this.axisY - this.playerImg.height,
             this.playerImg.width, this.playerImg.height);
 
@@ -680,7 +749,6 @@ export default class Game {
                 this.ctx.drawImage(this.ghostRightImg,
                     this.state.ghosts[i].x, this.axisY - this.ghostRightImg.height,
                     this.ghostRightImg.width, this.ghostRightImg.height);
-
                 this.ctx.clearRect(this.canvas.width / 2,
                     this.axisY - this.ghostRightImg.height - symbolImgWidth - this.symbolsOffset,
                     this.canvas.width / 2, symbolImgWidth);
@@ -722,7 +790,7 @@ export default class Game {
 
 
         if (!this.isSent) {
-            this.ws.send('MOVE', String(this.lastDrawing));
+            this.ws.send("MOVE", String(this.lastDrawing));
             this.isSent = true;
 
             for (let i = 0; i < this.state.ghosts.length; i++) {

@@ -11,8 +11,9 @@
 }
 
 .modal {
+  user-select: auto;
   z-index: 2;
-  background: var(--bg-black-clr);
+  background: rgb(15, 15, 20);
   border-radius: 0.75em;
   box-shadow: 0 0 3vw var(--light-blue-clr);
   display: inline-flex;
@@ -64,4 +65,8 @@
     margin: 1vh 0;
     width: 100%;
   }
+}
+
+.modal-window-btns {
+  display: flex;
 }

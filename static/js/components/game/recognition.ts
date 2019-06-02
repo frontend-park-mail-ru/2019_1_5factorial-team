@@ -17,8 +17,9 @@ export default class Recognizer {
 
         this.gestureNames = [
             'none', 'click', 'horizontal', 'vertical',
-            '^', 'v', '>', '<',
-            'pigtail', 'reverse pigtail', 'lightning', 'circle'
+            '^', 'v',
+            // '>', '<',
+            // 'pigtail', 'reverse pigtail', 'lightning', 'circle'
         ];
 
         this.gcanvas = document.getElementById('gcanvas');
