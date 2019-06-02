@@ -4,14 +4,12 @@ node_js:
 script:
 - ssh-keyscan -H 95.163.180.8 >> ~/.ssh/known_hosts
 - chmod 600 ~/5factorial_id_rsa.pem
+- npm i
 - npm run test
 - npm run build-travis
 - mkdir ./deploy
 - cp ./static/*.* ./deploy
 - mv ./static/{css,dist,img,fonts} ./deploy
-# - mv ./static/dist ./deploy
-# - mv ./static/img ./deploy
-# - mv ./static/fonts ./deploy
 - scp -i ~/5factorial_id_rsa.pem -r ./deploy/* ubuntu@95.163.180.8:/home/ubuntu/5factorial
 branches:
   only:
