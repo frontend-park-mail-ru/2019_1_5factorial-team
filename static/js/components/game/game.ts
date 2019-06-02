@@ -26,6 +26,7 @@ export default class Game {
     protected initialResizerCall?: Boolean;
     protected wasSwapped?: Boolean;
     protected spritesAreLoaded?: Boolean;
+    protected gameIsPaused?: Boolean;
 
     protected ghostsSpeed?: Array<Boolean>;
 
@@ -94,6 +95,7 @@ export default class Game {
         this.isPlayers = false;
         this.isRemoved = false;
         this.wasSwapped = false;
+        this.gameIsPaused = false;
 
         this.ghostsSpeed = new Array<Boolean>(2);
 
@@ -117,6 +119,7 @@ export default class Game {
 
         this.ghostLeftImg = (document.getElementById('ghost-left-sprite') as HTMLImageElement);
         this.ghostRightImg = (document.getElementById('ghost-right-sprite') as HTMLImageElement);
+
         this.heartImg = (document.getElementById('heart-sprite') as HTMLImageElement);
 
         this.symbolLR = document.getElementById('symbol_LR');
@@ -326,7 +329,9 @@ export default class Game {
 
         if (!this.isMulti) {
             if (this.canvas.height > this.canvas.width ) {
+                console.log('height > width');
                 this.makePause();
+                this.gameIsPaused = true;
             } else {
                 this.recoverFromPause();
 
@@ -335,14 +340,18 @@ export default class Game {
                 this.resizeSprite(this.playerImg);
                 this.resizeSprite(this.ghostRightImg);
                 this.resizeSprite(this.ghostLeftImg);
+
+                this.gameIsPaused = false;
             }
         } else {
             if (this.canvas.height > this.canvas.width ) {
                 this.ws.send("PAUSE", "");
                 this.makePause();
+                this.gameIsPaused = true;
             } else {
                 this.ws.send("RESUME", "");
                 this.recoverFromPause();
+                this.gameIsPaused = false;
             }
 
             this.axisY = this.canvas.height - this.canvas.height / 40; // координата Y оси X
@@ -377,7 +386,6 @@ export default class Game {
     }
 
     makePause() {
-        console.log('pause');
         for (let i = 0; i < this.state.ghosts.length; i++) {
             this.state.ghosts[i].speed > 0 ? this.ghostsSpeed[i] = true : this.ghostsSpeed[i] = false;
             this.state.ghosts[i].speed = 0;
@@ -385,7 +393,6 @@ export default class Game {
     }
 
     recoverFromPause() {
-        console.log('pause recovered');
         for (let i = 0; i < this.state.ghosts.length; i++) {
             this.ghostsSpeed[i] ? this.state.ghosts[i].speed = DEFAULT_GHOST_SPEED : this.state.ghosts[i].speed = -DEFAULT_GHOST_SPEED;
             delete this.ghostsSpeed[i];
@@ -413,14 +420,14 @@ export default class Game {
         let now = Date.now();
         let dt = (now - this.lastTime) / 1000.0;
 
-        if (!this.isMulti) {
+        if (!this.isMulti && !this.gameIsPaused) {
             this.updateSingle(dt);
             this.renderSingle();
-        } else {
+        } else if (!this.gameIsPaused) {
             if (!this.isPlayers) {
                 const userButtons = document.getElementsByClassName('js-check-user')[0];
                 userButtons.innerHTML = '';
-                userButtons.innerHTML = `<a class="btn users__btn login-btn">${this.state.Players[0].nick}</a><a class="btn users__btn login-btn">${this.state.Players[1].nick}</a><a class="btn users__btn signup-btn js-back-to-menu" href="/">Back to menu</a>`;
+                userButtons.innerHTML = `<a class="btn users__btn login-btn">${this.state.Players[0].nick}</a><a class="btn users__btn login-btn">${this.state.Players[1].nick}</a><a class="btn users__btn signup-btn js-back-to-menu" href="/">Back</a>`;
                 this.isPlayers = true;
             }
             this.renderMulti(dt);
@@ -490,14 +497,14 @@ export default class Game {
         for (let i = 0; i < this.state.ghosts.length; i++) {
             if (this.state.ghosts.length !== 0) {
                 if (this.state.ghosts[i].speed > 0) {
-                    if (this.state.ghosts[i].x + this.state.ghosts[i].sprite.width < this.state.player.x) {
+                    if (this.state.ghosts[i].x + this.ghostLeftImg.width < this.state.player.x) {
                         this.moveGhost(this.state.ghosts[i], dt);
                     } else {
                         this.state.player.hp -= this.state.ghosts[i].damage;
                         this.state.ghosts.splice(i, 1);
                     }
                 } else if (this.state.ghosts[i].speed < 0) {
-                    if (this.state.ghosts[i].x > this.state.player.x + this.state.player.sprite.width) {
+                    if (this.state.ghosts[i].x > this.state.player.x + this.playerImg.width) {
                         this.moveGhost(this.state.ghosts[i], dt);
                     } else {
                         this.state.player.hp -= this.state.ghosts[i].damage;
