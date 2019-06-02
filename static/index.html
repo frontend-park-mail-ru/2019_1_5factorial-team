@@ -20,11 +20,12 @@
             return await WebAssembly.instantiate(source, importObject);
         };
     }
-    const go = new Go()
-        const {instance} = WebAssembly.instantiateStreaming(fetch("test.wasm"), go.importObject);
+    (async function() {
+        const go = new Go()
+        const {instance} = await WebAssembly.instantiateStreaming(fetch("test.wasm"), go.importObject);
         console.log(instance);
         go.run(instance);
-        
+    })();      
     let getCustomAvatar;
     function setCustomAvatar(callback) {
         getCustomAvatar = callback;
