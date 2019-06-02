@@ -11,7 +11,6 @@
 }
 
 .modal {
-  max-width: 300px;
   user-select: auto;
   z-index: 2;
   background: rgb(15, 15, 20);
@@ -48,7 +47,7 @@
       max-width: 200px;
       word-wrap: break-word;
     }
-    @media screen and (orientation: landscape) {
+    @media screen and (max-width: 700px) and (orientation: landscape) {
       font-size: 4vh;
       text-align: center;
       max-width: 300px;
