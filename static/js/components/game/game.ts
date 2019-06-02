@@ -433,7 +433,7 @@ export default class Game {
         let finalScore = this.state.score;
         this.MW.createModal('Game single end');
         const scoreElement = (document.getElementsByClassName('js-set-final-score')[0] as HTMLElement);
-        scoreElement.innerText = 'Your score is : ${finalScore}';
+        scoreElement.innerText = `Your score is : ${finalScore}`;
         return;
         }
 
