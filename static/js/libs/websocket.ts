@@ -1,13 +1,21 @@
 import {NETWORK_ADRESS_WS_GAME_SOLO, NETWORK_ADRESS_WS_GAME_LINK} from '../components/constants';
 import EventBus from "./eventBus";
+import ModalWindow from '../components/modalWindow/modalWindow';
 
 export default class Ws {
     localEventBus: EventBus;
     webs: any;
     static __instance: Ws;
+    protected friend?: Boolean;
+    protected MW?: ModalWindow;
+    protected solo?: Boolean;
+
     constructor(eventBus: EventBus, isFriend: Boolean, room?: string) {
         this.localEventBus = eventBus;
         this.localEventBus.getEvent('sendButton', this.send.bind(this));
+        this.friend = false;
+        this.solo = false;
+        this.MW = new ModalWindow();
         if (Ws.__instance) {
             return Ws.__instance;
         }
@@ -19,9 +27,11 @@ export default class Ws {
             console.log('connect');
         } else if (isFriend && !room){
             this.webs = new WebSocket(NETWORK_ADRESS_WS_GAME_LINK)
+            this.friend = true;
             console.log('friend');
         } else {
             this.webs = new WebSocket(address);
+            this.solo = true;
         }
 
         this.webs.onerror = (event: any) => {
@@ -33,6 +43,14 @@ export default class Ws {
 
             this.webs.onclose = () => {
                 console.log(`WebSocket closed`);
+                if (this.friend) {
+                    this.MW.removeModal();
+                    this.MW.createModal('TTL multi');
+                }
+                if (this.solo) {
+                    this.MW.removeModal();
+                    this.MW.createModal('TTL multi solo');
+                }
             };
 
             this.webs.onmessage = this.handleMessage.bind(this);
