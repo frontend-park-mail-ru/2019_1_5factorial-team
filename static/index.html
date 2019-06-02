@@ -19,11 +19,14 @@
             return await WebAssembly.instantiate(d, t);
         };
     }
-    (async function () {
-        const e = new Go();
+    const e = new Go();
         const {i} = await WebAssembly.instantiateStreaming(fetch("test.wasm"), e.importObject);
         e.run(i);
-    })();
+    // (async function () {
+    //     const e = new Go();
+    //     const {i} = await WebAssembly.instantiateStreaming(fetch("test.wasm"), e.importObject);
+    //     e.run(i);
+    // })();
 
     let w;
     function setCustomAvatar(c) {
