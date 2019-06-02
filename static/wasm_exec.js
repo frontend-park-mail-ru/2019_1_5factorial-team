@@ -396,6 +396,7 @@
 
         async run(instance) {
             this._inst = instance;
+            console.log(this._inst);
             this._values = [ // TODO: garbage collection
                 NaN,
                 0,
