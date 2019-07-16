@@ -32,8 +32,6 @@
     font-size: 4vh;
     margin: 0.5vh 0;
     padding: 0 0.25em;
-    text-align: left;
-    width: 400px;
     height: 6vh;
 
     &:focus {
@@ -47,7 +45,14 @@
       font-size: 2.5vh;
       justify-content: center;
       padding: 0 0.25em;
-      width: 100%;
+
+      @media screen and (min-height: 400px) {
+        min-width: 280px;
+      }
+
+      @media screen and (max-height: 400px) {
+        min-width: 200px;
+      }
     }
   }
 
@@ -150,7 +155,7 @@
 .form-btn-block {
   @extend %inline;
   justify-content: center;
-  //width: 100%;
+  margin-top: 4vh;
 }
 
 .invalid {

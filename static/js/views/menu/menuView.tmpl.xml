@@ -10,27 +10,25 @@
             <div class="menu">
                 <div class="unit unit_menu">
                     <a class="btn menu__btn js-single" href="/single">Single</a>
-                    <!-- <div class="menu__symbol menu__symbol_td"></div> -->
                 </div>
                 <div class="unit unit_menu">
                     <a class="btn menu__btn js-multi" href="/multi">Multi</a>
-                    <!-- <div class="menu__symbol menu__symbol_lr"></div> -->
                 </div>
                 <div class="unit unit_menu">
                     <a class="btn menu__btn js-leaders" href="/leaders">Leaders</a>
-                    <!-- <div class="menu__symbol menu__symbol_dtd"></div> -->
                 </div>
             </div>
         </section>
+
         <section class="modal-window js-modal-window hidden">
         </section>
+
         <section class="container__block container__block_right sided-block right-elems">
             <div class="users js-check-auth">
             </div>
             <div class="name">
                 <h1 class="name__text">the game</h1>
             </div>
-            <canvas class="hidden" id="gcanvas"></canvas>
         </section>
     </div>
 </fest:template>
