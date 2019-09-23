@@ -1,6 +1,7 @@
 import Game from '../components/game/game';
 import ModalWindow from '../components/modalWindow/modalWindow';
 import EventBus from '../libs/eventBus';
+import Logger from '../libs/logger';
 
 /**
  * STATE - состояние игры
@@ -13,10 +14,12 @@ export default class gameOnlineMulti {
     scene: Game;
     MW: ModalWindow;
     winnerText: Element;
+    logger: Logger;
 
-    constructor(eventBus: EventBus) {
+    constructor(eventBus: EventBus, logger: Logger) {
         this.localEventBus = eventBus;
         this.scene = null;
+        this.logger = logger;
         this.MW = new ModalWindow();
 
         this.localEventBus.getEvent('startGame', this.onStart.bind(this));

@@ -10,6 +10,7 @@ import {profileController} from './controllers/profileCtrl';
 import {gameController} from './controllers/gameCtrl';
 
 import Router from './libs/router';
+import Logger from './libs/logger';
 
 document.addEventListener('DOMContentLoaded', () => {
     if ('serviceWorker' in navigator) {
@@ -19,15 +20,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const page = document.getElementsByClassName('body-cnt')[0];
     createPage(page);
     const main = document.getElementsByClassName('main-container')[0];
-    const router = new Router(page);
+    const logger = new Logger('/api/frontlogs');
+    const router = new Router(page, logger);
 
-    const gameCtrl = new gameController();
-    const menuCntl = new menuController();
-    const aboutCtrl = new aboutController();
-    const loginCtrl = new loginController(router);
-    const signUpCtrl = new signUpController(router);
-    const leaderboardCtrl = new leaderboardController();
-    const profileCtrl = new profileController(router);
+    const gameCtrl = new gameController(logger);
+    const menuCntl = new menuController(logger);
+    const aboutCtrl = new aboutController(logger);
+    const loginCtrl = new loginController(router, logger);
+    const signUpCtrl = new signUpController(router, logger);
+    const leaderboardCtrl = new leaderboardController(logger);
+    const profileCtrl = new profileController(router, logger);
 
     router.add('/about', main, aboutCtrl.aboutView);
     router.add('/login', main, loginCtrl.loginView);

@@ -1,3 +1,5 @@
+import Logger from './logger';
+
 import { OK_VALIDATE_EMAIL, OK_VALIDATE_LOGIN, OK_VALIDATE_PASSWORD, OK_VALIDATE_AVATAR } from '../components/constants';
 import { EMPTY_EMAIL, EMPTY_LOGIN, EMPTY_PASSWORD } from '../components/constants';
 import { EMAIL_EXPRESSION, LOGIN_EXPRESSION, PASSWORD_EXPRESSION } from '../components/constants';

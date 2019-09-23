@@ -4,14 +4,19 @@ import {User} from '../libs/users';
 import userBlock from '../components/userBlock/userBlock';
 import { ANAUTH_RESPONSE, OK_RESPONSE, COUNT_OF_PAGES, NUM_OF_POSITIONS } from '../components/constants';
 import EventBus from '../libs/eventBus';
+import Logger from '../libs/logger';
 
 export default class leaderboardModel {
     localEventBus: EventBus;
     countOfPages: number;
     numOfPositions: number;
     sumOfUsers: number;
-    constructor(eventBus: EventBus) {
+    logger: Logger;
+
+    constructor(eventBus: EventBus, logger: Logger) {
         this.localEventBus = eventBus;
+        this.logger = logger;
+        
         this.localEventBus.getEvent('load', this.loadPage.bind(this));
         this.localEventBus.getEvent('loadPaginator', this.loadPaginator.bind(this));
         this.localEventBus.getEvent('checkAuthorization', this.checkAuthorization.bind(this));

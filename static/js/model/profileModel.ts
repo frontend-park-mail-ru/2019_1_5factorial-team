@@ -4,6 +4,7 @@ import api from '../libs/api';
 import {User} from '../libs/users';
 import { OK_RESPONSE, NETWORK_ADRESS, DEFAULT_AVATAR, OK_VALIDATE_PASSWORD, OK_VALIDATE_AVATAR, AVATAR_DEFAULT, ANAUTH_RESPONSE } from '../components/constants';
 import EventBus from '../libs/eventBus';
+import Logger from '../libs/logger';
 
 interface IResponseProfile extends Response {
     avatar_link?: string;
@@ -16,10 +17,13 @@ interface IResponseProfile extends Response {
 export default class profileModel {
     localEventBus: EventBus;
     avatar: any;
-    constructor(eventBus: EventBus) {
-        this.localEventBus = eventBus;
-        this.localEventBus.getEvent('changeAvatar', this.onChangeAvatar.bind(this));
+    logger: Logger;
 
+    constructor(eventBus: EventBus, logger: Logger) {
+        this.localEventBus = eventBus;
+        this.logger = logger;
+        
+        this.localEventBus.getEvent('changeAvatar', this.onChangeAvatar.bind(this));
         this.localEventBus.getEvent('submitPassword', this.onSubmitPassword.bind(this));
         this.localEventBus.getEvent('checkAuth', this.onCheckAuth.bind(this));
         this.localEventBus.getEvent('loadUser', this.onLoadUser.bind(this));

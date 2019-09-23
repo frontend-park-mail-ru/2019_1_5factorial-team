@@ -1,8 +1,11 @@
+import Logger from './logger';
 
 export default class EventBus {
     private list: Map<String, Function[]>
+    private logger: Logger;
     constructor(events: Array<String>) {
         this.list = new Map();
+        this.logger = new Logger('/api/frontlogs');
         events.forEach((name) => {
             this.list.set(name, []);
         });
@@ -16,7 +19,7 @@ export default class EventBus {
      */
     getEvent(name: String, callback: Function) {
         if (!this.list.has(name)) {
-            console.log(`Unknown event ${name}`);
+            this.logger.addLog({type: 'eventBus', msg: 'No such event'})
         }
         this.list.get(name).push(callback);
     }
@@ -29,7 +32,7 @@ export default class EventBus {
      */
     callEvent(name: String, ...args: any[]) {
         if (!this.list.has(name)) {
-            console.log(`Unknown event ${name}`);
+            this.logger.addLog({type: 'eventBus', msg: 'No such event'})
         }
         const listener = this.list.get(name);
         listener.forEach((callback: Function) => {

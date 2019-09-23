@@ -7,9 +7,12 @@ import '../../components/userBlock/userblock.scss';
 import '../../../css/form.scss';
 
 export default class profileView extends View {
-    constructor(eventBus) {
+    constructor(eventBus, logger) {
         super(template, eventBus);
+        this.logger = logger;
+        
         this.render(document.getElementsByClassName('body-cnt')[0]);
+        
         this.localEventBus.getEvent('checkAuthResponse', this.onCheckAuthorizationResponse.bind(this));
         this.localEventBus.getEvent('loadUserResponse', this.onLoadUserResponse.bind(this));
 

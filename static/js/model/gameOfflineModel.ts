@@ -2,6 +2,7 @@ import Game from '../components/game/game';
 import api from '../libs/api';
 import { ANAUTH_RESPONSE } from '../components/constants';
 import EventBus from '../libs/eventBus';
+import Logger from '../libs/logger';
 
 interface IResponseGame extends Response {
     error?: string;
@@ -11,10 +12,12 @@ interface IResponseGame extends Response {
 export default class gameOfflineModel {
     scene: Game;
     localEventBus: EventBus;
+    logger: Logger;
 
-    constructor(eventBus: EventBus) {
+    constructor(eventBus: EventBus, logger: Logger) {
         this.scene = null;
         this.localEventBus = eventBus;
+        this.logger = logger;
 
         this.localEventBus.getEvent('startGame', this.onStart.bind(this));
         this.localEventBus.getEvent('gameOver', this.onGameOver.bind(this));

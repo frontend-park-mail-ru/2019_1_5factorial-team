@@ -3,9 +3,12 @@ import userBlock from '../../components/userBlock/userBlock';
 import template from './aboutView.tmpl.xml';
 
 export default class aboutView extends View {
-    constructor(eventBus) {
+    constructor(eventBus, logger) {
         super(template, eventBus);
+        this.logger = logger;
+        
         this.render(document.getElementsByClassName('body-cnt')[0]);
+        
         this.localEventBus.getEvent('checkAuthorizationResponse', this.onCheckAuthResponse.bind(this));
     }
 

@@ -4,11 +4,16 @@ import {User} from '../libs/users';
 import userBlock from '../components/userBlock/userBlock';
 import { ANAUTH_RESPONSE } from '../components/constants';
 import EventBus from '../libs/eventBus';
+import Logger from '../libs/logger';
 
 export default class menuModel {
     localEventBus: EventBus;
-    constructor(eventbus: EventBus) {
+    logger: Logger;
+    
+    constructor(eventbus: EventBus, logger: Logger) {
         this.localEventBus = eventbus;
+        this.logger = logger;
+
         this.localEventBus.getEvent('checkAuthorization', this.checkAuthorization.bind(this));
         this.localEventBus.getEvent('signOut', this.onLogout.bind(this));
     }

@@ -8,10 +8,13 @@ import template from './menuView.tmpl.xml';
 import './menuGameLogo.scss';
 
 export default class viewMenu extends View {
-    constructor(eventBus) {
+    constructor(eventBus, logger) {
         super(template, eventBus);
+        this.logger = logger;
         this.isAuth = false;
+
         this.render(document.getElementsByClassName('body-cnt')[0]);
+        
         this.localEventBus.getEvent('checkAuthorizationResponse', this.onCheckAuthResponse.bind(this));
     }
 
