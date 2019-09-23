@@ -17,7 +17,6 @@ export class profileController {
         const eventBus = new EventBus(eventList);
 
         eventBus.getEvent('checkAuthError', () => {
-            console.log('trying to go to start');
             router.toStartPage();
         });
 

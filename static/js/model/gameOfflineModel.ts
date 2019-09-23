@@ -27,7 +27,6 @@ export default class gameOfflineModel {
     }
 
     getUser() {
-        console.log('getUser');
         return api.sessionCheck()
             .then(res => {
                 if (res.status === ANAUTH_RESPONSE) {
@@ -45,7 +44,7 @@ export default class gameOfflineModel {
     }
 
     onStart() {
-        this.scene = new Game(this.localEventBus);
+        this.scene = new Game(this.localEventBus, false, this.logger);
     }
 
     stopGame() {

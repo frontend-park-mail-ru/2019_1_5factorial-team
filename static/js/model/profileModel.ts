@@ -120,7 +120,6 @@ export default class profileModel {
     onLoadUser() {
         api.loadUser()
             .then((response: IResponseProfile) => {
-                console.log(response);
                 if (response.error) {
                     this.localEventBus.callEvent('loadUserResponse', {});
                 } else {
@@ -142,7 +141,6 @@ export default class profileModel {
      */
     async onCheckAuth() {
         const res = await doGet({ url: '/api/session' });
-        console.log(res);
         if (res.status === ANAUTH_RESPONSE) {
             return this.localEventBus.callEvent('checkAuthResponse', {
                 isAuth: false,

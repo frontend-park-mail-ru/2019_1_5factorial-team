@@ -7,6 +7,10 @@ export default class Logger {
     constructor(url: string, ...params: any[]) {
         this.url = url;
         this.stack = [];
+
+        setInterval(() => {
+            this.sendLogs();
+        }, 120000)
     }
 
     getLogger() {

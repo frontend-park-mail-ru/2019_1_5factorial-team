@@ -6,6 +6,7 @@ import detectMobile from '../detectMobile';
 import { DEFAULT_GHOST_SPEED, DEFAULT_GHOST_DAMAGE, PLAYER_INITIAL_HP } from '../constants';
 import { SCORE_FOR_SYMBOL, SCORE_FOR_GHOST } from '../constants';
 import EventBus from '../../libs/eventBus';
+import Logger from '../../libs/logger';
 
 const symbolImgWidth: number = 60;
 
@@ -37,6 +38,8 @@ export default class Game {
             };
 
     protected recognizer: Recognizer;
+    protected logger: Logger;
+
     protected requestID: any;
 
     protected playerImg: HTMLImageElement;
@@ -55,9 +58,10 @@ export default class Game {
      * this.state - состояние игры
      * @param {boolean} isMulti - true - мультиплеер
      */
-    constructor(eventBus: EventBus, isMulti = false) {
+    constructor(eventBus: EventBus, isMulti = false, logger: Logger) {
         this.isMulti = isMulti;
         this.localEventBus = eventBus;
+        this.logger = logger;
 
         this.MW = new ModalWindow();
         this.canvas = (document.getElementsByClassName('temp_class_canvas')[0] as HTMLCanvasElement);
@@ -97,9 +101,8 @@ export default class Game {
             screen.orientation.lock('landscape-primary');
             this.isLocked = true;
 
-        } else {
-            console.log('non mobile');
-        }
+        } else {}
+
         this.lastTime = Date.now();
 
         if (!this.isMulti) {  // если синглплеер
@@ -117,15 +120,12 @@ export default class Game {
             };
             this.gameLoop();
         } else {
-            console.log('creating ws');
-            this.ws = new Ws(this.localEventBus);
+            this.ws = new Ws(this.localEventBus, this.logger);
         }
     }
 
     setState(state: { Players: { nick?: string, nickname?: string, score: Number, x?: number, id?: Number, hp?: number }[]; Objects: { items: any; }; }) {
         this.deltaX = this.ghostLeftImg.width / 2;
-        // console.log(state);
-
 
         ///////////////////////////////////
 
@@ -153,18 +153,11 @@ export default class Game {
 
             this.isSet = true;
         } else {
-            // console.log('в моем стейте столько призраков: ' + this.state.ghosts.length);
-            // console.log('в новом стейте столько: '+ state.Objects.items.length);
-
-            // console.log('дельта: ' + this.deltaX);
-
             if (this.state.ghosts.length === state.Objects.items.length) {
                 for (let i = 0; i < state.Objects.items.length; i++) {
                     if (Math.abs(state.Objects.items[i].x - this.state.ghosts[i].x) >= this.deltaX) {
                         this.state.ghosts[i] = state.Objects.items[i];
-                        // console.log('reset');
                     } else {
-                        // console.log('no need to reset');
                     }
                 }
             } else if (this.state.ghosts.length < state.Objects.items.length && state.Objects.items.length === 2) {
@@ -172,18 +165,14 @@ export default class Game {
                 for (let i = 0; i < state.Objects.items.length; i++) {
                     if (Math.abs(state.Objects.items[i].x - this.state.ghosts[i].x) >= this.deltaX) {
                         this.state.ghosts[i] = state.Objects.items[i];
-                        // console.log('reset');
                     } else {
-                        // console.log('no need to reset');
                     }
                 }
             } else if (this.state.ghosts.length > state.Objects.items.length && state.Objects.items.length === 1) {
                 this.state.ghosts.splice(0, 1);
                 if (Math.abs(state.Objects.items[0].x - this.state.ghosts[0].x) >= this.deltaX) {
                     this.state.ghosts[0] = state.Objects.items[0];
-                    // console.log('reset');
                 } else {
-                    // console.log('no need to reset');
                 }
             }
 
@@ -211,14 +200,12 @@ export default class Game {
     }
 
     destroy(): void {
-        console.log('destroy');
         if (this.requestID) {
             cancelAnimationFrame(this.requestID);
         }
         this.recognizer.destroyRecognizer();
 
         if (this.state) {
-            console.log('final score is', this.state.score);
         }
         window.removeEventListener('resize', this.resizer.bind(this));
         if (this.isLocked) {
@@ -315,7 +302,6 @@ export default class Game {
                     } else {
                         this.state.player.hp -= this.state.ghosts[i].damage;
                         this.state.ghosts.splice(i, 1);
-                        console.log('damage');
                     }
                 } else if (this.state.ghosts[i].speed < 0) {
                     if (this.state.ghosts[i].x > this.state.player.x + this.state.player.sprite.width) {
@@ -323,7 +309,6 @@ export default class Game {
                     } else {
                         this.state.player.hp -= this.state.ghosts[i].damage;
                         this.state.ghosts.splice(i, 1);
-                        console.log('damage');
                     }
                 }
             }

@@ -91,7 +91,6 @@ export default class Recognizer {
             this.mouseIsDown = false;
 
             gesture = this.jager.recognise(this.path, 5000, true);
-            console.log(this.gestureNames[gesture]);
             this.lastDrawing = gesture;
             this.gctx.clearRect(0, 0, this.gcanvas.width, this.gcanvas.height);
 
@@ -107,7 +106,6 @@ export default class Recognizer {
             this.mouseIsDown = false;
 
             gesture = this.jager.recognise(this.path, 5000, true);
-            console.log(this.gestureNames[gesture]);
             this.lastDrawing = gesture;
             this.gctx.clearRect(0, 0, this.gcanvas.width, this.gcanvas.height);
 

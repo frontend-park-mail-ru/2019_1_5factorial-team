@@ -39,12 +39,11 @@ export default class profileView extends View {
 
     onChangePasswodResponse(data = {}) {
         //TODO(): добавить обработку ошибки в верстке
-        console.log(data.error);
+        this.data = data;
     }
 
     onChangeAvatarResponse(data = {}) {
         if (data.error !== undefined) {
-            console.log(data.error);
             return;
         }
         this.localAvatar.style.background = `transparent url(${AVATAR_DEFAULT}) no-repeat`;
@@ -54,7 +53,6 @@ export default class profileView extends View {
     }
 
     onChangeAvatarSuccess(data = {}) {
-        console.log(data);
         this.localAvatar.src = data.avatar;
         this.localEventBus.callEvent('loadUser', data);
     }

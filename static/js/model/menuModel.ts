@@ -33,7 +33,6 @@ export default class menuModel {
      */
     async checkAuthorization() {
         const res = await doGet({ url: '/api/session' });
-        console.log(res);
         if (res.status === ANAUTH_RESPONSE) {
             return this.localEventBus.callEvent('checkAuthorizationResponse', {
                 isAuthorized: false,

@@ -44,7 +44,6 @@
 				outputBuf += decoder.decode(buf);
 				const nl = outputBuf.lastIndexOf("\n");
 				if (nl != -1) {
-					console.log(outputBuf.substr(0, nl));
 					outputBuf = outputBuf.substr(nl + 1);
 				}
 				return buf.length;
@@ -281,8 +280,6 @@
 					// func valueGet(v ref, p string) ref
 					"syscall/js.valueGet": (sp) => {
 						const result = Reflect.get(loadValue(sp + 8), loadString(sp + 16));
-						console.log(this._inst.exports);
-						console.log(this._inst);
 						sp = this._inst.exports.getsp(); // see comment above
 						storeValue(sp + 32, result);
 					},
@@ -371,9 +368,7 @@
 						mem().setUint8(sp + 24, loadValue(sp + 8) instanceof loadValue(sp + 16));
 					},
 
-					"debug": (value) => {
-						console.log(value);
-					},
+					"debug": (value) => {},
 				}
 			};
 		}
