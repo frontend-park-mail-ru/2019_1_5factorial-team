@@ -6,12 +6,16 @@ import '../../../css/form.scss';
 import { OK_VALIDATE_LOGIN, OK_VALIDATE_PASSWORD, OK_VALIDATE_EMAIL, EMPTY_PASSWORD, EXPTY_LOGIN_OR_EMAIL } from '../../components/constants';
 
 export default class loginView extends View {
-    constructor(eventBus) {
+    constructor(eventBus, logger) {
         super(template, eventBus);
+        this.logger = logger;
+
         this.render(document.getElementsByClassName('body-cnt')[0]);
+        
         this.localEventBus.getEvent('loginResponse', this.onSubmitResponse.bind(this));
         this.localEventBus.getEvent('loginOrEmailRTCheckResponse', this.loginOrEmailRTCheckResponse.bind(this));
         this.localEventBus.getEvent('passwRTCheckResponse', this.passwRTCheckResponse.bind(this));
+        
         this.loginOrEmailValue = '';
         this.passwordValue = '';
     }
@@ -58,7 +62,6 @@ export default class loginView extends View {
         this.loginOrEmailInput.addEventListener('change', this.loginOrEmailRTCheck.bind(this, this.loginOrEmailInput));
         this.passwInput.addEventListener('change', this.passwRTCheck.bind(this, this.passwInput));
         this.localEventBus.callEvent('oauthCheck');
-        // return this;
     }
 
     loginOrEmailRTCheck(input) {

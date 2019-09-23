@@ -7,9 +7,12 @@ import '../../components/userBlock/userblock.scss';
 import '../../../css/form.scss';
 
 export default class profileView extends View {
-    constructor(eventBus) {
+    constructor(eventBus, logger) {
         super(template, eventBus);
+        this.logger = logger;
+        
         this.render(document.getElementsByClassName('body-cnt')[0]);
+        
         this.localEventBus.getEvent('checkAuthResponse', this.onCheckAuthorizationResponse.bind(this));
         this.localEventBus.getEvent('loadUserResponse', this.onLoadUserResponse.bind(this));
 
@@ -36,12 +39,11 @@ export default class profileView extends View {
 
     onChangePasswodResponse(data = {}) {
         //TODO(): добавить обработку ошибки в верстке
-        console.log(data.error);
+        this.data = data;
     }
 
     onChangeAvatarResponse(data = {}) {
         if (data.error !== undefined) {
-            console.log(data.error);
             return;
         }
         this.localAvatar.style.background = `transparent url(${AVATAR_DEFAULT}) no-repeat`;
@@ -51,7 +53,6 @@ export default class profileView extends View {
     }
 
     onChangeAvatarSuccess(data = {}) {
-        console.log(data);
         this.localAvatar.src = data.avatar;
         this.localEventBus.callEvent('loadUser', data);
     }

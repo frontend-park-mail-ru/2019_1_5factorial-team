@@ -122,4 +122,11 @@ export default class api {
             url: `/api/user/score?limit=${limit}&offset=${offset}`
         });
     }
+
+    static sendLogs(url: string, stack: object[]) {
+        return network.doPost({
+            url,
+            body: stack
+        });
+    }
 }

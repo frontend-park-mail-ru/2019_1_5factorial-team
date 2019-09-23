@@ -5,14 +5,16 @@ import userBlock from '../../components/userBlock/userBlock';
 import './game.scss';
 
 export default class gameView extends View {
-    constructor(eventBus) {
+    constructor(eventBus, logger) {
         super(template, eventBus);
+        this.logger = logger;
         this.localEventBus = eventBus;
 
         this.isChecked = false;
         this.isStart = false;
 
         this.render(document.getElementsByClassName('body-cnt')[0]);
+        
         this.localEventBus.getEvent('onGetUserDataForGameResponse', this.getUserResponse.bind(this));
     }
 

@@ -165,7 +165,7 @@ export const INCORRECT_AVATAR_FORMAT = 'Avatar must be jpeg or png format!';
 export const MAP_OF_MODALS = new Map ([
     ['Game multi end', ''],
     ['Game multi leave', ''],
-    ['Game training', '<h1 class="text-title modal-window__header">Do you want to start training?</h1><div class="modal-window-btns"><button class="btn btn_inlined modal-window__btn js-skip-training">No</button><button class="btn btn_contained modal-window__btn js-start-training">Yes</button></div>'],
+    ['Game training', '<h1 class="text-title modal-window__header">Do you want to start training?</h1><div class="modal-window-btns"><a href="/single" class="btn btn_contained modal-window__btn js-skip-training">No</a><a href="/single?training=true" class="btn btn_contained modal-window__btn js-start-training">Yes</a></div>'],
     ['Game single end', '<h1 class="text-title modal-window__header">Game Over! You Lost!</h1><p class="js-set-final-score"></p><a class="btn btn_contained js-back-to-menu-modal" href="/">Back to menu</a>'],
     ['Game single pause', ''],
     ['Game single leave', ''],

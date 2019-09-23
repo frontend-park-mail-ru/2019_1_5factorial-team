@@ -1,3 +1,5 @@
+import Logger from './logger';
+
 export default class Router {
     private root: any;
     private routes: Map<String, {root: any, view: any, data: Object}>;
@@ -6,10 +8,12 @@ export default class Router {
 
     private notFoundView: any;
     private notFoundViewRoot: any;
+    private logger: Logger;
 
-    constructor(root: Element) {
+    constructor(root: Element, logger: Logger) {
         this.root = root;
         this.routes = new Map();
+        this.logger = logger;
 
         this.currentRoute = null;
         this.isCurrentNotFound = false;
@@ -55,6 +59,7 @@ export default class Router {
     setNotFoundView(root = this.root, view: any) {
         this.notFoundView = view;
         this.notFoundViewRoot = root;
+        this.logger.addLog({type: 'router', msg: `404, not found ${view} in root ${root}`});
     }
 
     /**

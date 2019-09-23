@@ -5,8 +5,10 @@ import userBlock from '../../components/userBlock/userBlock';
 import './game.scss';
 
 export default class gameViewMulti extends View {
-    constructor(eventBus) {
+    constructor(eventBus, logger) {
         super(template, eventBus);
+        this.logger = logger;
+
         this.state = {
             user: {
                 first: {
@@ -16,6 +18,7 @@ export default class gameViewMulti extends View {
                     nickname: '',
                 },
             },
+        
         };
         this.render(document.getElementsByClassName('body-cnt')[0]);
     }

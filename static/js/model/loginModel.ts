@@ -2,11 +2,16 @@ import api from '../libs/api';
 import Validator from '../libs/validation';
 import { OK_RESPONSE, OK_VALIDATE_EMAIL, OK_VALIDATE_LOGIN, OK_VALIDATE_PASSWORD } from '../components/constants';
 import EventBus from '../libs/eventBus';
+import Logger from '../libs/logger';
 
 export default class loginModel {
     localEventBus: EventBus;
-    constructor(eventBus: EventBus) {
+    logger: Logger;
+
+    constructor(eventBus: EventBus, logger: Logger) {
         this.localEventBus = eventBus;
+        this.logger = logger;
+        
         this.localEventBus.getEvent('login', this.onLogin.bind(this));
         this.localEventBus.getEvent('loginOrEmailRTCheck', this.loginOrEmailRTCheckResponse.bind(this));
         this.localEventBus.getEvent('passwRTCheck', this.passwRTCheck.bind(this));

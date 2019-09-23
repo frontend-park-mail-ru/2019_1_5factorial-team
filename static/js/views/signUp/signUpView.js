@@ -7,9 +7,12 @@ import '../../components/userBlock/userblock.scss';
 import '../../../css/form.scss';
 
 export default class signUpView extends View {
-    constructor(eventBus) {
+    constructor(eventBus, logger) {
         super(template, eventBus);
+        this.logger = logger;
+
         this.render(document.getElementsByClassName('body-cnt')[0]);
+
         this.localEventBus.getEvent('signupResponse', this.onSignupResponse.bind(this));
         this.localEventBus.getEvent('loginRTCheckResponse', this.loginRTCheckResponse.bind(this));
         this.localEventBus.getEvent('emailRTCheckResponse', this.emailRTCheckResponse.bind(this));

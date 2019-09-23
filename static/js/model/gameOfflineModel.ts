@@ -2,6 +2,7 @@ import Game from '../components/game/game';
 import api from '../libs/api';
 import { ANAUTH_RESPONSE } from '../components/constants';
 import EventBus from '../libs/eventBus';
+import Logger from '../libs/logger';
 
 interface IResponseGame extends Response {
     error?: string;
@@ -11,10 +12,12 @@ interface IResponseGame extends Response {
 export default class gameOfflineModel {
     scene: Game;
     localEventBus: EventBus;
+    logger: Logger;
 
-    constructor(eventBus: EventBus) {
+    constructor(eventBus: EventBus, logger: Logger) {
         this.scene = null;
         this.localEventBus = eventBus;
+        this.logger = logger;
 
         this.localEventBus.getEvent('startGame', this.onStart.bind(this));
         this.localEventBus.getEvent('gameOver', this.onGameOver.bind(this));
@@ -24,7 +27,6 @@ export default class gameOfflineModel {
     }
 
     getUser() {
-        console.log('getUser');
         return api.sessionCheck()
             .then(res => {
                 if (res.status === ANAUTH_RESPONSE) {
@@ -42,7 +44,7 @@ export default class gameOfflineModel {
     }
 
     onStart() {
-        this.scene = new Game(this.localEventBus);
+        this.scene = new Game(this.localEventBus, false, this.logger);
     }
 
     stopGame() {

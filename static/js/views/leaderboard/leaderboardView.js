@@ -6,12 +6,16 @@ import template from './leaderboardView.tmpl.xml';
 import './leaderboard.scss';
 
 export default class leaderboardView extends View {
-    constructor(eventBus) {
+    constructor(eventBus, logger) {
         super(template, eventBus);
+        this.logger = logger;
+        
         this.render(document.getElementsByClassName('body-cnt')[0]);
+        
         this.localEventBus.getEvent('loadResponse', this.loadResponse.bind(this));
         this.localEventBus.getEvent('loadPaginatorResponse', this.loadPaginatorResponse.bind(this));
         this.localEventBus.getEvent('checkAuthorizationResponse', this.onCheckAuthResponse.bind(this));
+        
         this.pagination = null;
         this.isClosed = false;
     }

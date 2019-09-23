@@ -1,7 +1,8 @@
 export default class View {
-    constructor(tmpl, eventBus) {
+    constructor(tmpl, eventBus, logger) {
         this.element = document.createElement('div');
         this.tmpl = tmpl;
+        this.logger = logger;
         this.localEventBus = eventBus;
         this.prevRoot = null;
         this.closedView = false;
@@ -34,7 +35,7 @@ export default class View {
         try {
             this.localEventBus.callEvent('close');
         } catch (e) {
-            console.log('no such event - close');
+            this.logger.addLog({type: 'eventBus', msg: 'No such event - close for view'});
         }
     }
 

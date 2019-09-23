@@ -144,7 +144,7 @@ export default class Jager {
         return this.recogniseGesture(fitCurve(this.clearPath(path), tolerance), debug);
     }
 
-    recogniseGesture(bezierPath, debug = false) {
+    recogniseGesture(bezierPath) {
         let i, r, l, latest, flag, result = 0;
         let lines = [];
         for (i = 0; i < bezierPath.length; i++) {
@@ -204,11 +204,6 @@ export default class Jager {
             }
         }
 
-        if (debug) {
-            console.log(lines);
-            console.log(result);
-        }
-
         return result;
     }
 
@@ -217,7 +212,6 @@ export default class Jager {
     }
 
     pointTouch(evt) {
-        console.log('touching');
         return {x: evt.touches[0].pageX, y: evt.touches[0].pageY};
     }
 
@@ -292,8 +286,6 @@ function fitCubic(points, leftTangent, rightTangent, error, progressCallback) {
         centerVector, toCenterTangent, fromCenterTangent,  //Unit tangent vector(s) at splitPoint
         beziers,                //Array of fitted Bezier curves if we need more than one curve
         dist, i;
-
-    //console.log('fitCubic, ', points.length);
 
     //Use heuristic if region only has two points in it
     if (points.length === 2) {
@@ -424,7 +416,6 @@ function generateBezier(points, parameters, leftTangent, rightTangent) {
         lastPoint = points[points.length-1];
 
     bezCurve = [firstPoint, null, null, lastPoint];
-    //console.log('gb', parameters.length);
 
     //Compute the A's
     A = maths.zeros_Xx2x2(parameters.length);
