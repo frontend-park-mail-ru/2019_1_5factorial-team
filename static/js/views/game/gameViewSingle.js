@@ -3,6 +3,7 @@ import View from '../../libs/views';
 import userBlock from '../../components/userBlock/userBlock';
 
 import './game.scss';
+import ModalWindow from "../../components/modalWindow/modalWindow";
 
 export default class gameView extends View {
     constructor(eventBus) {
@@ -24,7 +25,8 @@ export default class gameView extends View {
         menuButton.addEventListener('click', () => {
             this.localEventBus.callEvent('stopGameManualy');
         });
-        this.localEventBus.callEvent('startGame');  
+
+        this.localEventBus.callEvent('startGame');
     }
 
     render(root, data = {}) {

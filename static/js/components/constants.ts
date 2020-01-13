@@ -175,7 +175,7 @@ export const MAP_OF_MODALS = new Map ([
     ['Game multi end', '<h1 class="text-title modal-window__header js-header-over"></h1><p class="js-set-final-score"></p><a class="btn btn_contained form__btn js-back-to-menu-modal" href="/">Back to menu</a>'],
     ['TTL multi solo', '<h1 class="text-title modal-window__header">Timeout during player finding!</h1><a class="btn btn_contained modal-window__btn js-back-to-menu-modal" href="/">Back to menu</a>'],
     ['Game training', '<h1 class="text-title modal-window__header">Do you want to start training?</h1><div class="modal-window-btns"><button class="btn btn_inlined modal-window__btn js-skip-training">No</button><button class="btn btn_contained modal-window__btn js-start-training">Yes</button></div>'],
-    ['Game single end', '<h1 class="text-title modal-window__header">Game Over! You Lost!</h1><p class="modal-window__score js-set-final-score"></p><a class="btn btn_contained modal-window__btn js-back-to-menu-modal" href="/">Back to menu</a>'],
+    ['Game single end', '<h1 class="text-title modal-window__header">Game Over!</h1><p class="modal-window__score js-set-final-score"></p><a class="btn btn_contained modal-window__btn js-back-to-menu-modal" href="/">Back to menu</a>'],
     ['TTL multi', '<h1 class="text-title modal-window__header">Timeout during friend connection!</h1><a class="btn btn_contained modal-window__btn js-back-to-menu-modal" href="/">Back to menu</a>'],
     ['Error in multi', '<h1 class="text-title modal-window__header">Something went wrong, sorry!</h1><a class="btn btn_contained modal-window__btn js-back-to-menu-modal" href="/">Back to menu</a>'],
     ['Game multi choose', '<h1 class="text-title modal-window__header">Do you want to play with friend?</h1><div class="modal-window-btns"><button class="btn btn_contained modal-window__btn js-friend-yes">Yes</button><button class="btn btn_contained modal-window__btn js-friend-no">No</button></div>'],
@@ -184,7 +184,7 @@ export const MAP_OF_MODALS = new Map ([
     ['Profile change password', '<h1 class="text-title modal-window__header">Change password</h1><div class="modal-window__input-rows"><label class="form__label"><input class="form__input form__input_profile js-password-old" type="password" id="old-password" placeholder="Enter old password" autocomplete="current-password"/><div class="form__warning js-warning-old hide"></div></label><label class="form__label"><input class="form__input form__input_profile js-password-new" type="password" id="new-password" placeholder="Enter new password" autocomplete="new-password"/><div class="form__warning js-warning-new hide"></label></div></label><button class="btn btn_contained modal-window__btn js-button-submit" type="submit">Change</button>'],
     ['Profile change password success', '<h1 class="text-title modal-window__header">Password successfully changed!</h1><button class="btn btn_contained modal-window__btn js-close-mw">Close</button>'],
     ['Shop error login', ''],
-    ['mobileBlock', '<h1 class="text-title modal-window__header">Sorry, game is not avaliable on phone... For now...</h1><button class="btn btn_contained modal-window__btn js-close-mw">Cancel</button>'],
+    ['mobileBlock', '<h1 class="text-title modal-window__header">Sorry, game is not available on phone... For now...</h1><button class="btn btn_contained modal-window__btn js-close-mw">Cancel</button>'],
 ]);
 
 export const MAP_OF_USER_BLOCKS = new Map([

@@ -1,7 +1,6 @@
 import ModalWindow from '../modalWindow/modalWindow';
 import Recognizer from './recognition';
 import Ws from '../../libs/websocket';
-import detectMobile from '../detectMobile';
 
 import { DEFAULT_GHOST_SPEED, DEFAULT_GHOST_DAMAGE, PLAYER_INITIAL_HP } from '../constants';
 import { SCORE_FOR_SYMBOL, SCORE_FOR_GHOST } from '../constants';
@@ -41,10 +40,10 @@ export default class Game {
     protected lastTime: number;
     protected deltaX: number;
 
-    state: {    Players?: Array<{sprite: any, nick: string, x: number, id: Number, hp: number, score: Number}>, 
-                player?: {sprite: any, x: number, hp: number}, 
-                ghosts: Array<{x: number, speed: number, symbolsQueue?: Array<number>, 
-                symbols?:Array<number>, sprite: any, damage: number}>, 
+    state: {    Players?: Array<{sprite: any, nick: string, x: number, id: Number, hp: number, score: Number}>,
+                player?: {sprite: any, x: number, hp: number},
+                ghosts: Array<{x: number, speed: number, symbolsQueue?: Array<number>,
+                symbols?:Array<number>, sprite: any, damage: number}>,
                 score?: number, gameTime: number, isGameOver: Boolean
             };
 
@@ -155,17 +154,8 @@ export default class Game {
                 gameTime: 0,
                 isGameOver: false
             };
-            // if (detectMobile.detect()) {
-            //     window.screen.orientation.onchange = () => {
-            //         matchMedia('(orientation: landscape)').matches ? window.alert('OK') : window.alert('need to add pause');
-            //     };
-            //     // matchMedia('(orientation: landscape)').matches ? this.gameLoop() : window.alert('move your phone to horizontal orientation');
-            // } else {
-                this.MW.removeModal();
-                    this.gameLoop();
-                // }
-                // }
-            // }
+            this.MW.removeModal();
+            this.gameLoop();
         } else {
             const paramsString = window.location.search;
             const searchParams = new URLSearchParams(paramsString);
@@ -176,7 +166,7 @@ export default class Game {
                 this.MW.createModal('Game multi choose');
                 this.okChoose = (document.getElementsByClassName('js-friend-yes')[0] as HTMLButtonElement);
                 this.noChoose = (document.getElementsByClassName('js-friend-no')[0] as HTMLButtonElement);
-    
+
                 this.okChoose.addEventListener('click', (event) => {
                     event.preventDefault();
                     this.ws = new Ws(this.localEventBus, true);
@@ -766,7 +756,7 @@ export default class Game {
                 this.recognizer.jager.drawPatch(this.recognizer.path, this.recognizer.gctx, this.recognizer.jager.recognise(this.recognizer.path));
             }
         }
-        
+
         if (this.recognizer.lastDrawing !== null) {
             this.lastDrawing = this.recognizer.lastDrawing;
             this.recognizer.lastDrawing = null;

@@ -2,6 +2,7 @@ import Game from '../components/game/game';
 import api from '../libs/api';
 import { ANAUTH_RESPONSE } from '../components/constants';
 import EventBus from '../libs/eventBus';
+import ModalWindow from "../components/modalWindow/modalWindow";
 
 interface IResponseGame extends Response {
     error?: string;
